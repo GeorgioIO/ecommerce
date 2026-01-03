@@ -1,0 +1,21 @@
+// books_languages Table
+$conn->query("
+    CREATE TABLE IF NOT EXISTS book_languages (
+        book_id INT,
+        language_id INT,
+        PRIMARY KEY (book_id , language_id),
+        FOREIGN KEY (book_id) REFERENCES Books (id) ON DELETE CASCADE,
+        FOREIGN KEY (language_id) REFERENCES Languages (id)
+    );
+");
+
+
+
+// Languages Table
+$conn->query("
+    CREATE TABLE IF NOT EXISTS Languages (
+        id INT AUTO_INCREMENT,
+        name VARCHAR(45) NOT NULL UNIQUE,
+        PRIMARY KEY (id)
+    );
+");

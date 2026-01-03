@@ -1,0 +1,2677 @@
+var temporary_contents = {
+  products: `
+          <div class="table-container">
+          <button
+            class="open-book-form-btn action-open-form-btn"
+            data-action="add"
+          >
+            Add New Book
+          </button>
+          <div class="flex-table">
+            <div class="flex-table-header">
+              <div>#</div>
+              <div>Title</div>
+              <div>Author</div>
+              <div>Category</div>
+              <div>Price</div>
+              <div>Stock</div>
+              <div>Status</div>
+              <div>Actions</div>
+            </div>
+            <div class="flex-table-body">
+              <div class="flex-table-row">
+                <div><p>1</p></div>
+                <div><p>The Slient Patient</p></div>
+                <div><p>Alex Michaelides</p></div>
+                <div><p>Thriller</p></div>
+                <div><p>$12.99</p></div>
+                <div><p>14</p></div>
+                <div class="active-stock">
+                  <p>Active</p>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button id="temporary_3">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div><p>2</p></div>
+                <div><p>Atomic Habits</p></div>
+                <div><p>James Clear</p></div>
+                <div><p>Self-Help</p></div>
+                <div><p>$18.50</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>3</div>
+                <div>
+                  <p>Clean Code</p>
+                </div>
+                <div>
+                  <p>Robert C Martin</p>
+                </div>
+                <div>
+                  <p>Programming</p>
+                </div>
+                <div>
+                  <p>$35.00</p>
+                </div>
+                <div>
+                  <p>5</p>
+                </div>
+                <div class="active-stock">
+                  <p>Active</p>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div><p>4</p></div>
+                <div><p>The Midnight Library</p></div>
+                <div>Matt Haig</div>
+                <div class="category">
+                  <p>Fiction</p>
+                </div>
+                <div><p>$14.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>5</div>
+                <div>
+                  <p
+                    title=" The Comprehensive History Of MOdern Economic Systems and Their
+                  Global Impacts from the 19th Century to today"
+                  >
+                    The Comprehensive History Of MOdern Economic Systems and
+                    Their Global Impacts from the 19th Century to today
+                  </p>
+                </div>
+                <div><p>Dr. Michael Thompson</p></div>
+                <div class="category">
+                  <p>History</p>
+                </div>
+                <div><p>$39.99</p></div>
+                <div><p>0</p></div>
+                <div class="out-of-stock"><p>Out of Stock</p></div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+
+                  <button>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  `,
+  authors: `
+  
+          <div class="table-container">
+                    <button
+            class="open-book-form-btn action-open-form-btn"
+            data-action="add"
+          >
+            Add New Author
+          </button>
+          <div class="flex-table">
+            <div class="flex-table-header">
+              <div>#</div>
+              <div>Name</div>
+              <div>Books</div>
+              <div>Actions</div>
+            </div>
+            <div class="flex-table-body">
+              <div class="flex-table-row">
+                <div>
+                  <p>1</p>
+                </div>
+                <div>
+                  <p>James Clear</p>
+                </div>
+                <div>
+                  <button class="check-authors-books-btn">Check Books</button>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button id="temporary_3">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>
+                  <p>1</p>
+                </div>
+                <div>
+                  <p>James Clear</p>
+                </div>
+                <div>
+                  <button class="check-authors-books-btn">Check Books</button>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button id="temporary_3">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>
+                  <p>1</p>
+                </div>
+                <div>
+                  <p>James Clear</p>
+                </div>
+                <div>
+                  <button class="check-authors-books-btn">Check Books</button>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button id="temporary_3">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>
+                  <p>1</p>
+                </div>
+                <div>
+                  <p>James Clear</p>
+                </div>
+                <div>
+                  <button class="check-authors-books-btn">Check Books</button>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button id="temporary_3">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>
+                  <p>1</p>
+                </div>
+                <div>
+                  <p>James Clear</p>
+                </div>
+                <div>
+                  <button class="check-authors-books-btn">Check Books</button>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button id="temporary_3">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  `,
+  genres: `
+          <div class="table-container">
+          <button
+            class="open-book-form-btn action-open-form-btn"
+            data-action="add"
+          >
+            Add New Genre
+          </button>
+          <div class="flex-table">
+            <div class="flex-table-header">
+              <div><p>#</p></div>
+              <div><p>Genre Title</p></div>
+              <div><p>Actions</p></div>
+            </div>
+            <div class="flex-table-body">
+              <div class="flex-table-row">
+                <div>
+                  <p>1</p>
+                </div>
+                <div>
+                  <p>Romance</p>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button id="temporary_3">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>
+                  <p>2</p>
+                </div>
+                <div>
+                  <p>Fiction</p>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button id="temporary_3">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>
+                  <p>3</p>
+                </div>
+                <div>
+                  <p>Biography</p>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button id="temporary_3">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                        stroke="#1C1C1C"
+                        stroke-width="1.3"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  `,
+  customers: `
+          <div class="table-container">
+          <div class="flex-table">
+            <div class="flex-table-header">
+              <div>
+                <p>#</p>
+              </div>
+              <div>
+                <p>Customer Code</p>
+              </div>
+              <div>
+                <p>Name</p>
+              </div>
+              <div>
+                <p>Email</p>
+              </div>
+              <div>
+                <p>Phone</p>
+              </div>
+              <div>
+                <p>Address</p>
+              </div>
+              <div>
+                <p>Orders</p>
+              </div>
+              <div>
+                <p>Total Spent</p>
+              </div>
+              <div>
+                <p>Date Joined</p>
+              </div>
+              <div>
+                <p>Actions</p>
+              </div>
+            </div>
+            <div class="flex-table-body">
+              <div class="flex-table-row">
+                <div>
+                  <p>1</p>
+                </div>
+                <div>
+                  <p>C1</p>
+                </div>
+                <div>
+                  <p>Jack Smith</p>
+                </div>
+                <div>
+                  <p>jacksmith@gmail.com</p>
+                </div>
+                <div>
+                  <p>+961 71861376</p>
+                </div>
+                <div>
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="25"
+                      height="25"
+                      fill="none"
+                      viewBox="0 -0.5 25 25"
+                    >
+                      <path
+                        fill="#000"
+                        d="M7.5 11.25a.75.75 0 0 0 0 1.5v-1.5Zm5 1.5a.75.75 0 0 0 0-1.5v1.5Zm0-1.5a.75.75 0 0 0 0 1.5v-1.5Zm5 1.5a.75.75 0 0 0 0-1.5v1.5ZM13.25 12a.75.75 0 0 0-1.5 0h1.5Zm-1.5 5a.75.75 0 0 0 1.5 0h-1.5Zm0-5a.75.75 0 0 0 1.5 0h-1.5Zm1.5-5a.75.75 0 0 0-1.5 0h1.5ZM7.5 12.75h5v-1.5h-5v1.5Zm5 0h5v-1.5h-5v1.5Zm0-.75h-.75V17h1.5V12h-.75Zm.75 0V7h-1.5v5h1.5Z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div>
+                  <p>15</p>
+                </div>
+                <div>
+                  <p>$1500</p>
+                </div>
+                <div>
+                  <p>10/12/2005</p>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>
+                  <p>2</p>
+                </div>
+                <div>
+                  <p>C2</p>
+                </div>
+                <div>
+                  <p>Lewis Test</p>
+                </div>
+                <div>
+                  <p>lewis@gmail.com</p>
+                </div>
+                <div>
+                  <p>+961 72835576</p>
+                </div>
+                <div>
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="25"
+                      height="25"
+                      fill="none"
+                      viewBox="0 -0.5 25 25"
+                    >
+                      <path
+                        fill="#000"
+                        d="M7.5 11.25a.75.75 0 0 0 0 1.5v-1.5Zm5 1.5a.75.75 0 0 0 0-1.5v1.5Zm0-1.5a.75.75 0 0 0 0 1.5v-1.5Zm5 1.5a.75.75 0 0 0 0-1.5v1.5ZM13.25 12a.75.75 0 0 0-1.5 0h1.5Zm-1.5 5a.75.75 0 0 0 1.5 0h-1.5Zm0-5a.75.75 0 0 0 1.5 0h-1.5Zm1.5-5a.75.75 0 0 0-1.5 0h1.5ZM7.5 12.75h5v-1.5h-5v1.5Zm5 0h5v-1.5h-5v1.5Zm0-.75h-.75V17h1.5V12h-.75Zm.75 0V7h-1.5v5h1.5Z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div>
+                  <p>10</p>
+                </div>
+                <div>
+                  <p>$500</p>
+                </div>
+                <div>
+                  <p>10/12/2005</p>
+                </div>
+                <div class="action-btns-container">
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  `,
+  orders: `
+          <div class="table-container">
+          <div class="flex-table">
+            <button
+              class="open-book-form-btn action-open-form-btn"
+              data-action="add"
+            >
+              Add New Order
+            </button>
+            <div class="flex-table-header">
+              <div>
+                <p>#</p>
+              </div>
+              <div>
+                <p>Order ID</p>
+              </div>
+              <div>
+                <p>Customer</p>
+              </div>
+              <div>
+                <p>Total Price</p>
+              </div>
+              <div>
+                <p>Status</p>
+              </div>
+              <div>
+                <p>Order Date</p>
+              </div>
+              <div>
+                <p>Actions</p>
+              </div>
+            </div>
+            <div class="flex-table-body">
+              <div class="flex-table-row">
+                <div>
+                  <p>1</p>
+                </div>
+                <div>
+                  <p>O1</p>
+                </div>
+                <div>
+                  <p>C1</p>
+                </div>
+                <div>
+                  <p>$35.00</p>
+                </div>
+                <div>
+                  <p>Delivered</p>
+                </div>
+                <div>
+                  <p>10/10/2020</p>
+                </div>
+                <div class="action-btns-container">
+                  <button id="temporary_3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="25"
+                      height="25"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="#000"
+                        fill-rule="evenodd"
+                        d="M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-1 3a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+                        clip-rule="evenodd"
+                      />
+                      <path
+                        fill="#000"
+                        fill-rule="evenodd"
+                        d="M21.83 11.28C19.542 7.153 15.812 5 12 5c-3.812 0-7.542 2.152-9.83 6.28a1.376 1.376 0 0 0-.01 1.308C4.412 16.8 8.163 19 12 19c3.837 0 7.588-2.199 9.84-6.412a1.376 1.376 0 0 0-.01-1.307ZM12 17c-2.939 0-5.96-1.628-7.908-5.051C6.069 8.596 9.073 7 12 7c2.927 0 5.931 1.596 7.908 4.949C17.96 15.372 14.94 17 12 17Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="flex-table-row">
+                <div>
+                  <p>2</p>
+                </div>
+                <div>
+                  <p>O2</p>
+                </div>
+                <div>
+                  <p>C2</p>
+                </div>
+                <div>
+                  <p>$15.00</p>
+                </div>
+                <div>
+                  <p>Proccessed</p>
+                </div>
+                <div>
+                  <p>10/10/2021</p>
+                </div>
+                <div class="action-btns-container">
+                  <button id="temporary_3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="25"
+                      height="25"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="#000"
+                        fill-rule="evenodd"
+                        d="M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-1 3a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"
+                        clip-rule="evenodd"
+                      />
+                      <path
+                        fill="#000"
+                        fill-rule="evenodd"
+                        d="M21.83 11.28C19.542 7.153 15.812 5 12 5c-3.812 0-7.542 2.152-9.83 6.28a1.376 1.376 0 0 0-.01 1.308C4.412 16.8 8.163 19 12 19c3.837 0 7.588-2.199 9.84-6.412a1.376 1.376 0 0 0-.01-1.307ZM12 17c-2.939 0-5.96-1.628-7.908-5.051C6.069 8.596 9.073 7 12 7c2.927 0 5.931 1.596 7.908 4.949C17.96 15.372 14.94 17 12 17Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                  <button class="action-open-form-btn" data-action="edit">
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.6287 5.12132L4.31497 16.435M15.6287 5.12132L19.1642 8.65685M15.6287 5.12132L17.0429 3.70711C17.4334 3.31658 18.0666 3.31658 18.4571 3.70711L20.5784 5.82843C20.969 6.21895 20.969 6.85212 20.5784 7.24264L19.1642 8.65685M7.85051 19.9706L4.31497 16.435M7.85051 19.9706L19.1642 8.65685M7.85051 19.9706L3.25431 21.0312L4.31497 16.435"
+                        stroke="#000000"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  `,
+};

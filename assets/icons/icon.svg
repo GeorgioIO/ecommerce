@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+
+  <!-- DASHBOARD -->
+  <symbol id="icon-dashboard" viewBox="0 0 24 24">
+    <path d="M9 21H4C3.45 21 3 20.55 3 20v-7.59c0-.26.1-.52.29-.71l8-8a1 1 0 0 1 1.42 0l8 8c.19.19.29.45.29.71V20c0 .55-.45 1-1 1h-5m-6 0h6m-6 0v-6c0-.55.45-1 1-1h4c.55 0 1 .45 1 1v6"/>
+  </symbol>
+
+  <!-- BOOKS -->
+  <symbol id="icon-book" viewBox="0 0 24 24">
+    <path d="M6 4h11a2 2 0 0 1 2 2v13a1 1 0 0 1-1.45.89L12 17l-5.55 2.89A1 1 0 0 1 5 19V5a1 1 0 0 1 1-1z"/>
+  </symbol>
+
+  <!-- AUTHORS -->
+  <symbol id="icon-author" viewBox="0 0 24 24">
+    <path d="M12 2l9 5v10l-9 5-9-5V7l9-5zm0 2.18L5 8v8l7 3.82L19 16V8l-7-3.82z"/>
+  </symbol>
+
+  <!-- GENRES -->
+  <symbol id="icon-genre" viewBox="0 0 24 24">
+    <path d="M4 4h16v2H4V4zm0 4h10v2H4V8zm0 4h16v2H4v-2zm0 4h10v2H4v-2z"/>
+  </symbol>
+
+  <!-- CUSTOMERS -->
+  <symbol id="icon-customers" viewBox="0 0 24 24">
+    <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm6 8v-1a5 5 0 0 0-10 0v1z"/>
+  </symbol>
+
+  <!-- ORDERS -->
+  <symbol id="icon-orders" viewBox="0 0 24 24">
+    <path d="M7 3h10a2 2 0 0 1 2 2v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a2 2 0 0 1 2-2zm0 4h10V5H7v2zm0 2v2h6V9H7zm0 4v2h10v-2H7z"/>
+  </symbol>
+
+</svg>
+
+
+
+
+<!-- 
+  <!-- LOGOUT -->
+  <symbol id="icon-logout" viewBox="0 0 24 24">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M20 23L12 23C11.4477 23 11 22.5523 11 22C11 21.4477 11.4477 21 12 21L20 21C20.5523 21 21 20.5523 21 20L21 4C21 3.44771 20.5523 3 20 3L12 3C11.4477 3 11 2.55228 11 2C11 1.44772 11.4477 1 12 1L20 0.999999C21.6569 0.999999 23 2.34315 23 4L23 20C23 21.6569 21.6569 23 20 23Z" fill="#0F0F0F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M18.6881 10.6901C19.3396 11.4418 19.3396 12.5581 18.6881 13.3098L14.5114 18.1291C13.2988 19.5282 11 18.6707 11 16.8193L11 15L5 15C3.89543 15 3 14.1046 3 13L3 11C3 9.89541 3.89543 8.99998 5 8.99998L11 8.99998L11 7.18071C11 5.3293 13.2988 4.47176 14.5114 5.87085L18.6881 10.6901ZM16.6091 12.6549C16.9348 12.279 16.9348 11.7209 16.6091 11.345L13 7.18071L13 9.49998C13 10.3284 12.3284 11 11.5 11L5 11L5 13L11.5 13C12.3284 13 13 13.6716 13 14.5L13 16.8193L16.6091 12.6549Z" fill="#0F0F0F"/>
+  </symbol>
+
+  <!-- PLUS -->
+  <symbol id="icon-plus" viewBox="0 0 24 24">
+    <path stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" 
+    d="M12 5v14M5 12h14"/>
+  </symbol>
+
+  <!-- EDIT -->
+  <symbol id="icon-edit" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 
+    17.25zM20.71 7.04a1.003 1.003 0 
+    000-1.41l-2.34-2.34a1.003 1.003 0 
+    00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+  </symbol>
+
+  <!-- DELETE -->
+  <symbol id="icon-delete" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M6 19c0 1.1.9 2 2 
+    2h8a2 2 0 002-2V7H6v12zm3.5-9h1v7h-1V10zm5 
+    0h-1v7h1V10zM19 4h-3.5l-1-1h-5l-1 
+    1H5v2h14V4z"/>
+  </symbol>
+
+  <!-- ARROW LEFT -->
+  <symbol id="icon-arrow-left" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M14 7l-5 5 5 5V7z"/>
+  </symbol>
+
+  <!-- CLOSE / X -->
+  <symbol id="icon-close" viewBox="0 0 24 24">
+    <path stroke="currentColor" stroke-width="2" stroke-linecap="round" 
+    d="M6 6l12 12M18 6L6 18"/>
+  </symbol>
