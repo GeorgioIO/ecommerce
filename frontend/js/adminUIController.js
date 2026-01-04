@@ -5,6 +5,11 @@ import {
   loadBooks,
   resetBookForm,
 } from "./books/booksUI.js";
+import {
+  addBook_DB,
+  update_book_DB,
+  deleteBook_DB,
+} from "./books/booksService.js";
 import { validateBookData } from "./books/booksValidators.js";
 import {
   showAuthorAddForm,
@@ -13,21 +18,29 @@ import {
   loadAuthors,
   resetAuthorForm,
 } from "./authors/authorsUI.js";
+import {
+  addAuthor_DB,
+  update_author_DB,
+  delete_Author_DB,
+} from "./authors/authorServices.js";
 import { validateAuthorData } from "./authors/authorValidators.js";
 import { showDeletionModal } from "./UIhelpers.js";
 import { validateIDEligibility } from "./helpers.js";
 import { swapClass } from "./helpers.js";
 import { showMessageLog } from "./messageLog/messageLog.js";
 import {
-  addBook_DB,
-  update_book_DB,
-  deleteBook_DB,
-} from "./books/booksService.js";
+  showGenreAddForm,
+  showGenreEditForm,
+  collectGenreFormData,
+  loadGenres,
+  resetGenreForm,
+} from "./genres/genresUI.js";
 import {
-  addAuthor_DB,
-  update_author_DB,
-  delete_Author_DB,
-} from "./authors/authorServices.js";
+  addGenre_DB,
+  updateGenre_DB,
+  deleteGenre_DB,
+} from "./genres/genreServices.js";
+import { validateGenreData } from "./genres/genreValidators.js";
 
 const confirmationModal = document.querySelector("#confirmation-modal");
 const closeOperationFormButton = document.querySelector(
@@ -57,6 +70,17 @@ const entityHandlers = {
     loader: loadAuthors,
     dataCollector: collectAuthorFormData,
     dataValidator: validateAuthorData,
+  },
+  genre: {
+    showAdd: showGenreAddForm,
+    showEdit: showGenreEditForm,
+    resetForm: resetGenreForm,
+    addEntity: addGenre_DB,
+    updateEntity: updateGenre_DB,
+    delete: deleteGenre_DB,
+    loader: loadGenres,
+    dataCollector: collectGenreFormData,
+    dataValidator: validateGenreData,
   },
 };
 
@@ -118,7 +142,6 @@ confirmationModal.addEventListener("click", async (e) => {
         return;
       }
 
-      console.log(intent);
       const deleteEntity = entityHandlers?.[entity]?.[intent];
       const loadEntityElements = entityHandlers?.[entity]?.loader;
       if (deleteEntity) {
@@ -151,7 +174,6 @@ document.addEventListener("submit", async (e) => {
   // Get data collector and collect - entity
   const entityDataCollector = entityHandlers?.[entity]?.dataCollector;
   const data = entityDataCollector(form);
-
   // Get data validator and validate - entity
   const entityDataValidator = entityHandlers?.[entity]?.dataValidator;
   const validationResult = entityDataValidator(data);
@@ -163,6 +185,7 @@ document.addEventListener("submit", async (e) => {
 
   // Get entity loader
   const loadEntityElements = entityHandlers?.[entity]?.loader;
+  console.log(loadEntityElements);
 
   // if MODE is ADD
   if (mode === "add") {
@@ -180,6 +203,7 @@ document.addEventListener("submit", async (e) => {
   } else if (mode === "edit") {
     const updateEntity = entityHandlers?.[entity]?.updateEntity;
 
+    console.log(data);
     const updateEntityResult = await updateEntity(data);
     if (updateEntityResult?.success) {
       showMessageLog("success", updateEntityResult.message);

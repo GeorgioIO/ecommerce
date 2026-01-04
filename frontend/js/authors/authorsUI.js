@@ -74,10 +74,6 @@ export async function populateSelectAuthors(selectElement) {
   });
 }
 
-export async function handleAuthorAdd() {
-  openForm("add");
-}
-
 async function openForm(mode, data = {}) {
   // get form body
   const formBody = document.querySelector(".form-body");

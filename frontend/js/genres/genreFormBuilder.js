@@ -1,5 +1,3 @@
-import { genreFormConfigs } from "./genreFormConfigs";
-
 /*
 Function responsible to build the form based on its configuration
 Input : 
@@ -50,7 +48,7 @@ export function buildGenreForm(mode = "add", config) {
   submitButton.id = "author-operation-button";
   submitButton.type = "submit";
   submitButton.textContent = "SUBMIT";
-  submitButton.dataset.intent = "addEntity";
+  submitButton.dataset.intent = mode === "add" ? "addEntity" : "updateEntity";
 
   // Create reset button
   const resetButton = document.createElement("button");

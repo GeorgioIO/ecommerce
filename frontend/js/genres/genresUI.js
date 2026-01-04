@@ -4,7 +4,7 @@ import { genreTableConfigs } from "./genreTableConfigs.js";
 import { swapClass } from "../helpers.js";
 import { hydrateGenreForm } from "./genreFormHydrator.js";
 import { buildGenreForm } from "./genreFormBuilder.js";
-import { genreFormConfigss } from "./genreFormConfigs.js";
+import { genreFormConfigs } from "./genreFormConfigs.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
@@ -26,7 +26,7 @@ export function collectGenreFormData(form) {
 
   const idInput = form.querySelector("#id");
   if (idInput && idInput.value) {
-    data.id - idInput.value;
+    data.id = idInput.value;
   }
 
   return data;
@@ -35,6 +35,7 @@ export function collectGenreFormData(form) {
 export async function loadGenres() {
   try {
     const genres = await fetch_genres_DB();
+    console.log(genres);
 
     if (genres.length === 0) {
       content.innerHTML = renderEmptyTableState({
@@ -143,7 +144,7 @@ export async function openForm(mode, data = {}) {
   const formTitle = document.querySelector(".form-operation-text");
   formTitle.textContent = mode === "add" ? "ADD GENRE" : "UPDATE GENRE";
 
-  const formConfigs = genreFormConfigss;
+  const formConfigs = genreFormConfigs;
 
   const form = buildGenreForm(mode, formConfigs);
   formBody.append(form);

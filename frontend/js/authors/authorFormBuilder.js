@@ -49,7 +49,7 @@ export function buildAuthorForm(mode = "add", config) {
   submitButton.id = "author-operation-button";
   submitButton.type = "submit";
   submitButton.textContent = "SUBMIT";
-  submitButton.dataset.intent = "addEntity";
+  submitButton.dataset.intent = mode === "add" ? "addEntity" : "updateEntity";
 
   // Create reset button
   const resetButton = document.createElement("button");

@@ -1,4 +1,3 @@
-import { bookFormConfigs } from "./bookFormConfigs.js";
 import { populateSelectAuthors } from "../authors/authorsUI.js";
 import { populateSelectGenres } from "../genres/genresUI.js";
 import { populateSelectLanguages } from "../languages/languages.js";
@@ -80,7 +79,7 @@ export function buildBookForm(mode = "add", config) {
   submitButton.id = "book-operation-button";
   submitButton.type = "submit";
   submitButton.textContent = "SUBMIT";
-  submitButton.dataset.intent = "addEntity";
+  submitButton.dataset.intent = mode === "add" ? "addEntity" : "updateEntity";
 
   // create reset button
   const resetButton = document.createElement("button");
