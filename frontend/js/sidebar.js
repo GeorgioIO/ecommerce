@@ -2,6 +2,7 @@
 
 import { loadAuthors } from "./authors/authorsUI.js";
 import { loadBooks } from "./books/booksUI.js";
+import { loadGenres } from "./genres/genresUI.js";
 
 var sidebarButtons = document.querySelectorAll(
   ".sidebar ul li .adm-sidebar-button"
@@ -22,6 +23,8 @@ sidebarButtons.forEach((button) => {
       loadBooks();
     } else if (clickedButton.dataset.section === "authors") {
       loadAuthors();
+    } else if (clickedButton.dataset.section === "genres") {
+      loadGenres();
     }
   });
 });

@@ -118,6 +118,7 @@ confirmationModal.addEventListener("click", async (e) => {
         return;
       }
 
+      console.log(intent);
       const deleteEntity = entityHandlers?.[entity]?.[intent];
       const loadEntityElements = entityHandlers?.[entity]?.loader;
       if (deleteEntity) {

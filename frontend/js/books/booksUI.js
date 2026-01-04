@@ -129,7 +129,7 @@ function renderBookTableRow(item) {
                     />
                 </svg>
             </button>
-            <button class="table-row-button show-confirmation-modal" data-mode="delete" data-intent="showDelete" data-intent="deleteBook" data-entity="book" data-id="${
+            <button class="table-row-button show-confirmation-modal" data-mode="delete" data-entity="book" data-id="${
               item.id
             }">
                 <svg
