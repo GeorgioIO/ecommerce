@@ -1,7 +1,36 @@
-import { fetch_genres_DB } from "./genreServices.js";
+import { fetch_genres_DB, getGenreData_DB } from "./genreServices.js";
 import { renderActiveTableState, renderEmptyTableState } from "../UIhelpers.js";
 import { genreTableConfigs } from "./genreTableConfigs.js";
+import { swapClass } from "../helpers.js";
+import { hydrateGenreForm } from "./genreFormHydrator.js";
+import { buildGenreForm } from "./genreFormBuilder.js";
+import { genreFormConfigss } from "./genreFormConfigs.js";
+
 const content = document.querySelector(".table-container");
+const formContainer = document.querySelector(".form-container");
+
+export async function showGenreAddForm() {
+  openForm("add");
+}
+
+export async function showGenreEditForm(genreID) {
+  const genreData = await getGenreData_DB(genreID);
+  openForm("edit", genreData.data);
+}
+
+export function collectGenreFormData(form) {
+  const data = {
+    name: form.querySelector("#name").value,
+    image: form.querySelector("#image").files[0] || null,
+  };
+
+  const idInput = form.querySelector("#id");
+  if (idInput && idInput.value) {
+    data.id - idInput.value;
+  }
+
+  return data;
+}
 
 export async function loadGenres() {
   try {
@@ -101,6 +130,33 @@ function renderGenreTableRow(item) {
           </div>
         </div>
   `;
+}
+
+export async function openForm(mode, data = {}) {
+  // get form body
+  const formBody = document.querySelector(".form-body");
+
+  // empty it first
+  formBody.innerHTML = "";
+
+  // set form title
+  const formTitle = document.querySelector(".form-operation-text");
+  formTitle.textContent = mode === "add" ? "ADD GENRE" : "UPDATE GENRE";
+
+  const formConfigs = genreFormConfigss;
+
+  const form = buildGenreForm(mode, formConfigs);
+  formBody.append(form);
+
+  if (mode === "edit") {
+    hydrateGenreForm(form, data);
+  }
+
+  swapClass(formContainer, "slide-in-form", "slide-out-form");
+}
+
+export function resetGenreForm(form) {
+  form.reset();
 }
 
 export async function populateSelectGenres(selectElement) {
