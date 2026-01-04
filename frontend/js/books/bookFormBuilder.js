@@ -1,6 +1,6 @@
 import { bookFormConfigs } from "./bookFormConfigs.js";
 import { populateSelectAuthors } from "../authors/authorsUI.js";
-import { populateSelectGenres } from "../genres/genres.js";
+import { populateSelectGenres } from "../genres/genresUI.js";
 import { populateSelectLanguages } from "../languages/languages.js";
 import { populateSelectFormats } from "../formats/formats.js";
 

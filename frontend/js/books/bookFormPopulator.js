@@ -1,6 +1,6 @@
 import { populateSelectAuthors } from "../authors/authorsUI.js";
 import { populateSelectFormats } from "../formats/formats.js";
-import { populateSelectGenres } from "../genres/genres.js";
+import { populateSelectGenres } from "../genres/genresUI.js";
 import { populateSelectLanguages } from "../languages/languages.js";
 
 export async function populateBookFormSelects(form) {
