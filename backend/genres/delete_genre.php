@@ -3,6 +3,7 @@
 header('Content-Type: application/json');
 require_once  __DIR__ .  '/../../config/database.php';
 require_once  __DIR__ . '/../../config/helpers.php';
+require_once  __DIR__ . '/../validators/genre_db_validators.php';
 
 $genre_id = $_POST["id"] ?? null;
 
@@ -21,6 +22,17 @@ if($validation_result['valid'] === false)
 // sanitize genre id
 $DB_genre_id = trim($genre_id);
 $DB_genre_id = (int) $DB_genre_id;
+
+$genre_has_books_validation = DB_validate_genre_has_books($conn , $DB_genre_id);
+if(!$genre_has_books_validation['success'])
+{
+    echo json_encode([
+        'success' => false,
+        'message' => $genre_has_books_validation['message']
+    ]);
+    exit;
+}
+
 
 $query = "DELETE FROM genres WHERE id = ?";
 $stmt = $conn->prepare($query);

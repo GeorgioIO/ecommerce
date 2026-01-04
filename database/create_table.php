@@ -1,20 +1,20 @@
 <?php
 
-require_once '../config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
 // Genres Table
 $conn->query("
-    CREATE TABLE IF NOT EXISTS Genres (
+    CREATE TABLE IF NOT EXISTS genres (
         id INT AUTO_INCREMENT,
         name VARCHAR(45) NOT NULL UNIQUE,
-        image VARCHAR(255) NOT NULL,
+        image VARCHAR(255),
         PRIMARY KEY(id)
     );
 ");
 
 // Authors Table
 $conn->query("
-    CREATE TABLE IF NOT EXISTS Authors (
+    CREATE TABLE IF NOT EXISTS authors (
         id INT AUTO_INCREMENT,
         name VARCHAR(45) NOT NULL UNIQUE,
         PRIMARY KEY(id)
@@ -31,12 +31,12 @@ $conn->query("
 
 // Books Table
 $conn->query("
-    CREATE TABLE IF NOT EXISTS Books (
+    CREATE TABLE IF NOT EXISTS books (
         id INT AUTO_INCREMENT,
         isbn VARCHAR(17) NOT NULL UNIQUE,
-        sku VARCHAR(255) NOT NULL UNIQUE,
+        sku VARCHAR(100) NOT NULL UNIQUE,
         title VARCHAR(100) NOT NULL,
-        description VARCHAR(255),
+        description TEXT,
         language VARCHAR(100) NOT NULL CHECK(language IN('French' , 'English' , 'Not Defined')),
         stock_quantity INT CHECK(stock_quantity >= 0),
         cover_image VARCHAR(255),
@@ -46,9 +46,9 @@ $conn->query("
         author_id INT,
         format_id INT,
         PRIMARY KEY (id),
-        FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE CASCADE,
-        FOREIGN KEY (genre_id) REFERENCES genres(id), 
-        FOREIGN KEY (format_id) REFERENCES book_formats(id) 
+        FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE RESTRICT,
+        FOREIGN KEY (genre_id) REFERENCES genres(id) ON DELETE RESTRICT, 
+        FOREIGN KEY (format_id) REFERENCES book_formats(id) ON DELETE SET NULL  
     );
 ");
 
@@ -69,7 +69,7 @@ $conn->query("
 
 // Users Table
 $conn->query("
-    CREATE TABLE IF NOT EXISTS Users(
+    CREATE TABLE IF NOT EXISTS users(
         id INT AUTO_INCREMENT,
         address_id INT,
         customer_code VARCHAR(35) NOT NULL UNIQUE,
@@ -86,7 +86,7 @@ $conn->query("
 
 // Orders Table
 $conn->query("
-    CREATE TABLE IF NOT EXISTS Orders (
+    CREATE TABLE IF NOT EXISTS orders (
         id INT AUTO_INCREMENT,
         user_id INT,
         order_code VARCHAR(35) NOT NULL UNIQUE,
@@ -96,7 +96,7 @@ $conn->query("
         date_added DATETIME DEFAULT CURRENT_TIMESTAMP,  
         PRIMARY KEY (id),
         FOREIGN KEY (billing_id) REFERENCES billing_addresses(id),
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        FOREIGN KEY (user_id) REFERENCES users(id) 
     );
 ");
 
@@ -121,7 +121,7 @@ $conn->query("
         quantity INT,
         price DECIMAL(10,2),
         PRIMARY KEY (id),
-        FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+        FOREIGN KEY (order_id) REFERENCES orders(id),
         FOREIGN KEY (book_id) REFERENCES books(id)
     );
 ");
@@ -132,7 +132,7 @@ $conn->query("
         id INT AUTO_INCREMENT,
         user_id INT,
         book_id INT,
-        text VARCHAR(255) NOT NULL,
+        text TEXT NOT NULL,
         rating INT CHECK(rating BETWEEN 1 AND 5),
         PRIMARY KEY (id),
         FOREIGN KEY (user_id) REFERENCES users (id),

@@ -146,6 +146,7 @@ confirmationModal.addEventListener("click", async (e) => {
       const loadEntityElements = entityHandlers?.[entity]?.loader;
       if (deleteEntity) {
         const deleteEntityResult = await deleteEntity(id);
+        console.log(deleteEntityResult);
         if (!deleteEntityResult?.success) {
           showMessageLog("error", deleteEntityResult.message);
         } else {

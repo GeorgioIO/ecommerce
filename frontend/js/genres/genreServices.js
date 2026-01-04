@@ -45,7 +45,7 @@ export async function deleteGenre_DB(genreID) {
     }),
   });
 
-  console.log(result.text());
+  return result.json();
 }
 
 export async function getGenreData_DB(genreID) {
