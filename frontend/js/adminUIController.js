@@ -98,9 +98,7 @@ document.addEventListener("change", (e) => {
   const inputFile = e.target.closest('input[type="file"');
 
   if (inputFile) {
-    console.log("here");
     const file = inputFile.files[0];
-    console.log(file);
     handleImageFormat(file);
     handleEntityImageElement("set", file);
   }
@@ -221,7 +219,6 @@ document.addEventListener("submit", async (e) => {
   } else if (mode === "edit") {
     const updateEntity = entityHandlers?.[entity]?.updateEntity;
 
-    console.log(data);
     const updateEntityResult = await updateEntity(data);
     if (updateEntityResult?.success) {
       showMessageLog("success", updateEntityResult.message);

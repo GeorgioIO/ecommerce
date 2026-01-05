@@ -39,12 +39,14 @@ function DB_validate_genre_has_books($conn , $id)
 function DB_validate_genre_name($conn , $name , $id=null)
 {
     
+    // When we are adding genre we wanna check if there is a genre with this name at all
     if($id !== null)
     {
         $query = "SELECT id FROM genres WHERE name = ? AND id <> ? LIMIT 1";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("si" , $name , $id);
     }
+    // When we are updating a genre we wanna check if there is a genre with this name other than the genre with the id of the genre we are updating
     else
     {
         $query = "SELECT id FROM genres WHERE name = ?  LIMIT 1";

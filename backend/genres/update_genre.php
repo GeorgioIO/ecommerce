@@ -33,7 +33,7 @@ if(!$genre_image_result['success'])
 $DB_genre_name = $genre_name_result['value'];
 
 // Validate DB name uniqueness
-$DB_name_validation_result = DB_validate_genre_name($conn , $DB_genre_name);
+$DB_name_validation_result = DB_validate_genre_name($conn , $DB_genre_name , $genre_payload['id']);
 if(!$DB_name_validation_result['success'])
 {
     echo json_encode([
@@ -59,19 +59,31 @@ if($genre_image_result['value'])
     }
 }
 
-
-$query = <<<EOT
-
-UPDATE genres SET
-    name = ?,
-    image = ?
-WHERE id = ?
-EOT;
-
-$stmt = $conn->prepare($query);
-$stmt->bind_param(
-    "ssi", 
-    $DB_genre_name , $DB_genre_image, $genre_payload['id']);
+if($DB_image_filename === null)
+{
+    $query = <<<EOT
+        UPDATE genres SET
+            name = ?
+        WHERE id = ?
+    EOT;
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param(
+        "si", 
+        $DB_genre_name , $genre_payload['id']);
+}
+else
+{
+    $query = <<<EOT
+        UPDATE genres SET
+            name = ?,
+            image = ?
+        WHERE id = ?
+    EOT;
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param(
+        "ssi", 
+        $DB_genre_name , $DB_image_filename , $genre_payload['id']);
+}
 
 if($stmt->execute())
 {

@@ -17,7 +17,6 @@ export function validateGenreData(data) {
 
   // Image
   const image = data.image;
-
   if (image) {
     if (!image.type.startsWith("image/")) {
       return {
@@ -28,7 +27,7 @@ export function validateGenreData(data) {
 
     const allowedTypes = ["image/png", "image/jpeg"];
 
-    if (!allowedTypes.includes(name.type)) {
+    if (!allowedTypes.includes(image.type)) {
       return {
         valid: false,
         error: "Error in image : Only PNG and JPG, JPEG formats are allowed",

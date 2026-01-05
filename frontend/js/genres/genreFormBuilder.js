@@ -61,7 +61,7 @@ export function buildGenreForm(mode = "add", config) {
 
   // Create operation button (submit)
   const submitButton = document.createElement("button");
-  submitButton.id = "author-operation-button";
+  submitButton.id = "genre-operation-button";
   submitButton.type = "submit";
   submitButton.textContent = "SUBMIT";
   submitButton.dataset.intent = mode === "add" ? "addEntity" : "updateEntity";

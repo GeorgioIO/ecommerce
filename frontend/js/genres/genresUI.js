@@ -35,7 +35,6 @@ export function collectGenreFormData(form) {
 export async function loadGenres() {
   try {
     const genres = await fetch_genres_DB();
-    console.log(genres);
 
     if (genres.length === 0) {
       content.innerHTML = renderEmptyTableState({
@@ -84,13 +83,19 @@ function renderGenreTableRow(item) {
             <p> ${item.name} </p>
         </div>
         <div>
-              <img class="genre-image" src="../assets/images/history_1.png">
+              ${
+                item.image === null
+                  ? `<p> No image </p>`
+                  : `<img  class="genre-image" src="../assets/images/${item.image}" alt="${item.name} display image">`
+              }
         </div>
         <div>
             <p> test </p>
         </div>
         <div class="action-btns-container">
-            <button class="table-row-button open-operation-form" data-mode="edit" data-entity="genre" data-intent="showEdit" data-id="${item.id}">
+            <button class="table-row-button open-operation-form" data-mode="edit" data-entity="genre" data-intent="showEdit" data-id="${
+              item.id
+            }">
                 <svg
                     width="25px"
                     height="25px"
@@ -106,7 +111,9 @@ function renderGenreTableRow(item) {
                     />
                 </svg>
             </button>
-            <button class="table-row-button show-confirmation-modal" data-mode="delete" data-entity="genre" data-id="${item.id}">
+            <button class="table-row-button show-confirmation-modal" data-mode="delete" data-entity="genre" data-id="${
+              item.id
+            }">
                 <svg
                     width="25px"
                     height="25px" 

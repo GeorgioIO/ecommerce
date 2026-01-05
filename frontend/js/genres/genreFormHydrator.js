@@ -1,3 +1,5 @@
+import { handleEntityImageElement } from "../helpers.js";
+
 export function hydrateGenreForm(form, data) {
   Object.keys(data).forEach((key) => {
     const input = form.querySelector(`#${key}`);
@@ -5,7 +7,7 @@ export function hydrateGenreForm(form, data) {
     input.value = data[key];
   });
 
-  //   if (data.cover_image) {
-  //     handleBookImageElement("set", data.cover_image);
-  //   }
+  if (data.image) {
+    handleEntityImageElement("set", data.image);
+  }
 }
