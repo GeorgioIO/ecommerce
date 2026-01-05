@@ -1,4 +1,5 @@
 export function validateBookData(data) {
+  console.log(data);
   // Title
   const title = data.title.trim();
   if (!title || title === "") {
@@ -17,6 +18,7 @@ export function validateBookData(data) {
     };
   }
 
+  // Sku
   const sku = data.sku.trim();
   if (!sku || sku == "") {
     return {
@@ -25,7 +27,7 @@ export function validateBookData(data) {
     };
   }
 
-  // Author & Genre (IDs)
+  // Author , Genre & Format (IDs)
   const authorID = parseInt(data.author);
   const genreID = parseInt(data.genre);
   const formatID = parseInt(data.format);
@@ -41,10 +43,13 @@ export function validateBookData(data) {
     };
   }
 
+  // Cover
   const cover = data.cover;
 
+  console.log("Checking cover... : ", cover);
   if (cover) {
     if (!cover.type.startsWith("image/")) {
+      console.log("doesnt start with image/...");
       return {
         valid: false,
         error: "Error in cover : Cover must be an image file",
@@ -54,6 +59,7 @@ export function validateBookData(data) {
     const allowedTypes = ["image/png", "image/jpeg"];
 
     if (!allowedTypes.includes(cover.type)) {
+      console.log("Not from allowed types");
       return {
         valid: false,
         error: "Error in cover : Only PNG and JPG, JPEG formats are allowed",
@@ -61,6 +67,20 @@ export function validateBookData(data) {
     }
   }
 
+  const language = data.language ?? "Not Defined";
+
+  if (
+    language !== "Not Defined" &&
+    language !== "English" &&
+    language !== "French"
+  ) {
+    return {
+      valid: false,
+      error: "Error in language : Invalid Language",
+    };
+  }
+
+  // Price
   const price = parseFloat(data.price);
 
   if (Number.isNaN(price) || price < 0) {
@@ -70,6 +90,7 @@ export function validateBookData(data) {
     };
   }
 
+  // Quantity
   const quantity = parseInt(data.quantity);
 
   if (Number.isNaN(quantity) || quantity < 0) {

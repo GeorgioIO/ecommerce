@@ -160,38 +160,73 @@ $DB_book_format = $book_format_result['value'];
 $DB_book_quantity = $book_quantity_result['value'];
 $DB_book_price = $book_price_result['value'];
 
-$query = <<<EOT
 
-UPDATE books SET
-    title = ?,
-    isbn = ?,
-    sku = ?,
-    language = ?,
-    author_id = ?,
-    cover_image = ?,
-    description = ?,
-    genre_id = ?,
-    stock_quantity = ?,
-    price = ?,
-    format_id = ?
-WHERE id = ?
-EOT;
-
-$stmt = $conn->prepare($query);
-$stmt->bind_param(
-    "ssssissidiii", 
+if($DB_cover_filename === null)
+{
+    $query = <<<EOT
+        UPDATE books SET
+            title = ?,
+            isbn = ?,
+            sku = ?,
+            language = ?,
+            author_id = ?,
+            description = ?,
+            genre_id = ?,
+            stock_quantity = ?,
+            price = ?,
+            format_id = ?
+        WHERE 
+            id = ?
+    EOT;
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param(
+    "ssssisidiii", 
     $DB_book_title, 
     $DB_book_isbn, 
     $DB_book_sku, 
     $DB_book_language, 
     $DB_book_author, 
-    $DB_cover_filename, 
     $book_payload['id'], 
     $DB_book_genre, 
     $DB_book_quantity, 
     $DB_book_price, 
     $DB_book_format, 
     $book_payload['id']);
+}
+else
+{
+    $query = <<<EOT
+        UPDATE books SET
+            title = ?,
+            isbn = ?,
+            sku = ?,
+            language = ?,
+            author_id = ?,
+            cover_image = ?,
+            description = ?,
+            genre_id = ?,
+            stock_quantity = ?,
+            price = ?,
+            format_id = ?
+        WHERE 
+            id = ?
+    EOT;
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param(
+    "ssssissidiii", 
+    $DB_book_title, 
+    $DB_book_isbn, 
+    $DB_book_sku, 
+    $DB_book_language, 
+    $DB_book_author, 
+    $DB_cover_filename,
+    $book_payload['id'], 
+    $DB_book_genre, 
+    $DB_book_quantity, 
+    $DB_book_price, 
+    $DB_book_format, 
+    $book_payload['id']);
+}
 
 if($stmt->execute())
 {

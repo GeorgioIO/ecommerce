@@ -135,7 +135,7 @@ function validate_book_language($language)
         ];
     }
 
-    $language = trim($language);
+    $language = ucfirst(trim($language));
 
     if(strlen($language) > 100)
     {
@@ -145,9 +145,17 @@ function validate_book_language($language)
         ];
     }
 
+    if($language !== "English" && $language !== "French")
+    {
+        return [
+            'success' => false,
+            'message' => 'Invalid Language'
+        ];
+    }
+
     return [
         'success' => true,
-        'value' => ucfirst($language) 
+        'value' => $language 
     ];
 }
 
