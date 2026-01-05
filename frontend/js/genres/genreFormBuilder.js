@@ -37,6 +37,22 @@ export function buildGenreForm(mode = "add", config) {
     inputContainer.append(inputTag);
 
     form.append(inputContainer);
+
+    // Create image element after file
+    if (field.type === "file") {
+      const imgElementContainer = document.createElement("div");
+      imgElementContainer.classList.add("image-element-container");
+
+      const imgElement = document.createElement("img");
+      imgElement.classList.add("entity-image-display");
+
+      const emptyImgText = document.createElement("p");
+      emptyImgText.classList.add("empty-image-text");
+      emptyImgText.textContent = "No image set.";
+      imgElementContainer.append(imgElement, emptyImgText);
+
+      form.append(imgElementContainer);
+    }
   });
 
   // Create buttons container

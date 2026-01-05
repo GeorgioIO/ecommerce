@@ -242,7 +242,7 @@ main {
   width: 100%;
   display: flex;
   align-items: stretch;
-  gap: 20px;
+  gap: 40px;
   flex-direction: column;
 }
 
@@ -275,7 +275,7 @@ main {
 .flex-table-body {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 45px;
 }
 
 .flex-table > .flex-table-body > .flex-table-row {
@@ -283,7 +283,7 @@ main {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 35px;
+  height: 45px;
 }
 
 .flex-table > .flex-table-body div {
@@ -597,7 +597,14 @@ form {
   align-items: center;
 }
 
-.image-element-container > .book-image-display {
+.image-element-container > .entity-image-display {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  display: none;
+}
+
+.image-element-container > .entity-image-display {
   width: 100%;
   height: 100%;
   border-radius: inherit;
@@ -610,4 +617,10 @@ form {
   font-style: italic;
   text-align: center;
   vertical-align: middle;
+}
+
+.genre-image {
+  width: 100px;
+  height: 45px;
+  cursor: pointer;
 }

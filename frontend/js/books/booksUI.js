@@ -1,9 +1,12 @@
-import { swapClass } from "../helpers.js";
+import {
+  handleEntityImageElement,
+  swapClass,
+  handleImageFormat,
+} from "../helpers.js";
 import { get_book_data_DB, fetch_books_DB } from "../books/booksService.js";
 import { buildBookForm } from "../books/bookFormBuilder.js";
 import { hydrateBookForm } from "./bookFormHydrator.js";
 import { showMessageLog } from "../messageLog/messageLog.js";
-import { handleBookImageElement } from "../helpers.js";
 import { renderActiveTableState, renderEmptyTableState } from "../UIhelpers.js";
 import { bookTableConfigs } from "./bookTableConfigs.js";
 import { populateBookFormSelects } from "./bookFormPopulator.js";
@@ -11,17 +14,6 @@ import { bookFormConfigs } from "./bookFormConfigs.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
-
-// Listening to change events
-document.addEventListener("change", (e) => {
-  const inputFile = e.target.closest("#cover_image");
-
-  if (inputFile) {
-    const file = inputFile.files[0];
-    handleImageFormat(file);
-    handleBookImageElement("set", file);
-  }
-});
 
 export async function showBookAddForm() {
   openForm("add");
@@ -213,15 +205,6 @@ async function openForm(mode, data = {}) {
   swapClass(formContainer, "slide-in-form", "slide-out-form");
 }
 
-function handleImageFormat(file) {
-  if (!file) return;
-
-  if (!file.type.startsWith("image")) {
-    showMessageLog("error", "Please insert a valid image");
-    return;
-  }
-}
-
 export function resetBookForm() {
-  handleBookImageElement("reset");
+  handleEntityImageElement("reset");
 }

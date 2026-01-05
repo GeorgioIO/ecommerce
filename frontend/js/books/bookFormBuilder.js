@@ -59,7 +59,7 @@ export function buildBookForm(mode = "add", config) {
       imgElementContainer.classList.add("image-element-container");
 
       const imgElement = document.createElement("img");
-      imgElement.classList.add("book-image-display");
+      imgElement.classList.add("entity-image-display");
 
       const emptyImgText = document.createElement("p");
       emptyImgText.classList.add("empty-image-text");

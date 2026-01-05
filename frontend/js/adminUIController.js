@@ -25,7 +25,11 @@ import {
 } from "./authors/authorServices.js";
 import { validateAuthorData } from "./authors/authorValidators.js";
 import { showDeletionModal } from "./UIhelpers.js";
-import { validateIDEligibility } from "./helpers.js";
+import {
+  validateIDEligibility,
+  handleImageFormat,
+  handleEntityImageElement,
+} from "./helpers.js";
 import { swapClass } from "./helpers.js";
 import { showMessageLog } from "./messageLog/messageLog.js";
 import {
@@ -87,6 +91,19 @@ const entityHandlers = {
 closeOperationFormButton.addEventListener("click", () => {
   formBody.innerHTML = "";
   swapClass(formContainer, "slide-out-form", "slide-in-form");
+});
+
+// Listening to change events
+document.addEventListener("change", (e) => {
+  const inputFile = e.target.closest('input[type="file"');
+
+  if (inputFile) {
+    console.log("here");
+    const file = inputFile.files[0];
+    console.log(file);
+    handleImageFormat(file);
+    handleEntityImageElement("set", file);
+  }
 });
 
 document.addEventListener("reset", (e) => {
@@ -175,6 +192,7 @@ document.addEventListener("submit", async (e) => {
   // Get data collector and collect - entity
   const entityDataCollector = entityHandlers?.[entity]?.dataCollector;
   const data = entityDataCollector(form);
+
   // Get data validator and validate - entity
   const entityDataValidator = entityHandlers?.[entity]?.dataValidator;
   const validationResult = entityDataValidator(data);
@@ -186,7 +204,6 @@ document.addEventListener("submit", async (e) => {
 
   // Get entity loader
   const loadEntityElements = entityHandlers?.[entity]?.loader;
-  console.log(loadEntityElements);
 
   // if MODE is ADD
   if (mode === "add") {

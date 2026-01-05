@@ -1,4 +1,4 @@
-import { handleBookImageElement } from "../helpers.js";
+import { handleEntityImageElement } from "../helpers.js";
 
 export function hydrateBookForm(form, data) {
   Object.keys(data).forEach((key) => {
@@ -8,7 +8,7 @@ export function hydrateBookForm(form, data) {
   });
 
   if (data.cover_image) {
-    handleBookImageElement("set", data.cover_image);
+    handleEntityImageElement("set", data.cover_image);
   }
 }
 

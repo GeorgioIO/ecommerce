@@ -1,7 +1,7 @@
 import { fetch_genres_DB, getGenreData_DB } from "./genreServices.js";
 import { renderActiveTableState, renderEmptyTableState } from "../UIhelpers.js";
 import { genreTableConfigs } from "./genreTableConfigs.js";
-import { swapClass } from "../helpers.js";
+import { swapClass, handleEntityImageElement } from "../helpers.js";
 import { hydrateGenreForm } from "./genreFormHydrator.js";
 import { buildGenreForm } from "./genreFormBuilder.js";
 import { genreFormConfigs } from "./genreFormConfigs.js";
@@ -84,7 +84,7 @@ function renderGenreTableRow(item) {
             <p> ${item.name} </p>
         </div>
         <div>
-            <p> test </p>
+              <img class="genre-image" src="../assets/images/history_1.png">
         </div>
         <div>
             <p> test </p>
@@ -158,6 +158,8 @@ export async function openForm(mode, data = {}) {
 
 export function resetGenreForm(form) {
   form.reset();
+
+  handleEntityImageElement("reset");
 }
 
 export async function populateSelectGenres(selectElement) {

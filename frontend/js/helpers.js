@@ -1,3 +1,5 @@
+import { showMessageLog } from "./messageLog/messageLog.js";
+
 export function validateIDEligibility(id) {
   if (Number.isInteger(parseInt(id)) != true) {
     return {
@@ -16,9 +18,18 @@ export function swapClass(element, classA, classR) {
   element.classList.add(classA);
 }
 
-export function handleBookImageElement(mode = "set", source = "") {
+export function handleImageFormat(file) {
+  if (!file) return;
+
+  if (!file.type.startsWith("image")) {
+    showMessageLog("error", "Please insert a valid image");
+    return;
+  }
+}
+
+export function handleEntityImageElement(mode = "set", source = "") {
   const imageEmptyText = document.querySelector(".empty-image-text");
-  const image = document.querySelector(".book-image-display");
+  const image = document.querySelector(".entity-image-display");
 
   if (mode === "reset") {
     image.src = "";
