@@ -100,6 +100,7 @@ export const bookFormConfigs = {
       key: "price",
       tag: "input",
       type: "number",
+      step: "0.01",
       disabled: false,
 
       required: true,

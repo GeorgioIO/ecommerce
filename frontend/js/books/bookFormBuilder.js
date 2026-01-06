@@ -47,6 +47,10 @@ export function buildBookForm(mode = "add", config) {
     // in case the field is an input tag and need type
     if (field.tag === "input") {
       inputTag.type = field.type;
+      // Add step attribute for number inputs if specified
+      if (field.type === "number" && field.step !== undefined) {
+        inputTag.step = field.step;
+      }
     }
 
     inputContainer.append(inputTag);

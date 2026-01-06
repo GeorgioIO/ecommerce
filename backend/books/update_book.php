@@ -180,7 +180,7 @@ if($DB_cover_filename === null)
     EOT;
     $stmt = $conn->prepare($query);
     $stmt->bind_param(
-    "ssssisidiii", 
+    "ssssisiidii", 
     $DB_book_title, 
     $DB_book_isbn, 
     $DB_book_sku, 
@@ -213,7 +213,7 @@ else
     EOT;
     $stmt = $conn->prepare($query);
     $stmt->bind_param(
-    "ssssissidiii", 
+    "ssssissiidii", 
     $DB_book_title, 
     $DB_book_isbn, 
     $DB_book_sku, 
