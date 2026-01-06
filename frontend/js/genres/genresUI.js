@@ -90,7 +90,14 @@ function renderGenreTableRow(item) {
               }
         </div>
         <div>
-            <p> test </p>
+            <button class="cascade-show-books-button" data-entity="book" data-intent="cascadeBooks" data-filterf="genre_id" data-id="${
+              item.id
+            }">
+              Show Books
+              <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="none" viewBox="0 0 24 24">
+                <path stroke="#464455" stroke-linecap="round" stroke-linejoin="round" d="M5 12V6a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-6m-3.889-7H12m0 0v3.889M12 12l-7 7"/>
+              </svg>
+            </button>
         </div>
         <div class="action-btns-container">
             <button class="table-row-button open-operation-form" data-mode="edit" data-entity="genre" data-intent="showEdit" data-id="${
