@@ -222,11 +222,32 @@ main {
   border-radius: 20px;
   height: 100vh;
   box-shadow: 0px 0px 10px 0px rgba(54, 54, 54, 0.295);
-  padding: 20px;
-  overflow-y: scroll;
+  padding: 28px 24px;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .empty-table-container {
@@ -242,12 +263,15 @@ main {
   width: 100%;
   display: flex;
   align-items: stretch;
-  gap: 40px;
+  gap: 32px;
   flex-direction: column;
 }
 
 .flex-table-header {
   display: flex;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 4px;
 }
 
 .flex-table > .flex-table-header div {
@@ -255,27 +279,24 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.95rem;
   font-family: var(--source-sans-font);
   position: relative;
   flex-grow: 1;
+  color: #2c3e50;
+  letter-spacing: 0.3px;
+  padding: 8px 12px;
 }
 
 .flex-table > .flex-table-header div::before {
-  position: absolute;
-  content: "";
-  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.45) inset;
-  width: 100%;
-  bottom: -8px;
-  z-index: 5;
-  height: 2px;
-  border-radius: 5px;
+  display: none;
 }
 
 .flex-table-body {
   display: flex;
   flex-direction: column;
-  gap: 45px;
+  gap: 12px;
 }
 
 .flex-table > .flex-table-body > .flex-table-row {
@@ -283,17 +304,29 @@ main {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 45px;
+  min-height: 56px;
+  padding: 8px 0;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.flex-table > .flex-table-body > .flex-table-row:hover {
+  background-color: rgba(0, 205, 188, 0.04);
+  border-color: rgba(0, 205, 188, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
 .flex-table > .flex-table-body div {
   width: 140px;
   font-family: var(--source-sans-font);
   font-weight: 400;
+  font-size: 0.9rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 35px;
+  min-height: 40px;
+  padding: 8px 12px;
   text-align: center;
   flex: 1;
 }
@@ -303,14 +336,21 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: help;
+  color: #34495e;
+  line-height: 1.4;
+  max-width: 100%;
 }
 
 .action-btns-container {
   display: flex;
-  justify-content: space-around;
-  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
   background-color: #efebeb !important;
-  border-radius: 5px;
+  border-radius: 8px;
+  padding: 4px;
+  min-width: fit-content;
+  flex-shrink: 0;
 }
 
 .open-operation-form {
@@ -627,16 +667,30 @@ form {
 
 .cascade-show-books-button {
   color: rgb(45, 162, 231);
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 0.9rem;
   font-family: var(--source-sans-font);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  gap: 4px;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cascade-show-books-button:hover {
+  background-color: rgba(45, 162, 231, 0.08);
+  color: rgb(35, 142, 211);
 }
 
 .cascade-show-books-button > svg > path {
   stroke: rgb(45, 162, 231);
   stroke-width: 1.5;
+  transition: stroke 0.2s ease;
+}
+
+.cascade-show-books-button:hover > svg > path {
+  stroke: rgb(35, 142, 211);
 }
