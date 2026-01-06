@@ -1,5 +1,21 @@
 import { showMessageLog } from "./messageLog/messageLog.js";
 
+export function changeSidebarSection(entity) {
+  const sidebarButtons = document.querySelectorAll(
+    ".sidebar ul li .adm-sidebar-button"
+  );
+
+  sidebarButtons.forEach((button) => {
+    button.classList.remove("active-sidebar-btn");
+    button.querySelector("p").classList.remove("active-sidebar-text");
+
+    if (button.dataset.section === entity) {
+      button.classList.add("active-sidebar-btn");
+      button.querySelector("p").classList.add("active-sidebar-text");
+    }
+  });
+}
+
 export function validateIDEligibility(id) {
   if (Number.isInteger(parseInt(id)) != true) {
     return {

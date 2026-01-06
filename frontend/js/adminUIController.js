@@ -30,7 +30,7 @@ import {
   handleImageFormat,
   handleEntityImageElement,
 } from "./helpers.js";
-import { swapClass } from "./helpers.js";
+import { swapClass, changeSidebarSection } from "./helpers.js";
 import { showMessageLog } from "./messageLog/messageLog.js";
 import {
   showGenreAddForm,
@@ -117,9 +117,9 @@ document.addEventListener("reset", (e) => {
 document.addEventListener("click", async (e) => {
   const openOperationFormButton = e.target.closest(".open-operation-form");
   const showDeletionModalButton = e.target.closest(".show-confirmation-modal");
-
+  const cascadeShowBooksButton = e.target.closest(".cascade-show-books-button");
   if (openOperationFormButton) {
-    const { entity, mode, id, intent } = openOperationFormButton.dataset;
+    const { entity, id, intent } = openOperationFormButton.dataset;
     const openForm = entityHandlers?.[entity]?.[intent];
     if (openForm) {
       await openForm(id);
@@ -132,11 +132,25 @@ document.addEventListener("click", async (e) => {
     showDeletionModal(entity, id);
     return;
   }
+
+  if (cascadeShowBooksButton) {
+    const { id, filterf, entity, intent } = cascadeShowBooksButton.dataset;
+
+    // Change sidebar section to books
+    changeSidebarSection(entity);
+
+    // Get books loader
+    const loadEntityElements = entityHandlers?.[entity]?.loader;
+
+    // Load Books
+    loadEntityElements({ [filterf]: id });
+  }
 });
 
 confirmationModal.addEventListener("click", async (e) => {
   const closeConfirmationModal = e.target.closest("#close-confirmation-modal");
   const confirmBookDeletion = e.target.closest("#delete-entity-btn");
+  const cascadeShowBooksButton = e.target.closest(".cascade-show-books-button");
 
   if (closeConfirmationModal) {
     swapClass(confirmationModal, "fade-out-modal", "fade-in-modal");

@@ -1,29 +1,24 @@
 // Sidebar file
-
+import { changeSidebarSection } from "./helpers.js";
 import { loadAuthors } from "./authors/authorsUI.js";
 import { loadBooks } from "./books/booksUI.js";
 import { loadGenres } from "./genres/genresUI.js";
 
-var sidebarButtons = document.querySelectorAll(
+const sidebarButtons = document.querySelectorAll(
   ".sidebar ul li .adm-sidebar-button"
 );
 
 sidebarButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
     const clickedButton = e.currentTarget;
-    sidebarButtons.forEach((button) => {
-      button.classList.remove("active-sidebar-btn");
-      button.querySelector("p").classList.remove("active-sidebar-text");
-    });
-    clickedButton.classList.add("active-sidebar-btn");
-    clickedButton.querySelector("p").classList.add("active-sidebar-text");
-    // content.innerHTML = temporary_contents[event.currentTarget.dataset.section];
+    const entity = e.currentTarget.dataset.section;
+    changeSidebarSection(entity);
 
-    if (clickedButton.dataset.section === "products") {
+    if (clickedButton.dataset.section === "book") {
       loadBooks();
-    } else if (clickedButton.dataset.section === "authors") {
+    } else if (clickedButton.dataset.section === "author") {
       loadAuthors();
-    } else if (clickedButton.dataset.section === "genres") {
+    } else if (clickedButton.dataset.section === "genre") {
       loadGenres();
     }
   });

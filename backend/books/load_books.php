@@ -2,30 +2,61 @@
 
 header('Content-Type: application/json');
 require_once  __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/book_helpers.php';
+require_once __DIR__ . '/../../config/helpers.php';
 
-$query = <<<EOT
-    SELECT 
-        b.id,
-        b.isbn,
-        b.sku,
-        g.name AS genre_title,
-        b.title,
-        a.name AS author_name,
-        bf.name AS format,
-        b.description,
-        b.language,
-        b.stock_quantity,
-        b.cover_image,
-        b.price
-    FROM books b
-    LEFT JOIN genres g ON b.genre_id = g.id
-    LEFT JOIN authors a ON b.author_id = a.id
-    LEFT JOIN book_formats bf ON b.format_id = bf.id
-    ORDER BY b.id;
-EOT;
+$author_id = $_GET['author_id'] ?? null;
+$genre_id = $_GET['genre_id'] ?? null;
 
 
-$result = $conn->query($query);
+$query = form_load_books_query($author_id , $genre_id);
+
+$stmt = $conn->prepare($query);
+
+if($author_id)        
+{   
+    // validate id
+    $validation_result = validate_entity_ID($author_id);
+
+    if($validation_result['valid'] === false)
+    {
+        echo json_encode([
+            'success' => false,
+            'message' => $validation_result['message']
+        ]);
+        exit;
+    }
+
+    $DB_author_id = trim($author_id);
+    $DB_author_id = (int) $DB_author_id;
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i' , $DB_author_id);
+}
+elseif ($genre_id)
+{
+// validate id
+    $validation_result = validate_entity_ID($genre_id);
+
+    if($validation_result['valid'] === false)
+    {
+        echo json_encode([
+            'success' => false,
+            'message' => $validation_result['message']
+        ]);
+        exit;
+    }
+
+    $DB_genre_id = trim($genre_id);
+    $DB_genre_id = (int) $DB_genre_id;
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i' , $DB_genre_id);
+}
+
+$stmt->execute();
+
+$result = $stmt->get_result();
 $books = [];
 
 if($result && $result->num_rows > 0)
@@ -35,7 +66,6 @@ if($result && $result->num_rows > 0)
         $books[] = $row;
     }
 }
-
 
 echo json_encode($books);
 $conn->close();

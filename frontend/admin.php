@@ -68,7 +68,7 @@
             </button>
           </li>
           <li>
-            <button class="adm-sidebar-button" data-section="customers">
+            <button class="adm-sidebar-button" data-section="customer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
@@ -85,7 +85,7 @@
             </button>
           </li>
           <li>
-            <button class="adm-sidebar-button" data-section="products">
+            <button class="adm-sidebar-button" data-section="book">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
@@ -102,7 +102,7 @@
             </button>
           </li>
           <li>
-            <button class="adm-sidebar-button" data-section="authors">
+            <button class="adm-sidebar-button" data-section="author">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xml:space="preserve"
@@ -121,7 +121,7 @@
             </button>
           </li>
           <li>
-            <button class="adm-sidebar-button" data-section="genres">
+            <button class="adm-sidebar-button" data-section="genre">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
@@ -138,7 +138,7 @@
             </button>
           </li>
           <li>
-            <button class="adm-sidebar-button" data-section="orders">
+            <button class="adm-sidebar-button" data-section="order">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"

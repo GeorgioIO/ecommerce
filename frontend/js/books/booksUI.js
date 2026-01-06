@@ -25,9 +25,9 @@ export async function showBookEditForm(bookID) {
 }
 
 // Function to load books from the database by sending a request to backend
-export async function loadBooks() {
+export async function loadBooks(filters = {}) {
   try {
-    const books = await fetch_books_DB();
+    const books = await fetch_books_DB(filters);
 
     if (books.length === 0) {
       content.innerHTML = renderEmptyTableState({
@@ -94,10 +94,10 @@ function renderBookTableRow(item) {
             <p> ${item.stock_quantity} </p>
         </div>
         <div class="${
-          item.stock_quantity === "0" ? "out-of-stock" : "active-stock"
+          item.stock_quantity === 0 ? "out-of-stock" : "active-stock"
         }">
                 ${
-                  item.stock_quantity === "0"
+                  item.stock_quantity === 0
                     ? "<p>Out Of Stock</p>"
                     : "<p>Active</p>"
                 }  

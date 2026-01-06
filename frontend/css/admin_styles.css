@@ -624,3 +624,19 @@ form {
   height: 45px;
   cursor: pointer;
 }
+
+.cascade-show-books-button {
+  color: rgb(45, 162, 231);
+  font-weight: bold;
+  font-family: var(--source-sans-font);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.cascade-show-books-button > svg > path {
+  stroke: rgb(45, 162, 231);
+  stroke-width: 1.5;
+}

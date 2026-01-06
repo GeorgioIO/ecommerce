@@ -76,7 +76,10 @@ export async function update_book_DB(bookData) {
   return result.json();
 }
 
-export async function fetch_books_DB() {
-  const res = await fetch("../backend/books/load_books.php");
+export async function fetch_books_DB(filters) {
+  const params = new URLSearchParams(filters);
+  const res = await fetch(
+    `../backend/books/load_books.php?${params.toString()}`
+  );
   return res.json();
 }
