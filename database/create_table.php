@@ -52,9 +52,9 @@ $conn->query("
     );
 ");
 
-// Billing Addresses Table
+// Shipping Addresses Table
 $conn->query("
-    CREATE TABLE IF NOT EXISTS billing_addresses (
+    CREATE TABLE IF NOT EXISTS shipping_addresses (
         id INT AUTO_INCREMENT,
         first_name VARCHAR(255) NOT NULL,
         last_name VARCHAR(255) NOT NULL,
@@ -62,6 +62,8 @@ $conn->query("
         phone_number VARCHAR(25) NOT NULL,
         state VARCHAR(45) NOT NULL,
         city VARCHAR(45) NOT NULL,
+        address_line1 VARCHAR(255) NOT NULL,
+        address_line2 VARCHAR(255),
         additional_notes VARCHAR(255),
         PRIMARY KEY (id)
     )
@@ -71,44 +73,42 @@ $conn->query("
 $conn->query("
     CREATE TABLE IF NOT EXISTS users(
         id INT AUTO_INCREMENT,
-        address_id INT,
         customer_code VARCHAR(35) NOT NULL UNIQUE,
-        name VARCHAR(255) NOT NULL UNIQUE,
+        name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL UNIQUE,
         phone_number VARCHAR(25) UNIQUE,
         password VARCHAR(255) NOT NULL,
         profile_image VARCHAR(255),
         date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (id),
-        FOREIGN KEY (address_id) REFERENCES billing_addresses (id)
+        PRIMARY KEY (id)
     );
 ");
+
+// User addresses table
+$conn->query("
+    CREATE TABLE IF NOT EXISTS user_addresses(
+        user_id INT,
+        address_id INT,
+        is_default BOOLEAN DEFAULT 0,
+        PRIMARY KEY (user_id , address_id),
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+        FOREIGN KEY (address_id) REFERENCES shipping_addresses (id) ON DELETE CASCADE
+    )
+    ");
 
 // Orders Table
 $conn->query("
     CREATE TABLE IF NOT EXISTS orders (
         id INT AUTO_INCREMENT,
-        user_id INT,
         order_code VARCHAR(35) NOT NULL UNIQUE,
         status enum('Pending','Processing','Shipped','Delivered','Cancelled','Refunded') NOT NULL,
-        total_price DECIMAL(10,2),
-        billing_id INT,
-        date_added DATETIME DEFAULT CURRENT_TIMESTAMP,  
+        total_price DECIMAL(10,2) NOT NULL,
+        date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
+        user_id INT NOT NULL,
+        address_id INT NOT NULL,
         PRIMARY KEY (id),
-        FOREIGN KEY (billing_id) REFERENCES billing_addresses(id),
-        FOREIGN KEY (user_id) REFERENCES users(id) 
-    );
-");
-
-
-// Wishlist_items Table
-$conn->query("
-    CREATE TABLE IF NOT EXISTS wishlist_items (
-        user_id INT,
-        book_id INT,
-        PRIMARY KEY (user_id , book_id),
-        FOREIGN KEY (user_id) REFERENCES users (id),
-        FOREIGN KEY (book_id) REFERENCES books (id)
+        FOREIGN KEY (address_id) REFERENCES shipping_addresses(id),
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
     );
 ");
 
@@ -123,6 +123,18 @@ $conn->query("
         PRIMARY KEY (id),
         FOREIGN KEY (order_id) REFERENCES orders(id),
         FOREIGN KEY (book_id) REFERENCES books(id)
+    );
+");
+
+
+// Wishlist_items Table
+$conn->query("
+    CREATE TABLE IF NOT EXISTS wishlist_items (
+        user_id INT,
+        book_id INT,
+        PRIMARY KEY (user_id , book_id),
+        FOREIGN KEY (user_id) REFERENCES users (id),
+        FOREIGN KEY (book_id) REFERENCES books (id)
     );
 ");
 
@@ -153,7 +165,10 @@ $conn->query("
     );
 ");
 
+
 // Indexes
+$conn->query("CREATE INDEX IF NOT EXISTS order_cid_index ON Orders (user_id);");
+$conn->query("CREATE INDEX IF NOT EXISTS order_date_index ON Orders (date_added);");
 $conn->query("CREATE INDEX IF NOT EXISTS username_index ON users (name);");
 $conn->query("CREATE INDEX IF NOT EXISTS email_index ON users (email);");
 $conn->query("CREATE INDEX IF NOT EXISTS booktitle_index ON books (title);");
