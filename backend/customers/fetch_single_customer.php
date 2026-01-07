@@ -29,6 +29,7 @@ SELECT
     u.email,
     u.phone_number,
     u.date_added,
+    u.password,
     COALESCE(SUM(o.total_price), 0) AS total_spent,
     COUNT(o.id) AS total_orders
 FROM users u

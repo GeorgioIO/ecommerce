@@ -363,7 +363,23 @@ main {
   overflow: hidden;
 }
 
-.flex-table > .flex-table-body div p {
+.flex-table > .flex-table-body > .flex-table-row div.order-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.flex-table > .flex-table-body > .flex-table-row div.order-container div {
+  flex: 0 0 auto;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.flex-table > .flex-table-body div > p {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -371,6 +387,14 @@ main {
   color: #34495e;
   line-height: 1.4;
   max-width: 100%;
+}
+
+.flex-table > .flex-table-body div.active-stock > p,
+.flex-table > .flex-table-body div.out-of-stock > p {
+  width: 120px;
+  padding: 8px 4px;
+  border-radius: 6px;
+  font-weight: 700;
 }
 
 .action-btns-container {
@@ -415,12 +439,12 @@ main {
   justify-content: center;
 }
 
-.table-row-button:hover,
-.table-row-button.open-operation-form:hover {
+.table-row-button:hover {
   background-color: var(--color-secondary);
   outline: 2px solid black;
 }
-.table-row-button.open-operation-form:first-of-type {
+
+.table-row-button:first-of-type {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   border-top-left-radius: 5px;
@@ -432,14 +456,8 @@ main {
   border-bottom-right-radius: 5px;
 }
 
-.active-stock > p,
-.out-of-stock > p {
-  width: auto;
-  text-align: center;
-  padding: 2px 10px 2px 10px;
-  border-radius: 10px;
-  color: var(--color-secondary);
-  font-weight: bold;
+.table-row-button[data-mode="view"] {
+  border-radius: 5px;
 }
 
 .out-of-stock > p {

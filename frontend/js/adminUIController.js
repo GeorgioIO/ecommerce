@@ -24,6 +24,11 @@ import {
   delete_Author_DB,
 } from "./authors/authorServices.js";
 import { validateAuthorData } from "./authors/authorValidators.js";
+import {
+  loadCustomers,
+  showCustomerViewForm,
+  resetCustomerForm,
+} from "./customers/customerUI.js";
 import { showDeletionModal } from "./UIhelpers.js";
 import {
   validateIDEligibility,
@@ -86,6 +91,11 @@ const entityHandlers = {
     dataCollector: collectGenreFormData,
     dataValidator: validateGenreData,
   },
+  customer: {
+    showView: showCustomerViewForm,
+    resetForm: resetCustomerForm,
+    loader: loadCustomers,
+  },
 };
 
 closeOperationFormButton.addEventListener("click", () => {
@@ -118,6 +128,7 @@ document.addEventListener("click", async (e) => {
   const openOperationFormButton = e.target.closest(".open-operation-form");
   const showDeletionModalButton = e.target.closest(".show-confirmation-modal");
   const cascadeShowBooksButton = e.target.closest(".cascade-show-books-button");
+
   if (openOperationFormButton) {
     const { entity, id, intent } = openOperationFormButton.dataset;
     const openForm = entityHandlers?.[entity]?.[intent];
@@ -150,7 +161,6 @@ document.addEventListener("click", async (e) => {
 confirmationModal.addEventListener("click", async (e) => {
   const closeConfirmationModal = e.target.closest("#close-confirmation-modal");
   const confirmBookDeletion = e.target.closest("#delete-entity-btn");
-  const cascadeShowBooksButton = e.target.closest(".cascade-show-books-button");
 
   if (closeConfirmationModal) {
     swapClass(confirmationModal, "fade-out-modal", "fade-in-modal");

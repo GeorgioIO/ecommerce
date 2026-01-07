@@ -1,0 +1,52 @@
+export const customerFormConfigs = {
+  fields: [
+    {
+      name: "customer_id",
+      key: "id",
+      label: "Customer ID",
+      tag: "input",
+      type: "number",
+      disabled: true,
+    },
+    {
+      name: "customer_code",
+      key: "customer_code",
+      label: "Customer Code",
+      tag: "input",
+      type: "text",
+      disabled: true,
+    },
+    {
+      name: "name",
+      key: "name",
+      label: "Customer Name",
+      tag: "input",
+      type: "text",
+      disabled: true,
+    },
+    {
+      name: "email",
+      key: "email",
+      label: "Customer Email",
+      tag: "input",
+      type: "email",
+      disabled: true,
+    },
+    {
+      name: "Phone_number",
+      key: "phone_number",
+      label: "Phone Number",
+      tag: "input",
+      type: "text",
+      disabled: true,
+    },
+    {
+      name: "password",
+      key: "password",
+      label: "Password",
+      tag: "input",
+      type: "password",
+      disabled: true,
+    },
+  ],
+};
