@@ -78,7 +78,6 @@ $conn->query("
         email VARCHAR(255) NOT NULL UNIQUE,
         phone_number VARCHAR(25) UNIQUE,
         password VARCHAR(255) NOT NULL,
-        profile_image VARCHAR(255),
         date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
     );
