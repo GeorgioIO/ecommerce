@@ -66,7 +66,7 @@ export function handleEntityImageElement(mode = "set", source = "") {
     }
 
     if (typeof source === "string") {
-      image.src = "../assets/images/" + source;
+      image.src = "../../assets/images/" + source;
       return;
     }
   }

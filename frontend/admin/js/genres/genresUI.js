@@ -86,7 +86,7 @@ function renderGenreTableRow(item) {
               ${
                 item.image === null
                   ? `<p> No image </p>`
-                  : `<img  class="genre-image" src="../assets/images/${item.image}" alt="${item.name} display image">`
+                  : `<img  class="genre-image" src="../../assets/images/${item.image}" alt="${item.name} display image">`
               }
         </div>
         <div>

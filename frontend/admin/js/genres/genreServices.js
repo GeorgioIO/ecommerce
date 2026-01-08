@@ -1,5 +1,5 @@
 export async function fetch_genres_DB() {
-  const result = await fetch("../backend/genres/load_genres.php");
+  const result = await fetch("../../backend/genres/load_genres.php");
 
   return result.json();
 }
@@ -10,7 +10,7 @@ export async function addGenre_DB(genreData) {
   formData.append("name", genreData.name);
   formData.append("image", genreData.image);
 
-  const result = await fetch("../backend/genres/add_genre.php", {
+  const result = await fetch("../../backend/genres/add_genre.php", {
     method: "POST",
     body: formData,
   });
@@ -26,7 +26,7 @@ export async function updateGenre_DB(genreData) {
   formData.append("name", genreData.name);
   formData.append("image", genreData.image);
 
-  const result = await fetch("../backend/genres/update_genre.php", {
+  const result = await fetch("../../backend/genres/update_genre.php", {
     method: "POST",
     body: formData,
   });
@@ -35,7 +35,7 @@ export async function updateGenre_DB(genreData) {
 }
 
 export async function deleteGenre_DB(genreID) {
-  const result = await fetch("../backend/genres/delete_genre.php", {
+  const result = await fetch("../../backend/genres/delete_genre.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -49,7 +49,7 @@ export async function deleteGenre_DB(genreID) {
 }
 
 export async function getGenreData_DB(genreID) {
-  const result = await fetch("../backend/genres/fetch_single_genre.php", {
+  const result = await fetch("../../backend/genres/fetch_single_genre.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",

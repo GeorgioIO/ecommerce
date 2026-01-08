@@ -3,7 +3,7 @@ export async function addAuthor_DB(authorData) {
   const formData = new FormData();
   formData.append("name", authorData.name);
 
-  const result = await fetch("../backend/authors/add_author.php", {
+  const result = await fetch("../../backend/authors/add_author.php", {
     method: "POST",
     body: formData,
   });
@@ -13,7 +13,7 @@ export async function addAuthor_DB(authorData) {
 
 // Function responsible for deleting a author from the database
 export async function delete_Author_DB(author_ID) {
-  const result = await fetch("../backend/authors/delete_author.php", {
+  const result = await fetch("../../backend/authors/delete_author.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -32,7 +32,7 @@ export async function update_author_DB(authorData) {
   formData.append("id", authorData.id);
   formData.append("name", authorData.name);
 
-  const result = await fetch("../backend/authors/update_author.php", {
+  const result = await fetch("../../backend/authors/update_author.php", {
     method: "POST",
     body: formData,
   });
@@ -42,7 +42,7 @@ export async function update_author_DB(authorData) {
 
 // Function responsible to get data for a single book
 export async function get_author_data_DB(author_id) {
-  const res = await fetch("../backend/authors/fetch_single_author.php", {
+  const res = await fetch("../../backend/authors/fetch_single_author.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -56,6 +56,6 @@ export async function get_author_data_DB(author_id) {
 }
 
 export async function fetch_authors_DB() {
-  const result = await fetch("../backend/authors/load_authors.php");
+  const result = await fetch("../../backend/authors/load_authors.php");
   return result.json();
 }

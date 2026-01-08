@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard | BookNest</title>
-    <link rel="stylesheet" href="../frontend/css/admin_styles.css" />
-    <script defer type="module" src="../frontend/js/sidebar.js"></script>
-    <script defer type="module" src="../frontend/js/books/booksUI.js"></script>
-    <script defer type="module" src="../frontend/js/adminUIController.js"></script>
+    <link rel="stylesheet" href="../admin/css/admin_styles.css" />
+    <script defer type="module" src="../admin/js/sidebar.js"></script>
+    <script defer type="module" src="../admin/js/books/booksUI.js"></script>
+    <script defer type="module" src="../admin/js/adminUIController.js"></script>
   </head>
   <body>
     <main>
