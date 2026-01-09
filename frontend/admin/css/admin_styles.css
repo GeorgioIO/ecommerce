@@ -579,7 +579,8 @@ form {
 }
 
 .input-container,
-.textarea-container {
+.textarea-container,
+.addresses-container {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -588,7 +589,8 @@ form {
 
 .input-container > label,
 .textarea-container > label,
-.double-input-container > div > label {
+.double-input-container > div > label,
+.addresses-container > .addresses-container-title {
   font-family: var(--source-sans-font);
   font-weight: 600;
   font-size: 0.9rem;
@@ -871,4 +873,71 @@ form {
 .order-form-details > p {
   font-family: var(--source-sans-font);
   font-weight: 500;
+}
+
+.addresses-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+}
+
+.addresses-list > .address-item {
+  background-color: #ededed;
+  width: 100%;
+  min-height: 50px;
+  height: auto;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 15px;
+  border-radius: 10px;
+  gap: 12px;
+}
+
+.address-item > button {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--source-sans-font);
+  font-weight: bold;
+}
+.address-badge {
+  margin-right: auto;
+  font-style: italic;
+  font-weight: 400;
+  color: #474747;
+}
+
+.address-details {
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.is-open {
+  display: flex;
+}
+
+.is-closed {
+  display: none;
+}
+
+.address-details > p {
+  font-family: var(--source-sans-font);
+  font-size: 0.8rem;
+}
+
+.empty-addresses-text {
+  font-size: 0.8rem;
+  font-family: var(--source-sans-font);
+  font-style: italic;
 }

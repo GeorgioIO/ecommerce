@@ -12,17 +12,19 @@ const sidebarButtons = document.querySelectorAll(
 sidebarButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
     const clickedButton = e.currentTarget;
-    const entity = e.currentTarget.dataset.section;
-    changeSidebarSection(entity);
+    const section = e.currentTarget.dataset.section;
+    changeSidebarSection(section);
 
-    if (clickedButton.dataset.section === "book") {
+    if (section === "book") {
       loadBooks();
-    } else if (clickedButton.dataset.section === "author") {
+    } else if (section === "author") {
       loadAuthors();
-    } else if (clickedButton.dataset.section === "genre") {
+    } else if (section === "genre") {
       loadGenres();
-    } else if (clickedButton.dataset.section === "customer") {
+    } else if (section === "customer") {
       loadCustomers();
+    } else if (section === "logout") {
+      window.location.href = "/ecommerce/backend/auth/admin_logout.php";
     }
   });
 });

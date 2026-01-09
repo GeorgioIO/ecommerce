@@ -1,4 +1,7 @@
-import { fetch_customers_DB } from "./customerServices.js";
+import {
+  fetch_customers_DB,
+  get_customer_addresses_DB,
+} from "./customerServices.js";
 import { renderActiveTableState, renderEmptyTableState } from "../UIhelpers.js";
 import { customerTableConfigs } from "./customerTableConfigs.js";
 import { customerFormConfigs } from "./customerFormConfigs.js";
@@ -12,13 +15,14 @@ const formContainer = document.querySelector(".form-container");
 
 export async function showCustomerViewForm(customerID) {
   const customerData = await get_customer_data_DB(customerID);
-  openForm(customerData.data);
+  const customerAddresses = await get_customer_addresses_DB(customerID);
+  openForm(customerData.data, customerAddresses);
 }
 
-async function openForm(data = {}) {
+async function openForm(data = {}, customer_addresses = {}) {
   // get form body
   const formBody = document.querySelector(".form-body");
-
+  console.log(customer_addresses);
   // empty it first
   formBody.innerHTML = "";
 
@@ -32,13 +36,27 @@ async function openForm(data = {}) {
   formBody.append(form);
 
   if (data) {
-    hydrateCustomerForm(form, data);
+    hydrateCustomerForm(form, data, customer_addresses);
   }
 
   swapClass(formContainer, "slide-in-form", "slide-out-form");
 }
 
 export function resetCustomerForm(form) {
+  const addressesList = form.querySelector(".addresses-list");
+
+  const ordersCountText = form.querySelector(".orders-count-form");
+  const totalSpentText = form.querySelector(".total-spent-form");
+
+  ordersCountText.textContent = `Orders Count: 0`;
+  totalSpentText.textContent = `Total Spent: $0`;
+  addressesList.innerHTML = "";
+
+  const emptyAddressesText = document.createElement("p");
+  emptyAddressesText.classList.add("empty-addresses-text");
+  emptyAddressesText.textContent = "No Current Addresses";
+  addressesList.append(emptyAddressesText);
+
   form.reset();
 }
 

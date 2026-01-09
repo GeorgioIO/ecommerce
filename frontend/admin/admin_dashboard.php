@@ -160,7 +160,7 @@ require_once __DIR__ . '/../../backend/auth/admin_guard.php';
             </button>
           </li>
           <li>
-            <button id="log-out-btn" class="adm-sidebar-button">
+            <button data-section="logout" class="adm-sidebar-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"

@@ -49,6 +49,21 @@ export function buildCustomerForm(config) {
     inputContainer.append(inputTag);
 
     form.append(inputContainer);
+
+    if (inputTag.type === "password") {
+      const addressesContainer = document.createElement("div");
+      addressesContainer.classList.add("addresses-container");
+
+      const addressesTitle = document.createElement("p");
+      addressesTitle.classList.add("addresses-container-title");
+      addressesTitle.textContent = "Addresses";
+
+      const addressesList = document.createElement("ul");
+      addressesList.classList.add("addresses-list");
+
+      addressesContainer.append(addressesTitle, addressesList);
+      form.append(addressesContainer);
+    }
   });
 
   // Create buttons container

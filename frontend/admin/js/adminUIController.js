@@ -98,7 +98,6 @@ const entityHandlers = {
     loader: loadCustomers,
   },
 };
-
 closeOperationFormButton.addEventListener("click", () => {
   formBody.innerHTML = "";
   swapClass(formContainer, "slide-out-form", "slide-in-form");
@@ -129,7 +128,7 @@ document.addEventListener("click", async (e) => {
   const openOperationFormButton = e.target.closest(".open-operation-form"); // false
   const showDeletionModalButton = e.target.closest(".show-confirmation-modal"); // false
   const cascadeShowBooksButton = e.target.closest(".cascade-show-books-button"); // true
-  const logOutButton = e.target.closest("#log-out-btn"); // false
+  const toggleAddressButton = e.target.closest(".address-item");
 
   if (openOperationFormButton) {
     const { entity, id, intent } = openOperationFormButton.dataset;
@@ -159,9 +158,17 @@ document.addEventListener("click", async (e) => {
     loadEntityElements({ [filterf]: id }); // author_id : 3
   }
 
-  if (logOutButton) {
-    alert(1);
-    window.location.href = "/ecommerce/backend/auth/admin_logout.php";
+  // Address togglers in operation form
+  if (toggleAddressButton) {
+    const addressButtonState = toggleAddressButton.dataset.state;
+    const details = toggleAddressButton.querySelector(".address-details");
+    if (addressButtonState === "open") {
+      toggleAddressButton.dataset.state = "closed";
+      swapClass(details, "is-closed", "is-open");
+    } else if (addressButtonState === "closed") {
+      toggleAddressButton.dataset.state = "open";
+      swapClass(details, "is-open", "is-closed");
+    }
   }
 });
 
@@ -220,6 +227,7 @@ document.addEventListener("submit", async (e) => {
   const { entity, mode } = form.dataset;
   // Get data collector and collect - entity
   const entityDataCollector = entityHandlers?.[entity]?.dataCollector;
+  console.log(entityDataCollector);
   const data = entityDataCollector(form);
 
   // Get data validator and validate - entity
