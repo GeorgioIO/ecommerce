@@ -461,10 +461,12 @@ main {
 
 .out-of-stock > p {
   background-color: red;
+  color: white !important;
 }
 
 .active-stock > p {
   background-color: rgb(3, 208, 3);
+  color: white !important;
 }
 
 .category {
@@ -858,4 +860,15 @@ form {
 
 .cascade-show-books-button:hover > svg > path {
   stroke: rgb(35, 142, 211);
+}
+
+.order-form-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-form-details > p {
+  font-family: var(--source-sans-font);
+  font-weight: 500;
 }

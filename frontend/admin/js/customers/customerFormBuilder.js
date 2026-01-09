@@ -12,6 +12,19 @@ export function buildCustomerForm(config) {
   form.dataset.mode = "view";
   form.noValidate = true;
 
+  const orderDetailsContainer = document.createElement("div");
+  orderDetailsContainer.classList.add("order-form-details");
+
+  const ordersCount = document.createElement("p");
+  ordersCount.classList.add("orders-count-form");
+
+  const totalSpent = document.createElement("p");
+  totalSpent.classList.add("total-spent-form");
+
+  orderDetailsContainer.append(ordersCount, totalSpent);
+
+  form.append(orderDetailsContainer);
+
   // For each field in configuration start creating the container
   config.fields.forEach((field) => {
     const inputContainer = document.createElement("div");
