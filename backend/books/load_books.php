@@ -5,8 +5,8 @@ require_once  __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/book_helpers.php';
 require_once __DIR__ . '/../../config/helpers.php';
 
-$author_id = $_GET['author_id'] ?? null;
-$genre_id = $_GET['genre_id'] ?? null;
+$author_id = $_GET['author_id'] ?? null; // 3
+$genre_id = $_GET['genre_id'] ?? null; // null
 
 
 $query = form_load_books_query($author_id , $genre_id);

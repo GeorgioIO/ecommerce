@@ -37,7 +37,7 @@ export function buildBookForm(mode = "add", config) {
     // Add Label
     inputContainer.append(inputLabel);
 
-    // Html Tag
+    // HTML Tag
     const inputTag = document.createElement(field.tag);
     inputTag.name = field.name;
     inputTag.id = field.key;

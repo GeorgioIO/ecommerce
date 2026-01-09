@@ -57,6 +57,7 @@ const closeOperationFormButton = document.querySelector(
 );
 const formBody = document.querySelector(".form-body");
 const formContainer = document.querySelector(".form-container");
+
 const entityHandlers = {
   book: {
     showAdd: showBookAddForm,
@@ -125,9 +126,10 @@ document.addEventListener("reset", (e) => {
 });
 
 document.addEventListener("click", async (e) => {
-  const openOperationFormButton = e.target.closest(".open-operation-form");
-  const showDeletionModalButton = e.target.closest(".show-confirmation-modal");
-  const cascadeShowBooksButton = e.target.closest(".cascade-show-books-button");
+  const openOperationFormButton = e.target.closest(".open-operation-form"); // false
+  const showDeletionModalButton = e.target.closest(".show-confirmation-modal"); // false
+  const cascadeShowBooksButton = e.target.closest(".cascade-show-books-button"); // true
+  const logOutButton = e.target.closest("#log-out-btn"); // false
 
   if (openOperationFormButton) {
     const { entity, id, intent } = openOperationFormButton.dataset;
@@ -154,7 +156,12 @@ document.addEventListener("click", async (e) => {
     const loadEntityElements = entityHandlers?.[entity]?.loader;
 
     // Load Books
-    loadEntityElements({ [filterf]: id });
+    loadEntityElements({ [filterf]: id }); // author_id : 3
+  }
+
+  if (logOutButton) {
+    alert(1);
+    window.location.href = "/ecommerce/backend/auth/admin_logout.php";
   }
 });
 

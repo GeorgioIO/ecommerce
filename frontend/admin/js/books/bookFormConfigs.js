@@ -21,7 +21,6 @@ export const bookFormConfigs = {
       tag: "input",
       type: "text",
       disabled: false,
-
       required: true,
     },
     {
@@ -30,7 +29,6 @@ export const bookFormConfigs = {
       tag: "input",
       type: "text",
       disabled: false,
-
       required: false,
     },
     {
@@ -39,7 +37,6 @@ export const bookFormConfigs = {
       tag: "select",
       source: "languages",
       disabled: false,
-
       required: true,
     },
     {
@@ -48,7 +45,6 @@ export const bookFormConfigs = {
       tag: "select",
       source: "authors",
       disabled: false,
-
       required: true,
     },
     {
@@ -57,7 +53,6 @@ export const bookFormConfigs = {
       tag: "select",
       source: "formats",
       disabled: false,
-
       required: true,
     },
     {
@@ -66,7 +61,6 @@ export const bookFormConfigs = {
       tag: "input",
       type: "file",
       disabled: false,
-
       required: false,
     },
     {
@@ -74,7 +68,6 @@ export const bookFormConfigs = {
       key: "description",
       tag: "textarea",
       disabled: false,
-
       required: false,
     },
     {
@@ -83,7 +76,6 @@ export const bookFormConfigs = {
       tag: "select",
       source: "genres",
       disabled: false,
-
       required: true,
     },
     {
@@ -92,7 +84,6 @@ export const bookFormConfigs = {
       tag: "input",
       type: "number",
       disabled: false,
-
       required: true,
     },
     {
@@ -102,7 +93,6 @@ export const bookFormConfigs = {
       type: "number",
       step: "0.01",
       disabled: false,
-
       required: true,
     },
   ],

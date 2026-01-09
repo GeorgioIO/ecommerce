@@ -1,5 +1,6 @@
 <?php
 
+header('Content-Type: application/json');
 require_once  __DIR__ .  "/../../config/database.php";
 
 $query = <<<EOT
@@ -21,7 +22,7 @@ if($result && $result->num_rows > 0)
     }
 }
 
-header('Content-Type: application/json');
+
 echo json_encode($genres);
 $conn->close();
 

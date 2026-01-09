@@ -1,3 +1,9 @@
+<?php
+
+require_once __DIR__ . '/../../backend/auth/admin_guard.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -154,7 +160,7 @@
             </button>
           </li>
           <li>
-            <button class="adm-sidebar-button">
+            <button id="log-out-btn" class="adm-sidebar-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
@@ -175,7 +181,7 @@
                   clip-rule="evenodd"
                 />
               </svg>
-              <p>Log Out</p>
+              <p >Log Out</p>
             </button>
           </li>
         </ul>

@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
+
+/* RESETS */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* VARIABLES */
+
+:root {
+  --fredoka-font: "Fredoka", sans-serif;
+  --kavoon-font: "Kavoon", serif;
+  --source-sans-font: "Source Sans 3", sans-serif;
+
+  /* color variables */
+  --color-primary: #00cdbc;
+  --color-secondary: white;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-login-form {
+  display: flex;
+  padding: 18px 36px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  align-items: center;
+  width: 450px;
+  height: 350px;
+  border-radius: 22px;
+  border: 1px solid lightgray;
+  background-color: rgb(233, 233, 233);
+}
+
+.admin-login-form > h1 {
+  font-family: var(--source-sans-font);
+}
+
+.input-container {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 150px 2fr;
+  width: 100%;
+  height: 55px;
+}
+
+.input-container > label {
+  font-family: var(--source-sans-font);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.input-container > input {
+  height: 100%;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 2px solid rgb(177, 177, 177);
+  outline: 2px solid transparent;
+  transition: ease-in 200ms;
+}
+
+.input-container > input:hover {
+  outline: 2px solid rgb(128, 128, 128);
+}
+
+.input-container > input:focus {
+  outline: 2px solid rgb(128, 128, 128);
+}
+
+.input-container > input:active {
+  outline: 2px solid rgb(128, 128, 128);
+}
+
+.buttons-container {
+  display: flex;
+  gap: 25px;
+}
+
+.buttons-container > button {
+  width: 100px;
+  height: 35px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 6px;
+  color: white;
+  background-color: rgb(165, 165, 165);
+}
+
+.buttons-container > button {
+  width: 100px;
+  height: 35px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 6px;
+  color: white;
+  background-color: rgb(165, 165, 165);
+  transition: ease-in 200ms;
+}
+
+.buttons-container > button:hover {
+  background-color: rgb(80, 80, 80);
+}
+
+.login-message-log {
+  display: none;
+  font-family: var(--source-sans-font);
+  font-weight: 500;
+}
+
+.login-message-active {
+  display: flex;
+}
+
+.login-message-inactive {
+  display: none;
+}
+
+.login-error-message-state {
+  color: red;
+}
+
+.login-success-message-state {
+  color: green;
+}
