@@ -10,7 +10,6 @@ $genre_id = $_GET['genre_id'] ?? null; // null
 
 
 $query = form_load_books_query($author_id , $genre_id);
-
 $stmt = $conn->prepare($query);
 
 if($author_id)        
@@ -30,7 +29,6 @@ if($author_id)
     $DB_author_id = trim($author_id);
     $DB_author_id = (int) $DB_author_id;
 
-    $stmt = $conn->prepare($query);
     $stmt->bind_param('i' , $DB_author_id);
 }
 elseif ($genre_id)
@@ -50,7 +48,6 @@ elseif ($genre_id)
     $DB_genre_id = trim($genre_id);
     $DB_genre_id = (int) $DB_genre_id;
 
-    $stmt = $conn->prepare($query);
     $stmt->bind_param('i' , $DB_genre_id);
 }
 
