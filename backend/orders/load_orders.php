@@ -12,7 +12,8 @@ SELECT
     u.phone_number,
     o.status,
     o.total_price,
-    o.date_added
+    o.date_added,
+    DATE_FORMAT(o.date_added, '%m-%d-%Y') AS display_date
 FROM
     orders o
 JOIN users u ON o.user_id = u.id 
