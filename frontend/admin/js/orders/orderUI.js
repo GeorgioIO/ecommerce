@@ -1,7 +1,13 @@
 import { renderActiveTableState, renderEmptyTableState } from "../UIhelpers.js";
 import { fetchOrders_DB } from "./ordersServices.js";
 import { orderTableConfigs } from "./orderTableConfigs.js";
+import { orderFormConfigs } from "./orderFormConfigs.js";
+import { buildOrderForm } from "./orderFormBuilder.js";
+import { swapClass } from "../helpers.js";
+
 export function populateSelectOrderStatus() {
+  const selectEl = document.querySelector("#status");
+
   const optDefault = new Option("Select Status", "");
   const opt1 = new Option("Processing", "Processing");
   const opt2 = new Option("Shipped", "Shipped");
@@ -14,6 +20,10 @@ export function populateSelectOrderStatus() {
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
+
+export async function showOrderAddForm() {
+  openForm("add");
+}
 
 // Function to load books from the database by sending a request to backend
 export async function loadOrders() {
@@ -39,6 +49,31 @@ export async function loadOrders() {
   } catch (err) {
     console.log(err);
   }
+}
+
+async function openForm(mode, data = {}) {
+  // get form body
+  const formBody = document.querySelector(".form-body");
+
+  // empty it first
+  formBody.innerHTML = "";
+
+  // set form title
+  const formTitle = document.querySelector(".form-operation-text");
+  formTitle.textContent = mode === "add" ? "ADD ORDER" : "UPDATE ORDER";
+
+  const formConfigs = orderFormConfigs;
+
+  const form = buildOrderForm(mode, formConfigs);
+  formBody.append(form);
+
+  populateSelectOrderStatus(form);
+
+  // if (mode === "edit") {
+  //   hydrateBookForm(form, data);
+  // }
+
+  swapClass(formContainer, "slide-in-form", "slide-out-form");
 }
 
 function renderOrderTableHeader() {

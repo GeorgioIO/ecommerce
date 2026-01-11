@@ -2,6 +2,7 @@ export const orderFormConfigs = {
   fields: [
     {
       name: "order_id",
+      labelText: "Order ID",
       key: "id",
       tag: "input",
       type: "number",
@@ -9,14 +10,16 @@ export const orderFormConfigs = {
     },
     {
       name: "order_code",
+      labelText: "Order Code",
       key: "order_code",
       tag: "input",
       type: "text",
-      disabled: false,
+      disabled: true,
       required: true,
     },
     {
       name: "Customer Name",
+      labelText: "Customer Name",
       key: "name",
       tag: "input",
       type: "text",
@@ -25,6 +28,7 @@ export const orderFormConfigs = {
     },
     {
       name: "Email",
+      labelText: "Email",
       key: "email",
       tag: "input",
       type: "email",
@@ -33,6 +37,7 @@ export const orderFormConfigs = {
     },
     {
       name: "Phone_number",
+      labelText: "Phone Number",
       key: "phone_number",
       tag: "input",
       type: "text",
@@ -41,6 +46,7 @@ export const orderFormConfigs = {
     },
     {
       name: "status",
+      labelText: "Order Status",
       key: "status",
       tag: "select",
       source: "order_status",
@@ -49,6 +55,7 @@ export const orderFormConfigs = {
     },
     {
       name: "total_price",
+      labelText: "Total Price",
       key: "total_price",
       tag: "input",
       type: "number",
@@ -58,10 +65,11 @@ export const orderFormConfigs = {
     },
     {
       name: "date_added",
+      labelText: "Order Date",
       key: "date_added",
       tag: "input",
       type: "text",
-      disabled: false,
+      disabled: true,
       required: true,
     },
   ],

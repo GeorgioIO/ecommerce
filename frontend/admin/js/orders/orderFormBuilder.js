@@ -13,7 +13,7 @@ export function buildOrderForm(mode = "add", config) {
 
     // label
     const inputLabel = document.createElement("label");
-    inputLabel.innerText = field.name;
+    inputLabel.innerText = field.labelText;
     inputLabel.htmlFor = field.name.toLowerCase();
 
     // Add Label

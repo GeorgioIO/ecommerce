@@ -50,6 +50,7 @@ import {
   deleteGenre_DB,
 } from "./genres/genreServices.js";
 import { validateGenreData } from "./genres/genreValidators.js";
+import { showOrderAddForm } from "./orders/orderUI.js";
 
 const confirmationModal = document.querySelector("#confirmation-modal");
 const closeOperationFormButton = document.querySelector(
@@ -96,6 +97,9 @@ const entityHandlers = {
     showView: showCustomerViewForm,
     resetForm: resetCustomerForm,
     loader: loadCustomers,
+  },
+  order: {
+    showAdd: showOrderAddForm,
   },
 };
 closeOperationFormButton.addEventListener("click", () => {
