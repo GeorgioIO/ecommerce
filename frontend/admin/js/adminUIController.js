@@ -29,13 +29,14 @@ import {
   showCustomerViewForm,
   resetCustomerForm,
 } from "./customers/customerUI.js";
-import { showDeletionModal } from "./UIhelpers.js";
 import {
-  validateIDEligibility,
-  handleImageFormat,
+  showDeletionModal,
   handleEntityImageElement,
-} from "./helpers.js";
-import { swapClass, changeSidebarSection } from "./helpers.js";
+  swapClass,
+  changeSidebarSection,
+} from "./UIhelpers.js";
+import { validateIDEligibility, handleImageFormat } from "./helpers.js";
+import {} from "./helpers.js";
 import { showMessageLog } from "./messageLog/messageLog.js";
 import {
   showGenreAddForm,
@@ -50,11 +51,20 @@ import {
   deleteGenre_DB,
 } from "./genres/genreServices.js";
 import { validateGenreData } from "./genres/genreValidators.js";
-import { showOrderAddForm } from "./orders/orderUI.js";
+import {
+  resetOrderForm,
+  showOrderAddForm,
+  showOrderEditForm,
+  collectOrderFormData,
+  loadOrders,
+} from "./orders/orderUI.js";
+import { addOrder_DB, updateOrder_DB } from "./orders/ordersServices.js";
+import { validateOrderData } from "./orders/ordersValidators.js";
+import { removeSearchBox } from "./orders/orderLineSearch.js";
 
 const confirmationModal = document.querySelector("#confirmation-modal");
 const closeOperationFormButton = document.querySelector(
-  "#close-operation-form"
+  "#close-operation-form",
 );
 const formBody = document.querySelector(".form-body");
 const formContainer = document.querySelector(".form-container");
@@ -100,10 +110,21 @@ const entityHandlers = {
   },
   order: {
     showAdd: showOrderAddForm,
+    showEdit: showOrderEditForm,
+    resetForm: resetOrderForm,
+    addEntity: addOrder_DB,
+    updateEntity: updateOrder_DB,
+    loader: loadOrders,
+    dataCollector: collectOrderFormData,
+    dataValidator: validateOrderData,
   },
 };
+
 closeOperationFormButton.addEventListener("click", () => {
   formBody.innerHTML = "";
+
+  removeSearchBox();
+
   swapClass(formContainer, "slide-out-form", "slide-in-form");
 });
 
@@ -111,6 +132,7 @@ closeOperationFormButton.addEventListener("click", () => {
 document.addEventListener("change", (e) => {
   const inputFile = e.target.closest('input[type="file"');
 
+  // Check if file image is png or jpeg
   if (inputFile) {
     const file = inputFile.files[0];
     handleImageFormat(file);
@@ -231,7 +253,6 @@ document.addEventListener("submit", async (e) => {
   const { entity, mode } = form.dataset;
   // Get data collector and collect - entity
   const entityDataCollector = entityHandlers?.[entity]?.dataCollector;
-  console.log(entityDataCollector);
   const data = entityDataCollector(form);
 
   // Get data validator and validate - entity
@@ -254,6 +275,7 @@ document.addEventListener("submit", async (e) => {
 
     if (addEntityResult?.success) {
       showMessageLog("success", addEntityResult.message);
+      removeSearchBox();
       await loadEntityElements();
     } else {
       showMessageLog("error", addEntityResult.message);

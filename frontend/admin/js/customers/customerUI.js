@@ -2,13 +2,17 @@ import {
   fetch_customers_DB,
   get_customer_addresses_DB,
 } from "./customerServices.js";
-import { renderActiveTableState, renderEmptyTableState } from "../UIhelpers.js";
+
 import { customerTableConfigs } from "./customerTableConfigs.js";
 import { customerFormConfigs } from "./customerFormConfigs.js";
 import { buildCustomerForm } from "./customerFormBuilder.js";
 import { get_customer_data_DB } from "./customerServices.js";
 import { hydrateCustomerForm } from "./customerFormHydrator.js";
-import { swapClass } from "../helpers.js";
+import {
+  swapClass,
+  renderActiveTableState,
+  renderEmptyTableState,
+} from "../UIhelpers.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");

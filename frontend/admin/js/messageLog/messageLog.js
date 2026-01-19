@@ -1,4 +1,4 @@
-import { swapClass } from "../helpers.js";
+import { swapClass } from "../UIhelpers.js";
 
 const messageLog = document.querySelector(".message-log");
 const messageLogText = document.querySelector(".message-log-text");

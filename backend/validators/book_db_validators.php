@@ -3,6 +3,29 @@
 require_once  __DIR__ . '/../../config/database.php';
 require_once  __DIR__ . '/../../config/helpers.php';
 
+function DB_validate_book_exists($conn , $id)
+{
+    $query = "SELECT id FROM books WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i" , $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if($result->num_rows !== 1){
+        return [
+            'success' => false,
+            'message' => 'Book doesnt exist in the database'
+        ];
+    }
+    else
+    {
+        return [
+            'success' => true
+        ];
+    }
+}
+
+
 function DB_validate_book_isbn($conn , $isbn , $id=null)
 {
     

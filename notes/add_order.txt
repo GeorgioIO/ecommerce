@@ -1,0 +1,65 @@
+The flow to add an order :
+- validate everything
+- insert address if new
+- insert order (pending)
+- insert order items (transactional)
+- update stock
+- commit
+
+
+-----
+Validate :
+customer name
+    - not empty
+    - is a positive digit
+order status 
+    - not empty
+    - is a valid order status (to prevent from changing status from inspect)
+total price
+    - can be 0 but not negative or NULL
+    - is obviously a number not text
+    - positive number
+order date
+    - not empty
+    - today date
+
+Address
+if its picked from existing one or a new one validate :
+first_name :
+    - not empty
+    - not over 255 characters
+last_name :
+    - not empty
+    - not over 255 characters
+email :
+    - not empty
+    - actual email
+    - not over 55 characters (keep this temporary i think email can be longer)
+phone_number :
+    - not empty
+    - actuall phone number (check more how phone number look)
+state :
+    - not empty
+    - not over 45 (same as email)
+city :
+    - not empty 
+    - not over 45 (same as email)
+address_line1 :
+    - not empty
+    - not over 255 characters
+address_line2 :
+    - not over 255 characters if not empty
+additional_notes :  
+    = not over 255 characters if not empty
+
+Order Lines :
+per line
+
+quantity :
+    - not empty
+    - positive digit
+
+price : 
+    = not empty
+    = positive
+

@@ -35,6 +35,7 @@ function form_load_books_query($author_id , $genre_id)
             b.description,
             b.language,
             b.stock_quantity,
+            b.is_inStock,
             b.cover_image,
             b.price
         FROM books b
@@ -58,6 +59,7 @@ function form_load_books_query($author_id , $genre_id)
             b.description,
             b.language,
             b.stock_quantity,
+            b.is_inStock,
             b.cover_image,
             b.price
         FROM books b
@@ -82,6 +84,7 @@ function form_load_books_query($author_id , $genre_id)
             b.description,
             b.language,
             b.stock_quantity,
+            b.is_inStock,
             b.cover_image,
             b.price
         FROM books b

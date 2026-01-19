@@ -25,19 +25,13 @@ $DB_order_id = $order_id_result['value'];
 
 $query = <<<EOT
     SELECT
-        o.id,
-        o.order_code,
-        o.status,
-        o.total_price,
-        o.date_added,
-        DATE_FORMAT(o.date_added , '%m-%d-%Y') AS display_date,
-        o.user_id,
-        u.role,
-        u.email,
-        u.name as customer_name
-    FROM orders o
-    JOIN users u ON o.user_id = u.id
-    WHERE o.id = ?;
+        oi.book_id,
+        b.title,
+        oi.quantity,
+        oi.price
+    FROM order_items oi
+    JOIN books b ON oi.book_id = b.id
+    WHERE oi.order_id = ?;
 EOT;
 
 $stmt = $conn->prepare($query);
@@ -54,12 +48,17 @@ if($result->num_rows === 0)
     exit;
 }
 
-$order = $result->fetch_assoc();
+$order_lines = [];
+
+while($row = $result->fetch_assoc())
+{
+    $order_lines[] = $row;
+}
 
 $stmt->close();
 $conn->close();
 
-echo json_encode($order);
+echo json_encode($order_lines);
 exit;
 
 

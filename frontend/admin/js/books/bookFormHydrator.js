@@ -1,4 +1,4 @@
-import { handleEntityImageElement } from "../helpers.js";
+import { handleEntityImageElement } from "../UIhelpers.js";
 
 export function hydrateBookForm(form, data) {
   Object.keys(data).forEach((key) => {

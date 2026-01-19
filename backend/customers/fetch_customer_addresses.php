@@ -21,17 +21,18 @@ if(!$customer_id_result['success'])
 $DB_customer_id = $customer_id_result['value'];
 
 $query = <<<EOT
-    SELECT 
+    SELECT
+        ua.address_id, 
         ua.is_default,
-        sd.first_name AS "First Name",
-        sd.last_name AS "Last Name",
-        sd.email AS "Email",
-        sd.phone_number AS "Phone Number",
-        sd.state AS "State",
-        sd.city AS "City",
-        sd.address_line1 AS "Address Line 1",
-        sd.address_line2 AS "Address Line 2",
-        sd.additional_notes AS "Additional Notes"
+        sd.first_name,
+        sd.last_name,
+        sd.email,
+        sd.phone_number,
+        sd.state,
+        sd.city,
+        sd.address_line1,
+        sd.address_line2,
+        sd.additional_notes
     FROM 
         user_addresses ua
     JOIN 

@@ -39,7 +39,7 @@ export function validateBookData(data) {
   ) {
     return {
       valid: false,
-      error: "Error in Genre or Author: Genre, Author, Format cannot be empty",
+      error: "Error in Genre , Author or Format : Invalid value",
     };
   }
 

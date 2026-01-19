@@ -68,16 +68,13 @@ function validate_entity_ID($data)
     ];
 }
 
-function validate_user_email($email)
-{
-    if($email === null || trim($email) === '')
-    {
-        return [
-            'valid' => false,
-            'message' => 'Email cannot be empty'
-        ];
-    }
+function isValidPhone(string $phone): bool {
+    return preg_match('/^[+]?[\d\s()-]{7,20}$/', $phone) === 1;
+}
 
+function validate_email($email)
+{
+    
     $email = trim($email);
     $regex = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
 
@@ -85,22 +82,16 @@ function validate_user_email($email)
     {
         return [
             'valid' => false,
-            'message' => 'Invalid Email'
+            'message' => 'Invalid email'
         ];
     }
-
-    if(strlen($email) > 255)
+    else
     {
         return [
-            'valid' => false,
-            'message' => 'Email cannot succeed 255 characters'
+            'valid' => true,
+            'value' => $email
         ];
     }
-
-    return [
-        'valid' => true,
-        'value' => $email    
-    ];
 
 }
 

@@ -39,6 +39,7 @@ $conn->query("
         description TEXT,
         language VARCHAR(100) NOT NULL CHECK(language IN('French' , 'English' , 'Not Defined')),
         stock_quantity INT CHECK(stock_quantity >= 0),
+        is_inStock BOOLEAN NOT NULL DEFAULT 1,
         cover_image VARCHAR(255),
         price DECIMAL(10,2) NOT NULL,
         date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -177,5 +178,24 @@ $conn->query("CREATE INDEX IF NOT EXISTS ordersstatus_index ON orders (status)")
 $conn->query("CREATE INDEX IF NOT EXISTS ordersdate_index ON orders (date_added)");
 $conn->query("CREATE INDEX IF NOT EXISTS orders_products_index ON order_items (book_id);");
 $conn->query("CREATE INDEX IF NOT EXISTS order_items_index ON order_items (order_id);");
+
+
+// Triggers 
+// Trigger to run whenever a update is made on books table , if the new stock_quantity = 0 it will set the new is_InStock to FALSE (0)
+$conn->query("
+    DELIMITER $$
+
+    CREATE TRIGGER after_book_stock_update
+    BEFORE UPDATE
+    ON books
+    FOR EACH ROW
+    BEGIN
+        IF NEW.stock_quantity = 0 THEN
+            SET NEW.is_InStock = 0;
+        END IF;
+    END$$
+
+    DELIMITER ;
+")
 
 ?>

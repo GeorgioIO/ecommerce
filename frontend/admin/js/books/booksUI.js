@@ -1,13 +1,13 @@
 import {
   handleEntityImageElement,
   swapClass,
-  handleImageFormat,
-} from "../helpers.js";
+  renderActiveTableState,
+  renderEmptyTableState,
+} from "../UIhelpers.js";
 import { get_book_data_DB, fetch_books_DB } from "../books/booksService.js";
 import { buildBookForm } from "../books/bookFormBuilder.js";
 import { hydrateBookForm } from "./bookFormHydrator.js";
-import { showMessageLog } from "../messageLog/messageLog.js";
-import { renderActiveTableState, renderEmptyTableState } from "../UIhelpers.js";
+
 import { bookTableConfigs } from "./bookTableConfigs.js";
 import { populateBookFormSelects } from "./bookFormPopulator.js";
 import { bookFormConfigs } from "./bookFormConfigs.js";
@@ -93,11 +93,9 @@ function renderBookTableRow(item) {
         <div>
             <p> ${item.stock_quantity} </p>
         </div>
-        <div class="${
-          item.stock_quantity === 0 ? "out-of-stock" : "active-stock"
-        }">
+        <div class="${item.is_inStock === 0 ? "out-of-stock" : "active-stock"}">
                 ${
-                  item.stock_quantity === 0
+                  item.is_inStock === 0
                     ? "<p>Out Of Stock</p>"
                     : "<p>Active</p>"
                 }  

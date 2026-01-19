@@ -3,8 +3,11 @@ import { authorFormConfigs } from "./authorFormConfigs.js";
 import { authorTableConfigs } from "./authorTableConfigs.js";
 import { buildAuthorForm } from "./authorFormBuilder.js";
 import { hydrateAuthorForm } from "./authorFormHydrator.js";
-import { swapClass } from "../helpers.js";
-import { renderActiveTableState, renderEmptyTableState } from "../UIhelpers.js";
+import {
+  swapClass,
+  renderActiveTableState,
+  renderEmptyTableState,
+} from "../UIhelpers.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");

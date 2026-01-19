@@ -1,19 +1,25 @@
 import { showMessageLog } from "./messageLog/messageLog.js";
 
-export function changeSidebarSection(entity) {
-  const sidebarButtons = document.querySelectorAll(
-    ".sidebar ul li .adm-sidebar-button"
-  );
+export function normalizeOrderLineData(raw) {
+  // Coming from search
+  if (raw.id) {
+    return {
+      bookId: raw.id,
+      title: raw.title,
+      unitPrice: parseFloat(raw.price),
+      quantity: 1,
+    };
+  }
 
-  sidebarButtons.forEach((button) => {
-    button.classList.remove("active-sidebar-btn");
-    button.querySelector("p").classList.remove("active-sidebar-text");
-
-    if (button.dataset.section === entity) {
-      button.classList.add("active-sidebar-btn");
-      button.querySelector("p").classList.add("active-sidebar-text");
-    }
-  });
+  // Edit mode
+  if (raw.book_id) {
+    return {
+      bookId: raw.book_id,
+      title: raw.title,
+      unitPrice: parseFloat(raw.price),
+      quantity: parseInt(raw.quantity),
+    };
+  }
 }
 
 export function validateIDEligibility(id) {
@@ -29,11 +35,6 @@ export function validateIDEligibility(id) {
   };
 }
 
-export function swapClass(element, classA, classR) {
-  element.classList.remove(classR);
-  element.classList.add(classA);
-}
-
 export function handleImageFormat(file) {
   if (!file) return;
 
@@ -43,31 +44,10 @@ export function handleImageFormat(file) {
   }
 }
 
-export function handleEntityImageElement(mode = "set", source = "") {
-  const imageEmptyText = document.querySelector(".empty-image-text");
-  const image = document.querySelector(".entity-image-display");
+export function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
-  if (mode === "reset") {
-    image.src = "";
-    imageEmptyText.style.display = "flex";
-    image.style.display = "none";
-    return;
-  }
-
-  if (mode === "set") {
-    if (!source) return;
-
-    imageEmptyText.style.display = "none";
-    image.style.display = "block";
-
-    if (source instanceof File) {
-      image.src = URL.createObjectURL(source);
-      return;
-    }
-
-    if (typeof source === "string") {
-      image.src = "../../assets/images/" + source;
-      return;
-    }
-  }
+export function isValidPhone(phone) {
+  return /^[+]?[\d\s()-]{7,20}$/.test(phone.trim());
 }

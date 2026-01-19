@@ -19,6 +19,8 @@ $conn->query("DROP TABLE IF EXISTS users;");
 $conn->query("DROP TABLE IF EXISTS book_formats;");
 $conn->query("DROP TABLE IF EXISTS user_addresses;");
 
+$conn->query("DROP TRIGGER IF EXISTS after_book_stock_update;");
+
 $conn->query("SET FOREIGN_KEY_CHECKS = 1");
 
 ?>

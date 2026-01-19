@@ -20,7 +20,7 @@ $query = <<<EOT
         email = ?
 EOT;
 
-$admin_email_result = validate_user_email($admin_email);
+$admin_email_result = validate_email($admin_email);
 if(!$admin_email_result['valid'])
 {
     echo json_encode([

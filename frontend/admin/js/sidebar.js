@@ -1,5 +1,5 @@
 // Sidebar file
-import { changeSidebarSection } from "./helpers.js";
+import { changeSidebarSection } from "./UIhelpers.js";
 import { loadAuthors } from "./authors/authorsUI.js";
 import { loadBooks } from "./books/booksUI.js";
 import { loadGenres } from "./genres/genresUI.js";

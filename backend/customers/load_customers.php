@@ -4,7 +4,6 @@ header('Content-Type: application/json');
 require_once  __DIR__ . '/../../config/database.php';
 
 $query = <<<EOT
-
 SELECT
     u.id,
     u.customer_code,
@@ -12,11 +11,13 @@ SELECT
     u.email,
     u.phone_number,
     u.date_added,
+    u.role,
     COALESCE(SUM(o.total_price), 0) AS total_spent,
     COUNT(o.id) AS total_orders
 FROM users u
 LEFT JOIN orders o ON u.id = o.user_id
 GROUP BY u.id
+ORDER BY u.role
 EOT;
 
 $result = $conn->query($query);

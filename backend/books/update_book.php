@@ -159,7 +159,7 @@ $DB_book_genre = $book_genre_result['value'];
 $DB_book_format = $book_format_result['value'];
 $DB_book_quantity = $book_quantity_result['value'];
 $DB_book_price = $book_price_result['value'];
-
+$DB_book_in_stock = $DB_book_quantity === 0 ? 0 : 1;
 
 if($DB_cover_filename === null)
 {
@@ -173,6 +173,7 @@ if($DB_cover_filename === null)
             description = ?,
             genre_id = ?,
             stock_quantity = ?,
+            is_inStock = ?,
             price = ?,
             format_id = ?
         WHERE 
@@ -180,15 +181,16 @@ if($DB_cover_filename === null)
     EOT;
     $stmt = $conn->prepare($query);
     $stmt->bind_param(
-    "ssssisiidii", 
+    "ssssisiiidii", 
     $DB_book_title, 
     $DB_book_isbn, 
     $DB_book_sku, 
     $DB_book_language, 
     $DB_book_author, 
-    $book_payload['id'], 
+    $book_payload['description'], 
     $DB_book_genre, 
     $DB_book_quantity, 
+    $DB_book_in_stock,
     $DB_book_price, 
     $DB_book_format, 
     $book_payload['id']);
@@ -206,6 +208,7 @@ else
             description = ?,
             genre_id = ?,
             stock_quantity = ?,
+            is_inStock = ?,
             price = ?,
             format_id = ?
         WHERE 
@@ -213,16 +216,17 @@ else
     EOT;
     $stmt = $conn->prepare($query);
     $stmt->bind_param(
-    "ssssissiidii", 
+    "ssssissiiidii", 
     $DB_book_title, 
     $DB_book_isbn, 
     $DB_book_sku, 
     $DB_book_language, 
     $DB_book_author, 
     $DB_cover_filename,
-    $book_payload['id'], 
+    $book_payload['description'], 
     $DB_book_genre, 
-    $DB_book_quantity, 
+    $DB_book_quantity,
+    $DB_book_in_stock, 
     $DB_book_price, 
     $DB_book_format, 
     $book_payload['id']);
