@@ -44,13 +44,22 @@ function validate_order_lines($conn , array $lines) : array
             ];
         }
 
-        // Price
-        $price = $line['totalPrice'] ?? null;
-        if(!is_numeric($price) || (float) $price < 0)
+        $unit_price = $line['unitPrice'] ?? null;
+        if(!is_numeric($unit_price) || (float) $unit_price < 0)
         {
             return [
                 'success' => false,
-                'message' => 'Invalid price in order line #' . ($index + 1)
+                'message' => 'Invalid unit price in order line #' . ($index + 1)
+            ];
+        }
+
+        // Price
+        $total_price = $line['totalLinePrice'] ?? null;
+        if(!is_numeric($total_price) || (float) $total_price < 0)
+        {
+            return [
+                'success' => false,
+                'message' => 'Invalid total price in order line #' . ($index + 1)
             ];
         }
     }

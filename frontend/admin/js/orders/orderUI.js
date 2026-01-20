@@ -1,4 +1,8 @@
-import { renderActiveTableState, renderEmptyTableState } from "../UIhelpers.js";
+import {
+  renderActiveTableState,
+  renderEmptyTableState,
+  toggleButtonClickablility,
+} from "../UIhelpers.js";
 import {
   fetchOrders_DB,
   fetchOrderAddress_DB,
@@ -109,16 +113,18 @@ export function collectOrderFormData(form) {
     (row) => ({
       bookId: row.dataset.bookid || null,
       quantity: row.querySelector(".quantity-line-input")?.value ?? "",
-      singlePrice: row.querySelector(".single-price-cell")?.dataset.value ?? "",
-      totalPrice: row.querySelector(".total-price-cell")?.dataset.value ?? "",
+      unitPrice: row.querySelector(".unit-price-cell")?.dataset.value ?? "",
+      totalLinePrice:
+        row.querySelector(".total-line-price-cell")?.dataset.value ?? "",
     }),
   );
 
   const data = {
     orderMetaData: {
+      id: form.querySelector("#id").value,
       name: form.querySelector("#name").value,
       status: form.querySelector("#status").value,
-      totalPrice: form.querySelector("#total_price").value,
+      totalOrderPrice: form.querySelector("#total_price").value,
       dateAdded: form.querySelector("#date_added").value,
     },
     orderAddressDetails: {
@@ -137,6 +143,11 @@ export function collectOrderFormData(form) {
     orderLines: orderLines,
   };
 
+  const idInput = form.querySelector("#id");
+  if (idInput && idInput.value) {
+    data.orderMetaData.id = idInput.value;
+  }
+
   return data;
 }
 
@@ -144,6 +155,7 @@ export async function showOrderEditForm(orderID) {
   const orderMetaData = await get_order_data_DB(orderID);
   const orderAddressData = await fetchOrderAddress_DB(orderID);
   const orderLines = await fetchOrderLines_DB(orderID);
+  console.log(orderLines);
 
   openForm("edit", orderMetaData, orderAddressData, orderLines);
 }
@@ -153,6 +165,8 @@ export async function showOrderAddForm() {
 }
 
 export function resetOrderForm(form) {
+  const mode = form.dataset.mode;
+
   // reset the form
   form.reset();
 
@@ -172,6 +186,21 @@ export function resetOrderForm(form) {
     const orderDate = form.querySelector("#date_added");
     orderDate.value = new Date().toISOString().split("T")[0];
   }, 0);
+
+  // reset customers
+  if (mode === "edit") {
+    resetCustomerSelect();
+  }
+
+  // reset buttons
+  const addOrderLineButton = formContainer.querySelector(
+    "#add-new-order-line-button",
+  );
+  const submitOperationButton = formContainer.querySelector(
+    "#order-operation-button",
+  );
+  toggleButtonClickablility(addOrderLineButton, false);
+  toggleButtonClickablility(submitOperationButton, false);
 }
 
 // Function to load books from the database by sending a request to backend
@@ -201,6 +230,14 @@ export async function loadOrders() {
 }
 
 // ========== LOCAL FUNCTIONS ========== //
+
+function resetCustomerSelect() {
+  const customerSelectOptions = formContainer.querySelectorAll("#name option");
+
+  customerSelectOptions.forEach((option) => {
+    option.remove();
+  });
+}
 
 // Function responsible to hydrate address setion
 function hydrateAddressSection(address_details) {
@@ -300,6 +337,20 @@ async function openForm(
 
   if (mode === "edit") {
     hydrateOrderForm(form, orderMetaData, orderAddressData, orderLines);
+
+    if (
+      orderMetaData.status !== "Pending" &&
+      orderMetaData.status !== "Processing"
+    ) {
+      const addOrderLineButton = formContainer.querySelector(
+        "#add-new-order-line-button",
+      );
+      const submitOperationButton = formContainer.querySelector(
+        "#order-operation-button",
+      );
+      toggleButtonClickablility(addOrderLineButton, true);
+      toggleButtonClickablility(submitOperationButton, true);
+    }
   }
 
   swapClass(formContainer, "slide-in-form", "slide-out-form");

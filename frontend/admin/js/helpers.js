@@ -16,7 +16,7 @@ export function normalizeOrderLineData(raw) {
     return {
       bookId: raw.book_id,
       title: raw.title,
-      unitPrice: parseFloat(raw.price),
+      unitPrice: parseFloat(raw.selling_price),
       quantity: parseInt(raw.quantity),
     };
   }

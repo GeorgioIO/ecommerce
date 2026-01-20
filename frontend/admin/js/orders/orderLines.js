@@ -1,6 +1,7 @@
 import { orderLineTableHeaders } from "./orderLinesTableConfigs.js";
 import { showProductSearch } from "./orderLineSearch.js";
 import { normalizeOrderLineData } from "../helpers.js";
+import { swapClass } from "../UIhelpers.js";
 
 const formContainer = document.querySelector(".form-container");
 
@@ -37,7 +38,7 @@ export function hydrateOrderLinesTable(
   orderStatus = null,
 ) {
   orderLines.forEach((line) => {
-    let orderLineElement = createOrderLine(mode);
+    let orderLineElement = createOrderLine(mode, orderStatus);
     appendOrderLine(orderLineElement);
     hydrateProductLine(line, orderLineElement, mode, orderStatus);
   });
@@ -116,7 +117,7 @@ export function appendOrderLine(line) {
 }
 
 // Create the DOM of an order line
-export function createOrderLine(mode = null) {
+export function createOrderLine(mode = null, status = null) {
   // Create line
   const orderLineContainer = document.createElement("div");
   orderLineContainer.classList.add("order-lines-table-line");
@@ -146,15 +147,15 @@ export function createOrderLine(mode = null) {
 
   quantityCell.append(quantityInput);
 
-  const singlePriceCell = document.createElement("div");
-  singlePriceCell.classList.add("order-lines-table-line-cell");
-  singlePriceCell.classList.add("single-price-cell");
-  singlePriceCell.textContent = "$0";
+  const unitPriceCell = document.createElement("div");
+  unitPriceCell.classList.add("order-lines-table-line-cell");
+  unitPriceCell.classList.add("unit-price-cell");
+  unitPriceCell.textContent = "$0";
 
-  const totalPriceCell = document.createElement("div");
-  totalPriceCell.classList.add("order-lines-table-line-cell");
-  totalPriceCell.classList.add("total-price-cell");
-  totalPriceCell.textContent = "$0";
+  const totalLinePriceCell = document.createElement("div");
+  totalLinePriceCell.classList.add("order-lines-table-line-cell");
+  totalLinePriceCell.classList.add("total-line-price-cell");
+  totalLinePriceCell.textContent = "$0";
 
   const deleteLineCell = document.createElement("div");
   deleteLineCell.classList.add("order-lines-table-line-cell");
@@ -164,7 +165,7 @@ export function createOrderLine(mode = null) {
   deleteLineButton.id = "delete-order-line-button";
   deleteLineButton.type = "button";
   deleteLineButton.textContent = "X";
-  if (mode === "edit") {
+  if (mode === "edit" && status !== "Pending" && status !== "Processing") {
     deleteLineButton.disabled = true;
   }
 
@@ -173,8 +174,8 @@ export function createOrderLine(mode = null) {
   orderLineContainer.append(
     bookCell,
     quantityCell,
-    singlePriceCell,
-    totalPriceCell,
+    unitPriceCell,
+    totalLinePriceCell,
     deleteLineCell,
   );
 
@@ -198,7 +199,6 @@ export function hydrateProductLine(rawData, row, mode, status) {
   if (!row) return;
 
   const lineData = normalizeOrderLineData(rawData);
-
   row.dataset.bookid = lineData.bookId;
 
   const quantityInput = row.querySelector(".quantity-cell input");
@@ -211,22 +211,21 @@ export function hydrateProductLine(rawData, row, mode, status) {
 
   row.querySelector(".book-cell").textContent = lineData.title;
 
-  const priceCell = row.querySelector(".single-price-cell");
+  const priceCell = row.querySelector(".unit-price-cell");
   priceCell.textContent = `$${lineData.unitPrice.toFixed(2)}`;
   priceCell.dataset.value = lineData.unitPrice.toFixed(2);
 
-  const totalCell = row.querySelector(".total-price-cell");
+  const totalCell = row.querySelector(".total-line-price-cell");
   totalCell.textContent = `$${total.toFixed(2)}`;
   totalCell.dataset.value = total.toFixed(2);
 }
 
 export function handleOrderLinePriceChange(line) {
   const inlineQuantityNumber = line.querySelector(".quantity-line-input");
-  const singlePrice = line.querySelector(".single-price-cell");
-  const totalPrice = line.querySelector(".total-price-cell");
+  const unitPrice = line.querySelector(".unit-price-cell");
+  const totalPrice = line.querySelector(".total-line-price-cell");
   const total =
-    parseInt(inlineQuantityNumber.value) *
-    parseFloat(singlePrice.dataset.value);
+    parseInt(inlineQuantityNumber.value) * parseFloat(unitPrice.dataset.value);
   totalPrice.textContent = `$${total.toFixed(2)}`;
   totalPrice.dataset.value = total;
   handleTotalOrderLinesPrice();
@@ -240,7 +239,7 @@ export function handleTotalOrderLinesPrice() {
 
   lines.forEach((line) => {
     let totalPriceCell =
-      line.querySelector(".total-price-cell").dataset.value || 0;
+      line.querySelector(".total-line-price-cell").dataset.value || 0;
     totalPrice = parseFloat(totalPrice) + parseFloat(totalPriceCell);
   });
 

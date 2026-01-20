@@ -79,7 +79,7 @@ function validate_order_price($price)
     if(!is_numeric($price)){
         return [
             'success' => false,
-            'message' => 'Price must be a valid number'
+            'message' => "Price must be a valid number $price"
         ];
     }
 

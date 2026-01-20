@@ -119,7 +119,8 @@ $conn->query("
         order_id INT,
         book_id INT,
         quantity INT,
-        price DECIMAL(10,2),
+        selling_price DECIMAL(10,2) NOT NULL,
+        total_line_price DECIMAL(10,2),
         PRIMARY KEY (id),
         FOREIGN KEY (order_id) REFERENCES orders(id),
         FOREIGN KEY (book_id) REFERENCES books(id)
@@ -196,6 +197,21 @@ $conn->query("
     END$$
 
     DELIMITER ;
-")
+");
+
+$conn->query("
+    DELIMITER $$
+
+    CREATE TRIGGER after_book_stock_increase
+    BEFORE UPDATE
+    ON books
+    FOR EACH ROW
+    BEGIN
+        IF NEW.stock_quantity > 0 THEN
+            SET NEW.is_InStock = 1;
+        END IF;
+    END$$
+
+    DELIMITER ;");
 
 ?>

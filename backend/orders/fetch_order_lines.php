@@ -28,7 +28,8 @@ $query = <<<EOT
         oi.book_id,
         b.title,
         oi.quantity,
-        oi.price
+        oi.selling_price,
+        oi.total_line_price
     FROM order_items oi
     JOIN books b ON oi.book_id = b.id
     WHERE oi.order_id = ?;

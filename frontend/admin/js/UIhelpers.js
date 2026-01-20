@@ -1,3 +1,11 @@
+export function toggleButtonClickablility(button, clickable) {
+  if (clickable) {
+    swapClass(button, "not-clickable", "clickable");
+  } else {
+    swapClass(button, "clickable", "not-clickable");
+  }
+}
+
 export function swapClass(element, classA, classR) {
   element.classList.remove(classR);
   element.classList.add(classA);
@@ -34,7 +42,7 @@ export function handleEntityImageElement(mode = "set", source = "") {
 
 export function changeSidebarSection(entity) {
   const sidebarButtons = document.querySelectorAll(
-    ".sidebar ul li .adm-sidebar-button"
+    ".sidebar ul li .adm-sidebar-button",
   );
 
   sidebarButtons.forEach((button) => {

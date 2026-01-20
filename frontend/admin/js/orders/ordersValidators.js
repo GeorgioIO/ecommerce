@@ -1,44 +1,52 @@
 import { isValidEmail, isValidPhone } from "../helpers.js";
 
-export function validateOrderData(data) {
-  const orderMetaData = data.orderMetaData;
-  const orderAddressDetails = data.orderAddressDetails;
-  const orderLines = data.orderLines;
-  let orderTotalPrice = 0;
+function validateOrderMetaData(data, mode) {
+  if (mode === "add") {
+    // customer id
+    const customerID = parseInt(data.name);
 
-  // ==== Validate order meta data ====
-  /*  
-  - customer name (id)
-  - status
-  - total price
-  - date added
-  */
+    // Check if not a number
+    if (Number.isNaN(customerID)) {
+      return {
+        valid: false,
+        error: "Error in customer field : Invalid ID",
+      };
+    }
 
-  // customer id
-  const customerID = parseInt(orderMetaData.name);
+    // Check if a positive digit
+    if (
+      typeof customerID === "number" &&
+      Number.isInteger(customerID) &&
+      customerID < 0
+    ) {
+      return {
+        valid: false,
+        error:
+          "Error in customer field : Customer ID must be a positive Integer",
+      };
+    }
 
-  // Check if not a number
-  if (Number.isNaN(customerID)) {
-    return {
-      valid: false,
-      error: "Error in customer field : Invalid ID",
-    };
-  }
+    // date added
+    const dateAdded = data.dateAdded;
+    const todayDate = new Date().toISOString().split("T")[0];
 
-  // Check if a positive digit
-  if (
-    typeof customerID === "number" &&
-    Number.isInteger(customerID) &&
-    customerID < 0
-  ) {
-    return {
-      valid: false,
-      error: "Error in customer field : Customer ID must be a positive Integer",
-    };
+    if (!dateAdded) {
+      return {
+        valid: false,
+        error: "Error in date : date cannot be empty",
+      };
+    }
+
+    if (dateAdded !== todayDate) {
+      return {
+        valid: false,
+        error: "Error in date : Invalid Date",
+      };
+    }
   }
 
   // status
-  const status = orderMetaData.status.trim() || "Pending";
+  const status = data.status.trim() || "Pending";
 
   if (!status || status === "") {
     return {
@@ -61,26 +69,8 @@ export function validateOrderData(data) {
     };
   }
 
-  // date added
-  const dateAdded = orderMetaData.dateAdded;
-  const todayDate = new Date().toISOString().split("T")[0];
-
-  if (!dateAdded) {
-    return {
-      valid: false,
-      error: "Error in date : date cannot be empty",
-    };
-  }
-
-  if (dateAdded !== todayDate) {
-    return {
-      valid: false,
-      error: "Error in date : Invalid Date",
-    };
-  }
-
   // total price
-  const totalPrice = parseFloat(orderMetaData.totalPrice);
+  const totalPrice = parseFloat(data.totalOrderPrice);
 
   if (Number.isNaN(totalPrice) || totalPrice < 0) {
     return {
@@ -89,21 +79,12 @@ export function validateOrderData(data) {
     };
   }
 
-  // ==== Validate order address details ====
-  /*  
-  - first_name
-  - last_name
-  - email
-  - phone_number
-  - state
-  - city
-  - address_line1
-  - address_line2
-  - additional_notes
-  */
+  return { valid: true };
+}
 
+function validateOrderAddress(data, mode) {
   // first name
-  const first_name = orderAddressDetails.firstName.trim();
+  const first_name = data.firstName.trim();
 
   if (!first_name || first_name === "") {
     return {
@@ -120,7 +101,7 @@ export function validateOrderData(data) {
   }
 
   // last name
-  const last_name = orderAddressDetails.lastName.trim();
+  const last_name = data.lastName.trim();
 
   if (!last_name || last_name === "") {
     return {
@@ -137,7 +118,7 @@ export function validateOrderData(data) {
   }
 
   // email
-  const email = orderAddressDetails.email.trim();
+  const email = data.email.trim();
   if (!email || email === "") {
     return {
       valid: false,
@@ -160,7 +141,7 @@ export function validateOrderData(data) {
   }
 
   // phone number
-  const phoneNumber = orderAddressDetails.phoneNumber.trim();
+  const phoneNumber = data.phoneNumber.trim();
   if (!phoneNumber || phoneNumber === "") {
     return {
       valid: false,
@@ -176,7 +157,7 @@ export function validateOrderData(data) {
   }
 
   // state
-  const state = orderAddressDetails.state.trim();
+  const state = data.state.trim();
 
   if (!state || state === "") {
     return {
@@ -193,7 +174,7 @@ export function validateOrderData(data) {
   }
 
   // city
-  const city = orderAddressDetails.city.trim();
+  const city = data.city.trim();
 
   if (!city || city === "") {
     return {
@@ -210,7 +191,7 @@ export function validateOrderData(data) {
   }
 
   // Address line 1
-  const addressLine1 = orderAddressDetails.addressLine1.trim();
+  const addressLine1 = data.addressLine1.trim();
 
   if (!addressLine1 || addressLine1 === "") {
     return {
@@ -227,7 +208,7 @@ export function validateOrderData(data) {
   }
 
   // Address line 2
-  const addressLine2 = orderAddressDetails.addressLine2?.trim();
+  const addressLine2 = data.addressLine2?.trim();
 
   if (!addressLine2 && addressLine2?.length > 255) {
     return {
@@ -237,7 +218,7 @@ export function validateOrderData(data) {
   }
 
   // Additional Notes
-  const additionalNotes = orderAddressDetails.additionalNotes?.trim();
+  const additionalNotes = data.additionalNotes?.trim();
 
   if (!additionalNotes && additionalNotes?.length > 255) {
     return {
@@ -246,11 +227,13 @@ export function validateOrderData(data) {
     };
   }
 
-  // ==== Validate Order Lines ====
-  /*  
-  
-  */
-  if (!Array.isArray(orderLines) || orderLines.length === 0) {
+  return { valid: true };
+}
+
+function validateOrderLines(data, totalPrice) {
+  let orderTotalPrice = 0;
+
+  if (!Array.isArray(data) || data.length === 0) {
     return {
       valid: false,
       error: "Error in Order Lines : Order must contain at least one product",
@@ -259,8 +242,8 @@ export function validateOrderData(data) {
 
   //   const usedBookIDS = new Set();
 
-  for (let i = 0; i < orderLines.length; i++) {
-    let line = orderLines[i];
+  for (let i = 0; i < data.length; i++) {
+    let line = data[i];
 
     // book id
     let bookId = parseInt(line.bookId);
@@ -281,20 +264,19 @@ export function validateOrderData(data) {
     }
 
     // single and total price
-    let singlePrice = parseFloat(line.singlePrice).toFixed(2);
-    let lineTotalPrice = parseFloat(line.totalPrice).toFixed(2);
+    let unitPrice = parseFloat(line.unitPrice).toFixed(2);
+    let lineTotalPrice = parseFloat(line.totalLinePrice).toFixed(2);
 
-    if (Number.isNaN(singlePrice) || singlePrice < 0) {
+    if (Number.isNaN(unitPrice) || unitPrice < 0) {
       return {
         valid: false,
         error: `Error in Single Price : Invalid price in order line ${i + 1}`,
       };
     }
 
-    let expectedTotal = parseFloat((singlePrice * quantity).toFixed(2));
+    let expectedTotal = parseFloat((unitPrice * quantity).toFixed(2));
 
     if (Number.isNaN(totalPrice) || lineTotalPrice != expectedTotal) {
-      console.log(lineTotalPrice, expectedTotal);
       return {
         valid: false,
         error: `Error in total price : Invalid total price in order line ${
@@ -312,6 +294,56 @@ export function validateOrderData(data) {
       error: `Error in Total Price : Total price doesnt match the order lines total`,
     };
   }
+
+  return { valid: true };
+}
+
+export function validateOrderData(data, mode) {
+  const orderMetaData = data.orderMetaData;
+  const orderAddressDetails = data.orderAddressDetails;
+  const orderLines = data.orderLines;
+
+  // ==== Validate order meta data ====
+  /*  
+  - customer name (id)
+  - status
+  - total price
+  - date added
+  */
+  const orderMetaResult = validateOrderMetaData(orderMetaData, mode);
+  if (!orderMetaResult.valid) {
+    return orderMetaResult;
+  }
+
+  const orderAddressDetailsResult = validateOrderAddress(
+    orderAddressDetails,
+    mode,
+  );
+  if (!orderAddressDetailsResult.valid) {
+    return orderAddressDetails;
+  }
+
+  const orderLinesResult = validateOrderLines(
+    orderLines,
+    parseFloat(orderMetaData.totalPrice),
+  );
+  if (!orderLinesResult) {
+    return orderLinesResult;
+  }
+  // ==== Validate order address details ====
+  /*  
+  - first_name
+  - last_name
+  - email
+  - phone_number
+  - state
+  - city
+  - address_line1
+  - address_line2
+  - additional_notes
+  */
+
+  // ==== Validate Order Lines ====
 
   return { valid: true };
 }

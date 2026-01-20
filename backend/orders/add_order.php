@@ -38,7 +38,7 @@ if(!$order_status_result['success'])
 }
 
 // Total Price
-$order_total_price_result = validate_order_price($order_payload['order']['total_price']);
+$order_total_price_result = validate_order_price($order_payload['order']['total_order_price']);
 if(!$order_total_price_result['success'])
 {
     echo json_encode([
@@ -228,8 +228,11 @@ try
         // Insert a line
         insert_order_line($conn , $line , $order_id);
 
+        $book_id = (int) $line['bookId'];
+        $quantity = (int) $line['quantity'];
+    
         // Update Stock
-        update_stock($conn , $line);
+        decrease_book_stock($conn , $book_id , $quantity);
     }
 
     $conn->commit();
