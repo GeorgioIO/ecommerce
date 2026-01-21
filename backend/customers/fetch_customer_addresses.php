@@ -32,7 +32,8 @@ $query = <<<EOT
         sd.city,
         sd.address_line1,
         sd.address_line2,
-        sd.additional_notes
+        sd.additional_notes,
+        sd.admin_made
     FROM 
         user_addresses ua
     JOIN 

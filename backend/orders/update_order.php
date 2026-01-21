@@ -50,6 +50,17 @@ if(!$order_id_result['success'])
     exit;
 }
 
+$order_customer_id_result = validate_customer_id($order_payload['order']['user_id']);
+if(!$order_customer_id_result['success'])
+{
+    echo json_encode([
+        'success' => false,
+        'message' => $order_customer_id_result['message']
+    ]);
+    exit;
+}
+
+
 $order_status_result = validate_order_status($order_payload['order']['status']);
 if(!$order_status_result['success'])
 {
@@ -178,7 +189,7 @@ if(!$order_lines_result['success'])
 
 // Collect data 
 $order_id = $order_id_result['value'];
-
+$DB_user_id = (int) $order_payload['order']['user_id'];
 $DB_order_status = $order_status_result['value'];
 $DB_order_price = $order_total_price_result['value'];
 $DB_order_first_name_ad = $order_first_name_result['value'];
@@ -197,6 +208,7 @@ try
 {
     // Fetch the order
     $order = get_single_order_by_id($conn , $order_id);
+
     if(!$order['success'])
     {
         echo json_encode([
@@ -218,7 +230,6 @@ try
 
     // Fetch order lines that belong to that order
     $existing_order_lines = get_order_lines_by_order($conn , $order_id);
-
 
     // Groups of operations
     $to_insert = [];
@@ -316,8 +327,30 @@ try
         decrease_book_stock($conn , $line['bookId'] , $line['quantity']);
     }
 
-    update_order_meta($conn , $order_id , $DB_order_status , $DB_order_price);
 
+    // If admin typed a complete new address
+    if(empty($order_payload['address']['existing_address_id']) || $order_payload['address']['existing_address_id'] === "null")
+    {
+        $DB_address_id = insert_new_address($conn , $order_payload['address']);
+
+        update_order_meta($conn , $order_id , $DB_order_status , $DB_order_price , $DB_address_id);
+
+    }
+    // Admin picked another existing address id
+    elseif($order['value']['address_id'] !== (int) $order_payload['address']['existing_address_id'])
+    {
+        $DB_address_id = (int) $order_payload['address']['existing_address_id'];
+
+        $address_ownership_validation = validate_address_ownership($conn , $DB_user_id , $DB_address_id);
+        if(!$address_ownership_validation['success'])
+        {
+            throw new Exception($address_ownership_validation['message']);
+        }
+
+        update_order_meta($conn , $order_id , $DB_order_status , $DB_order_price , $DB_address_id);
+    }
+
+    update_order_meta($conn , $order_id , $DB_order_status , $DB_order_price );
 
     $conn->commit();
 

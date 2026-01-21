@@ -26,6 +26,13 @@ function hydrateOrderMetaDataSection(form, data) {
 }
 
 function hydrateOrderAddressSection(form, data) {
+  const addressSelect = form.querySelector("#existing-address-select");
+  if (data.admin_made === 1) {
+    addressSelect.value = null;
+  } else {
+    addressSelect.value = data.address_id;
+  }
+
   Object.keys(data).forEach((key) => {
     const input = form.querySelector(`#${key}`);
     if (!input) return;

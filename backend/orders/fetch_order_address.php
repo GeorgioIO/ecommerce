@@ -34,7 +34,8 @@ $query = <<<EOT
         sa.city,
         sa.address_line1,
         sa.address_line2,
-        sa.additional_notes
+        sa.additional_notes,
+        sa.admin_made
     FROM orders o
     JOIN shipping_addresses sa ON o.address_id = sa.id
     WHERE o.id = ?;

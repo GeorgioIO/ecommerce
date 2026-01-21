@@ -53,6 +53,8 @@ formContainer.addEventListener("change", async (e) => {
       ".address-existing-container",
     );
 
+    addressesContainer.style.display = "flex";
+
     // Get customer ID
     const customerID = customerNamesSelect.value;
     const addressesSelect = document.querySelector("#existing-address-select");
@@ -66,22 +68,14 @@ formContainer.addEventListener("change", async (e) => {
     }
 
     // Get addresses a specific customer id
-    currentCustomerAddresses = await get_customer_addresses_DB(customerID);
+    currentCustomerAddresses =
+      (await get_customer_addresses_DB(customerID)) ?? null;
 
-    if (currentCustomerAddresses.length) {
-      addressesContainer.style.display = "flex";
-      populateExistingAddressesSelect(
-        addressesSelect,
-        currentCustomerAddresses,
-      );
-    } else {
-      resetAddressSection();
-      addressesContainer.style.display = "none";
-    }
+    populateExistingAddressesSelect(addressesSelect, currentCustomerAddresses);
+    resetAddressSection();
   } else if (existingAddressSelect) {
     // Get address id
     const addressID = Number(existingAddressSelect.value);
-
     // When 'New address' is selected
     if (!addressID) {
       resetAddressSection();
@@ -92,7 +86,6 @@ formContainer.addEventListener("change", async (e) => {
     const address = currentCustomerAddresses.find(
       (addr) => addr.address_id === addressID,
     );
-
     if (!address) return;
 
     // Hydrate address section
@@ -231,6 +224,12 @@ export async function loadOrders() {
 
 // ========== LOCAL FUNCTIONS ========== //
 
+function resetExistingAddresses(addressesSelect) {
+  const optionGroups = addressesSelect.querySelectorAll("optgroup");
+
+  optionGroups.forEach((group) => group.remove());
+}
+
 function resetCustomerSelect() {
   const customerSelectOptions = formContainer.querySelectorAll("#name option");
 
@@ -283,32 +282,34 @@ function populateExistingAddressesSelect(selectElement, existingAddresses) {
   newAddressOption.value = null;
   selectElement.append(newAddressOption);
 
-  existingAddresses.forEach((address) => {
-    // Create group for each address
-    const addressGroup = document.createElement("optgroup");
-    addressGroup.dataset.addressid = address.address_id;
-    addressGroup.label = `Address ${addressesCounter}`;
+  if (existingAddresses) {
+    existingAddresses.forEach((address) => {
+      // Create group for each address
+      const addressGroup = document.createElement("optgroup");
+      addressGroup.dataset.addressid = address.address_id;
+      addressGroup.label = `Address ${addressesCounter}`;
 
-    // Select option (clickable)
-    const selectOption = document.createElement("option");
-    selectOption.value = address.address_id;
-    selectOption.textContent = `Use Address ${addressesCounter}`;
-    addressGroup.append(selectOption);
+      // Select option (clickable)
+      const selectOption = document.createElement("option");
+      selectOption.value = address.address_id;
+      selectOption.textContent = `Use Address ${addressesCounter}`;
+      addressGroup.append(selectOption);
 
-    // Select option for address details (read only)
-    Object.keys(address).forEach((detail) => {
-      if (detail !== "address_id" && detail !== "is_default") {
-        const address_detail = document.createElement("option");
-        address_detail.disabled = true;
-        address_detail.value = address[detail];
-        address_detail.textContent = `${detail}: ${address[detail]}`;
-        addressGroup.append(address_detail);
-      }
+      // Select option for address details (read only)
+      Object.keys(address).forEach((detail) => {
+        if (detail !== "address_id" && detail !== "is_default") {
+          const address_detail = document.createElement("option");
+          address_detail.disabled = true;
+          address_detail.value = address[detail];
+          address_detail.textContent = `${detail}: ${address[detail]}`;
+          addressGroup.append(address_detail);
+        }
+      });
+
+      addressesCounter++;
+      selectElement.append(addressGroup);
     });
-
-    addressesCounter++;
-    selectElement.append(addressGroup);
-  });
+  }
 }
 
 async function openForm(
@@ -336,6 +337,16 @@ async function openForm(
   await populateOrderFormSelect(form, mode, orderMetaData);
 
   if (mode === "edit") {
+    const addressesContainer = document.querySelector(
+      ".address-existing-container",
+    );
+    const addressesSelect = document.querySelector("#existing-address-select");
+    addressesContainer.style.display = "flex";
+    currentCustomerAddresses = await get_customer_addresses_DB(
+      orderMetaData.user_id,
+    );
+    populateExistingAddressesSelect(addressesSelect, currentCustomerAddresses);
+
     hydrateOrderForm(form, orderMetaData, orderAddressData, orderLines);
 
     if (

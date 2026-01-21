@@ -1,19 +1,36 @@
 <?php
 
-function update_order_meta($conn , $id , $new_status , $new_price)
+
+function update_order_meta($conn , $id , $new_status , $new_price , $new_address = null)
 {
-    $query = <<<EOT
+    if($new_address)
+    {
+        $query = <<<EOT
+            UPDATE orders 
+            SET 
+                status = ?, 
+                total_price = ?,
+                address_id = ?
+            WHERE id = ?;
+        EOT;
 
-        UPDATE orders 
-        SET 
-            status = ?, 
-            total_price = ? 
-        WHERE id = ?;
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("sdii" , $new_status , $new_price , $new_address , $id);
+    }
+    else
+    {
+        $query = <<<EOT
+            UPDATE orders 
+            SET 
+                status = ?, 
+                total_price = ? 
+            WHERE id = ?;
+        EOT;
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("sdi" , $new_status , $new_price , $id);
+    }
 
-    EOT;
 
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("sdi" , $new_status , $new_price , $id);
     $stmt->execute();
 
     if($stmt->affected_rows < 0)
@@ -212,7 +229,8 @@ function get_single_order_by_id($conn , $id)
     $query = <<<EOT
         SELECT 
             total_price,
-            status
+            status,
+            address_id
         FROM
             orders
         WHERE id = ?
@@ -287,19 +305,20 @@ function insert_new_order($conn , $order_code , $order_payload , $user_id , $add
 
 function insert_new_address($conn , $address_payload)
 {
+    $admin_made = 1;
     $query = <<<EOT
 
     INSERT INTO shipping_addresses
-    (first_name , last_name, email, phone_number, state, city, address_line1, address_line2 , additional_notes)
+    (first_name , last_name, email, phone_number, state, city, address_line1, address_line2 , additional_notes, admin_made)
     VALUES
-    (? , ? , ? , ? , ? , ? , ? , ? , ?)
+    (? , ? , ? , ? , ? , ? , ? , ? , ? , ?)
 
     EOT;
 
 
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("sssssssss", 
+    $stmt->bind_param("sssssssssi", 
                         $address_payload['first_name'], 
                         $address_payload['last_name'], 
                         $address_payload['email'], 
@@ -308,7 +327,8 @@ function insert_new_address($conn , $address_payload)
                         $address_payload['city'], 
                         $address_payload['address_line1'], 
                         $address_payload['address_line2'], 
-                        $address_payload['additional_notes'], 
+                        $address_payload['additional_notes'],
+                        $admin_made
                         );
     
     $stmt->execute();
