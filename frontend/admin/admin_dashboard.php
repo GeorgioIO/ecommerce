@@ -73,6 +73,22 @@ require_once __DIR__ . '/../../backend/auth/admin_guard.php';
               <p>Dashboard</p>
             </button>
           </li>
+                    <li>
+            <button class="adm-sidebar-button" data-section="order">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                aria-hidden="true"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  d="M12.667 7.667H11v2l-.667-.444-.666.444v-2H8A.334.334 0 0 0 7.667 8v4c0 .183.15.333.333.333h4.667c.183 0 .333-.15.333-.333V8a.334.334 0 0 0-.333-.333zm-8-1.334h4.666c.184 0 .334-.15.334-.333V2a.334.334 0 0 0-.334-.333H7.667v2L7 3.223l-.667.444v-2H4.667A.334.334 0 0 0 4.333 2v4c0 .183.15.333.334.333zM6 7.667H4.333v2l-.666-.444L3 9.667v-2H1.333A.334.334 0 0 0 1 8v4c0 .183.15.333.333.333H6c.183 0 .333-.15.333-.333V8A.334.334 0 0 0 6 7.667z"
+                />
+              </svg>
+              <p>Orders</p>
+            </button>
+          </li>
           <li>
             <button class="adm-sidebar-button" data-section="customer">
               <svg
@@ -141,22 +157,6 @@ require_once __DIR__ . '/../../backend/auth/admin_guard.php';
                 />
               </svg>
               <p>Genres</p>
-            </button>
-          </li>
-          <li>
-            <button class="adm-sidebar-button" data-section="order">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="25"
-                aria-hidden="true"
-                viewBox="0 0 14 14"
-              >
-                <path
-                  d="M12.667 7.667H11v2l-.667-.444-.666.444v-2H8A.334.334 0 0 0 7.667 8v4c0 .183.15.333.333.333h4.667c.183 0 .333-.15.333-.333V8a.334.334 0 0 0-.333-.333zm-8-1.334h4.666c.184 0 .334-.15.334-.333V2a.334.334 0 0 0-.334-.333H7.667v2L7 3.223l-.667.444v-2H4.667A.334.334 0 0 0 4.333 2v4c0 .183.15.333.334.333zM6 7.667H4.333v2l-.666-.444L3 9.667v-2H1.333A.334.334 0 0 0 1 8v4c0 .183.15.333.333.333H6c.183 0 .333-.15.333-.333V8A.334.334 0 0 0 6 7.667z"
-                />
-              </svg>
-              <p>Orders</p>
             </button>
           </li>
           <li>
