@@ -1,5 +1,5 @@
 export async function get_order_data_DB(order_id) {
-  const result = await fetch("../../backend/orders/fetch_single_order.php", {
+  const result = await fetch("../../backend/orders/get_order.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -13,7 +13,7 @@ export async function get_order_data_DB(order_id) {
 }
 
 export async function fetchOrderAddress_DB(orderID) {
-  const result = await fetch("../../backend/orders/fetch_order_address.php", {
+  const result = await fetch("../../backend/orders/get_order_address.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -27,7 +27,7 @@ export async function fetchOrderAddress_DB(orderID) {
 }
 
 export async function fetchOrderLines_DB(orderID) {
-  const result = await fetch("../../backend/orders/fetch_order_lines.php", {
+  const result = await fetch("../../backend/orders/get_order_lines.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -41,13 +41,13 @@ export async function fetchOrderLines_DB(orderID) {
 }
 
 export async function fetchOrders_DB() {
-  const result = await fetch("../../backend/orders/load_orders.php");
+  const result = await fetch("../../backend/orders/get_orders.php");
 
   return result.json();
 }
 
 export async function fetchOrdersCount_DB() {
-  const result = await fetch("../../backend/orders/fetch_order_count.php");
+  const result = await fetch("../../backend/orders/get_orders_count.php");
 
   return result.json();
 }

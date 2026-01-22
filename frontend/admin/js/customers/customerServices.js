@@ -1,22 +1,19 @@
 export async function fetch_customers_DB() {
-  const result = await fetch("../../backend/customers/load_customers.php");
+  const result = await fetch("../../backend/customers/get_customers.php");
   return result.json();
 }
 
 // function responsible to get data about single customer
 export async function get_customer_data_DB(customer_id) {
-  const result = await fetch(
-    "../../backend/customers/fetch_single_customer.php",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        id: customer_id,
-      }),
-    }
-  );
+  const result = await fetch("../../backend/customers/get_customer.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      id: customer_id,
+    }),
+  });
 
   return result.json();
 }
@@ -25,7 +22,7 @@ export async function get_customer_data_DB(customer_id) {
 
 export async function get_customer_addresses_DB(customer_id) {
   const result = await fetch(
-    "../../backend/customers/fetch_customer_addresses.php",
+    "../../backend/customers/get_customer_addresses.php",
     {
       method: "POST",
       headers: {
@@ -34,7 +31,7 @@ export async function get_customer_addresses_DB(customer_id) {
       body: new URLSearchParams({
         id: customer_id,
       }),
-    }
+    },
   );
   return result.json();
 }

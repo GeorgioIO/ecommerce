@@ -3,8 +3,8 @@
 header('Content-Type: application/json');
 require_once  __DIR__ . '/../../config/database.php';
 require_once  __DIR__ . '/../../config/helpers.php';
-require_once  __DIR__ . '/../validators/book_validators.php';
-require_once  __DIR__ . '/../validators/book_db_validators.php';
+require_once  __DIR__ . '/validators/book_validators.php';
+require_once  __DIR__ . '/validators/book_db_validators.php';
 require_once  __DIR__ . '/book_helpers.php';
 
 $book_payload = extract_book_payload($_POST , $_FILES);

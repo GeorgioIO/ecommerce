@@ -3,7 +3,7 @@
 header("Content-Type: application/json");
 
 require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../validators/order_validators.php';
+require_once __DIR__ . '/validators/order_validators.php';
 
 // Get ID
 $id = $_POST['id'] ?? null;
@@ -25,20 +25,14 @@ $DB_order_id = $order_id_result['value'];
 
 $query = <<<EOT
     SELECT
-        o.address_id,
-        sa.first_name,
-        sa.last_name,
-        sa.phone_number,
-        sa.email,
-        sa.state,
-        sa.city,
-        sa.address_line1,
-        sa.address_line2,
-        sa.additional_notes,
-        sa.admin_made
-    FROM orders o
-    JOIN shipping_addresses sa ON o.address_id = sa.id
-    WHERE o.id = ?;
+        oi.book_id,
+        b.title,
+        oi.quantity,
+        oi.selling_price,
+        oi.total_line_price
+    FROM order_items oi
+    JOIN books b ON oi.book_id = b.id
+    WHERE oi.order_id = ?;
 EOT;
 
 $stmt = $conn->prepare($query);
@@ -50,17 +44,22 @@ if($result->num_rows === 0)
 {
     echo json_encode([
         'success' => false,
-        'message' => 'Address not found'
+        'message' => 'Order not found'
     ]);
     exit;
 }
 
-$address = $result->fetch_assoc();
+$order_lines = [];
+
+while($row = $result->fetch_assoc())
+{
+    $order_lines[] = $row;
+}
 
 $stmt->close();
 $conn->close();
 
-echo json_encode($address);
+echo json_encode($order_lines);
 exit;
 
 

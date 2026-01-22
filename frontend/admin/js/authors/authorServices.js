@@ -42,7 +42,7 @@ export async function update_author_DB(authorData) {
 
 // Function responsible to get data for a single book
 export async function get_author_data_DB(author_id) {
-  const res = await fetch("../../backend/authors/fetch_single_author.php", {
+  const res = await fetch("../../backend/authors/get_author.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -56,6 +56,6 @@ export async function get_author_data_DB(author_id) {
 }
 
 export async function fetch_authors_DB() {
-  const result = await fetch("../../backend/authors/load_authors.php");
+  const result = await fetch("../../backend/authors/get_authors.php");
   return result.json();
 }

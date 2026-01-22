@@ -1,6 +1,6 @@
 // Function responsible to get data for a single book
 export async function get_book_data_DB(book_id) {
-  const res = await fetch("../../backend/books/fetch_single_book.php", {
+  const res = await fetch("../../backend/books/get_book.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -79,7 +79,7 @@ export async function update_book_DB(bookData) {
 export async function fetch_books_DB(filters) {
   const params = new URLSearchParams(filters);
   const res = await fetch(
-    `../../backend/books/load_books.php?${params.toString()}`
+    `../../backend/books/get_books.php?${params.toString()}`,
   );
   return res.json();
 }

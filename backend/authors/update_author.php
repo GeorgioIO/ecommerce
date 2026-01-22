@@ -3,8 +3,8 @@
 header('Content-Type: application/json');
 require_once  __DIR__ . '/../../config/database.php';
 require_once  __DIR__ . '/../../config/helpers.php';
-require_once  __DIR__ . '/../validators/author_validators.php';
-require_once  __DIR__ . '/../validators/author_db_validators.php';
+require_once  __DIR__ . '/validators/author_validators.php';
+require_once  __DIR__ . '/validators/author_db_validators.php';
 require_once  __DIR__ . '/author_helpers.php';
 
 $author_payload = extract_author_payload($_POST);

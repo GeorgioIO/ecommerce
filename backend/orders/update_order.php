@@ -3,10 +3,11 @@
 header('Content-Type: application/json');
 
 require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../validators/order_db_validators.php';
-require_once __DIR__ . '/../validators/order_validators.php';
-require_once __DIR__ . '/../validators/order_lines_validators.php';
-require_once __DIR__ . '/order_helpers.php';
+require_once __DIR__ . '/validators/order_db_validators.php';
+require_once __DIR__ . '/validators/order_validators.php';
+require_once __DIR__ . '/validators/order_lines_validators.php';
+require_once __DIR__ . '/helpers/order_db_helpers.php';
+require_once __DIR__ . '/helpers/order_helpers.php';
 
 
 // 1. Fetch order (must exist)

@@ -2,36 +2,44 @@
 
 header('Content-Type: application/json');
 require_once  __DIR__ . '/../../config/database.php';
-require_once  __DIR__ . '/../validators/author_validators.php';
+require_once  __DIR__ . '/validators/customer_validators.php';
 
 
 $id = $_POST["id"] ?? null;
 
 // validate author id
-$author_id_result = validate_author_id($id);
-if(!$author_id_result['success'])
+$customer_id_result = validate_customer_id($id);
+if(!$customer_id_result['success'])
 {
     echo json_encode([
         'success' => false,
-        'message' => $author_id_result['message']
+        'message' => $customer_id_result['message']
     ]);
     exit;
 }
 
-$DB_author_id = $author_id_result['value'];
+$DB_customer_id = $customer_id_result['value'];
 
 $query = <<<EOT
 
-SELECT 
-    id,
-    name
-FROM
-    authors 
-WHERE id = ?
+SELECT
+    u.id,
+    u.customer_code,
+    u.name,
+    u.email,
+    u.phone_number,
+    u.date_added,
+    u.password,
+    COALESCE(SUM(o.total_price), 0) AS total_spent,
+    COUNT(o.id) AS total_orders
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+WHERE u.id = ?
+GROUP BY u.id
 EOT;
 
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i" , $DB_author_id);
+$stmt->bind_param("i" , $DB_customer_id);
 $stmt->execute();
 
 $result = $stmt->get_result();
@@ -40,7 +48,7 @@ $result = $stmt->get_result();
 if($result->num_rows === 0){
     echo json_encode([
         'success' => false, 
-        'data' => 'Author not found'
+        'data' => 'Customer not found'
     ]);
     exit;
 }

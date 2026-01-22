@@ -2,7 +2,7 @@
 
 header('Content-Type: application/json');
 require_once  __DIR__ . '/../../config/database.php';
-require_once  __DIR__ . '/../validators/book_validators.php';
+require_once  __DIR__ . '/validators/book_validators.php';
 
 
 $id = $_POST["id"] ?? null;

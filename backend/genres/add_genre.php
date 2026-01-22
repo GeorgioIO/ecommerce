@@ -4,9 +4,9 @@ header('Content-Type: application/json');
 
 require_once __DIR__ .  '/../../config/database.php';
 require_once __DIR__ . '/../../config/helpers.php';
-require_once __DIR__ . '/../validators/genre_validators.php';
-require_once  __DIR__ . '/../validators/genre_db_validators.php';
-require_once  __DIR__ . '/genre_helpers.php';
+require_once __DIR__ . '/validators/genre_validators.php';
+require_once  __DIR__ . '/validators/genre_db_validators.php';
+require_once  __DIR__ . '/helpers/genre_helpers.php';
 
 
 $genre_payload = extract_genre_payload($_POST , $_FILES);
