@@ -211,21 +211,13 @@ try
 
     if(!$order['success'])
     {
-        echo json_encode([
-            'success' => false,
-            'message' => $order['message']
-        ]);
-        exit;
+        throw new Exception($order['message']);
     }
 
     // Check order allowed to be edited
     if(!is_order_editable($order['value']))
     {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Order is not allowed to be edited'
-        ]);
-        exit;
+        throw new Exception('Order is not allowed to be edited');
     }
 
     // Fetch order lines that belong to that order
@@ -278,7 +270,7 @@ try
         if(isset($old_map[$book_id]))
         {
             $old_qty = (int) $old_map[$book_id]['quantity'];
-            $unit_price = (int) $new_map[$book_id]['unitPrice'];
+            $unit_price = (float) $new_map[$book_id]['unitPrice'];
             $new_qty = (int) $new_line['quantity'];
 
             if($old_qty !== $new_qty)
