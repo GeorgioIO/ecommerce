@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../../config/helpers.php';
-require_once __DIR__ . '/book_db_validators.php';
+require_once __DIR__ . '/../../../config/helpers.php';
+require_once __DIR__  . '/../../books/validators/book_db_validators.php';
 
 function validate_order_lines($conn , array $lines) : array
 {

@@ -2,7 +2,8 @@
 
 header('Content-Type: application/json');
 require_once  __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/book_helpers.php';
+require_once __DIR__ . '/helpers/book_helpers.php';
+require_once __DIR__ . '/helpers/book_db_helpers.php';
 require_once __DIR__ . '/../../config/helpers.php';
 
 $author_id = $_GET['author_id'] ?? null; // 3

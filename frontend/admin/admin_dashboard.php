@@ -12,7 +12,6 @@ require_once __DIR__ . '/../../backend/auth/admin_guard.php';
     <title>Admin Dashboard | BookNest</title>
     <link rel="stylesheet" href="../admin/css/admin_styles.css" />
     <script defer type="module" src="../admin/js/sidebar.js"></script>
-    <script defer type="module" src="../admin/js/books/booksUI.js"></script>
     <script defer type="module" src="../admin/js/adminUIController.js"></script>
   </head>
   <body>
@@ -57,7 +56,7 @@ require_once __DIR__ . '/../../backend/auth/admin_guard.php';
         <h1><span class="booknest-text">BookNest</span> Dashboard</h1>
         <ul>
           <li>
-            <button class="adm-sidebar-button active-sidebar-btn">
+            <button class="adm-sidebar-button active-sidebar-btn" data-section="dashboard">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
@@ -73,7 +72,7 @@ require_once __DIR__ . '/../../backend/auth/admin_guard.php';
               <p>Dashboard</p>
             </button>
           </li>
-                    <li>
+          <li>
             <button class="adm-sidebar-button" data-section="order">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +187,7 @@ require_once __DIR__ . '/../../backend/auth/admin_guard.php';
       </div>
       <div class="content">
         <div class="table-container">
-
+            
         </div>
       </div>
     </main>

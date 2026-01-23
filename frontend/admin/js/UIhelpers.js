@@ -121,6 +121,19 @@ export function renderActiveTableState({
         `;
 }
 
+export function renderMiniActiveTableState(data, renderHeader, renderRow) {
+  const header = renderHeader();
+
+  return `
+    <div class="mini-flex-table">
+      ${header}
+      <div class="mini-flex-table-body">
+        ${data.map((item) => renderRow(item)).join("")}
+      </div>
+    </div>  
+  `;
+}
+
 export function showDeletionModal(entity, id) {
   const confirmationModal = document.querySelector("#confirmation-modal");
   const confirmationText =

@@ -196,12 +196,12 @@ export function resetOrderForm(form) {
   toggleButtonClickablility(submitOperationButton, false);
 }
 
-// Function to load books from the database by sending a request to backend
+// Function to load orders from the database by sending a request to backend
 export async function loadOrders() {
   try {
-    const books = await fetchOrders_DB();
+    const orders = await fetchOrders_DB();
 
-    if (books.length === 0) {
+    if (orders.length === 0) {
       content.innerHTML = renderEmptyTableState({
         entity: "order",
         label: "Order",
@@ -211,7 +211,7 @@ export async function loadOrders() {
       content.innerHTML = renderActiveTableState({
         entity: "order",
         label: "Order",
-        data: books,
+        data: orders,
         renderHeader: renderOrderTableHeader,
         renderRow: renderOrderTableRow,
         canAdd: true,

@@ -1,6 +1,6 @@
 // Function responsible to get data for a single book
 export async function get_book_data_DB(book_id) {
-  const res = await fetch("../../backend/books/get_book.php", {
+  const result = await fetch("../../backend/books/get_book.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -10,7 +10,8 @@ export async function get_book_data_DB(book_id) {
     }),
   });
 
-  return res.json();
+  return result.json();
+  // console.log(result.text());
 }
 
 // Function responsible for adding a book to the database
@@ -78,8 +79,8 @@ export async function update_book_DB(bookData) {
 
 export async function fetch_books_DB(filters) {
   const params = new URLSearchParams(filters);
-  const res = await fetch(
+  const result = await fetch(
     `../../backend/books/get_books.php?${params.toString()}`,
   );
-  return res.json();
+  return result.json();
 }

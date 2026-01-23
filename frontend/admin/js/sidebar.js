@@ -5,9 +5,9 @@ import { loadBooks } from "./books/booksUI.js";
 import { loadGenres } from "./genres/genresUI.js";
 import { loadCustomers } from "./customers/customerUI.js";
 import { loadOrders } from "./orders/orderUI.js";
-
+import { loadDashboard } from "./dashboard/dashboardUI.js";
 const sidebarButtons = document.querySelectorAll(
-  ".sidebar ul li .adm-sidebar-button"
+  ".sidebar ul li .adm-sidebar-button",
 );
 
 sidebarButtons.forEach((button) => {
@@ -28,6 +28,8 @@ sidebarButtons.forEach((button) => {
       loadOrders();
     } else if (section === "logout") {
       window.location.href = "/ecommerce/backend/auth/admin_logout.php";
+    } else if (section === "dashboard") {
+      loadDashboard();
     }
   });
 });

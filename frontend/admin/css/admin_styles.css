@@ -160,7 +160,7 @@ body {
 
 main {
   width: 100%;
-  min-height: 100vh;
+  max-height: 100vh;
   max-width: 100vw;
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -1288,4 +1288,165 @@ form {
   font-size: 0.9rem;
   height: 100%;
   font-weight: 400;
+}
+
+#admin-dashboard {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 100px 1fr;
+  grid-template-columns: 1fr;
+  font-family: var(--source-sans-font);
+  row-gap: 20px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 25px;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px 0px rgba(190, 190, 190, 0.637);
+}
+
+.dashboard-header > .dashboard-header-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.dashboard-header-intro > .dashboard-title {
+  font-size: 2.2rem;
+  margin-bottom: -5px;
+}
+
+.dashboard-header-intro > .dashboard-subtitle {
+  font-weight: 400;
+  word-spacing: 3px;
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-rows: 150px 1fr;
+  row-gap: 20px;
+  grid-template-columns: 1fr;
+}
+
+.dashboard-kpis {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.dashboard-main {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas:
+    "rectangle rectangle upper"
+    "rectangle rectangle lower";
+  gap: 20px;
+}
+
+.dashboard-main > div {
+  box-shadow: 0px 0px 5px 0px rgba(190, 190, 190, 0.637);
+  background-color: #f3f3f3;
+  border-radius: 10px;
+}
+
+#rectangle-graph {
+  grid-area: rectangle;
+}
+
+#right-upper-graph {
+  grid-area: upper;
+}
+
+#right-lower-graph {
+  grid-area: lower;
+}
+
+.kpi-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+
+  padding: 5px;
+  box-shadow: 0px 0px 5px 0px rgba(190, 190, 190, 0.637);
+}
+
+.kpi-card > .kpi-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.kpi-card > .kpi-content {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.mini-flex-table {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 40px 1fr;
+  grid-template-columns: 1fr;
+  box-sizing: border-box;
+}
+
+.mini-flex-table-header {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: repeat(5, 1fr);
+  background-color: black;
+  width: 100%;
+  max-width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding-left: 25px;
+  box-sizing: border-box;
+}
+
+.mini-flex-table > .mini-flex-table-header div {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: bold;
+  letter-spacing: 0.2px;
+}
+
+.mini-flex-table-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(5, 1fr);
+  height: 100%;
+  width: 100%;
+  padding-left: 25px;
+  box-sizing: border-box;
+}
+
+.mini-flex-table-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 100%;
+}
+
+.mini-flex-table-row div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.mini-flex-table-row div > p {
+  text-align: left;
 }

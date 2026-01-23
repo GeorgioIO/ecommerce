@@ -54,7 +54,7 @@ function generate_order_code()
     $letter = chr(random_int(65,90));
 
     // Order Count
-    $order_count = require __DIR__ . '/fetch_order_count.php';
+    $order_count = require __DIR__ . '../../get_orders_count.php';
 
     return "ORD-$todayDate$letter$order_count";
 }

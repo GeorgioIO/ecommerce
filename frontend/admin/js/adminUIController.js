@@ -61,6 +61,7 @@ import {
 import { addOrder_DB, updateOrder_DB } from "./orders/ordersServices.js";
 import { validateOrderData } from "./orders/ordersValidators.js";
 import { removeSearchBox } from "./orders/orderLineSearch.js";
+import { loadDashboard } from "./dashboard/dashboardUI.js";
 
 const confirmationModal = document.querySelector("#confirmation-modal");
 const closeOperationFormButton = document.querySelector(
@@ -119,6 +120,10 @@ const entityHandlers = {
     dataValidator: validateOrderData,
   },
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadDashboard();
+});
 
 closeOperationFormButton.addEventListener("click", () => {
   formBody.innerHTML = "";
