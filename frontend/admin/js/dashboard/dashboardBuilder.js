@@ -45,10 +45,10 @@ export function buildDashboardSkeleton() {
   const dashboardKPIsContainer = document.createElement("div");
   dashboardKPIsContainer.classList.add("dashboard-kpis");
 
-  const dashboardMain = document.createElement("div");
-  dashboardMain.classList.add("dashboard-main");
+  // const dashboardMain = document.createElement("div");
+  // dashboardMain.classList.add("dashboard-main");
 
-  dashboardContent.append(dashboardKPIsContainer, dashboardMain);
+  dashboardContent.append(dashboardKPIsContainer);
 
   adminDashboard.append(dashboardHeader, dashboardContent);
 

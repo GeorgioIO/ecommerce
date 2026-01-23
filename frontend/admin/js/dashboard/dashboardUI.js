@@ -9,6 +9,7 @@ import {
   renderMiniOrdersTableHeader,
   renderMiniOrdersTableRow,
 } from "./miniOrdersTable/miniOrdersTableUI.js";
+
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
 
@@ -78,6 +79,8 @@ export async function loadDashboard() {
 
   content.append(adminDashboard);
 
+  const dashboardContent = content.querySelector(".dashboard-content");
+
   // Load KPIs Cards
   const kpisData = await loadDashboardKPIs_DB();
 
@@ -88,5 +91,5 @@ export async function loadDashboard() {
 
   const recentOrdersGraph = loadMiniOrdersTable(recentOrders);
 
-  adminDashboardMain.append(recentOrdersGraph);
+  dashboardContent.append(recentOrdersGraph);
 }

@@ -1328,26 +1328,21 @@ form {
 
 .dashboard-content {
   display: grid;
-  grid-template-rows: 150px 1fr;
+  grid-template-rows: 150px 1fr 1fr;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-areas:
+    "kpi kpi kpi kpi kpi"
+    "rectangle rectangle rectangle upper upper"
+    "rectangle rectangle rectangle lower lower";
   row-gap: 20px;
-  grid-template-columns: 1fr;
 }
 
 .dashboard-kpis {
+  grid-area: kpi;
   display: grid;
   grid-template-rows: 100%;
   grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-}
-
-.dashboard-main {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  grid-template-areas:
-    "rectangle rectangle upper"
-    "rectangle rectangle lower";
-  gap: 20px;
+  column-gap: 20px;
 }
 
 .dashboard-main > div {
