@@ -4,11 +4,17 @@ import {
   getAdminSession,
   loadDashboardKPIs_DB,
   loadLastFiveOrders_DB,
+  loadMostSellingGenres_DB,
+  loadValuableCustomers_DB,
 } from "./dashboardServices.js";
 import {
   renderMiniOrdersTableHeader,
   renderMiniOrdersTableRow,
 } from "./miniOrdersTable/miniOrdersTableUI.js";
+import {
+  loadHorizontalBarChart,
+  loadPieChart,
+} from "./charts/chartsFunctions.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
@@ -17,8 +23,8 @@ const kpiCardsConfigs = {
   total_orders: "Total Orders",
   total_customers: "Total Customers",
   total_revenue: "Total Revenue",
-  total_pending_orders: "Total Pending Orders",
-  total_ofs_books: "Total OFS Books",
+  total_pending_orders: "Pending Orders",
+  total_ofs_books: "Out of Stock Books",
 };
 
 // ========== LISTENERS ========== //
@@ -48,6 +54,20 @@ function loadKPISCards(data) {
 
     dashboardKPISContainer.append(kpiCard);
   });
+}
+
+function loadRightUpperGraph() {
+  const upperGraph = document.createElement("div");
+  upperGraph.id = "right-upper-graph";
+
+  return upperGraph;
+}
+
+function loadRightLowerGraph() {
+  const lowerGraph = document.createElement("div");
+  lowerGraph.id = "right-lower-graph";
+
+  return lowerGraph;
 }
 
 function loadMiniOrdersTable(data) {
@@ -92,4 +112,39 @@ export async function loadDashboard() {
   const recentOrdersGraph = loadMiniOrdersTable(recentOrders);
 
   dashboardContent.append(recentOrdersGraph);
+
+  // Load Valuable Customers
+  const valuableCustomers = await loadValuableCustomers_DB();
+
+  const customerNames = valuableCustomers.map((item) => item.name);
+  const revenuesPerCustomer = valuableCustomers.map(
+    (item) => item.total_orders_revenue,
+  );
+
+  const rightUpperGraph = loadRightUpperGraph();
+  dashboardContent.append(rightUpperGraph);
+
+  loadHorizontalBarChart(
+    rightUpperGraph.id,
+    revenuesPerCustomer,
+    customerNames,
+    "Most Valuable Customers",
+  );
+
+  const mostSellingGenres = await loadMostSellingGenres_DB();
+
+  const genreNames = mostSellingGenres.map((item) => item.name);
+  const revenuesPerGenre = mostSellingGenres.map(
+    (item) => item.total_orders_revenue,
+  );
+
+  const rightLowerGraph = loadRightLowerGraph();
+  dashboardContent.append(rightLowerGraph);
+
+  loadPieChart(
+    rightLowerGraph.id,
+    genreNames,
+    revenuesPerGenre,
+    "Revenue By Genres",
+  );
 }

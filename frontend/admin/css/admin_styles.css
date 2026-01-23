@@ -1402,7 +1402,7 @@ form {
   display: grid;
   grid-template-rows: 100%;
   grid-template-columns: repeat(5, 1fr);
-  background-color: black;
+  background-color: var(--color-primary);
   width: 100%;
   max-width: 100%;
   border-top-left-radius: 10px;
