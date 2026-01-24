@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Kavoon&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 
@@ -19,7 +18,6 @@ button {
 /* VARIABLES */
 
 :root {
-  --fredoka-font: "Fredoka", sans-serif;
   --kavoon-font: "Kavoon", serif;
   --source-sans-font: "Source Sans 3", sans-serif;
 
@@ -1308,6 +1306,11 @@ form {
   background-color: #f3f3f3;
   border-radius: 10px;
   box-shadow: 0px 0px 5px 0px rgba(190, 190, 190, 0.637);
+  border: 1px solid var(--color-primary);
+}
+
+.dashboard-header-actions {
+  position: relative;
 }
 
 .dashboard-header > .dashboard-header-intro {
@@ -1334,7 +1337,7 @@ form {
     "kpi kpi kpi kpi kpi"
     "rectangle rectangle rectangle upper upper"
     "rectangle rectangle rectangle lower lower";
-  row-gap: 20px;
+  gap: 20px;
 }
 
 .dashboard-kpis {
@@ -1345,22 +1348,29 @@ form {
   column-gap: 20px;
 }
 
-.dashboard-main > div {
-  box-shadow: 0px 0px 5px 0px rgba(190, 190, 190, 0.637);
-  background-color: #f3f3f3;
+.dashboard-content > div {
   border-radius: 10px;
 }
 
 #rectangle-graph {
   grid-area: rectangle;
+  background-color: #f3f3f3;
+  border: 1px solid var(--color-primary);
+  box-shadow: 0px 0px 5px 0px rgba(190, 190, 190, 0.637);
 }
 
 #right-upper-graph {
   grid-area: upper;
+  background-color: #f3f3f3;
+  box-shadow: 0px 0px 5px 0px rgba(190, 190, 190, 0.637);
+  border: 1px solid var(--color-primary);
 }
 
 #right-lower-graph {
   grid-area: lower;
+  background-color: #f3f3f3;
+  box-shadow: 0px 0px 5px 0px rgba(190, 190, 190, 0.637);
+  border: 1px solid var(--color-primary);
 }
 
 .kpi-card {
@@ -1371,8 +1381,8 @@ form {
   gap: 10px;
   background-color: #f3f3f3;
   border-radius: 10px;
-
   padding: 5px;
+  border: 1px solid var(--color-primary);
   box-shadow: 0px 0px 5px 0px rgba(190, 190, 190, 0.637);
 }
 
@@ -1444,4 +1454,106 @@ form {
 
 .mini-flex-table-row div > p {
   text-align: left;
+}
+
+.notifications-container {
+  background-color: white;
+  position: absolute;
+  z-index: 100;
+  width: 350px;
+  height: 550px;
+  left: -350px;
+  border-radius: 10px;
+  padding: 10px 25px;
+  display: none;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.notification-container-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-container-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#mark-all-as-read-button {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--source-sans-font);
+  color: #3b5ae6;
+  font-weight: 600;
+  transition: ease-in-out 30ms;
+}
+
+#mark-all-as-read-button:hover {
+  color: #4c9e97;
+}
+#mark-all-as-read-button:hover svg path {
+  fill: #4c9e97;
+}
+
+#close-notification-section-button {
+  width: 15px;
+}
+
+.close-caret {
+  background-color: black;
+  width: 100%;
+  height: 2px;
+  border-radius: 5px;
+}
+
+.notifications-ul {
+  list-style-type: none;
+  overflow-y: scroll;
+  padding: 0px;
+}
+
+.notifications-ul > .notification-item {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px 0px;
+}
+
+.notification-item:not(:first-of-type) {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.notification-read-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+}
+
+.unread-notification {
+  background-color: blue;
+}
+
+.read-notification {
+  background-color: #9b9b9b;
+}
+
+.notification-info-container > .notification-title {
+  word-spacing: 0.3px;
+}
+
+.notification-info-container > .notification-message {
+  font-weight: 300px;
+}
+
+.notification-info-container > .notification-date {
+  font-weight: 200px;
+  color: #b9b9b9;
 }

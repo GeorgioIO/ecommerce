@@ -8,7 +8,7 @@ require_once __DIR__ . '/validators/order_db_validators.php';
 require_once __DIR__ . '/validators/order_lines_validators.php';
 require_once __DIR__ . '/helpers/order_helpers.php';
 require_once __DIR__ . '/helpers/order_db_helpers.php';
-
+require_once __DIR__ . '/../notifications/admin_notifications/helpers/admin_notifcations_db_helpers.php';
 
 $order_payload = extract_order_payload($_POST);
 
@@ -234,9 +234,19 @@ try
     
         // Update Stock
         decrease_book_stock($conn , $book_id , $quantity);
+
+        $new_stock = get_book_stock($conn , $book_id);
+        $title = get_book_title($conn , $book_id);
+        if($new_stock <= 5)
+        {
+            insert_admin_notification($conn , 'low_stock' , "Low stock for book #$book_id" , "$title reached $new_stock in stock !" , 'book' , $book_id); 
+        }
     }
 
     $conn->commit();
+
+    // Create notifications : one for the order , one for the stock
+    insert_admin_notification($conn , 'new_order' , 'New Order Placed' , "Order {$order_code} was placed" , 'order' , $order_id);
 
     echo json_encode([
         'success' => true,
@@ -253,6 +263,16 @@ try
     ]);
     exit;
 }
+
+
+
+
+
+
+
+
+
+
 
 
 ?>

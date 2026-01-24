@@ -14,12 +14,12 @@ export function loadPieChart(id, labels, values, title) {
 
       marker: {
         colors: [
-          "#E6FAF8",
-          "#B3F0EA",
-          "#66E0D4",
-          "#00CDBC",
-          "#00AFA1",
           "#008F86",
+          "#00AFA1",
+          "#00CDBC",
+          "#66E0D4",
+          "#B3F0EA",
+          "#E6FAF8",
         ],
       },
     },
@@ -95,7 +95,7 @@ export function loadHorizontalBarChart(id, xarray, yarray, title) {
     },
 
     xaxis: {
-      title: "Revenue",
+      title: "Revenue in $USD",
       gridcolor: "#e5e7eb",
       zeroline: false,
     },

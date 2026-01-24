@@ -1,3 +1,6 @@
+import { buildNotificationContainer } from "../notifications/notificationBuilder.js";
+import { populateNotification } from "../notifications/notificationPopulator.js";
+
 const notificationIcon = `                    
                     <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" viewBox="0 0 24 24">
                         <path d="M20 18H4l2-2v-6a6 6 0 0 1 5-5.91V3a1 1 0 0 1 2 0v1.09a5.9 5.9 0 0 1 1.3.4A3.992 3.992 0 0 0 18 10v6Zm-8 4a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2Zm6-18a2 2 0 1 0 2 2 2 2 0 0 0-2-2Z"/>
@@ -29,7 +32,13 @@ export function buildDashboardSkeleton() {
 
   // HEADER: Header actions
   const dashboardHeaderAction = document.createElement("div");
-  dashboardHeaderAction.classList.add("admin-header-intro");
+  dashboardHeaderAction.classList.add("dashboard-header-actions");
+
+  // HEADER: build admin notifications container
+  const notificationContainer = buildNotificationContainer();
+
+  // HEADER: append notification-container
+  dashboardHeaderAction.append(notificationContainer);
 
   const notificationButton = document.createElement("button");
   notificationButton.id = "notification-button";
@@ -44,9 +53,6 @@ export function buildDashboardSkeleton() {
 
   const dashboardKPIsContainer = document.createElement("div");
   dashboardKPIsContainer.classList.add("dashboard-kpis");
-
-  // const dashboardMain = document.createElement("div");
-  // dashboardMain.classList.add("dashboard-main");
 
   dashboardContent.append(dashboardKPIsContainer);
 

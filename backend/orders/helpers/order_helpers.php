@@ -10,7 +10,7 @@ function validate_stock($conn , $insert_lines , $update_lines)
 
         $current_book_stock = get_book_stock($conn , $book_id);
 
-        if($current_book_stock['stock_quantity'] < $qty_to_insert)
+        if($current_book_stock < $qty_to_insert)
         {
             throw new Exception("Not enough stock for book ID $book_id");
         }
@@ -23,7 +23,7 @@ function validate_stock($conn , $insert_lines , $update_lines)
         {
             $current_book_stock = get_book_stock($conn , $line['book_id']);
 
-            if($current_book_stock['stock_quantity'] < $line['delta'])
+            if($current_book_stock < $line['delta'])
             {
                 throw new Exception("Not enough stock for book ID {$line['book_id']}");
             }

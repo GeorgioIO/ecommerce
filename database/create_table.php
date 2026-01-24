@@ -166,8 +166,26 @@ $conn->query("
     );
 ");
 
+$conn->query("
+    CREATE TABLE IF NOT EXISTS admin_notifications (
+        id INT AUTO_INCREMENT,
+        type ENUM('new_order' , 'low_stock' , 'out_of_stock' , 'order_status' , 'system') NOT NULL,
+        title VARCHAR(255) NOT NULL,
+        message TEXT NOT NULL,
+        entity ENUM('order' , 'book' , 'customer' , 'system') NOT NULL,
+        entity_id INT NULL,
+        is_read BOOLEAN NOT NULL DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY(id)
+);
+    
+");
+
 
 // Indexes
+$conn->query("CREATE INDEX IF NOT EXISTS notif_read_index ON admin_notifications (is_read);");
+$conn->query("CREATE INDEX IF NOT EXISTS notif_date_index ON admin_notifications (created_at);");
+$conn->query("CREATE INDEX IF NOT EXISTS notif_type_index ON admin_notifications (type);");
 $conn->query("CREATE INDEX IF NOT EXISTS order_cid_index ON Orders (user_id);");
 $conn->query("CREATE INDEX IF NOT EXISTS order_date_index ON Orders (date_added);");
 $conn->query("CREATE INDEX IF NOT EXISTS username_index ON users (name);");

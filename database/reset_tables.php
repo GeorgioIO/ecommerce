@@ -6,6 +6,7 @@ require_once __DIR__ . '/../config/database.php';
 $conn->query("SET FOREIGN_KEY_CHECKS = 0");
 
 $conn->query("DROP TABLE IF EXISTS authors;");
+$conn->query("DROP TABLE IF EXISTS admin_notifications;");
 $conn->query("DROP TABLE IF EXISTS wishlist_items;");
 $conn->query("DROP TABLE IF EXISTS order_items;");
 $conn->query("DROP TABLE IF EXISTS shipping_addresses;");

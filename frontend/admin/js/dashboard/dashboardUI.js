@@ -15,6 +15,8 @@ import {
   loadHorizontalBarChart,
   loadPieChart,
 } from "./charts/chartsFunctions.js";
+import { loadAdminNotifications_DB } from "../notifications/notificationsServices.js";
+import { loadNotifications } from "../notifications/notificationUI.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
@@ -147,4 +149,6 @@ export async function loadDashboard() {
     revenuesPerGenre,
     "Revenue By Genres",
   );
+
+  loadNotifications();
 }

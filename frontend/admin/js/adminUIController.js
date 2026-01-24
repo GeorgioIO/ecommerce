@@ -62,6 +62,9 @@ import { addOrder_DB, updateOrder_DB } from "./orders/ordersServices.js";
 import { validateOrderData } from "./orders/ordersValidators.js";
 import { removeSearchBox } from "./orders/orderLineSearch.js";
 import { loadDashboard } from "./dashboard/dashboardUI.js";
+import { MarkAllNotificationRead_DB } from "./notifications/notificationsServices.js";
+import { populateNotification } from "./notifications/notificationPopulator.js";
+import { loadNotifications } from "./notifications/notificationUI.js";
 
 const confirmationModal = document.querySelector("#confirmation-modal");
 const closeOperationFormButton = document.querySelector(
@@ -160,6 +163,26 @@ document.addEventListener("click", async (e) => {
   const showDeletionModalButton = e.target.closest(".show-confirmation-modal"); // false
   const cascadeShowBooksButton = e.target.closest(".cascade-show-books-button"); // true
   const toggleAddressButton = e.target.closest(".address-item");
+  const closeNotificationContainer = e.target.closest(
+    "#close-notification-section-button",
+  );
+  const openNotificationContainer = e.target.closest("#notification-button");
+
+  if (openNotificationContainer) {
+    const notificationContainer = document.querySelector(
+      ".notifications-container",
+    );
+
+    notificationContainer.style.display = "flex";
+  }
+
+  if (closeNotificationContainer) {
+    const notificationContainer = document.querySelector(
+      ".notifications-container",
+    );
+
+    notificationContainer.style.display = "none";
+  }
 
   if (openOperationFormButton) {
     const { entity, id, intent } = openOperationFormButton.dataset;
