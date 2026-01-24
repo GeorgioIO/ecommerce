@@ -50,7 +50,7 @@ function loadKPISCards(data) {
     kpiContent.classList.add("kpi-content");
 
     if (kpi === "total_revenue") {
-      kpiContent.innerHTML = `$${data.value[kpi]}`;
+      kpiContent.innerHTML = `$${data.value[kpi].toFixed(2)}`;
     } else {
       kpiContent.innerHTML = data.value[kpi];
     }
