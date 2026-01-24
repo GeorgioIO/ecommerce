@@ -3,6 +3,7 @@ import { loadOrders, showOrderEditForm } from "../orders/orderUI.js";
 import { changeSidebarSection } from "../UIhelpers.js";
 import {
   MarkAllNotificationRead_DB,
+  getUnreadNotificationCount,
   loadAdminNotifications_DB,
 } from "./notificationsServices.js";
 
@@ -20,6 +21,7 @@ document.addEventListener("click", async (e) => {
     if (notificationItems) {
       const result = await MarkAllNotificationRead_DB();
       loadNotifications();
+      changeNotificationCountBadge();
     }
   }
 
@@ -37,6 +39,22 @@ document.addEventListener("click", async (e) => {
     }
   }
 });
+
+export async function changeNotificationCountBadge() {
+  const notificationBadge = document.querySelector(".notification-badge");
+
+  const notificationCount = await getUnreadNotificationCount();
+
+  if (notificationCount.value === 0) {
+    notificationBadge.style.display = "none";
+  } else if (notificationCount.value > 9) {
+    notificationBadge.style.display = "flex";
+    notificationBadge.textContent = notificationCount.value;
+  } else {
+    notificationBadge.style.display = "flex";
+    notificationBadge.textContent = "+9";
+  }
+}
 
 export async function loadNotifications() {
   const data = await loadAdminNotifications_DB();
