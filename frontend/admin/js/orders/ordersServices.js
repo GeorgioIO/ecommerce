@@ -120,7 +120,6 @@ export async function updateOrder_DB(orderData) {
   // Order Lines
   formData.append("order_lines", JSON.stringify(orderData.orderLines));
 
-  console.log(orderData);
   const result = await fetch("../../backend/orders/update_order.php", {
     method: "POST",
     body: formData,

@@ -1524,6 +1524,7 @@ form {
   gap: 12px;
   align-items: flex-start;
   padding: 16px 0px;
+  cursor: pointer;
 }
 
 .notification-item:not(:first-of-type) {

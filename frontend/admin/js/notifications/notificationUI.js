@@ -1,3 +1,6 @@
+import { loadBooks, showBookEditForm } from "../books/booksUI.js";
+import { loadOrders, showOrderEditForm } from "../orders/orderUI.js";
+import { changeSidebarSection } from "../UIhelpers.js";
 import {
   MarkAllNotificationRead_DB,
   loadAdminNotifications_DB,
@@ -7,8 +10,8 @@ document.addEventListener("click", async (e) => {
   const notificationContainer = document.querySelector(
     ".notifications-container",
   );
-
   const markAllAsReadButton = e.target.closest("#mark-all-as-read-button");
+  const notificationItem = e.target.closest(".notification-item");
 
   if (markAllAsReadButton) {
     const notificationItems =
@@ -17,6 +20,20 @@ document.addEventListener("click", async (e) => {
     if (notificationItems) {
       const result = await MarkAllNotificationRead_DB();
       loadNotifications();
+    }
+  }
+
+  if (notificationItem) {
+    const { entity, entityid } = notificationItem.dataset;
+
+    if (entity === "order") {
+      changeSidebarSection(entity);
+      loadOrders();
+      showOrderEditForm(entityid);
+    } else if (entity === "book") {
+      changeSidebarSection(entity);
+      loadBooks();
+      showBookEditForm(entityid);
     }
   }
 });
@@ -28,10 +45,14 @@ export async function loadNotifications() {
 
   const notificationUL = document.querySelector(".notifications-ul");
   notificationUL.innerHTML = "";
+
   data.forEach((notification) => {
     const notificationItem = document.createElement("li");
     notificationItem.classList.add("notification-item");
     notificationItem.dataset.notificationid = notification.id;
+    notificationItem.dataset.entity = notification.entity;
+    notificationItem.dataset.entityid = notification.entity_id;
+
     const notificationReadIndicator = document.createElement("div");
     notificationReadIndicator.classList.add("notification-read-indicator");
     notificationReadIndicator.classList.add(
@@ -39,6 +60,7 @@ export async function loadNotifications() {
         ? "read-notification"
         : "unread-notification",
     );
+
     const notificationInfoContainer = document.createElement("div");
     notificationInfoContainer.classList.add("notification-info-container");
 

@@ -8,7 +8,7 @@ require_once __DIR__ . '/validators/order_validators.php';
 require_once __DIR__ . '/validators/order_lines_validators.php';
 require_once __DIR__ . '/helpers/order_db_helpers.php';
 require_once __DIR__ . '/helpers/order_helpers.php';
-
+require_once __DIR__ . '/../customers/validators/customer_validators.php';
 
 // 1. Fetch order (must exist)
 // 2. Check status allows edit

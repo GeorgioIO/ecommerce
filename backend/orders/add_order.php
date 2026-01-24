@@ -237,9 +237,13 @@ try
 
         $new_stock = get_book_stock($conn , $book_id);
         $title = get_book_title($conn , $book_id);
-        if($new_stock <= 5)
+        if($new_stock <= 5 && $new_stock !== 0)
         {
             insert_admin_notification($conn , 'low_stock' , "Low stock for book #$book_id" , "$title reached $new_stock in stock !" , 'book' , $book_id); 
+        }
+        elseif($new_stock === 0)
+        {
+            insert_admin_notification($conn , 'out_of_stock' , "Book $book_id is out of stock" , "$title is out of stock" , 'book' , $book_id);
         }
     }
 
