@@ -150,6 +150,5 @@ export async function loadDashboard() {
     "Revenue By Genres",
   );
 
-  alert(1);
   loadNotifications();
 }
