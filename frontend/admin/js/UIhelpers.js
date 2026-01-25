@@ -1,3 +1,5 @@
+import { createPaginationButtons } from "./pagination/paginationUI.js";
+
 export function handlePaginationButtonsColor(pageNumber) {
   const paginationsButtons = document.querySelectorAll(".page-button");
 
@@ -77,6 +79,16 @@ export function changeSidebarSection(entity) {
   });
 }
 
+function renderTableFooter(paginationData) {
+  const buttons = createPaginationButtons(paginationData);
+  console.log(buttons);
+  return `
+  <div class="flex-table-footer">
+    ${buttons}
+  </div>
+  `;
+}
+
 /*
 renderEmptyState : responsible of controlling the dom of the table in table-container , based on entity (books, authors, genres....)
 Input : 
@@ -120,11 +132,10 @@ export function renderActiveTableState({
   pagination,
   renderHeader,
   renderRow,
-  renderFooter,
   canAdd = true,
 }) {
   const header = renderHeader();
-  const footer = renderFooter(pagination);
+  const footer = renderTableFooter(pagination);
   return `
         ${
           canAdd
@@ -136,7 +147,7 @@ export function renderActiveTableState({
             : ""
         }
         
-        <div class="flex-table">
+        <div class="flex-table" data-entity="${entity}">
             ${header}
             <div class="flex-table-body">    
                 ${data.map((item) => renderRow(item)).join("")}

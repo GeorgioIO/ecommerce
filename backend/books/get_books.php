@@ -19,11 +19,15 @@ $offset = ($page - 1) * $perPage;
 
 
 $query = form_load_books_query($author_id , $genre_id , $perPage , $offset);
-$stmt = $conn->prepare($query);
+$datastmt = $conn->prepare($query);
 
 if(!$author_id && !$genre_id)
 {
-    $stmt->bind_param('ii' , $perPage , $offset);
+    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books");
+    $countstmt->execute();
+    $total_books = $countstmt->get_result()->fetch_assoc()['total_books'];
+
+    $datastmt->bind_param('ii' , $perPage , $offset);
 }
 else if($author_id)        
 {   
@@ -42,7 +46,12 @@ else if($author_id)
     $DB_author_id = trim($author_id);
     $DB_author_id = (int) $DB_author_id;
 
-    $stmt->bind_param('iii' , $DB_author_id , $perPage , $offset);
+    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books WHERE author_id = ?");
+    $countstmt->bind_param("i" , $DB_author_id);
+    $countstmt->execute();
+    $total_books = $countstmt->get_result()->fetch_assoc()['total_books'];
+
+    $datastmt->bind_param('iii' , $DB_author_id  , $perPage , $offset);
 }
 elseif ($genre_id)
 {
@@ -61,13 +70,19 @@ elseif ($genre_id)
     $DB_genre_id = trim($genre_id);
     $DB_genre_id = (int) $DB_genre_id;
 
-    $stmt->bind_param('iii' , $DB_genre_id  , $perPage , $offset);
+
+    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books WHERE genre_id = ?");
+    $countstmt->bind_param("i" , $DB_genre_id);
+    $countstmt->execute();
+    $total_books = $countstmt->get_result()->fetch_assoc()['total_books'];
+    
+    $datastmt->bind_param('iii' , $DB_genre_id  , $perPage , $offset);
 }
 
 
-$stmt->execute();
+$datastmt->execute();
 
-$result = $stmt->get_result();
+$result = $datastmt->get_result();
 $books = [];
 
 
@@ -81,9 +96,11 @@ if($result && $result->num_rows > 0)
 }
 
 // Get total books
-$result = $conn->query("SELECT COUNT(*) AS total_books FROM books");
-$total_books = $result->fetch_assoc()['total_books'];
 
+
+$conn->close();
+$datastmt->close();
+$countstmt->close();
 
 echo json_encode([
     'success' => true,
@@ -96,7 +113,6 @@ echo json_encode([
     ]
 ]);
 
-$conn->close();
 
 ?>
 

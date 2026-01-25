@@ -6,18 +6,23 @@ import { loadGenres } from "./genres/genresUI.js";
 import { loadCustomers } from "./customers/customerUI.js";
 import { loadOrders } from "./orders/orderUI.js";
 import { loadDashboard } from "./dashboard/dashboardUI.js";
+import { listState } from "./adminUIController.js";
 const sidebarButtons = document.querySelectorAll(
   ".sidebar ul li .adm-sidebar-button",
 );
 
 sidebarButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
-    const clickedButton = e.currentTarget;
     const section = e.currentTarget.dataset.section;
     changeSidebarSection(section);
 
+    listState.page = 1;
+    listState.filters = {};
+    listState.entity = section;
+
     if (section === "book") {
-      loadBooks(null, { currentPage: 1, perPage: 10 });
+      listState.filters = {};
+      loadBooks();
     } else if (section === "author") {
       loadAuthors();
     } else if (section === "genre") {

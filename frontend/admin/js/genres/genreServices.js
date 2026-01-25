@@ -1,5 +1,15 @@
-export async function fetch_genres_DB() {
-  const result = await fetch("../../backend/genres/get_genres.php");
+export async function fetch_genres_DB(pagination = null) {
+  let params = "";
+  if (pagination) {
+    params = new URLSearchParams({
+      page: pagination.page,
+      perPage: pagination.perPage,
+    });
+  }
+
+  const result = await fetch(
+    `../../backend/genres/get_genres.php?${params.toString()}`,
+  );
 
   return result.json();
 }

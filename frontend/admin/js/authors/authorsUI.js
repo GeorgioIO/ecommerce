@@ -7,8 +7,9 @@ import {
   swapClass,
   renderActiveTableState,
   renderEmptyTableState,
+  handlePaginationButtonsColor,
 } from "../UIhelpers.js";
-
+import { listState } from "../adminUIController.js";
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
 
@@ -37,7 +38,16 @@ export function collectAuthorFormData(form) {
 // Function to load author from the database by sending a request to backend
 export async function loadAuthors() {
   try {
-    const authors = await fetch_authors_DB();
+    const authorsResponse = await fetch_authors_DB({
+      page: listState.page,
+      perPage: listState.perPage,
+    });
+
+    const authors = authorsResponse.data;
+    const paginationData = authorsResponse.pagination;
+
+    listState.page = paginationData.page;
+    listState.totalPages = paginationData.totalPages;
 
     if (authors.length === 0) {
       content.innerHTML = renderEmptyTableState({
@@ -50,10 +60,13 @@ export async function loadAuthors() {
         entity: "author",
         label: "Author",
         data: authors,
+        pagination: paginationData,
         renderHeader: renderAuthorTableHeader,
         renderRow: renderAuthorTableRow,
         canAdd: true,
       });
+
+      handlePaginationButtonsColor(listState.page);
     }
   } catch (err) {
     console.log(err);
@@ -69,7 +82,7 @@ export async function populateSelectAuthors(selectElement) {
   defaultOptionElement.textContent = "Select Author";
   selectElement.append(defaultOptionElement);
 
-  authors.forEach((author) => {
+  authors.data.forEach((author) => {
     let optionElement = document.createElement("option");
     optionElement.value = author.id;
     optionElement.textContent = author.name;
@@ -116,7 +129,7 @@ function renderAuthorTableHeader() {
           <div>
             <p>${columnHeader.headerTitle}</p>
           </div>
-        `
+        `,
       )
       .join("")}
   </div>

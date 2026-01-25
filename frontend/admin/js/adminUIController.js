@@ -63,7 +63,14 @@ import { addOrder_DB, updateOrder_DB } from "./orders/ordersServices.js";
 import { validateOrderData } from "./orders/ordersValidators.js";
 import { removeSearchBox } from "./orders/orderLineSearch.js";
 import { loadDashboard } from "./dashboard/dashboardUI.js";
-import { paginationState } from "./pagination/paginationState.js";
+
+export const listState = {
+  entity: "",
+  filters: {},
+  page: 1,
+  perPage: 10,
+  totalPages: 1,
+};
 
 const confirmationModal = document.querySelector("#confirmation-modal");
 const closeOperationFormButton = document.querySelector(
@@ -169,26 +176,31 @@ document.addEventListener("click", async (e) => {
   const pageButton = e.target.closest(".page-button");
 
   if (pageButton) {
+    const table = document.querySelector(".flex-table");
+    const entity = table.dataset.entity;
+
+    const loadEntityElements = entityHandlers?.[entity]?.loader;
+
     // Previous page
     if (pageButton.id === "previous-page-button") {
-      if (paginationState.page > 1) {
-        paginationState.page--;
+      if (listState.page > 1) {
+        listState.page--;
       } else {
-        paginationState.page = paginationState.totalPages;
+        listState.page = listState.totalPages;
       }
-
-      loadBooks();
     }
     // Next page
     else if (pageButton.id === "next-page-button") {
-      if (paginationState.page < paginationState.totalPages) {
-        paginationState.page++;
+      if (listState.page < listState.totalPages) {
+        listState.page++;
       } else {
-        paginationState.page = 1;
+        listState.page = 1;
       }
-
-      loadBooks();
+    } else {
+      listState.page = pageButton.dataset.page;
     }
+
+    loadEntityElements();
   }
 
   if (openNotificationContainer) {
@@ -223,7 +235,7 @@ document.addEventListener("click", async (e) => {
   }
 
   if (cascadeShowBooksButton) {
-    const { id, filterf, entity, intent } = cascadeShowBooksButton.dataset;
+    const { id, filterf, entity } = cascadeShowBooksButton.dataset;
 
     // Change sidebar section to books
     changeSidebarSection(entity);
@@ -231,8 +243,11 @@ document.addEventListener("click", async (e) => {
     // Get books loader
     const loadEntityElements = entityHandlers?.[entity]?.loader;
 
+    listState.entity = entity;
+    listState.filters = { [filterf]: id };
+    console.log(listState);
     // Load Books
-    loadEntityElements({ [filterf]: id }); // author_id : 3
+    loadEntityElements(); // author_id : 3
   }
 
   // Address togglers in operation form
@@ -282,6 +297,8 @@ confirmationModal.addEventListener("click", async (e) => {
         } else {
           showMessageLog("success", deleteEntityResult.message);
           swapClass(confirmationModal, "fade-out-modal", "fade-in-modal");
+          listState.filters = {};
+          listState.entity = entity;
           await loadEntityElements();
         }
       }
@@ -327,6 +344,8 @@ document.addEventListener("submit", async (e) => {
     if (addEntityResult?.success) {
       showMessageLog("success", addEntityResult.message);
       removeSearchBox();
+      listState.filters = {};
+      listState.entity = entity;
       await loadEntityElements();
     } else {
       showMessageLog("error", addEntityResult.message);
@@ -338,6 +357,8 @@ document.addEventListener("submit", async (e) => {
     const updateEntityResult = await updateEntity(data);
     if (updateEntityResult?.success) {
       showMessageLog("success", updateEntityResult.message);
+      listState.filters = {};
+      listState.entity = entity;
       await loadEntityElements();
     } else {
       showMessageLog("error", updateEntityResult.message);

@@ -1,5 +1,13 @@
-export async function fetch_customers_DB() {
-  const result = await fetch("../../backend/customers/get_customers.php");
+export async function fetch_customers_DB(pagination) {
+  const params = new URLSearchParams({
+    page: pagination.page,
+    perPage: pagination.perPage,
+  });
+
+  const result = await fetch(
+    `../../backend/customers/get_customers.php?${params.toString()}`,
+  );
+
   return result.json();
 }
 

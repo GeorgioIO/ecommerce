@@ -2,6 +2,7 @@ import {
   renderActiveTableState,
   renderEmptyTableState,
   toggleButtonClickablility,
+  handlePaginationButtonsColor,
 } from "../UIhelpers.js";
 import {
   fetchOrders_DB,
@@ -9,23 +10,19 @@ import {
   fetchOrderLines_DB,
   get_order_data_DB,
 } from "./ordersServices.js";
-import {
-  fetch_customers_DB,
-  get_customer_addresses_DB,
-} from "../customers/customerServices.js";
+import { get_customer_addresses_DB } from "../customers/customerServices.js";
 import { orderTableConfigs } from "./orderTableConfigs.js";
 import { orderDetailsConfig, orderAddressConfig } from "./orderFormConfigs.js";
 import { buildOrderForm } from "./orderFormBuilder.js";
 import { swapClass } from "../UIhelpers.js";
 import { populateOrderFormSelect } from "./orderFormPopulator.js";
 import {
-  createOrderLine,
   clearOrderLineTable,
-  deleteOrderLineRow,
   handleOrderLinePriceChange,
 } from "./orderLines.js";
 import { hydrateOrderForm } from "./orderFormHydrator.js";
-import { removeSearchBox, showProductSearch } from "./orderLineSearch.js";
+import { removeSearchBox } from "./orderLineSearch.js";
+import { listState } from "../adminUIController.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
@@ -199,7 +196,16 @@ export function resetOrderForm(form) {
 // Function to load orders from the database by sending a request to backend
 export async function loadOrders() {
   try {
-    const orders = await fetchOrders_DB();
+    const ordersResponse = await fetchOrders_DB({
+      page: listState.page,
+      perPage: listState.perPage,
+    });
+
+    const orders = ordersResponse.data;
+    const paginationData = ordersResponse.pagination;
+
+    listState.page = paginationData.page;
+    listState.totalPages = paginationData.totalPages;
 
     if (orders.length === 0) {
       content.innerHTML = renderEmptyTableState({
@@ -212,10 +218,13 @@ export async function loadOrders() {
         entity: "order",
         label: "Order",
         data: orders,
+        pagination: paginationData,
         renderHeader: renderOrderTableHeader,
         renderRow: renderOrderTableRow,
         canAdd: true,
       });
+
+      handlePaginationButtonsColor(listState.page);
     }
   } catch (err) {
     console.log(err);
@@ -224,11 +233,11 @@ export async function loadOrders() {
 
 // ========== LOCAL FUNCTIONS ========== //
 
-function resetExistingAddresses(addressesSelect) {
-  const optionGroups = addressesSelect.querySelectorAll("optgroup");
+// function resetExistingAddresses(addressesSelect) {
+//   const optionGroups = addressesSelect.querySelectorAll("optgroup");
 
-  optionGroups.forEach((group) => group.remove());
-}
+//   optionGroups.forEach((group) => group.remove());
+// }
 
 function resetCustomerSelect() {
   const customerSelectOptions = formContainer.querySelectorAll("#name option");

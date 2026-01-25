@@ -12,7 +12,10 @@ import {
   swapClass,
   renderActiveTableState,
   renderEmptyTableState,
+  handlePaginationButtonsColor,
 } from "../UIhelpers.js";
+import { createPaginationButtons } from "../pagination/paginationUI.js";
+import { listState } from "../adminUIController.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
@@ -66,7 +69,16 @@ export function resetCustomerForm(form) {
 
 export async function loadCustomers() {
   try {
-    const customers = await fetch_customers_DB();
+    const customersResponse = await fetch_customers_DB({
+      page: listState.page,
+      perPage: listState.perPage,
+    });
+
+    const customers = customersResponse.data;
+    const paginationData = customersResponse.pagination;
+
+    listState.page = paginationData.page;
+    listState.totalPages = paginationData.totalPages;
 
     if (customers.length === 0) {
       content.innerHTML = renderEmptyTableState({
@@ -79,10 +91,14 @@ export async function loadCustomers() {
         entity: "customer",
         label: "Customer",
         data: customers,
+        pagination: paginationData,
         renderHeader: renderCustomerTableHeader,
         renderRow: renderCustomerTableRow,
+
         canAdd: false,
       });
+
+      handlePaginationButtonsColor(listState.page);
     }
   } catch (err) {
     console.log(err);
@@ -101,7 +117,7 @@ function renderCustomerTableHeader() {
           <div>
             <p>${columnHeader.headerTitle}</p>
           </div>
-        `
+        `,
       )
       .join("")}
   </div>

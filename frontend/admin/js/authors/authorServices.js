@@ -55,7 +55,17 @@ export async function get_author_data_DB(author_id) {
   return res.json();
 }
 
-export async function fetch_authors_DB() {
-  const result = await fetch("../../backend/authors/get_authors.php");
+export async function fetch_authors_DB(pagination = null) {
+  let params = "";
+  if (pagination) {
+    params = new URLSearchParams({
+      page: pagination.page,
+      perPage: pagination.perPage,
+    });
+  }
+
+  const result = await fetch(
+    `../../backend/authors/get_authors.php?${params.toString()}`,
+  );
   return result.json();
 }

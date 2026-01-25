@@ -13,8 +13,7 @@ import { bookTableConfigs } from "./bookTableConfigs.js";
 import { populateBookFormSelects } from "./bookFormPopulator.js";
 import { bookFormConfigs } from "./bookFormConfigs.js";
 import { createPaginationButtons } from "../pagination/paginationUI.js";
-import { paginationState } from "../pagination/paginationState.js";
-
+import { listState } from "../adminUIController.js";
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
 
@@ -28,18 +27,19 @@ export async function showBookEditForm(bookID) {
 }
 
 // Function to load books from the database by sending a request to backend
-export async function loadBooks(filters = {}) {
+export async function loadBooks() {
+  console.log(listState);
   try {
-    const booksResponse = await fetch_books_DB(filters, {
-      page: paginationState.page,
-      perPage: paginationState.perPage,
+    const booksResponse = await fetch_books_DB(listState.filters, {
+      page: listState.page,
+      perPage: listState.perPage,
     });
 
     const books = booksResponse.data;
     const paginationData = booksResponse.pagination;
 
-    paginationState.page = paginationData.page;
-    paginationState.totalPages = paginationData.totalPages;
+    listState.page = paginationData.page;
+    listState.totalPages = paginationData.totalPages;
 
     if (books.length === 0) {
       content.innerHTML = renderEmptyTableState({
@@ -55,11 +55,10 @@ export async function loadBooks(filters = {}) {
         pagination: paginationData,
         renderHeader: renderBookTableHeader,
         renderRow: renderBookTableRow,
-        renderFooter: renderBookTableFooter,
         canAdd: true,
       });
 
-      handlePaginationButtonsColor(paginationData.page);
+      handlePaginationButtonsColor(listState.page);
     }
   } catch (err) {
     console.log(err);
@@ -81,16 +80,6 @@ function renderBookTableHeader() {
         `,
       )
       .join("")}
-  </div>
-  `;
-}
-
-function renderBookTableFooter(paginationData) {
-  const buttons = createPaginationButtons(paginationData);
-
-  return `
-  <div class="flex-table-footer">
-    ${buttons}
   </div>
   `;
 }

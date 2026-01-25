@@ -1,8 +1,10 @@
 export function createPaginationButtons(pagination) {
   let buttons = "";
-  for (let i = 1; i <= pagination.totalPages; i++) {
+  let i = 1;
+  do {
     buttons += `<button data-page="${i}" class="page-button"> ${i} </button>`;
-  }
+    i++;
+  } while (i <= pagination.totalPages);
 
   buttons = `
     <button class="page-button" id="previous-page-button"> &lt; </button>

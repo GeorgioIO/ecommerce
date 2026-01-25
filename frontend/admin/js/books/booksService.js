@@ -79,13 +79,20 @@ export async function update_book_DB(bookData) {
 
 export async function fetch_books_DB(filters, pagination) {
   const params = new URLSearchParams({
-    filters,
     page: pagination.page,
     perPage: pagination.perPage,
   });
+
+  if (filters) {
+    const key = Object.keys(filters)[0];
+    params.set(key, filters[key]);
+  }
+
+  console.log(params.toString());
   const result = await fetch(
     `../../backend/books/get_books.php?${params.toString()}`,
   );
 
   return result.json();
+  // console.log(result.text());
 }

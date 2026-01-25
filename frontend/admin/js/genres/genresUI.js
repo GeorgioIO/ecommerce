@@ -6,10 +6,13 @@ import {
   handleEntityImageElement,
   renderActiveTableState,
   renderEmptyTableState,
+  handlePaginationButtonsColor,
 } from "../UIhelpers.js";
 import { hydrateGenreForm } from "./genreFormHydrator.js";
 import { buildGenreForm } from "./genreFormBuilder.js";
 import { genreFormConfigs } from "./genreFormConfigs.js";
+import { createPaginationButtons } from "../pagination/paginationUI.js";
+import { listState } from "../adminUIController.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
@@ -39,7 +42,16 @@ export function collectGenreFormData(form) {
 
 export async function loadGenres() {
   try {
-    const genres = await fetch_genres_DB();
+    const genresResponse = await fetch_genres_DB({
+      page: listState.page,
+      perPage: listState.perPage,
+    });
+
+    const genres = genresResponse.data;
+    const paginationData = genresResponse.pagination;
+
+    listState.page = paginationData.page;
+    listState.totalPages = paginationData.totalPages;
 
     if (genres.length === 0) {
       content.innerHTML = renderEmptyTableState({
@@ -52,11 +64,14 @@ export async function loadGenres() {
         entity: "genre",
         label: "Genre",
         data: genres,
+        pagination: paginationData,
         renderHeader: renderGenreTableHeader,
         renderRow: renderGenreTableRow,
-        renderFooter: renderGenreTableFooter,
+
         canAdd: true,
       });
+
+      handlePaginationButtonsColor(listState.page);
     }
   } catch (err) {
     console.log(err);
@@ -78,19 +93,6 @@ function renderGenreTableHeader() {
         `,
       )
       .join("")}
-  </div>
-  `;
-}
-
-function renderGenreTableFooter() {
-  return `
-
-  <div class="flex-table-footer">
-    <button class="page-button" id="previous-page-button"> &lt; </button>
-    <button class="page-button"> 1 </button>
-    <button class="page-button"> 2 </button>
-    <button class="page-button"> 3 </button>
-    <button class="page-button" id="next-page-button"> &gt; </button>
   </div>
   `;
 }
@@ -204,7 +206,7 @@ export async function populateSelectGenres(selectElement) {
   defaultOptionElement.textContent = "Select Genre";
   selectElement.append(defaultOptionElement);
 
-  genres.forEach((genre) => {
+  genres.data.forEach((genre) => {
     let optionElement = document.createElement("option");
     optionElement.value = genre.id;
     optionElement.textContent = genre.name;
