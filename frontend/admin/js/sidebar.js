@@ -17,7 +17,7 @@ sidebarButtons.forEach((button) => {
     changeSidebarSection(section);
 
     if (section === "book") {
-      loadBooks();
+      loadBooks(null, { currentPage: 1, perPage: 10 });
     } else if (section === "author") {
       loadAuthors();
     } else if (section === "genre") {

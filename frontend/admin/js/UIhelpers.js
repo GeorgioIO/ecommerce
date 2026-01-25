@@ -1,3 +1,24 @@
+export function handlePaginationButtonsColor(pageNumber) {
+  const paginationsButtons = document.querySelectorAll(".page-button");
+
+  paginationsButtons.forEach((button) => {
+    if (
+      button.id !== "previous-page-button" &&
+      button.id !== "next-page-button"
+    ) {
+      button.classList.remove("active-page-button");
+    }
+  });
+
+  const targetPageButton = document.querySelector(
+    `.page-button[data-page="${pageNumber}"]`,
+  );
+
+  if (!targetPageButton) return;
+
+  targetPageButton.classList.add("active-page-button");
+}
+
 export function toggleButtonClickablility(button, clickable) {
   if (clickable) {
     swapClass(button, "not-clickable", "clickable");
@@ -96,11 +117,14 @@ export function renderActiveTableState({
   entity,
   label,
   data,
+  pagination,
   renderHeader,
   renderRow,
+  renderFooter,
   canAdd = true,
 }) {
   const header = renderHeader();
+  const footer = renderFooter(pagination);
   return `
         ${
           canAdd
@@ -117,6 +141,7 @@ export function renderActiveTableState({
             <div class="flex-table-body">    
                 ${data.map((item) => renderRow(item)).join("")}
             </div>
+            ${footer}
         </div>
         `;
 }

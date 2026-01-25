@@ -3,6 +3,7 @@ import {
   swapClass,
   renderActiveTableState,
   renderEmptyTableState,
+  handlePaginationButtonsColor,
 } from "../UIhelpers.js";
 import { get_book_data_DB, fetch_books_DB } from "../books/booksService.js";
 import { buildBookForm } from "../books/bookFormBuilder.js";
@@ -11,6 +12,8 @@ import { hydrateBookForm } from "./bookFormHydrator.js";
 import { bookTableConfigs } from "./bookTableConfigs.js";
 import { populateBookFormSelects } from "./bookFormPopulator.js";
 import { bookFormConfigs } from "./bookFormConfigs.js";
+import { createPaginationButtons } from "../pagination/paginationUI.js";
+import { paginationState } from "../pagination/paginationState.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
@@ -27,7 +30,16 @@ export async function showBookEditForm(bookID) {
 // Function to load books from the database by sending a request to backend
 export async function loadBooks(filters = {}) {
   try {
-    const books = await fetch_books_DB(filters);
+    const booksResponse = await fetch_books_DB(filters, {
+      page: paginationState.page,
+      perPage: paginationState.perPage,
+    });
+
+    const books = booksResponse.data;
+    const paginationData = booksResponse.pagination;
+
+    paginationState.page = paginationData.page;
+    paginationState.totalPages = paginationData.totalPages;
 
     if (books.length === 0) {
       content.innerHTML = renderEmptyTableState({
@@ -40,10 +52,14 @@ export async function loadBooks(filters = {}) {
         entity: "book",
         label: "Book",
         data: books,
+        pagination: paginationData,
         renderHeader: renderBookTableHeader,
         renderRow: renderBookTableRow,
+        renderFooter: renderBookTableFooter,
         canAdd: true,
       });
+
+      handlePaginationButtonsColor(paginationData.page);
     }
   } catch (err) {
     console.log(err);
@@ -62,9 +78,19 @@ function renderBookTableHeader() {
           <div>
             <p>${columnHeader.headerTitle}</p>
           </div>
-        `
+        `,
       )
       .join("")}
+  </div>
+  `;
+}
+
+function renderBookTableFooter(paginationData) {
+  const buttons = createPaginationButtons(paginationData);
+
+  return `
+  <div class="flex-table-footer">
+    ${buttons}
   </div>
   `;
 }

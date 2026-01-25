@@ -23,7 +23,8 @@ function form_load_books_query($author_id , $genre_id)
         LEFT JOIN genres g ON b.genre_id = g.id
         LEFT JOIN authors a ON b.author_id = a.id
         LEFT JOIN book_formats bf ON b.format_id = bf.id
-        ORDER BY b.title ASC;
+        ORDER BY b.title ASC
+        LIMIT ? OFFSET ?;
         EOT;
     }
     elseif ($author_id)
@@ -48,7 +49,9 @@ function form_load_books_query($author_id , $genre_id)
         LEFT JOIN authors a ON b.author_id = a.id
         LEFT JOIN book_formats bf ON b.format_id = bf.id
         WHERE b.author_id = ?
-        ORDER BY b.title ASC;
+        ORDER BY b.title ASC
+        LIMIT ? OFFSET ?;
+        
         EOT;
     }
     elseif($genre_id)
@@ -73,7 +76,8 @@ function form_load_books_query($author_id , $genre_id)
         LEFT JOIN authors a ON b.author_id = a.id
         LEFT JOIN book_formats bf ON b.format_id = bf.id
         WHERE b.genre_id = ?
-        ORDER BY b.title ASC;
+        ORDER BY b.title ASC
+        LIMIT ? OFFSET ?;
         EOT;
     }
 }

@@ -54,6 +54,7 @@ export async function loadGenres() {
         data: genres,
         renderHeader: renderGenreTableHeader,
         renderRow: renderGenreTableRow,
+        renderFooter: renderGenreTableFooter,
         canAdd: true,
       });
     }
@@ -74,9 +75,22 @@ function renderGenreTableHeader() {
           <div>
             <p>${columnHeader.headerTitle}</p>
           </div>
-        `
+        `,
       )
       .join("")}
+  </div>
+  `;
+}
+
+function renderGenreTableFooter() {
+  return `
+
+  <div class="flex-table-footer">
+    <button class="page-button" id="previous-page-button"> &lt; </button>
+    <button class="page-button"> 1 </button>
+    <button class="page-button"> 2 </button>
+    <button class="page-button"> 3 </button>
+    <button class="page-button" id="next-page-button"> &gt; </button>
   </div>
   `;
 }

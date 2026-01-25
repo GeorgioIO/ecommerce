@@ -300,13 +300,15 @@ main {
 
 .flex-table {
   width: 100%;
+  height: 100%;
   max-width: 100%;
   min-width: 0;
   display: flex;
   align-items: stretch;
-  gap: 32px;
+  gap: 28px;
   flex-direction: column;
   box-sizing: border-box;
+  padding: 5px;
 }
 
 .flex-table-header {
@@ -344,6 +346,7 @@ main {
 .flex-table-body {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   gap: 12px;
   width: 100%;
   max-width: 100%;
@@ -355,6 +358,7 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  align-self: flex-start;
   width: 100%;
   max-width: 100%;
   min-width: 0;
@@ -422,6 +426,47 @@ main {
   padding: 8px 4px;
   border-radius: 6px;
   font-weight: 700;
+}
+
+.flex-table-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+
+.page-button {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  color: var(--color-primary);
+  background-color: var(--color-secondary);
+  border: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--source-sans-font);
+  font-weight: bold;
+  transition: ease-in 300ms;
+}
+
+.page-button:hover {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  transform: scale(1.1);
+}
+
+.active-page-button {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+}
+
+#previous-page-button,
+#next-page-button {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
 }
 
 .action-btns-container {

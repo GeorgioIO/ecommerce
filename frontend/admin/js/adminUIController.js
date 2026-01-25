@@ -34,6 +34,7 @@ import {
   handleEntityImageElement,
   swapClass,
   changeSidebarSection,
+  handlePaginationButtonsColor,
 } from "./UIhelpers.js";
 import { validateIDEligibility, handleImageFormat } from "./helpers.js";
 import {} from "./helpers.js";
@@ -62,9 +63,7 @@ import { addOrder_DB, updateOrder_DB } from "./orders/ordersServices.js";
 import { validateOrderData } from "./orders/ordersValidators.js";
 import { removeSearchBox } from "./orders/orderLineSearch.js";
 import { loadDashboard } from "./dashboard/dashboardUI.js";
-import { MarkAllNotificationRead_DB } from "./notifications/notificationsServices.js";
-import { populateNotification } from "./notifications/notificationPopulator.js";
-import { loadNotifications } from "./notifications/notificationUI.js";
+import { paginationState } from "./pagination/paginationState.js";
 
 const confirmationModal = document.querySelector("#confirmation-modal");
 const closeOperationFormButton = document.querySelector(
@@ -167,6 +166,30 @@ document.addEventListener("click", async (e) => {
     "#close-notification-section-button",
   );
   const openNotificationContainer = e.target.closest("#notification-button");
+  const pageButton = e.target.closest(".page-button");
+
+  if (pageButton) {
+    // Previous page
+    if (pageButton.id === "previous-page-button") {
+      if (paginationState.page > 1) {
+        paginationState.page--;
+      } else {
+        paginationState.page = paginationState.totalPages;
+      }
+
+      loadBooks();
+    }
+    // Next page
+    else if (pageButton.id === "next-page-button") {
+      if (paginationState.page < paginationState.totalPages) {
+        paginationState.page++;
+      } else {
+        paginationState.page = 1;
+      }
+
+      loadBooks();
+    }
+  }
 
   if (openNotificationContainer) {
     const notificationContainer = document.querySelector(
