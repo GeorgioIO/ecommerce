@@ -44,15 +44,15 @@ export async function changeNotificationCountBadge() {
   const notificationBadge = document.querySelector(".notification-badge");
 
   const notificationCount = await getUnreadNotificationCount();
-
+  console.log(notificationCount.value);
   if (notificationCount.value === 0) {
     notificationBadge.style.display = "none";
   } else if (notificationCount.value > 9) {
     notificationBadge.style.display = "flex";
-    notificationBadge.textContent = notificationCount.value;
+    notificationBadge.textContent = "+9";
   } else {
     notificationBadge.style.display = "flex";
-    notificationBadge.textContent = "+9";
+    notificationBadge.textContent = notificationCount.value;
   }
 }
 
