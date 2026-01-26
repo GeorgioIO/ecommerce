@@ -9,6 +9,7 @@ require_once __DIR__ . '/validators/order_lines_validators.php';
 require_once __DIR__ . '/helpers/order_helpers.php';
 require_once __DIR__ . '/helpers/order_db_helpers.php';
 require_once __DIR__ . '/../notifications/admin_notifications/helpers/admin_notifcations_db_helpers.php';
+require_once __DIR__ . '/../email/email_config.php';
 
 $order_payload = extract_order_payload($_POST);
 
@@ -251,7 +252,14 @@ try
 
     // Create notifications : one for the order , one for the stock
     insert_admin_notification($conn , 'new_order' , 'New Order Placed' , "Order {$order_code} was placed" , 'order' , $order_id);
-
+    $emailData = [
+        'order_id' => $order_id,
+        'order_code' => $order_code,
+        'customer_name' => $DB_user_id,
+        'price' => $order_payload['order']['total_order_price']
+    ];
+    sendEmail('new_order' , "📦 New Order is Placed - #$order_id - $order_code" , $emailData);
+    
     echo json_encode([
         'success' => true,
         'message' => 'Order created successfully'

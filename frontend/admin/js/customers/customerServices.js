@@ -1,8 +1,11 @@
-export async function fetch_customers_DB(pagination) {
-  const params = new URLSearchParams({
-    page: pagination.page,
-    perPage: pagination.perPage,
-  });
+export async function fetch_customers_DB(pagination = null) {
+  let params = "";
+  if (pagination) {
+    params = new URLSearchParams({
+      page: pagination.page,
+      perPage: pagination.perPage,
+    });
+  }
 
   const result = await fetch(
     `../../backend/customers/get_customers.php?${params.toString()}`,

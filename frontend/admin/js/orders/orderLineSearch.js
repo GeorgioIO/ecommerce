@@ -40,7 +40,7 @@ export function removeSearchBox() {
 
 export function enableSearch(input, searchBox) {
   const searchesBody = searchBox.querySelector(
-    ".inline-book-searches-container"
+    ".inline-book-searches-container",
   );
   input.addEventListener("input", async (e) => {
     // Get value
@@ -54,8 +54,8 @@ export function enableSearch(input, searchBox) {
     const books = await fetch_books_DB();
 
     // Find matches
-    const matches = books.filter((book) =>
-      book.title.toLowerCase().includes(searchValue)
+    const matches = books.data.filter((book) =>
+      book.title.toLowerCase().includes(searchValue),
     );
 
     matches.forEach((book) => {
@@ -65,7 +65,7 @@ export function enableSearch(input, searchBox) {
       searchLine.addEventListener("click", (e) => {
         handleInlineBookSearchSelection(
           book,
-          input.closest(".order-lines-table-line")
+          input.closest(".order-lines-table-line"),
         );
       });
     });

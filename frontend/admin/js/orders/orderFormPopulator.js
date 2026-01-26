@@ -35,7 +35,7 @@ async function populateCustomerSelect(selectElement, mode, data) {
       defaultOptionElement.textContent = "Select Customer";
       selectElement.append(defaultOptionElement);
 
-      customers.forEach((customer) => {
+      customers.data.forEach((customer) => {
         let optionElement = document.createElement("option");
         optionElement.value = customer.id;
         optionElement.textContent = `${customer.name} - ${customer.email} - ${customer.role}`;

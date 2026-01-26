@@ -6,19 +6,38 @@ require_once __DIR__ . '/helpers/book_helpers.php';
 require_once __DIR__ . '/helpers/book_db_helpers.php';
 require_once __DIR__ . '/../../config/helpers.php';
 
+$hasPagination = isset($_GET['page']) && isset($_GET['perPage']);
+
 $author_id = $_GET['author_id'] ?? null; // 3
 $genre_id = $_GET['genre_id'] ?? null; // null
 
-// Pagination
-$page = $_GET['page'] ?? 1;
-$perPage = $_GET['perPage'] ?? 10;
+$params = [];
+$types = "";
 
-$page = max(1 , (int) $page);
-$perPage = min(50 , max(5 , (int) $perPage));
-$offset = ($page - 1) * $perPage;
+if($hasPagination)
+{
 
+    $page = $_GET['page'] ?? 1;
+    $perPage = $_GET['perPage'] ?? 10;
 
-$query = form_load_books_query($author_id , $genre_id , $perPage , $offset);
+    $page = max(1 , (int) $page);
+    $perPage = min(50 , max(5 , $perPage));
+    $offset = ($page - 1) * $perPage;
+
+    $query = form_load_books_query($author_id , $genre_id , $perPage , $offset);
+
+    $query .= " LIMIT ? OFFSET ?";
+
+    $params[] = $perPage;
+    $params[] = $offset;
+    $types .= "ii";
+
+}
+else
+{
+    $query = form_load_books_query($author_id , $genre_id);
+}
+
 $datastmt = $conn->prepare($query);
 
 if(!$author_id && !$genre_id)
@@ -27,7 +46,10 @@ if(!$author_id && !$genre_id)
     $countstmt->execute();
     $total_books = $countstmt->get_result()->fetch_assoc()['total_books'];
 
-    $datastmt->bind_param('ii' , $perPage , $offset);
+    if($hasPagination)
+    {
+        $datastmt->bind_param("ii" , $perPage , $offset);
+    }
 }
 else if($author_id)        
 {   
@@ -95,7 +117,13 @@ if($result && $result->num_rows > 0)
     }
 }
 
-// Get total books
+$pagination = $hasPagination ? [
+    'page' => $page,
+    'perPage' => $perPage,
+    'total' => $total_books,
+    'totalPages' => ceil($total_books / $perPage)
+] : null;
+
 
 
 $conn->close();
@@ -105,12 +133,7 @@ $countstmt->close();
 echo json_encode([
     'success' => true,
     'data' => $books,
-    'pagination' => [
-        'page' => $page,
-        'perPage' => $perPage,
-        'total' => $total_books,
-        'totalPages' => ceil($total_books / $perPage)
-    ]
+    'pagination' => $pagination
 ]);
 
 
