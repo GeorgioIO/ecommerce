@@ -64,38 +64,44 @@ function update_order_line($conn , $order_id , $book_id , $unit_price , $quantit
 
 function decrease_book_stock($conn , $book_id , $quantity)
 {
-    $query = <<<EOT
-        UPDATE books SET stock_quantity  = stock_quantity - ? WHERE id = ? AND stock_quantity >= ?
+    $update_query = <<<EOT
+        UPDATE books SET stock_quantity  = LAST_INSERT_ID(stock_quantity - ?) WHERE id = ? AND stock_quantity >= ?
     EOT;
 
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("iii" , $quantity , $book_id , $quantity);
-    $stmt->execute();
+    $update_stmt = $conn->prepare($update_query);
+    $update_stmt->bind_param("iii" , $quantity , $book_id , $quantity);
+    $update_stmt->execute();
 
-    if($stmt->affected_rows !== 1)
+    if($update_stmt->affected_rows !== 1)
     {
         throw new Exception("Not enough stock for book ID $book_id");
     }
 
-    $stmt->close();
+    $update_stmt->close();
+
+    $result = $conn->query("SELECT LAST_INSERT_ID() AS new_stock");
+    return (int) $result->fetch_assoc()['new_stock'];
 }
 
 function increase_book_stock($conn , $book_id , $quantity)
 {
-    $query = <<<EOT
-        UPDATE books SET stock_quantity  = stock_quantity + ? WHERE id = ? 
+    $update_query = <<<EOT
+        UPDATE books SET stock_quantity  = LAST_INSERT_ID(stock_quantity + ?) WHERE id = ? 
     EOT;
 
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii" , $quantity , $book_id);
-    $stmt->execute();
+    $update_stmt = $conn->prepare($update_query);
+    $update_stmt->bind_param("ii" , $quantity , $book_id);
+    $update_stmt->execute();
 
-    if($stmt->affected_rows !== 1)
+    if($update_stmt->affected_rows !== 1)
     {
         throw new Exception("Problem in increasing stock for book id #$book_id");
     }
 
-    $stmt->close();
+    $update_stmt->close();
+
+    $result = $conn->query("SELECT LAST_INSERT_ID() AS new_stock");
+    return (int) $result->fetch_assoc()['new_stock'];
 }
 
 function delete_order_line($conn , $order_id , $book_id)
@@ -113,6 +119,27 @@ function delete_order_line($conn , $order_id , $book_id)
     }
 
     $stmt->close();
+}
+
+function get_book_data($conn , $id)
+{
+    $query = <<<EOT
+        SELECT
+            title,
+            isbn,
+            sku,
+            stock_quantity AS old_stock
+        FROM 
+            books
+        WHERE id = ?
+    EOT;
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i" , $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return $result->fetch_assoc();
 }
 
 function get_book_title($conn , $id)
@@ -202,13 +229,28 @@ function get_order_lines_by_order($conn , $id)
 function get_single_order_by_id($conn , $id)
 {
     $query = <<<EOT
-        SELECT 
-            total_price,
-            status,
-            address_id
+        SELECT
+            o.id,
+            o.order_code,
+            o.status,
+            o.total_price,
+            o.date_added,
+            o.address_id,
+            u.name AS customer_name,
+            s.first_name,
+            s.last_name,
+            s.email,
+            s.phone_number,
+            s.state,
+            s.city,
+            s.address_line1,
+            s.address_line2,
+            s.additional_notes
         FROM
-            orders
-        WHERE id = ?
+            orders o
+        JOIN users u ON o.user_id = u.id
+        JOIN shipping_addresses s ON o.address_id = s.id 
+        WHERE o.id = ?
     EOT;
 
     $stmt = $conn->prepare($query);

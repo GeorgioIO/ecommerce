@@ -1,5 +1,51 @@
 <?php
 
+require_once __DIR__ . '/../../notifications/admin_notifications/helpers/admin_notifcations_db_helpers.php';
+
+function handle_stock_transition($conn , $book_id , $title , $old_stock , $new_stock , &$email_queue)
+{
+    // Book is out of stock
+    if($old_stock > 0 && $new_stock === 0)
+    {
+        $email_data = [
+            'book_id' => $book_id,
+            'title' => $title,
+            'old_stock' => $old_stock,
+            'new_stock' => $new_stock,
+        ];
+
+        $email_queue [] = ['type' => 'out_of_stock' , 'subject' => "🚨 Book $book_id - $title is out of stock" , 'data' => $email_data];
+        insert_admin_notification($conn , 'out_of_stock' , "Book $book_id is out of stock" , "$title is out of stock" , 'book' , $book_id);
+    }
+    // Book became low in stock
+    elseif($old_stock > 5 && $new_stock <= 5 && $new_stock > 0)
+    {
+        $email_data = [
+            'book_id' => $book_id,
+            'title' => $title,
+            'old_stock' => $old_stock,
+            'new_stock' => $new_stock,
+            'threshold' => 5
+        ];
+
+        $email_queue [] = ['type' => 'low_stock' , 'subject' => "⚠️ Stock is low for book #$book_id - $title" , 'data' => $email_data];
+        insert_admin_notification($conn , 'low_stock' , "Low stock for book #$book_id" , "$title reached $new_stock in stock !" , 'book' , $book_id);
+    }
+    // Book back in stock but low
+    elseif($old_stock === 0 && $new_stock > 0 && $new_stock <= 5)
+    {
+        $email_data = [
+            'book_id' => $book_id,
+            'title' => $title,
+            'old_stock' => $old_stock,
+            'new_stock' => $new_stock,
+        ];
+
+        $email_queue [] = ['type' => 'back_in_stock' , 'subject' => "🟨 Book $book_id is back in stock but running low" , 'data' => $email_data];
+        insert_admin_notification($conn , 'low_stock' , "Low stock for book #$book_id" , "$title reached $new_stock in stock!" , 'book' , $book_id);
+    }
+}
+
 function validate_stock($conn , $insert_lines , $update_lines)
 {
     // Validate for insert

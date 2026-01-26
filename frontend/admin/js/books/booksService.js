@@ -54,7 +54,6 @@ export async function deleteBook_DB(book_ID) {
 
 export async function update_book_DB(bookData) {
   const formData = new FormData();
-  console.log(typeof bookData.author);
 
   formData.append("id", bookData.id);
   formData.append("isbn", bookData.isbn);

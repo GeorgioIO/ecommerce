@@ -12,7 +12,7 @@ require_once __DIR__ . '/../notifications/admin_notifications/helpers/admin_noti
 require_once __DIR__ . '/../email/email_config.php';
 
 $order_payload = extract_order_payload($_POST);
-
+$email_queue = [];
 // Data validation
 
 // Validate order meta data
@@ -233,31 +233,32 @@ try
         $book_id = (int) $line['bookId'];
         $quantity = (int) $line['quantity'];
     
+        $current_book_data = get_book_data($conn , $book_id);
+        
         // Update Stock
-        decrease_book_stock($conn , $book_id , $quantity);
-
-        $new_stock = get_book_stock($conn , $book_id);
-        $title = get_book_title($conn , $book_id);
-        if($new_stock <= 5 && $new_stock !== 0)
-        {
-            insert_admin_notification($conn , 'low_stock' , "Low stock for book #$book_id" , "$title reached $new_stock in stock !" , 'book' , $book_id); 
-        }
-        elseif($new_stock === 0)
-        {
-            insert_admin_notification($conn , 'out_of_stock' , "Book $book_id is out of stock" , "$title is out of stock" , 'book' , $book_id);
-        }
+        $new_stock = decrease_book_stock($conn , $book_id , $quantity);
+        
+        handle_stock_transition($conn , $book_id , $current_book_data['title'] , $current_book_data['old_stock'] , $new_stock , $email_queue);
     }
 
     $conn->commit();
 
     // Create notifications : one for the order , one for the stock
     insert_admin_notification($conn , 'new_order' , 'New Order Placed' , "Order {$order_code} was placed" , 'order' , $order_id);
+
+    foreach($email_queue as $email)
+    {
+        sendEmail($email['type'] , $email['subject'] , $email['data']);
+    }
+
+    $order = get_single_order_by_id($conn , $order_id);
+    $order_lines = get_order_lines_by_order($conn , $order_id);
+
     $emailData = [
-        'order_id' => $order_id,
-        'order_code' => $order_code,
-        'customer_name' => $DB_user_id,
-        'price' => $order_payload['order']['total_order_price']
+        'order_data' => $order['value'],
+        'order_lines' => $order_lines
     ];
+
     sendEmail('new_order' , "📦 New Order is Placed - #$order_id - $order_code" , $emailData);
     
     echo json_encode([

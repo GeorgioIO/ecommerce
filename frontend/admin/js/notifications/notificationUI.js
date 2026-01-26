@@ -44,7 +44,6 @@ export async function changeNotificationCountBadge() {
   const notificationBadge = document.querySelector(".notification-badge");
 
   const notificationCount = await getUnreadNotificationCount();
-  console.log(notificationCount.value);
   if (notificationCount.value === 0) {
     notificationBadge.style.display = "none";
   } else if (notificationCount.value > 9) {

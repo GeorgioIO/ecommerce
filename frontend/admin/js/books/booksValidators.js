@@ -1,5 +1,4 @@
 export function validateBookData(data) {
-  console.log(data);
   // Title
   const title = data.title.trim();
   if (!title || title === "") {
@@ -46,10 +45,8 @@ export function validateBookData(data) {
   // Cover
   const cover = data.cover;
 
-  console.log("Checking cover... : ", cover);
   if (cover) {
     if (!cover.type.startsWith("image/")) {
-      console.log("doesnt start with image/...");
       return {
         valid: false,
         error: "Error in cover : Cover must be an image file",
@@ -59,7 +56,6 @@ export function validateBookData(data) {
     const allowedTypes = ["image/png", "image/jpeg"];
 
     if (!allowedTypes.includes(cover.type)) {
-      console.log("Not from allowed types");
       return {
         valid: false,
         error: "Error in cover : Only PNG and JPG, JPEG formats are allowed",

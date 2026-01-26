@@ -145,7 +145,6 @@ export async function showOrderEditForm(orderID) {
   const orderMetaData = await get_order_data_DB(orderID);
   const orderAddressData = await fetchOrderAddress_DB(orderID);
   const orderLines = await fetchOrderLines_DB(orderID);
-  console.log(orderLines);
 
   openForm("edit", orderMetaData, orderAddressData, orderLines);
 }

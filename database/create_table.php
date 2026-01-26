@@ -197,6 +197,7 @@ $conn->query("CREATE INDEX IF NOT EXISTS ordersstatus_index ON orders (status)")
 $conn->query("CREATE INDEX IF NOT EXISTS ordersdate_index ON orders (date_added)");
 $conn->query("CREATE INDEX IF NOT EXISTS orders_products_index ON order_items (book_id);");
 $conn->query("CREATE INDEX IF NOT EXISTS order_items_index ON order_items (order_id);");
+$conn->query("CREATE INDEX IF NOT EXISTS book_stock ON books (stock_quantity);");
 
 
 // Triggers 

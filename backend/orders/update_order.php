@@ -9,6 +9,8 @@ require_once __DIR__ . '/validators/order_lines_validators.php';
 require_once __DIR__ . '/helpers/order_db_helpers.php';
 require_once __DIR__ . '/helpers/order_helpers.php';
 require_once __DIR__ . '/../customers/validators/customer_validators.php';
+require_once __DIR__ . '/../notifications/admin_notifications/helpers/admin_notifcations_db_helpers.php';
+require_once __DIR__ . '/../email/email_config.php';
 
 // 1. Fetch order (must exist)
 // 2. Check status allows edit
@@ -37,6 +39,8 @@ Data im expecting to get in EDIT ORDER :
 
 
 */
+
+$email_queue = [];
 
 // Extract the payload of the request
 $order_payload = extract_order_payload($_POST);
@@ -294,21 +298,29 @@ try
     foreach($to_delete as $line)
     {
         delete_order_line($conn , $order_id , $line['book_id']);
-        increase_book_stock($conn , $line['book_id'] , $line['quantity']);
+        $current_book_data = get_book_data($conn , $line['book_id']);
+
+        $new_stock = increase_book_stock($conn , $line['book_id'] , $line['quantity']);
+        // Handle book transition to emails and notifications
+        handle_stock_transition($conn , $line['book_id'] , $current_book_data['title'] , $current_book_data['old_stock'] , $new_stock , $email_queue);
     }
 
     // Update order lines
     foreach($to_update as $line)
     {
         update_order_line($conn , $order_id , $line['book_id'] , $line['unitPrice'] , $line['new_qty']);
+        $current_book_data = get_book_data($conn , $line['book_id']);
 
         if($line['delta'] > 0)
         {
-            decrease_book_stock($conn , $line['book_id'] , $line['delta']);
+            $new_stock = decrease_book_stock($conn , $line['book_id'] , $line['delta']);
+            handle_stock_transition($conn , $line['book_id'] , $current_book_data['title'] , $current_book_data['old_stock'] , $new_stock , $email_queue);
         }
         else
-        {
-            increase_book_stock($conn , $line['book_id'] , abs($line['delta']));
+        {   
+            $new_stock = increase_book_stock($conn , $line['book_id'] , abs($line['delta']));
+            handle_stock_transition($conn , $line['book_id'] , $current_book_data['title'] , $current_book_data['old_stock'] , $new_stock , $email_queue);
+            
         }
     }
 
@@ -316,16 +328,18 @@ try
     foreach($to_insert as $line)
     {
         insert_order_line($conn , $line , $order_id);
-
-        decrease_book_stock($conn , $line['bookId'] , $line['quantity']);
-    }
+        $current_book_data = get_book_data($conn , $line['bookId']);
+        
+        $new_stock = decrease_book_stock($conn , $line['bookId'] , $line['quantity']);
+        
+        handle_stock_transition($conn , $line['bookId'] , $current_book_data['title'] , $current_book_data['old_stock'] , $new_stock , $email_queue);
+    }   
 
 
     // If admin typed a complete new address
     if(empty($order_payload['address']['existing_address_id']) || $order_payload['address']['existing_address_id'] === "null")
     {
         $DB_address_id = insert_new_address($conn , $order_payload['address']);
-
         update_order_meta($conn , $order_id , $DB_order_status , $DB_order_price , $DB_address_id);
 
     }
@@ -346,6 +360,24 @@ try
     update_order_meta($conn , $order_id , $DB_order_status , $DB_order_price );
 
     $conn->commit();
+
+    
+    insert_admin_notification($conn , 'order_status' , 'Order is updated' , "Order $order_id is updated" , 'order' , $order_id);
+
+    foreach($email_queue as $email)
+    {
+        sendEmail($email['type'] , $email['subject'] , $email['data']);
+    }
+
+    $new_order_data = get_single_order_by_id($conn , $order_id)['value'];
+    $new_order_lines = get_order_lines_by_order($conn , $order_id);
+
+    $emailData = [
+        'order_data' => $new_order_data,
+        'order_lines' => $new_order_lines
+    ];
+
+    sendEmail('order_update' , "🟦 Your Order is updated - #{$order['value']['id']} -  {$order['value']['order_code']}" , $emailData , $DB_order_email_ad);
 
     echo json_encode([
         'success' => true,

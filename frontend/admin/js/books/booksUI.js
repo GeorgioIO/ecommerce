@@ -28,7 +28,6 @@ export async function showBookEditForm(bookID) {
 
 // Function to load books from the database by sending a request to backend
 export async function loadBooks() {
-  console.log(listState);
   try {
     const booksResponse = await fetch_books_DB(listState.filters, {
       page: listState.page,

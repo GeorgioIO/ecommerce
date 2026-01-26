@@ -81,7 +81,6 @@ export function changeSidebarSection(entity) {
 
 function renderTableFooter(paginationData) {
   const buttons = createPaginationButtons(paginationData);
-  console.log(buttons);
   return `
   <div class="flex-table-footer">
     ${buttons}
