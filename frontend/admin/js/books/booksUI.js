@@ -8,12 +8,12 @@ import {
 import { get_book_data_DB, fetch_books_DB } from "../books/booksService.js";
 import { buildBookForm } from "../books/bookFormBuilder.js";
 import { hydrateBookForm } from "./bookFormHydrator.js";
-
 import { bookTableConfigs } from "./bookTableConfigs.js";
 import { populateBookFormSelects } from "./bookFormPopulator.js";
 import { bookFormConfigs } from "./bookFormConfigs.js";
-import { createPaginationButtons } from "../pagination/paginationUI.js";
 import { listState } from "../adminUIController.js";
+import { showMessageLog } from "../messageLog/messageLog.js";
+
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
 
@@ -60,7 +60,8 @@ export async function loadBooks() {
       handlePaginationButtonsColor(listState.page);
     }
   } catch (err) {
-    console.log(err);
+    showMessageLog("error", err);
+    return;
   }
 }
 

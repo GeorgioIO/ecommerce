@@ -303,7 +303,7 @@ confirmationModal.addEventListener("click", async (e) => {
         }
       }
     } catch (err) {
-      console.log(err);
+      showMessageLog("error", err);
     }
   }
 });

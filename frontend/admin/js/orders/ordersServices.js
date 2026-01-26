@@ -133,5 +133,4 @@ export async function updateOrder_DB(orderData) {
   });
 
   return result.json();
-  // console.log(result.text());
 }

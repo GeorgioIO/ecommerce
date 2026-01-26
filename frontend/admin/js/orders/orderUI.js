@@ -23,6 +23,7 @@ import {
 import { hydrateOrderForm } from "./orderFormHydrator.js";
 import { removeSearchBox } from "./orderLineSearch.js";
 import { listState } from "../adminUIController.js";
+import { showMessageLog } from "../messageLog/messageLog.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
@@ -226,7 +227,8 @@ export async function loadOrders() {
       handlePaginationButtonsColor(listState.page);
     }
   } catch (err) {
-    console.log(err);
+    showMessageLog("error", err);
+    return;
   }
 }
 

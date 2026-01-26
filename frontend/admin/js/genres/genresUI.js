@@ -11,8 +11,8 @@ import {
 import { hydrateGenreForm } from "./genreFormHydrator.js";
 import { buildGenreForm } from "./genreFormBuilder.js";
 import { genreFormConfigs } from "./genreFormConfigs.js";
-import { createPaginationButtons } from "../pagination/paginationUI.js";
 import { listState } from "../adminUIController.js";
+import { showMessageLog } from "../messageLog/messageLog.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
@@ -74,7 +74,8 @@ export async function loadGenres() {
       handlePaginationButtonsColor(listState.page);
     }
   } catch (err) {
-    console.log(err);
+    showMessageLog("error", err);
+    return;
   }
 }
 

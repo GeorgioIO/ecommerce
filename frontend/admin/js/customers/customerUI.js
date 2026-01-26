@@ -14,7 +14,7 @@ import {
   renderEmptyTableState,
   handlePaginationButtonsColor,
 } from "../UIhelpers.js";
-import { createPaginationButtons } from "../pagination/paginationUI.js";
+import { showMessageLog } from "../messageLog/messageLog.js";
 import { listState } from "../adminUIController.js";
 
 const content = document.querySelector(".table-container");
@@ -101,7 +101,8 @@ export async function loadCustomers() {
       handlePaginationButtonsColor(listState.page);
     }
   } catch (err) {
-    console.log(err);
+    showMessageLog("error", err);
+    return;
   }
 }
 

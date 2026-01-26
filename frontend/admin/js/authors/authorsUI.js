@@ -10,6 +10,8 @@ import {
   handlePaginationButtonsColor,
 } from "../UIhelpers.js";
 import { listState } from "../adminUIController.js";
+import { showMessageLog } from "../messageLog/messageLog.js";
+
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
 
@@ -69,7 +71,8 @@ export async function loadAuthors() {
       handlePaginationButtonsColor(listState.page);
     }
   } catch (err) {
-    console.log(err);
+    showMessageLog("error", err);
+    return;
   }
 }
 
