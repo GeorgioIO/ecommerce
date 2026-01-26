@@ -21,7 +21,7 @@ export function renderMiniOrdersTableHeader() {
 
 export function renderMiniOrdersTableRow(item) {
   return `
-    <div class="mini-flex-table-row">
+    <div class="mini-flex-table-row" data-entity="order" data-entityid="${item.id}">
         <div>
             <p> ${item.order_code} </p>
         </div>

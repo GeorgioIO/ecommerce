@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../config/database.php';
 
 $result = $conn->query("
 SELECT
+        o.id,
         o.order_code,
         u.name AS customer_name,
         o.total_price,

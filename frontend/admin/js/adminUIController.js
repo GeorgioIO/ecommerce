@@ -174,6 +174,22 @@ document.addEventListener("click", async (e) => {
   );
   const openNotificationContainer = e.target.closest("#notification-button");
   const pageButton = e.target.closest(".page-button");
+  const miniFlexTableRow = e.target.closest(".mini-flex-table-row");
+
+  if (miniFlexTableRow) {
+    const { entity, entityid } = miniFlexTableRow.dataset;
+
+    // Change sidebar section to orders
+    changeSidebarSection(entity);
+
+    const loadEntityElements = entityHandlers?.[entity]?.loader;
+    const showEntityEditForm = entityHandlers?.[entity]?.showEdit;
+    listState.entity = entity;
+    listState.filters = {};
+
+    loadEntityElements();
+    showEntityEditForm(entityid);
+  }
 
   if (pageButton) {
     const table = document.querySelector(".flex-table");
@@ -245,7 +261,7 @@ document.addEventListener("click", async (e) => {
 
     listState.entity = entity;
     listState.filters = { [filterf]: id };
-    console.log(listState);
+
     // Load Books
     loadEntityElements(); // author_id : 3
   }

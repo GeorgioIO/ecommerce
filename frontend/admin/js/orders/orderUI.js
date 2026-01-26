@@ -143,6 +143,7 @@ export function collectOrderFormData(form) {
 }
 
 export async function showOrderEditForm(orderID) {
+  console.log(orderID);
   const orderMetaData = await get_order_data_DB(orderID);
   const orderAddressData = await fetchOrderAddress_DB(orderID);
   const orderLines = await fetchOrderLines_DB(orderID);
@@ -355,6 +356,7 @@ async function openForm(
     currentCustomerAddresses = await get_customer_addresses_DB(
       orderMetaData.user_id,
     );
+
     populateExistingAddressesSelect(addressesSelect, currentCustomerAddresses);
 
     hydrateOrderForm(form, orderMetaData, orderAddressData, orderLines);

@@ -1463,7 +1463,6 @@ form {
   max-width: 100%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  padding-left: 25px;
   box-sizing: border-box;
 }
 
@@ -1476,13 +1475,16 @@ form {
   letter-spacing: 0.2px;
 }
 
+.mini-flex-table-header div:first-of-type {
+  padding-left: 25px;
+}
+
 .mini-flex-table-body {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(5, 1fr);
   height: 100%;
   width: 100%;
-  padding-left: 25px;
   box-sizing: border-box;
 }
 
@@ -1490,6 +1492,12 @@ form {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 100%;
+  cursor: pointer;
+  transition: ease-in 200ms;
+}
+
+.mini-flex-table-row:hover {
+  background-color: #00cdbc22;
 }
 
 .mini-flex-table-row div {
@@ -1500,6 +1508,10 @@ form {
 
 .mini-flex-table-row div > p {
   text-align: left;
+}
+
+.mini-flex-table-row div:first-of-type > p {
+  padding-left: 25px;
 }
 
 .notifications-container {

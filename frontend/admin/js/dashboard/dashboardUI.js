@@ -15,7 +15,6 @@ import {
   loadHorizontalBarChart,
   loadPieChart,
 } from "./charts/chartsFunctions.js";
-import { loadAdminNotifications_DB } from "../notifications/notificationsServices.js";
 import {
   changeNotificationCountBadge,
   loadNotifications,
