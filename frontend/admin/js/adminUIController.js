@@ -285,6 +285,9 @@ confirmationModal.addEventListener("click", async (e) => {
   const confirmBookDeletion = e.target.closest("#delete-entity-btn");
 
   if (closeConfirmationModal) {
+    setTimeout(() => {
+      confirmationModal.style.display = "none";
+    }, 300);
     swapClass(confirmationModal, "fade-out-modal", "fade-in-modal");
     confirmationModal.querySelector("#delete-entity-btn").dataset.id = "";
     confirmationModal.querySelector("#delete-entity-btn").dataset.entity = "";

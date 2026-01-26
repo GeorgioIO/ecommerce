@@ -171,6 +171,8 @@ export function renderMiniActiveTableState(data, renderHeader, renderRow) {
 
 export function showDeletionModal(entity, id) {
   const confirmationModal = document.querySelector("#confirmation-modal");
+  confirmationModal.style.display = "flex";
+
   const confirmationText =
     confirmationModal.querySelector(".confirmation-text");
   const confirmDeletionButton =
