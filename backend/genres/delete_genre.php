@@ -1,6 +1,14 @@
 <?php
 
+session_start();
+
 header('Content-Type: application/json');
+
+if (!isset($_SESSION['admin_id'])) {
+    http_response_code(401);
+    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+}
+
 require_once  __DIR__ .  '/../../config/database.php';
 require_once  __DIR__ . '/../../config/helpers.php';
 require_once  __DIR__ . '/validators/genre_db_validators.php';

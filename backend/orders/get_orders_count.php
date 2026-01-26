@@ -1,5 +1,14 @@
 <?php
 
+session_start();
+
+header("Content-Type: application/json");
+
+if (!isset($_SESSION['admin_id'])) {
+    http_response_code(401);
+    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+}
+
 $host = "localhost";
 $username = "root";
 $dbname = "booknest";

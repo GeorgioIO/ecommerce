@@ -1,5 +1,12 @@
 <?php
 
+session_start();
+
+if (!isset($_SESSION['admin_id'])) {
+    http_response_code(401);
+    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+}
+
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/database.php';
 

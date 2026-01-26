@@ -1,5 +1,7 @@
 <?php 
 
+
+
 // Temporary file used to create an admin
 
 require_once __DIR__ . '/database.php';
