@@ -93,8 +93,8 @@ export async function addOrder_DB(orderData) {
     body: formData,
   });
 
-  return result.json();
-  // console.log(result.text());
+  // return result.json();
+  console.log(result.text());
 }
 
 export async function updateOrder_DB(orderData) {

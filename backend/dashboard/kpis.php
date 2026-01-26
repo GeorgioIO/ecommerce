@@ -1,5 +1,12 @@
 <?php
 
+require __DIR__ . '/../../config/session.php';
+
+if (!isset($_SESSION['admin_id'])) {
+    http_response_code(401);
+    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+}
+
 /*
 
 This file will return :
