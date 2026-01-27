@@ -8,7 +8,7 @@ This dashboard was built fro **scratch** using Vanilla PHP, MySQL, JavaScript, H
 
 ## 🎯 Purpose of the Dashboard
 
-The dashboard is designed to handle \*\*real- world e-commerce operations, including:
+The dashboard is designed to handle **real- world e-commerce operations**, including:
 
 - Managing books and inventory
 - Handling customer data and addresses
