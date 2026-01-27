@@ -10,7 +10,7 @@ if (!isset($_SESSION['admin_id'])) {
     exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
 }
 
-require_once __DIR__ . '/../../../config/database.php';
+require_once __DIR__ . '/../../../configuration/database.php';
 
 
 $query = "UPDATE admin_notifications SET is_read = 1 WHERE is_read = 0";

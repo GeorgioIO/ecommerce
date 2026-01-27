@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../../config/helpers.php';
+require_once __DIR__ . '/../../helpers.php';
 
 function validate_order_customer($id)
 {

@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../../config/session.php';
-require_once __DIR__ . '/../../config/database.php';
-require_once __DIR__ . '/../../config/helpers.php';
+require_once __DIR__ . '/../../configuration/session.php';
+require_once __DIR__ . '/../../configuration/database.php';
+require_once __DIR__ . '/../helpers.php';
 
 $admin_email = $_POST['email'];
 $admin_password = $_POST['password'];

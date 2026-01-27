@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../../config/session.php';
+require __DIR__ . '/../../configuration/session.php';
 
 header('Content-Type: application/json');
 
@@ -10,7 +10,7 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 
-require_once  __DIR__ .  "/../../config/database.php";
+require_once  __DIR__ .  "/../../configuration/database.php";
 
 $query = <<<EOT
 

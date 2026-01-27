@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../../config/session.php';
+require __DIR__ . '/../../configuration/session.php';
 
 header('Content-Type: application/json');
 

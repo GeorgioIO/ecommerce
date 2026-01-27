@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../../config/session.php';
+require __DIR__ . '/../../configuration/session.php';
 
 if (!isset($_SESSION['admin_id'])) {
     http_response_code(401);
@@ -8,7 +8,7 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 header('Content-Type: application/json');
-require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../configuration/database.php';
 
 // Top valuable customers : they are the customers that have the top revenue in our store meaning the sum of their orders (NOT CANCELLED OR REFUNDED)
 

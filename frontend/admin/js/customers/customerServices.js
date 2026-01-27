@@ -46,4 +46,5 @@ export async function get_customer_addresses_DB(customer_id) {
     },
   );
   return result.json();
+  // console.log(result.text());
 }
