@@ -20,13 +20,6 @@ A full-stack web application for managing an online bookstore, featuring a compr
 - **HTML5** - Semantic markup
 - **CSS3** - Custom styling and responsive design
 
-## 📁 Project Structure
-
-```
-
-
-```
-
 ## 📊 BookNest Admin Dashboard
 
 The **Admin Dashboard** is the core management system of the BookNest e-commerce platform. It is a fully custom-built internal tool designed to allow admins to **manage products, customers, orders, inventory** efficiently and safely.
