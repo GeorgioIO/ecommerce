@@ -12,6 +12,9 @@ A full-stack web application for managing an online bookstore, featuring a compr
 
 - **PHP 7.4+** - Server-side logic and API endpoints
 - **MySQL** - Relational database management
+  - Developed a database schema for the platform
+  - Implemented the usage of **Indexes, Triggers, Junction Tables**
+    to showcase my abilities,
 - **XAMPP** - Local development environment (Apache server)
 
 ### Frontend
