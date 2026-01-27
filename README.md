@@ -34,4 +34,4 @@ The **Admin Dashboard** is the core management system of the BookNest e-commerce
 ![Dashboard First Section](assets/readme-assets/dashboard-first.png)
 ![Dashboard Customers Section](assets/readme-assets/dashboard-customers.png)
 
-To check in depth details about The Dashboard [Click Here](https://example.com)
+To check in depth details about The Dashboard [Click Here](https://github.com/GeorgioIO/ecommerce/blob/main/frontend/admin/README.md)
