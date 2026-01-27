@@ -1508,6 +1508,8 @@ form {
 
 .mini-flex-table-row div > p {
   text-align: left;
+  font-size: 0.8rem;
+  font-weight: 400;
 }
 
 .mini-flex-table-row div:first-of-type > p {

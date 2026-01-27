@@ -34,6 +34,195 @@ It reflects how **real admin panels work** fcusing on data consistency, validati
 - Pagination
 - Image upload handling
 
+#### Process of adding a book
+
+![Proccess of adding a book](/assets/readme-assets/process-adding-book.mp4)
+
+- Admin click add new order
+- Operation form will open
+
+```
+/*
+    Check rest of code here in adminUIController.js , lines are removed to scope the focus on the operation happening
+*/
+
+const entityHandlers = {
+  book: {
+    showAdd: showBookAddForm,
+    showEdit: showBookEditForm,
+    resetForm: resetBookForm,
+    addEntity: addBook_DB,
+    updateEntity: update_book_DB,
+    delete: deleteBook_DB,
+    loader: loadBooks,
+    dataCollector: collectBookFormData,
+    dataValidator: validateBookData,
+  },
+  author: {
+    showAdd: showAuthorAddForm,
+    showEdit: showAuthorEditForm,
+    resetForm: resetAuthorForm,
+    addEntity: addAuthor_DB,
+    updateEntity: update_author_DB,
+    delete: delete_Author_DB,
+    loader: loadAuthors,
+    dataCollector: collectAuthorFormData,
+    dataValidator: validateAuthorData,
+  },
+  genre: {
+    showAdd: showGenreAddForm,
+    showEdit: showGenreEditForm,
+    resetForm: resetGenreForm,
+    addEntity: addGenre_DB,
+    updateEntity: updateGenre_DB,
+    delete: deleteGenre_DB,
+    loader: loadGenres,
+    dataCollector: collectGenreFormData,
+    dataValidator: validateGenreData,
+  },
+  customer: {
+    showView: showCustomerViewForm,
+    resetForm: resetCustomerForm,
+    loader: loadCustomers,
+  },
+  order: {
+    showAdd: showOrderAddForm,
+    showEdit: showOrderEditForm,
+    resetForm: resetOrderForm,
+    addEntity: addOrder_DB,
+    updateEntity: updateOrder_DB,
+    loader: loadOrders,
+    dataCollector: collectOrderFormData,
+    dataValidator: validateOrderData,
+  },
+};
+
+document.addEventListener("click", async (e) => {
+  const openOperationFormButton = e.target.closest(".open-operation-form"); // false
+  /*
+        Check rest of code here in adminUIController.js
+  */
+
+  if (openOperationFormButton) {
+    const { entity, id, intent } = openOperationFormButton.dataset;
+    const openForm = entityHandlers?.[entity]?.[intent];
+    if (openForm) {
+      await openForm(id);
+    }
+  }
+
+});
+```
+
+- based on my routing system in **AdminUIController.js** automatically through using the dataset attached to the open button , i will get from the entityHandler Object of each entity object the function needed to open the form with specific configuration **showAdd: showBookAddForm**
+
+- User will fill data and then submit
+
+```
+document.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const { entity, mode } = form.dataset;
+  // Get data collector and collect - entity
+  const entityDataCollector = entityHandlers?.[entity]?.dataCollector;
+  const data = entityDataCollector(form);
+
+  // Get data validator and validate - entity
+  const entityDataValidator = entityHandlers?.[entity]?.dataValidator;
+  const validationResult = entityDataValidator(data);
+
+  if (!validationResult.valid) {
+    showMessageLog("error", validationResult.error);
+    return;
+  }
+
+  // Get entity loader
+  const loadEntityElements = entityHandlers?.[entity]?.loader;
+
+  // if MODE is ADD
+  if (mode === "add") {
+    const addEntity = entityHandlers?.[entity]?.addEntity;
+
+    const addEntityResult = await addEntity(data);
+
+    if (addEntityResult?.success) {
+      showMessageLog("success", addEntityResult.message);
+      removeSearchBox();
+      listState.filters = {};
+      listState.entity = entity;
+      await loadEntityElements();
+    } else {
+      showMessageLog("error", addEntityResult.message);
+    }
+    // if MODE is EDIT (UPDATE)
+  } else if (mode === "edit") {
+    const updateEntity = entityHandlers?.[entity]?.updateEntity;document.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const { entity, mode } = form.dataset;
+  // Get data collector and collect - entity
+  const entityDataCollector = entityHandlers?.[entity]?.dataCollector;
+  const data = entityDataCollector(form);
+
+  // Get data validator and validate - entity
+  const entityDataValidator = entityHandlers?.[entity]?.dataValidator;
+  const validationResult = entityDataValidator(data);
+
+  if (!validationResult.valid) {
+    showMessageLog("error", validationResult.error);
+    return;
+  }
+
+  // Get entity loader
+  const loadEntityElements = entityHandlers?.[entity]?.loader;
+
+  // if MODE is ADD
+  if (mode === "add") {
+    const addEntity = entityHandlers?.[entity]?.addEntity;
+
+    const addEntityResult = await addEntity(data);
+
+    if (addEntityResult?.success) {
+      showMessageLog("success", addEntityResult.message);
+      removeSearchBox();
+      listState.filters = {};
+      listState.entity = entity;
+      await loadEntityElements();
+    } else {
+      showMessageLog("error", addEntityResult.message);
+    }
+    // if MODE is EDIT (UPDATE)
+  } else if (mode === "edit") {
+    const updateEntity = entityHandlers?.[entity]?.updateEntity;
+
+    const updateEntityResult = await updateEntity(data);
+    if (updateEntityResult?.success) {
+      showMessageLog("success", updateEntityResult.message);
+      listState.filters = {};
+      listState.entity = entity;
+      await loadEntityElements();
+    } else {
+      showMessageLog("error", updateEntityResult.message);
+    }
+  }
+});
+
+    const updateEntityResult = await updateEntity(data);
+    if (updateEntityResult?.success) {
+      showMessageLog("success", updateEntityResult.message);
+      listState.filters = {};
+      listState.entity = entity;
+      await loadEntityElements();
+    } else {
+      showMessageLog("error", updateEntityResult.message);
+    }
+  }
+});
+
+```
+
+- Using same entity handler routing system i use , automatically functions needed for that specific entity will be used
+
 ### 👥 Customers Management
 
 ![Customers Section](/assets/readme-assets/dashboard-customers.png)
