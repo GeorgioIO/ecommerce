@@ -25,7 +25,7 @@
         
         <div class="input-container">
             <label for="email">Email :</label>
-            <input type="email" id="email" name="admin-email" placeholder="Your email">
+            <input type="email" id="email" name="admin-email" placeholder="Your email" autocomplete="off">
         </div>
         <div class="input-container">
             <label for="password">Password :</label>
@@ -33,7 +33,7 @@
         </div>
         <div class="buttons-container">
             <button type="submit" id="submit-admin-login-button">LOGIN</button>
-            <button>RESET</button>
+            <button type="reset">RESET</button>
         </div>
     </form>
     <span class="login-message-log"></span>
