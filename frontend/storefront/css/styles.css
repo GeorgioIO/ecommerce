@@ -1,0 +1,234 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
+
+/* RESETS */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* === Font Faces === */
+@font-face {
+  font-family: "Inter";
+  src: url("../../../assets/fonts/Roboto-VariableFont_wdth\,wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* VARIABLES */
+:root {
+  /* === Colors === */
+  --primary-color: #00cdbc;
+  --secondary-color: white;
+  --accent-color: black;
+
+  /* === Sizes === */
+  --sides-padding: 20px;
+
+  /* === Fonts === */
+  --base-font: "Inter";
+}
+
+/* === Animations + Animation classes */
+@keyframes slide_in_sidebar {
+  0% {
+    transform: translateX(-1000px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.slide-in-sidebar {
+  animation: slide_in_sidebar ease-in-out 500ms forwards;
+}
+
+@keyframes slide_out_sidebar {
+  0% {
+    transform: translateX(0px);
+  }
+
+  100% {
+    transform: translateX(-1000px);
+  }
+}
+
+.slide-out-sidebar {
+  animation: slide_out_sidebar ease-in-out 500ms forwards;
+}
+
+/* === GENERALS === */
+
+.right-caret {
+  transform: rotate(-90deg);
+}
+
+/* STYLES */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ============= HEADER ============= */
+#site-header {
+  background-color: var(--primary-color);
+  padding: 10px var(--sides-padding);
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-header-navbar {
+  width: 550px;
+}
+
+.site-header-navbar > ul {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.site-header-navbar > ul > li > a,
+.site-header-navbar > ul > li > button {
+  color: var(--secondary-color);
+  font-weight: bold;
+  font-family: var(--base-font);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.site-header-navbar > ul > li > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.hamburger-menu {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.hamburger-menu > .line {
+  background-color: var(--secondary-color);
+  width: 100%;
+  height: 3px;
+  border-radius: 20px;
+}
+
+.phone-header-leftside-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* === Sidebar === */
+#site-sidebar {
+  position: absolute;
+  top: 0;
+  background-color: var(--secondary-color);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 0px;
+  transform: translateY(-1000px);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px var(--sides-padding) 20px;
+  border-bottom: 1px solid rgb(222, 222, 222);
+}
+
+.sidebar-header > .sidebar-title {
+  font-family: var(--base-font);
+}
+
+.sidebar-actions-container,
+.site-sidebar-navbar {
+  width: 100%;
+}
+.sidebar-actions-container > ul {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  border-bottom: 1px solid rgb(222, 222, 222);
+  padding: 5px var(--sides-padding) 15px;
+}
+
+.site-sidebar-navbar {
+  height: 100%;
+  padding: 0px var(--sides-padding);
+}
+
+.site-sidebar-navbar > ul {
+  width: 100%;
+  height: 100%;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 25px;
+}
+
+.site-sidebar-navbar > ul > li {
+  border-bottom: 1px solid rgb(222, 222, 222);
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.site-sidebar-navbar > ul > .sidebar-collection-li {
+  width: 100%;
+}
+
+.site-sidebar-navbar > ul > .sidebar-collection-li button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-sidebar-navbar > ul > li > a,
+.site-sidebar-navbar > ul > li > button {
+  color: var(--accent-color);
+  font-weight: bold;
+  font-family: var(--base-font);
+  font-weight: 500;
+  font-size: 1rem;
+}
