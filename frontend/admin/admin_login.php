@@ -10,7 +10,7 @@
 <body>
     <?php
     
-    require_once __DIR__ . '/../../config/session.php';
+    require_once __DIR__ . '/../../configuration/session.php';
 
     if(isset($_SESSION['admin_id']))
     {
