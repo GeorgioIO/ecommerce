@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BookNest</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <script defer type="module" src="../js/temporary.js"></script>
+    <script defer type="module" src="../js/main.js"></script>
 </head>
 <body>
     <?php  require __DIR__ . '/../includes/header.php' ?>
@@ -13,7 +13,7 @@
     <div id="site-sidebar">
         <div class="sidebar-header">
             <h2 class="sidebar-title">Menu</h2>
-            <button id="close-sidebar-button">
+            <button id="close-sidebar-button" type="button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="none" viewBox="-0.5 0 25 25">
                     <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m3 21.32 18-18M3 3.32l18 18"/>
                 </svg>
@@ -53,7 +53,7 @@
                     <a>Shop</a>
                 </li>
                 <li class="sidebar-collection-li">
-                    <button>
+                    <button type="button">
                         Collections
                         <svg class="right-caret" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
                             <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m7 10 5 5 5-5"/>
@@ -65,6 +65,8 @@
                 </li>
             </ul>
         </nav>
+
     </div>
+    
 </body>
 </html>
