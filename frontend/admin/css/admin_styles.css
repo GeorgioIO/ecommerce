@@ -1,6 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Kavoon&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
-
 /* RESETS */
 
 * {
@@ -15,11 +12,30 @@ button {
   cursor: pointer;
 }
 
+/* Font Faces */
+
+@font-face {
+  font-family: "Kavoon";
+  src: url("../../../assets/fonts/Kavoon-Regular.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source-sans";
+  src: url("../../../assets/fonts/SourceSans3-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* VARIABLES */
 
 :root {
   --kavoon-font: "Kavoon", serif;
-  --source-sans-font: "Source Sans 3", sans-serif;
+  --source-sans-font: "Source-sans", sans-serif;
 
   /* color variables */
   --color-primary: #00cdbc;
@@ -918,6 +934,7 @@ form {
   width: 100px;
   height: 45px;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .cascade-show-books-button {

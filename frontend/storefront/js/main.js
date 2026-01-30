@@ -3,10 +3,21 @@ import {
   buildCollectionsBar,
   populateCollectionsBar,
 } from "./components/collectionsBar.js";
+import {
+  buildHeroCard,
+  showNextCard,
+  showPreviousCard,
+} from "./components/heroCards.js";
+import { BuildMiniCartBar } from "./components/miniCartBart.js";
+import { buildMiniWishlistBar } from "./components/miniWishlistBar.js";
+import { buildSearchBar } from "./components/searchBar.js";
 import { getGenres_DB } from "./services/booksServices.js";
 
+const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
-const hamburgerMenu = document.querySelector(".hamburger-menu");
+const header = document.querySelector("#site-header");
+const hero = document.querySelector("#hero");
+let heroCardNavigationIndex = 0;
 
 sidebar.addEventListener("click", async (e) => {
   const closeSidebarButton = e.target.closest("#close-sidebar-button");
@@ -20,11 +31,7 @@ sidebar.addEventListener("click", async (e) => {
   if (closeCollectionContainer) {
     const genresContainer = sidebar.querySelector(".genres-sidebar-container");
 
-    swapClass(
-      genresContainer,
-      "slide-out-genres-sidebar",
-      "slide-in-genres-sidebar",
-    );
+    swapClass(genresContainer, "slide-out-right", "slide-in-right");
 
     setTimeout(() => {
       if (genresContainer) {
@@ -42,15 +49,105 @@ sidebar.addEventListener("click", async (e) => {
 
     sidebar.append(genresContainer);
 
-    swapClass(
-      genresContainer,
-      "slide-in-genres-sidebar",
-      "slide-out-genres-sidebar",
-    );
+    swapClass(genresContainer, "slide-in-right", "slide-out-right");
   }
 });
 
-// Open sidebar
-hamburgerMenu.addEventListener("click", () => {
-  swapClass(sidebar, "slide-in-sidebar", "slide-out-sidebar");
+header.addEventListener("click", (e) => {
+  const hamburgerMenu = e.target.closest(".hamburger-menu");
+  const showSearchButton = e.target.closest(".show-search-sidebar-button");
+  const expandGenresButton = e.target.closest(
+    "#show-genres-header-submenu-button",
+  );
+  const openWishlistButton = e.target.closest(
+    "#show-mini-wishlist-menu-button",
+  );
+  const openMiniCartMenuButton = e.target.closest(
+    "#show-mini-cart-menu-button",
+  );
+
+  if (openMiniCartMenuButton) {
+    const miniCart = BuildMiniCartBar();
+
+    body.append(miniCart);
+
+    swapClass(miniCart, "slide-in-right", "slide-out-right");
+  }
+
+  if (openWishlistButton) {
+    const miniWishlist = buildMiniWishlistBar();
+
+    body.append(miniWishlist);
+
+    swapClass(miniWishlist, "slide-in-right", "slide-out-right");
+  }
+
+  if (expandGenresButton) {
+    const genresSubmenu = header.querySelector(".header-submenu-collections");
+
+    if (genresSubmenu.classList.contains("inactive-submenu")) {
+      setTimeout(() => {
+        genresSubmenu.style.display = "flex";
+      }, 250);
+      swapClass(genresSubmenu, "active-submenu", "inactive-submenu");
+    } else {
+      setTimeout(() => {
+        genresSubmenu.style.display = "none";
+      }, 200);
+      swapClass(genresSubmenu, "inactive-submenu", "active-submenu");
+    }
+  }
+
+  if (hamburgerMenu) {
+    swapClass(sidebar, "slide-in-sidebar", "slide-out-sidebar");
+  }
+
+  if (showSearchButton) {
+    const searchBar = buildSearchBar();
+
+    body.append(searchBar);
+
+    swapClass(searchBar, "slide-in-right", "slide-out-right");
+  }
+});
+
+hero.addEventListener("click", async (e) => {
+  const previousHeroCardButton = e.target.closest("#previous-hero-card-button");
+  const nextHeroCardButton = e.target.closest("#next-hero-card-button");
+
+  const cards = hero.querySelectorAll(".hero-card");
+  const bars = hero.querySelectorAll(".navigation-bars-container div");
+
+  const previousButton = hero.querySelector("#previous-hero-card-button");
+  const nextButton = hero.querySelector("#next-hero-card-button");
+
+  const lastIndex = cards.length - 1;
+
+  // Next hero card
+  if (nextHeroCardButton && heroCardNavigationIndex < lastIndex) {
+    showNextCard(cards, heroCardNavigationIndex);
+    bars[heroCardNavigationIndex].classList.remove("active");
+    bars[heroCardNavigationIndex + 1].classList.add("active");
+    heroCardNavigationIndex++;
+  }
+
+  // Previous hero card
+  if (previousHeroCardButton && heroCardNavigationIndex > 0) {
+    showPreviousCard(cards, heroCardNavigationIndex);
+    bars[heroCardNavigationIndex].classList.remove("active");
+    bars[heroCardNavigationIndex - 1].classList.add("active");
+    heroCardNavigationIndex--;
+  }
+
+  if (heroCardNavigationIndex === 0) {
+    swapClass(previousButton, "disabled", "enabled");
+  } else {
+    swapClass(previousButton, "enabled", "disabled");
+  }
+
+  if (heroCardNavigationIndex === lastIndex) {
+    swapClass(nextButton, "disabled", "enabled");
+  } else {
+    swapClass(nextButton, "enabled", "disabled");
+  }
 });

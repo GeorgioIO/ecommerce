@@ -7,6 +7,7 @@ export function buildCollectionsBar() {
   let genresContainer =
     document.querySelector(".genres-sidebar-container") ?? null;
 
+  console.log(genresContainer);
   if (genresContainer) {
     genresContainer.remove;
   }
