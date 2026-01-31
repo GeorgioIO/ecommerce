@@ -1,5 +1,38 @@
 <?php
 
+function get_best_seller_books($conn)
+{
+    $result = $conn->query("
+        SELECT
+            b.id,
+            b.title,
+            b.price,
+            b.cover_image,
+            a.name AS author_name,
+            bf.name AS format_name,
+            COUNT(o.id) AS total_orders
+        FROM books b
+        JOIN order_items oi ON b.id = oi.book_id
+        JOIN orders o ON oi.order_id = o.id 
+        JOIN authors a ON b.author_id = a.id
+        JOIN book_formats bf ON b.format_id = bf.id
+        WHERE o.status NOT IN ('Refunded' , 'Cancelled' , 'Pending' , 'Processed')
+        GROUP BY b.id , b.title , b.cover_image , a.name , bf.name 
+        LIMIT 6;
+    ");
+    $best_sellers = [];
+
+    if($result)
+    {
+        while($row = $result->fetch_assoc())
+        {
+            $best_sellers[] = $row;
+        }
+    }
+
+    return $best_sellers;
+}
+
 function form_load_books_query($author_id , $genre_id)
 {
     if($author_id === null && $genre_id === null)
