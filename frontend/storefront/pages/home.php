@@ -80,58 +80,70 @@
                     </a>
                 <?php endforeach; ?>
             </div>
-            <a href="" id="open-genres-page-button">
+            <a href="" class="section-redirection-button">
                 View all genres
             </a>
         </section>
         <section id="best-sellers">
             <h3 class="section-title">What people buy the most</h3>
             <?php 
-
-            include __DIR__ . '/../../../backend/books/helpers/book_db_helpers.php';
-            $best_sellers = get_best_seller_books($conn);
-            
-            ?>
-            <div class="best-sellers-container">
-                <?php foreach($best_sellers as $best_seller): 
                 
-                $title = htmlspecialchars($best_seller['title'] , ENT_QUOTES , 'UTF-8');
-                $total_price = htmlspecialchars($best_seller['price'] , ENT_QUOTES , 'UTF-8');
-                $image = htmlspecialchars($best_seller['cover_image'] , ENT_QUOTES , 'UTF-8');
-                $author_name = htmlspecialchars($best_seller['author_name'] , ENT_QUOTES , 'UTF-8');
-                $format_name = htmlspecialchars($best_seller['format_name'] , ENT_QUOTES , 'UTF-8');
-                $url = "../../../assets/images/$image";
-                ?> 
-                    <div class="product-card">
-                        <figure>
-                            <a href="">
-                                <img src="<?= $url ?>" alt="<?= $title ?> cover image">
-                            </a>
-                            <div class="product-card-actions">
-                                <button class="product-card-add-wishlist-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
-                                    </svg>
-                                </button>
-                                <button class="product-card-add-cart-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.3 5H21l-2 7H7.377M20 16H8L6 3H3m6 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm11 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
-                                    </svg>
-                                </button>
+                $best_sellers = get_best_seller_books($conn);
+            ?>
+            <div class="carousel">
+                <button class="carousel-button prev">
+                    <svg class="left-caret" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" fill="none" viewBox="0 0 24 24">
+                        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m7 10 5 5 5-5"/>
+                    </svg>
+                </button>
+                <div class="carousel-viewport">
+                    <div class="carousel-track">
+                        <?php foreach($best_sellers as $best_seller):
+
+                            $title = htmlspecialchars($best_seller['title'] , ENT_QUOTES , 'UTF-8');
+                            $total_price = htmlspecialchars($best_seller['price'] , ENT_QUOTES , 'UTF-8');
+                            $image = htmlspecialchars($best_seller['cover_image'] , ENT_QUOTES , 'UTF-8');
+                            $author_name = htmlspecialchars($best_seller['author_name'] , ENT_QUOTES , 'UTF-8');
+                            $format_name = htmlspecialchars($best_seller['format_name'] , ENT_QUOTES , 'UTF-8');
+                            $url = "../../../assets/images/$image";
+                        ?> 
+                            <div class="product-card">
+                                <figure>
+                                    <a href="">
+                                        <img src="<?= $url ?>" alt="<?= $title ?> cover image">
+                                    </a>
+                                    <div class="product-card-actions">
+                                        <button class="product-card-add-wishlist-button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
+                                            </svg>
+                                        </button>
+                                        <button class="product-card-add-cart-button">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.3 5H21l-2 7H7.377M20 16H8L6 3H3m6 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm11 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </figure>
+                                <div class="product-card-text">
+                                    <p class="product-card-price">$<?= $total_price ?> USD</p>
+                                    <a class="product-card-title"><?= $title ?></a>
+                                    <p class="product-card-author-format"> 
+                                        <a href="" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?></span></a>     
+                                        <span class="separator">,</span>
+                                        <span class="product-card-format"><?= $format_name ?></span>
+                                    </p>
+                                </div>
+                                <a href="" class="product-card-redirection-button">View Product</a>             
                             </div>
-                        </figure>
-                        <div class="product-card-text">
-                            <p class="product-card-price">$<?= $total_price ?> USD</p>
-                            <a class="product-card-title"><?= $title ?></a>
-                            <p class="product-card-author-format"> 
-                                <a href="" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?></span></a>     
-                                <span class="separator">,</span>
-                                <span class="product-card-format"><?= $format_name ?></span>
-                            </p>
-                        </div>
-                        <a href="" class="product-card-show-button">View Product</a>             
+                        <?php endforeach; ?>
                     </div>
-                <?php endforeach; ?>
+                </div>
+                <button class="carousel-button next">
+                    <svg class="right-caret" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" fill="none" viewBox="0 0 24 24">
+                        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m7 10 5 5 5-5"/>
+                    </svg>
+                </button>
             </div>
         </section>
         <div class="moving-advertisement">
@@ -144,6 +156,71 @@
                 <span>30% OFF on Game of Thrones Books</span>
             </div>
         </div>
+        <section id="new-arrivals">
+            <?php 
+                $new_arrivals = get_new_arrivals_books($conn);
+            ?>
+            <div class="section-title">New Arrivals</div>
+            <div class="carousel">
+                <button class="carousel-button prev">
+                    <svg class="left-caret" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" fill="none" viewBox="0 0 24 24">
+                        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m7 10 5 5 5-5"/>
+                    </svg>
+                </button>
+                <div class="carousel-viewport">
+                    <div class="carousel-track">
+                        <?php foreach($new_arrivals as $new_arrival):
+
+                            $title = htmlspecialchars($new_arrival['title'] , ENT_QUOTES , 'UTF-8');
+                            $total_price = htmlspecialchars($new_arrival['price'] , ENT_QUOTES , 'UTF-8');
+                            $image = htmlspecialchars($new_arrival['cover_image'] , ENT_QUOTES , 'UTF-8');
+                            $author_name = htmlspecialchars($new_arrival['author_name'] , ENT_QUOTES , 'UTF-8');
+                            $format_name = htmlspecialchars($new_arrival['format_name'] , ENT_QUOTES , 'UTF-8');
+                            $url = "../../../assets/images/$image";
+                            
+                        ?>
+                        <div class="product-card">
+                            <figure>
+                                <a href="">
+                                    <img src="<?= $url ?>" alt="<?= $title ?> cover image">
+                                </a>
+                                <div class="product-card-actions">
+                                    <button class="product-card-add-wishlist-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="product-card-add-cart-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.3 5H21l-2 7H7.377M20 16H8L6 3H3m6 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm11 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </figure>
+                            <div class="product-card-text">
+                                <p class="product-card-price">$<?= $total_price ?> USD</p>
+                                <a class="product-card-title"><?= $title ?></a>
+                                <p class="product-card-author-format"> 
+                                    <a href="" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?> </span></a>     
+                                    <span class="separator">,</span>
+                                    <span class="product-card-format"><?= $format_name ?></span>
+                                </p>
+                            </div>
+                            <a href="" class="product-card-redirection-button">View Product</a>             
+                        </div>
+                        <?php endforeach;?>
+                    </div>
+                </div>
+                <button class="carousel-button next">
+                    <svg class="right-caret" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" fill="none" viewBox="0 0 24 24">
+                        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m7 10 5 5 5-5"/>
+                    </svg>
+                </button>
+            </div>
+        </section>
+        <section id="reviews">
+            
+        </section>
     </main>
 </body>
 </html>

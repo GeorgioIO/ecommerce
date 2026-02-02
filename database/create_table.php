@@ -148,8 +148,8 @@ $conn->query("
         text TEXT NOT NULL,
         rating INT CHECK(rating BETWEEN 1 AND 5),
         PRIMARY KEY (id),
-        FOREIGN KEY (user_id) REFERENCES users (id),
-        FOREIGN KEY (book_id) REFERENCES books (id)
+        FOREIGN KEY (book_id) REFERENCES books (id),
+        FOREIGN KEY (user_id) REFERENCES users (id)
     );
 ");
 
@@ -183,6 +183,7 @@ $conn->query("
 
 
 // Indexes
+$conn->query("CREATE INDEX IF NOT EXISTS book_added_date_index ON books (date_added);");
 $conn->query("CREATE INDEX IF NOT EXISTS notif_read_index ON admin_notifications (is_read);");
 $conn->query("CREATE INDEX IF NOT EXISTS notif_date_index ON admin_notifications (created_at);");
 $conn->query("CREATE INDEX IF NOT EXISTS notif_type_index ON admin_notifications (type);");

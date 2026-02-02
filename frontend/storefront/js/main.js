@@ -12,12 +12,23 @@ import { BuildMiniCartBar } from "./components/miniCartBart.js";
 import { buildMiniWishlistBar } from "./components/miniWishlistBar.js";
 import { buildSearchBar } from "./components/searchBar.js";
 import { getGenres_DB } from "./services/booksServices.js";
+import { createCarousel } from "./components/carousel.js";
 
 const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
 const header = document.querySelector("#site-header");
 const hero = document.querySelector("#hero");
+const newArrivals = document.querySelector("#new-arrivals");
+const bestSellers = document.querySelector("#best-sellers");
+
+const newArrivalsCarousel = createCarousel(newArrivals);
+const bestSellersCarousel = createCarousel(bestSellers);
 let heroCardNavigationIndex = 0;
+
+window.addEventListener("resize", () => {
+  newArrivalsCarousel.recalc();
+  bestSellersCarousel.recalc();
+});
 
 sidebar.addEventListener("click", async (e) => {
   const closeSidebarButton = e.target.closest("#close-sidebar-button");
@@ -149,5 +160,32 @@ hero.addEventListener("click", async (e) => {
     swapClass(nextButton, "disabled", "enabled");
   } else {
     swapClass(nextButton, "enabled", "disabled");
+  }
+});
+
+bestSellers.addEventListener("click", (e) => {
+  const carouselPreviousButton = e.target.closest(".carousel-button.prev");
+
+  const carouselNextButton = e.target.closest(".carousel-button.next");
+
+  if (carouselPreviousButton) {
+    bestSellersCarousel.goPrev();
+  }
+
+  if (carouselNextButton) {
+    bestSellersCarousel.goNext();
+  }
+});
+
+newArrivals.addEventListener("click", (e) => {
+  const carouselPreviousButton = e.target.closest(".carousel-button.prev");
+  const carouselNextButton = e.target.closest(" .carousel-button.next");
+
+  if (carouselPreviousButton) {
+    newArrivalsCarousel.goPrev();
+  }
+
+  if (carouselNextButton) {
+    newArrivalsCarousel.goNext();
   }
 });

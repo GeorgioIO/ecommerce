@@ -1,5 +1,35 @@
 <?php
 
+function get_new_arrivals_books($conn)
+{
+    $result = $conn->query("
+        SELECT 
+            b.id,
+            b.title,
+            b.price,
+            b.cover_image,
+            a.name AS author_name,
+            bf.name AS format_name
+        FROM books b
+        JOIN authors a ON b.author_id = a.id
+        JOIN book_formats bf ON b.format_id = bf.id
+        ORDER BY b.date_added DESC
+        LIMIT 10;
+    ");
+
+    $new_arrivals = [];
+
+    if($result)
+    {
+        while($row = $result->fetch_assoc())
+        {
+            $new_arrivals[] = $row;
+        }
+    }
+
+    return $new_arrivals;
+}
+
 function get_best_seller_books($conn)
 {
     $result = $conn->query("
@@ -16,9 +46,9 @@ function get_best_seller_books($conn)
         JOIN orders o ON oi.order_id = o.id 
         JOIN authors a ON b.author_id = a.id
         JOIN book_formats bf ON b.format_id = bf.id
-        WHERE o.status NOT IN ('Refunded' , 'Cancelled' , 'Pending' , 'Processed')
+        WHERE o.status NOT IN ('Refunded' , 'Cancelled' , 'Pending' , 'Processing')
         GROUP BY b.id , b.title , b.cover_image , a.name , bf.name 
-        LIMIT 6;
+        LIMIT 10;
     ");
     $best_sellers = [];
 
