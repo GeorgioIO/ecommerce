@@ -648,7 +648,8 @@ main {
 /* === Genres === */
 #genres,
 #best-sellers,
-#new-arrivals {
+#new-arrivals,
+#reviews {
   width: 100%;
   height: auto;
   padding: 15px var(--sides-padding);
@@ -656,10 +657,15 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 30px;
+  overflow: hidden;
 }
 
-#new-arrivals {
-  overflow: hidden;
+#reviews {
+  padding: 15px 0px;
+}
+
+#reviews > .section-title {
+  padding: 15px var(--sides-padding);
 }
 
 .section-title {
@@ -681,12 +687,14 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   gap: 8px;
 }
 
 .genre-grid-card img {
   width: 100%;
   border-radius: inherit;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
 .genre-grid-card > figcaption {
@@ -894,6 +902,82 @@ main {
   align-items: center;
 }
 
+/* ===== STORE REVIEWS ===== */
+
+.reviews-slider {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  padding: 10px var(--sides-padding);
+}
+
+.review-viewport {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+
+.review-track {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 10px;
+
+  animation: scroll-left 15s linear infinite;
+}
+
+.store-review-card {
+  height: 100%;
+  flex: 0 0 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border-radius: 10px;
+  background-color: var(--secondary-color);
+  padding: 15px 20px;
+  border: 1px solid rgb(145, 145, 145);
+}
+
+.store-review-card > .card-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.store-review-card > .card-footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.store-review-card > .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 15px;
+  flex: 1;
+}
+
+.store-review-card > .card-body > .review-text {
+  text-align: center;
+  font-family: var(--primary-font);
+  font-weight: 400;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+}
+
+.store-review-card > .card-body > .review-owner {
+  text-align: center;
+  font-family: var(--primary-font);
+  font-weight: 800;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+}
+
 /* ===== MEDIA QUERIES ====== */
 /* Tablet */
 
@@ -920,6 +1004,10 @@ main {
 
   .carousel .product-card {
     flex: 0 0 calc((100% - 20px * 2) / 3);
+  }
+
+  .store-review-card {
+    flex: 0 0 calc((100% - 12px * 2) / 3);
   }
 }
 
@@ -949,6 +1037,10 @@ main {
 
   .carousel .product-card {
     flex: 0 0 calc((100% - 20px * 3) / 4);
+  }
+
+  .store-review-card {
+    flex: 0 0 calc((100% - 12px * 3) / 4);
   }
 }
 

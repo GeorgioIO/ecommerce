@@ -147,6 +147,7 @@ $conn->query("
         book_id INT,
         text TEXT NOT NULL,
         rating INT CHECK(rating BETWEEN 1 AND 5),
+        type ENUM('store' , 'book') DEFAULT 'store',
         PRIMARY KEY (id),
         FOREIGN KEY (book_id) REFERENCES books (id),
         FOREIGN KEY (user_id) REFERENCES users (id)

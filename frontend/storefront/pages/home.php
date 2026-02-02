@@ -85,7 +85,7 @@
             </a>
         </section>
         <section id="best-sellers">
-            <h3 class="section-title">What people buy the most</h3>
+            <h3 class="section-title">Best Sellers</h3>
             <?php 
                 
                 $best_sellers = get_best_seller_books($conn);
@@ -160,7 +160,7 @@
             <?php 
                 $new_arrivals = get_new_arrivals_books($conn);
             ?>
-            <div class="section-title">New Arrivals</div>
+            <h3 class="section-title">New Arrivals</h3>
             <div class="carousel">
                 <button class="carousel-button prev">
                     <svg class="left-caret" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" fill="none" viewBox="0 0 24 24">
@@ -219,7 +219,51 @@
             </div>
         </section>
         <section id="reviews">
+            <?php
             
+            $store_reviews = get_store_reviews($conn);
+            
+            ?>
+            <h3 class="section-title">Check what our clients say about us</h3>
+            <div class="review-slider-control">
+                <button class="control-review-slider-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="none" viewBox="0 0 16 16">
+                        <path fill="#000" d="M7 1H2v14h5V1ZM14 1H9v14h5V1Z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="reviews-slider">
+                <div class="review-viewport">
+                    <div class="review-track">
+                        <?php foreach($store_reviews as $store_review) :
+                            
+                            $name = htmlspecialchars($store_review['customer_name'] , ENT_QUOTES , 'UTF-8');
+                            $text = htmlspecialchars($store_review['text'] , ENT_QUOTES , 'UTF-8');
+                            $rating = htmlspecialchars($store_review['rating'] , ENT_QUOTES , 'UTF-8');
+                        ?>
+                            <div class="store-review-card">
+                                <div class="card-header">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" fill="none" viewBox="0 0 16 16">
+                                        <path fill="#00cdbc" d="m5.293 1.293 1.414 1.414L3 6.414V7h4v7H1V5.586l4.293-4.293ZM15 7h-4v-.586l3.707-3.707-1.414-1.414L9 5.586V14h6V7Z"/>
+                                    </svg>
+                                </div>
+                                <div class="card-body">
+                                    <p class="review-text"><?= $text ?></p>
+                                    <p class="review-owner">
+                                        <strong><?= $name ?></strong>
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="35px" height="35px" fill="none" viewBox="0 0 16 16">
+                                        <path fill="#00cdbc" d="m7 10.414-4.293 4.293-1.414-1.414L5 9.586V9H1V2h6v8.414ZM9 9h4v.586l-3.707 3.707 1.414 1.414L15 10.414V2H9v7Z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>    
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 </body>

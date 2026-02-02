@@ -23,6 +23,9 @@ const bestSellers = document.querySelector("#best-sellers");
 
 const newArrivalsCarousel = createCarousel(newArrivals);
 const bestSellersCarousel = createCarousel(bestSellers);
+
+const storeReviews = document.querySelector("#reviews");
+let reviewSliderToggler = true;
 let heroCardNavigationIndex = 0;
 
 window.addEventListener("resize", () => {
@@ -187,5 +190,26 @@ newArrivals.addEventListener("click", (e) => {
 
   if (carouselNextButton) {
     newArrivalsCarousel.goNext();
+  }
+});
+
+storeReviews.addEventListener("click", (e) => {
+  const track = storeReviews.querySelector(".review-track");
+  const toggle = e.target.closest(".control-review-slider-button");
+
+  if (toggle) {
+    reviewSliderToggler = !reviewSliderToggler;
+    track.style.animationPlayState = reviewSliderToggler ? "running" : "paused";
+    reviewSliderToggler === true
+      ? (toggle.innerHTML = `                    
+          <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="none" viewBox="0 0 16 16">
+              <path fill="#000" d="M7 1H2v14h5V1ZM14 1H9v14h5V1Z"/>
+          </svg>
+        `)
+      : (toggle.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="-0.5 0 8 8">
+            <path fill="#000" fill-rule="evenodd" d="M0 0v8l7-4z"/>
+          </svg>
+        `);
   }
 });

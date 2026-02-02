@@ -20,6 +20,7 @@
                 include __DIR__ . '/../../../configuration/database.php';
                 include __DIR__ . '/../../../backend/genres/helpers/genre_db_helpers.php';
                 include __DIR__ . '/../../../backend/books/helpers/book_db_helpers.php';
+                include __DIR__ . '/../../../backend/reviews/helpers/reviews_db_helpers.php';
                 
                 $genres = get_genres_by_alphabet($conn);
                 
