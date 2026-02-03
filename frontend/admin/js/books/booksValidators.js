@@ -96,6 +96,23 @@ export function validateBookData(data) {
     };
   }
 
+  // Discount data
+  const is_onSale = parseInt(data.isOnSale);
+  const discountPercentage = parseInt(data.discountPercentage);
+
+  if (is_onSale === 1) {
+    if (
+      Number.isNaN(discountPercentage) ||
+      discountPercentage <= 0 ||
+      discountPercentage > 100
+    ) {
+      return {
+        valid: false,
+        error: "Error in discount value : must be between 1 and 100",
+      };
+    }
+  }
+
   return {
     valid: true,
     error: "",

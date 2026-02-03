@@ -9,7 +9,15 @@ function get_new_arrivals_books($conn)
             b.price,
             b.cover_image,
             a.name AS author_name,
-            bf.name AS format_name
+            bf.name AS format_name,
+            b.is_onSale,
+            b.discount_percentage,
+            CASE 
+                WHEN b.is_onSale = 1
+                    THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
+                ELSE
+                    b.price
+            END AS final_price
         FROM books b
         JOIN authors a ON b.author_id = a.id
         JOIN book_formats bf ON b.format_id = bf.id
@@ -40,6 +48,15 @@ function get_best_seller_books($conn)
             b.cover_image,
             a.name AS author_name,
             bf.name AS format_name,
+            b.is_inStock,
+            b.is_onSale,
+            b.discount_percentage,
+            CASE 
+                WHEN b.is_onSale = 1
+                    THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
+                ELSE
+                    b.price
+            END AS final_price,
             COUNT(o.id) AS total_orders
         FROM books b
         JOIN order_items oi ON b.id = oi.book_id
@@ -81,7 +98,15 @@ function form_load_books_query($author_id , $genre_id)
             b.stock_quantity,
             b.is_inStock,
             b.cover_image,
-            b.price
+            b.price,
+            b.is_onSale,
+            b.discount_percentage,
+            CASE 
+                WHEN b.is_onSale = 1
+                    THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
+                ELSE
+                    b.price
+            END AS final_price
         FROM books b
         LEFT JOIN genres g ON b.genre_id = g.id
         LEFT JOIN authors a ON b.author_id = a.id
@@ -106,7 +131,15 @@ function form_load_books_query($author_id , $genre_id)
             b.stock_quantity,
             b.is_inStock,
             b.cover_image,
-            b.price
+            b.price,
+            b.is_onSale,
+            b.discount_percentage,
+            CASE 
+                WHEN b.is_onSale = 1
+                    THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
+                ELSE
+                    b.price
+            END AS final_price
         FROM books b
         LEFT JOIN genres g ON b.genre_id = g.id
         LEFT JOIN authors a ON b.author_id = a.id
@@ -133,7 +166,15 @@ function form_load_books_query($author_id , $genre_id)
             b.stock_quantity,
             b.is_inStock,
             b.cover_image,
-            b.price
+            b.price,
+            b.is_onSale,
+            b.discount_percentage,
+            CASE 
+                WHEN b.is_onSale = 1
+                    THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
+                ELSE
+                    b.price
+            END AS final_price
         FROM books b
         LEFT JOIN genres g ON b.genre_id = g.id
         LEFT JOIN authors a ON b.author_id = a.id

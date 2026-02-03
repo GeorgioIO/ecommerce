@@ -2,6 +2,7 @@ export const bookFormConfigs = {
   fields: [
     {
       name: "Book_id",
+      labelText: "ID",
       key: "id",
       tag: "input",
       type: "number",
@@ -9,6 +10,7 @@ export const bookFormConfigs = {
     },
     {
       name: "ISBN",
+      labelText: "ISBN",
       key: "isbn",
       tag: "input",
       type: "text",
@@ -17,6 +19,7 @@ export const bookFormConfigs = {
     },
     {
       name: "Sku",
+      labelText: "SKU",
       key: "sku",
       tag: "input",
       type: "text",
@@ -25,6 +28,7 @@ export const bookFormConfigs = {
     },
     {
       name: "Title",
+      labelText: "Title",
       key: "title",
       tag: "input",
       type: "text",
@@ -33,6 +37,7 @@ export const bookFormConfigs = {
     },
     {
       name: "Language",
+      labelText: "Language",
       key: "language",
       tag: "select",
       source: "languages",
@@ -41,6 +46,7 @@ export const bookFormConfigs = {
     },
     {
       name: "Author",
+      labelText: "Author",
       key: "author_id",
       tag: "select",
       source: "authors",
@@ -49,6 +55,7 @@ export const bookFormConfigs = {
     },
     {
       name: "Format",
+      labelText: "Format",
       key: "format_id",
       tag: "select",
       source: "formats",
@@ -57,6 +64,7 @@ export const bookFormConfigs = {
     },
     {
       name: "Cover",
+      labelText: "Cover",
       key: "cover_image",
       tag: "input",
       type: "file",
@@ -65,6 +73,7 @@ export const bookFormConfigs = {
     },
     {
       name: "Description",
+      labelText: "Description",
       key: "description",
       tag: "textarea",
       disabled: false,
@@ -72,6 +81,7 @@ export const bookFormConfigs = {
     },
     {
       name: "Genre",
+      labelText: "Genre",
       key: "genre_id",
       tag: "select",
       source: "genres",
@@ -80,6 +90,7 @@ export const bookFormConfigs = {
     },
     {
       name: "Quantity",
+      labelText: "Stock Quantity",
       key: "stock_quantity",
       tag: "input",
       type: "number",
@@ -88,11 +99,46 @@ export const bookFormConfigs = {
     },
     {
       name: "Price",
+      labelText: "Base Price",
       key: "price",
       tag: "input",
       type: "number",
       step: "0.01",
       disabled: false,
+      required: true,
+    },
+    {
+      name: "Discount",
+      labelText: "Apply Discount",
+      key: "is_onSale",
+      tag: "input",
+      type: "checkbox",
+      disabled: false,
+      required: false,
+    },
+    {
+      name: "Discount_Percentage",
+      labelText: "Discount Percentage",
+      containerClass: "discount-info",
+      key: "discount_percentage",
+      placeholder: "10%-100%",
+      tag: "input",
+      type: "number",
+      step: "10",
+      min: "10",
+      max: "100",
+      disabled: false,
+      required: false,
+    },
+    {
+      name: "Discount Price",
+      labelText: "Discount Price",
+      containerClass: "discount-info",
+      key: "discount_price",
+      tag: "input",
+      type: "number",
+      step: "0.01",
+      disabled: true,
       required: true,
     },
   ],

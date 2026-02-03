@@ -196,7 +196,7 @@ function createSearchLine(item) {
         <h3> ${item.title} </h3>
         <p> By <strong  class="author-inline-name">${item.author_name}</strong> , ${item.language} </p>
         <p> Format: ${item.format} </p>
-        <p> <strong> $${item.price} </strong> </p>
+        ${item.is_onSale === 1 ? `<p class='book-search-price'> <span class='pre-sale-price'> $${item.price}</span> <span class='post-sale-price'> $${item.final_price}</p>` : `<p class="base-price"> $${item.price} </p>`}
       </div>
       <p> ${item.description} </p>
     </div>

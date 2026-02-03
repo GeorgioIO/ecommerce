@@ -108,6 +108,19 @@ if(!$book_price_result['success'])
     exit;
 }
 
+if($book_payload['is_on_sale'] === "1")
+{
+    $book_discount_result = validate_book_discount_percentage($book_payload['discount_percentage']);
+    if(!$book_discount_result['success'])
+    {
+        echo json_encode([
+            'success' => false,
+            'message' => $book_discount_result['message']
+        ]);
+        exit;
+    }
+}
+
 $book_cover_result = validate_book_cover_file($book_payload['cover']);
 if(!$book_cover_result['success'])
 {
@@ -168,19 +181,26 @@ $DB_book_format = $book_format_result['value'];
 $DB_book_quantity = $book_quantity_result['value'];
 $DB_book_price = $book_price_result['value'];
 $DB_book_in_stock = $DB_book_quantity === 0 ? 0 : 1;
+$DB_book_on_sale = !$book_payload['is_on_sale'] ? 0 : 1; 
 
-$query = <<<EOT
 
-INSERT INTO books
-(isbn , sku , title , description , language , stock_quantity , is_inStock , cover_image , price , genre_id , author_id , format_id)
-VALUES
-(? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?);
+if($book_payload['is_on_sale'] === "1")
+{
+    $DB_book_discount = $book_discount_result['value'];
+}
 
-EOT;
+$query = form_add_book_query($book_payload['is_on_sale']);
 
 $stmt = $conn->prepare($query);
 
-$stmt->bind_param("sssssiisdiii" , $DB_book_isbn , $DB_book_sku , $DB_book_title , $book_payload['description'] , $DB_book_language , $DB_book_quantity , $DB_book_in_stock , $DB_cover_filename , $DB_book_price , $DB_book_genre , $DB_book_author , $DB_book_format);
+if($book_payload['is_on_sale'] === "1")
+{
+    $stmt->bind_param("sssssiiiisdiii" , $DB_book_isbn , $DB_book_sku , $DB_book_title , $book_payload['description'] , $DB_book_language , $DB_book_quantity , $DB_book_in_stock , $DB_book_on_sale , $DB_book_discount , $DB_cover_filename , $DB_book_price , $DB_book_genre , $DB_book_author , $DB_book_format);
+}
+else
+{
+    $stmt->bind_param("sssssiisdiii" , $DB_book_isbn , $DB_book_sku , $DB_book_title , $book_payload['description'] , $DB_book_language , $DB_book_quantity , $DB_book_in_stock , $DB_cover_filename , $DB_book_price , $DB_book_genre , $DB_book_author , $DB_book_format);
+}
 
 if($stmt->execute()){
     $response = ['success' => true , 'message' => 'New book is added!'];

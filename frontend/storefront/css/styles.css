@@ -755,6 +755,21 @@ main {
   gap: 12px;
 }
 
+.product-card > figure > .product-card-sale-badge {
+  margin: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  width: 50px;
+  border-radius: 10px;
+  color: var(--secondary-color);
+  font-weight: bold;
+  font-family: var(--primary-font);
+  text-align: center;
+  font-size: 0.8rem;
+}
+
 .product-card-actions > button {
   background-color: var(--secondary-color);
   border-radius: 50%;
@@ -764,6 +779,10 @@ main {
   width: 35px;
   height: 35px;
   transition: ease-in-out 300ms;
+}
+
+.product-card-actions > button.unclickable {
+  cursor: not-allowed;
 }
 
 .product-card-actions > button:hover {
@@ -789,8 +808,17 @@ main {
 
 .product-card-text > .product-card-price {
   font-family: var(--primary-font);
-  font-weight: 400;
-  line-height: 1.05rem;
+}
+
+.product-card-price > .pre-sale-price {
+  font-weight: 300;
+  text-decoration: line-through;
+  color: rgb(145, 145, 145);
+}
+.product-card-price > .base-price,
+.product-card-price > .post-sale-price {
+  font-weight: 700;
+  color: black;
 }
 
 .product-card-text > .product-card-title {

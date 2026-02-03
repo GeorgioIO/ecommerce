@@ -22,8 +22,9 @@ require_once __DIR__ . '/../email/email_config.php';
 
 $order_payload = extract_order_payload($_POST);
 $email_queue = [];
-// Data validation
 
+
+// Data validation
 // Validate order meta data
 
 // Customer id
@@ -84,7 +85,6 @@ if($order_payload['address']['existing_address_id'])
         exit;
     }
     
-    // Get the address
 }
 else
 {
@@ -219,6 +219,8 @@ try
         // There is an existing address id
         $DB_address_id = (int) $order_payload['address']['existing_address_id'];
 
+
+        // Validate that address belong to the user
         $address_ownership_validation = validate_address_ownership($conn , $DB_user_id , $DB_address_id);
         if(!$address_ownership_validation['success'])
         {
@@ -232,7 +234,6 @@ try
     // Insert Order itself
     $order_id = insert_new_order($conn , $order_code , $order_payload['order'] , $DB_user_id , $DB_address_id);
 
-
     // Inserting Order Lines
     foreach($order_lines as $line)
     {
@@ -241,7 +242,7 @@ try
 
         $book_id = (int) $line['bookId'];
         $quantity = (int) $line['quantity'];
-    
+
         $current_book_data = get_book_data($conn , $book_id);
         
         // Update Stock

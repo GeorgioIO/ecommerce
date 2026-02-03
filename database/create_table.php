@@ -42,6 +42,7 @@ $conn->query("
         is_inStock BOOLEAN NOT NULL DEFAULT 1,
         cover_image VARCHAR(255),
         price DECIMAL(10,2) NOT NULL,
+        is_onSale BOOL NOT NULL DEFAULT 0
         date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
         genre_id INT,
         author_id INT,

@@ -1,9 +1,15 @@
-import { handleEntityImageElement } from "../UIhelpers.js";
+import { handleEntityImageElement, toggleDiscountInfo } from "../UIhelpers.js";
 
 export function hydrateBookForm(form, data) {
+  console.log(data);
   Object.keys(data).forEach((key) => {
     const input = form.querySelector(`#${key}`);
     if (!input || input.type === "file") return;
+
+    if (data.is_onSale === 1) {
+      input.checked = true;
+      toggleDiscountInfo();
+    }
     input.value = data[key];
   });
 

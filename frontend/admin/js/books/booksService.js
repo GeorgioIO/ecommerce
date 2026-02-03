@@ -28,6 +28,8 @@ export async function addBook_DB(bookData) {
   formData.append("quantity", bookData.quantity);
   formData.append("price", bookData.price);
   formData.append("cover", bookData.cover);
+  formData.append("is_on_sale", bookData.isOnSale);
+  formData.append("discount_percentage", bookData.discountPercentage);
 
   const result = await fetch("../../backend/books/add_book.php", {
     method: "POST",
@@ -35,6 +37,7 @@ export async function addBook_DB(bookData) {
   });
 
   return result.json();
+  // console.log(result.text());
 }
 
 // Function responsible for deleting a book from the database
@@ -67,6 +70,8 @@ export async function update_book_DB(bookData) {
   formData.append("quantity", bookData.quantity);
   formData.append("price", bookData.price);
   formData.append("cover", bookData.cover);
+  formData.append("is_on_sale", bookData.isOnSale);
+  formData.append("discount_percentage", bookData.discountPercentage);
 
   const result = await fetch("../../backend/books/update_book.php", {
     method: "POST",
@@ -74,6 +79,7 @@ export async function update_book_DB(bookData) {
   });
 
   return result.json();
+  // console.log(result.text());
 }
 
 export async function fetch_books_DB(filters, pagination = null) {

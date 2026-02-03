@@ -1,5 +1,13 @@
 import { createPaginationButtons } from "./pagination/paginationUI.js";
 
+export function toggleDiscountInfo() {
+  const disountInfo = document.querySelectorAll(".discount-info");
+
+  disountInfo.forEach((infoContainer) => {
+    infoContainer.classList.toggle("show");
+  });
+}
+
 export function handlePaginationButtonsColor(pageNumber) {
   const paginationsButtons = document.querySelectorAll(".page-button");
 

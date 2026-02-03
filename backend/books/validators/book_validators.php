@@ -320,6 +320,39 @@ function validate_book_price($price)
     ];
 }
 
+function validate_book_discount_percentage($percentage)
+{
+    if($percentage === null || trim($percentage) === '')
+    {
+        return [
+            'success' => false,
+            'message' => 'Percentage is required'
+        ];
+    }
+
+    $percentage = trim($percentage);
+
+    if(!is_numeric($percentage)){
+        return [
+            'success' => false,
+            'message' => 'Percentage must be a valid number'
+        ];
+    }
+
+    if((int) $percentage <= 0 || (int) $percentage > 100)
+    {
+        return [
+            'success' => false,
+            'message' => 'percentage must be between 1 and 100'
+        ];
+    }
+
+    return [
+        'success' =>  true,
+        'value' => (int) $percentage
+    ];
+}
+
 function validate_book_cover_file($cover)
 {
 

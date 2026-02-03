@@ -40,6 +40,8 @@ SELECT
     stock_quantity,
     cover_image,
     price,
+    is_onSale,
+    discount_percentage,
     genre_id,
     author_id,
     format_id

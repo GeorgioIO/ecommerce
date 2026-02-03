@@ -109,6 +109,19 @@ if(!$book_price_result['success'])
     exit;
 }
 
+if($book_payload['is_on_sale'] === "1")
+{
+    $book_discount_result = validate_book_discount_percentage($book_payload['discount_percentage']);
+    if(!$book_discount_result['success'])
+    {
+        echo json_encode([
+            'success' => false,
+            'message' => $book_discount_result['message']
+        ]);
+        exit;
+    }
+}
+
 $book_cover_result = validate_book_cover_file($book_payload['cover']);
 if(!$book_cover_result['success'])
 {
@@ -169,28 +182,28 @@ $DB_book_format = $book_format_result['value'];
 $DB_book_quantity = $book_quantity_result['value'];
 $DB_book_price = $book_price_result['value'];
 $DB_book_in_stock = $DB_book_quantity === 0 ? 0 : 1;
+$DB_book_on_sale = !$book_payload['is_on_sale'] ? 0 : 1; 
+$DB_book_discount = isset($book_discount_result['value']) ? $book_discount_result['value'] : 0;
 
-if($DB_cover_filename === null)
-{
-    $query = <<<EOT
-        UPDATE books SET
-            title = ?,
-            isbn = ?,
-            sku = ?,
-            language = ?,
-            author_id = ?,
-            description = ?,
-            genre_id = ?,
-            stock_quantity = ?,
-            is_inStock = ?,
-            price = ?,
-            format_id = ?
-        WHERE 
-            id = ?
-    EOT;
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param(
-    "ssssisiiidii", 
+// Main fields
+$fields = [
+    "title = ?",
+    "isbn = ?",
+    "sku = ?",
+    "language = ?",
+    "author_id = ?",
+    "description = ?",
+    "genre_id = ?",
+    "stock_quantity = ?",
+    "is_inStock = ?",
+    "price = ?",
+    "format_id = ?",
+    "is_onSale = ?",
+    "discount_percentage = ?",
+];
+
+// Main params
+$params = [
     $DB_book_title, 
     $DB_book_isbn, 
     $DB_book_sku, 
@@ -201,45 +214,30 @@ if($DB_cover_filename === null)
     $DB_book_quantity, 
     $DB_book_in_stock,
     $DB_book_price, 
-    $DB_book_format, 
-    $book_payload['id']);
-}
-else
+    $DB_book_format,
+    $DB_book_on_sale,
+    $DB_book_discount 
+];
+
+$types = "ssssisiiidiii";
+
+if($DB_cover_filename !== null)
 {
-    $query = <<<EOT
-        UPDATE books SET
-            title = ?,
-            isbn = ?,
-            sku = ?,
-            language = ?,
-            author_id = ?,
-            cover_image = ?,
-            description = ?,
-            genre_id = ?,
-            stock_quantity = ?,
-            is_inStock = ?,
-            price = ?,
-            format_id = ?
-        WHERE 
-            id = ?
-    EOT;
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param(
-    "ssssissiiidii", 
-    $DB_book_title, 
-    $DB_book_isbn, 
-    $DB_book_sku, 
-    $DB_book_language, 
-    $DB_book_author, 
-    $DB_cover_filename,
-    $book_payload['description'], 
-    $DB_book_genre, 
-    $DB_book_quantity,
-    $DB_book_in_stock, 
-    $DB_book_price, 
-    $DB_book_format, 
-    $book_payload['id']);
+    array_splice($fields , 5 , 0 , "cover_image = ?");
+    array_splice($params , 5 , 0 , $DB_cover_filename);
+    $types = substr_replace($types , "s" , 5 , 0);
 }
+
+$query = "
+    UPDATE books SET
+    " . implode(", " , $fields) . " WHERE id = ?";
+
+$params[] = (int) $book_payload['id'];
+$types .= "i";
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param($types , ...$params);
+$stmt->execute();
 
 if($stmt->execute())
 {

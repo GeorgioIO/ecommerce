@@ -16,17 +16,16 @@ button {
 
 @font-face {
   font-family: "Kavoon";
-  src: url("../../../assets/fonts/Kavoon-Regular.ttf") format("truetype");
-  font-weight: 100 900;
+  src: url("/ecommerce/assets/fonts/Kavoon-Regular.woff2") format("woff2");
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Source-sans";
-  src: url("../../../assets/fonts/SourceSans3-VariableFont_wght.ttf")
-    format("truetype");
-  font-weight: 100 900;
+  src: url("/ecommerce/assets/fonts/SourceSans3-Regular.woff2") format("woff2");
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -35,7 +34,7 @@ button {
 
 :root {
   --kavoon-font: "Kavoon", serif;
-  --source-sans-font: "Source-sans", sans-serif;
+  --source-sans-font: "Source-sans", system-ui, sans-serif;
 
   /* color variables */
   --color-primary: #00cdbc;
@@ -683,6 +682,7 @@ form {
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 8px;
 }
 
@@ -714,6 +714,20 @@ form {
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
+}
+
+.discount-info {
+  display: none;
+}
+
+.discount-info.show {
+  display: flex;
+}
+
+.input-container > input#is_onSale {
+  width: 30px;
+  height: 100%;
+  padding: 0px;
 }
 
 .address-existing-container > #existing-address-select {
@@ -1349,6 +1363,24 @@ form {
   height: 100%;
   font-weight: 400;
   overflow-y: scroll;
+}
+
+.book-search-price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.book-search-price > .pre-sale-price {
+  font-weight: 300;
+  text-decoration: line-through;
+  color: rgb(145, 145, 145);
+}
+
+.base-price,
+.book-search-price > .post-sale-price {
+  font-weight: 800;
+  color: black;
 }
 
 #admin-dashboard {

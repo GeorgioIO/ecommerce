@@ -118,15 +118,28 @@
                                                 <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
                                             </svg>
                                         </button>
-                                        <button class="product-card-add-cart-button">
+                                        <button class="product-card-add-cart-button <?= $best_seller['is_inStock'] === "0" ? "unclickable" : "" ?>" <?= $best_seller['is_inStock'] === "0" ? "disabled" : "" ?>>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.3 5H21l-2 7H7.377M20 16H8L6 3H3m6 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm11 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
                                             </svg>
                                         </button>
                                     </div>
+                                    <?php 
+                                        echo $best_seller['is_onSale'] === "1" ? 
+                                        "<div class='product-card-sale-badge'>- %{$best_seller['discount_percentage']}</div>" : 
+                                        "" ; 
+                                    ?>
                                 </figure>
                                 <div class="product-card-text">
-                                    <p class="product-card-price">$<?= $total_price ?> USD</p>
+                                    <p class="product-card-price">
+                                        <?php
+                                        
+                                        echo $best_seller['is_onSale'] === "1" ?
+                                        "<span class='pre-sale-price'> \${$best_seller['price']} </span> <span class='post-sale-price'> \${$best_seller['final_price']} </span>":
+                                        "<span class='base-price'> \${$best_seller['final_price']} </span>";
+                                        
+                                        ?>
+                                    </p>    
                                     <a class="product-card-title"><?= $title ?></a>
                                     <p class="product-card-author-format"> 
                                         <a href="" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?></span></a>     
@@ -196,9 +209,21 @@
                                         </svg>
                                     </button>
                                 </div>
+                                <?php 
+                                
+                                echo $new_arrival['is_onSale'] === "1" ? 
+                                 "<div class='product-card-sale-badge'>- %{$new_arrival['discount_percentage']}</div>" : 
+                                 "" ; 
+                                ?>
                             </figure>
                             <div class="product-card-text">
-                                <p class="product-card-price">$<?= $total_price ?> USD</p>
+                                <p class="product-card-price">
+                                    <?php
+                                        echo $new_arrival['is_onSale'] === "1" ?
+                                        "<span class='pre-sale-price'> \${$new_arrival['price']} </span> <span class='post-sale-price'> \${$new_arrival['final_price']} </span>":
+                                        "<span class='base-price'> \${$new_arrival['final_price']} </span>";  
+                                    ?>
+                                </p>
                                 <a class="product-card-title"><?= $title ?></a>
                                 <p class="product-card-author-format"> 
                                     <a href="" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?> </span></a>     

@@ -201,20 +201,25 @@ export function hydrateProductLine(rawData, row, mode, status) {
   const lineData = normalizeOrderLineData(rawData);
   row.dataset.bookid = lineData.bookId;
 
+  // Set quantity value
   const quantityInput = row.querySelector(".quantity-cell input");
   quantityInput.value = lineData.quantity;
   if (mode === "edit" && status !== "Pending" && status !== "Processing") {
     quantityInput.readOnly = true;
   }
 
+  // Get total
   const total = lineData.unitPrice * lineData.quantity;
 
+  // Set title value
   row.querySelector(".book-cell").textContent = lineData.title;
 
+  // Set unit price value
   const priceCell = row.querySelector(".unit-price-cell");
   priceCell.textContent = `$${lineData.unitPrice.toFixed(2)}`;
   priceCell.dataset.value = lineData.unitPrice.toFixed(2);
 
+  // Set total line price value
   const totalCell = row.querySelector(".total-line-price-cell");
   totalCell.textContent = `$${total.toFixed(2)}`;
   totalCell.dataset.value = total.toFixed(2);

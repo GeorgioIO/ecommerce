@@ -64,7 +64,7 @@ function sendEmail($type , $subject , $data , $receiver='georgiojabbour.g.gj@gma
     catch (Exception $e) 
     { 
         // handle error. 
-       throw new Exception("Error sending email"); 
+       throw new Exception("Error sending email " . $e); 
     } 
 }
 

@@ -4,6 +4,7 @@ import {
   renderActiveTableState,
   renderEmptyTableState,
   handlePaginationButtonsColor,
+  toggleDiscountInfo,
 } from "../UIhelpers.js";
 import { get_book_data_DB, fetch_books_DB } from "../books/booksService.js";
 import { buildBookForm } from "../books/bookFormBuilder.js";
@@ -16,6 +17,16 @@ import { showMessageLog } from "../messageLog/messageLog.js";
 
 const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
+
+// ========== LISTENERS ========== //
+
+formContainer.addEventListener("click", (e) => {
+  const discountCheckbox = e.target.closest("#is_onSale");
+
+  if (discountCheckbox) {
+    toggleDiscountInfo();
+  }
+});
 
 export async function showBookAddForm() {
   openForm("add");
@@ -103,7 +114,7 @@ function renderBookTableRow(item) {
             <p> ${item.genre_title} </p>
         </div>
         <div>
-            <p> $${item.price} </p>
+          ${item.is_onSale === 1 ? `$${item.final_price} - %${item.discount_percentage}` : `$${item.final_price}`}
         </div>
         <div>
             <p> ${item.stock_quantity} </p>
@@ -183,6 +194,9 @@ export function collectBookFormData(form) {
     price: form.querySelector("#price").value,
     description: form.querySelector("#description").value,
     cover: form.querySelector("#cover_image").files[0] || null,
+    isOnSale: form.querySelector("#is_onSale").checked ? "1" : "0",
+    discountPercentage:
+      form.querySelector("#discount_percentage").value || null,
   };
 
   const idInput = form.querySelector("#id");
@@ -220,4 +234,6 @@ async function openForm(mode, data = {}) {
 
 export function resetBookForm() {
   handleEntityImageElement("reset");
+
+  toggleDiscountInfo();
 }

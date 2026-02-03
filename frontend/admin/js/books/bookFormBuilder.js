@@ -25,14 +25,18 @@ export function buildBookForm(mode = "add", config) {
       field.tag === "input"
         ? "input-container"
         : field.tag === "textarea"
-        ? "textarea-container"
-        : "input-container"
+          ? "textarea-container"
+          : "input-container",
     );
+
+    if (field.containerClass) {
+      inputContainer.classList.add(field.containerClass);
+    }
 
     // label
     const inputLabel = document.createElement("label");
-    inputLabel.innerText = field.name;
-    inputLabel.htmlFor = field.name.toLowerCase();
+    inputLabel.innerText = field.labelText;
+    inputLabel.htmlFor = field.key;
 
     // Add Label
     inputContainer.append(inputLabel);
@@ -43,13 +47,15 @@ export function buildBookForm(mode = "add", config) {
     inputTag.id = field.key;
     inputTag.required = field.required;
     inputTag.disabled = field.disabled;
-
+    inputTag.placeholder = field.placeholder ?? "";
     // in case the field is an input tag and need type
     if (field.tag === "input") {
       inputTag.type = field.type;
       // Add step attribute for number inputs if specified
       if (field.type === "number" && field.step !== undefined) {
         inputTag.step = field.step;
+        inputTag.min = field.min;
+        inputTag.max = field.max;
       }
     }
 
