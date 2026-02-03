@@ -309,6 +309,27 @@
                 </div>
             </div>
         </section>
+        <section id="community">
+            <div class="community-container">
+                <div class="community-info">
+                    <div class="community-text">
+                        <h4 class="community-title">Join The Community</h4>
+                        <p>Enter your email address to receive regular updates, as well as news on upcoming events and specific offers.</p>
+                    </div>
+                    <div class="community-action">
+                        <input type="email" name="user-email-newsletter" id="newsletter-community-email" autocomplete="off">
+                        <button>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="none" viewBox="0 0 24 24">
+                                <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12 4 4l2 8m14 0L4 20l2-8m14 0H6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="community-image">
+                    <img src="../../../assets/images/community-image.png" alt="Booknest community image">
+                </div>
+            </div>
+        </section>
     </main>
 
     <?php require __DIR__ . '/../includes/footer.php' ?>

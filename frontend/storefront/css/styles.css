@@ -652,7 +652,8 @@ main {
 #best-sellers,
 #new-arrivals,
 #reviews,
-#services {
+#services,
+#community {
   width: 100%;
   height: auto;
   padding: 25px var(--sides-padding);
@@ -1113,7 +1114,7 @@ main {
 }
 
 .services-container > .service-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
   background-color: var(--primary-color);
   color: var(--secondary-color);
   border: 1px solid var(--secondary-color);
@@ -1135,6 +1136,78 @@ main {
   text-align: center;
   gap: 6px;
   font-family: var(--primary-font);
+}
+
+/* ===== COMMUNITY ===== */
+.community-container {
+  width: 100%;
+  padding: 25px var(--sides-padding);
+  background-color: var(--primary-color);
+  display: grid;
+  border-radius: 10px;
+}
+
+.community-container > .community-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--secondary-color);
+  gap: 25px;
+}
+
+.community-info > .community-text {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.community-text > .community-title {
+  font-family: var(--primary-font);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(1rem, 2vw, 2rem);
+}
+
+.community-text > p {
+  font-family: var(--primary-font);
+  font-weight: 300;
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+}
+
+.community-container > .community-image {
+  display: none;
+}
+
+.community-info > .community-action {
+  width: 100%;
+  height: 40px;
+}
+
+.community-info > .community-action {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--secondary-color);
+  border-radius: 10px;
+}
+
+.community-info > .community-action > input {
+  width: 90%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  padding: 10px var(--sides-padding);
+  color: var(--secondary-color);
+  font-family: var(--secondary-font);
+}
+
+.community-info > .community-action > input:focus {
+  outline: none;
+}
+
+.community-info > .community-action > button {
+  position: absolute;
+  right: 10px;
 }
 
 /* ===== MEDIA QUERIES ====== */
@@ -1194,6 +1267,25 @@ main {
   }
   .footer > .copyright > p {
     text-align: center;
+  }
+
+  .community-container {
+    grid-template-columns: 2fr 1fr;
+
+    grid-template-rows: 300px;
+  }
+
+  .community-container > .community-image {
+    display: flex;
+    justify-content: center;
+  }
+
+  .community-container > .community-info {
+    justify-content: space-between;
+  }
+
+  .community-container > .community-info > .community-action {
+    width: 50%;
   }
 }
 
