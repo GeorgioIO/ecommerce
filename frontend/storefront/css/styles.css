@@ -555,7 +555,7 @@ main {
 
 .search-card > .search-card-info > .search-card-price {
   font-size: clamp(0.7rem, 0.7vw, 1.05rem);
-  font-weight: 300;
+  font-weight: 100;
 }
 
 .search-card-title {
