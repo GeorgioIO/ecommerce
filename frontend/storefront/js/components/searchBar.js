@@ -1,5 +1,7 @@
 import { swapClass } from "../../../admin/js/UIhelpers.js";
-
+import { searchBooks } from "../services/booksServices.js";
+let maxMiniSearch = 4;
+let searchCounter = 0;
 export function buildSearchBar() {
   let searchBar = document.querySelector("#search-bar") ?? null;
 
@@ -34,8 +36,8 @@ export function buildSearchBar() {
   };
 
   // Field
-  const searchBarSearchingContainer = document.createElement("div");
-  searchBarSearchingContainer.classList.add("search-bar-searching-container");
+  const searchBarActionContainer = document.createElement("div");
+  searchBarActionContainer.classList.add("search-bar-action-container");
 
   const searchInput = document.createElement("input");
   searchInput.classList.add("search-input");
@@ -43,9 +45,95 @@ export function buildSearchBar() {
   searchInput.autocomplete = "off";
   searchInput.placeholder = "Type a keyword..";
 
-  searchBarSearchingContainer.append(searchInput);
+  const searchBarSearchContainer = document.createElement("div");
+  searchBarSearchContainer.classList.add("search-bar-search-container");
 
-  searchBar.append(searchBarHeader, searchBarSearchingContainer);
+  const title = document.createElement("h5");
+  title.classList.add("search-title");
+  title.textContent = "Products";
+
+  const searchResultContainer = document.createElement("div");
+  searchResultContainer.classList.add("search-result-container");
+
+  const searchMoreButton = document.createElement("button");
+  searchMoreButton.id = "search-more-button";
+  searchMoreButton.textContent = `Search`;
+
+  searchBarSearchContainer.append(
+    title,
+    searchResultContainer,
+    searchMoreButton,
+  );
+
+  let lastQuery = "";
+
+  searchInput.addEventListener("input", async () => {
+    let searchValue = searchInput.value.trim();
+
+    if (searchValue.length === 0) {
+      searchMoreButton.textContent = `Search`;
+
+      searchBarSearchContainer.style.display = "none";
+    }
+
+    searchMoreButton.textContent = `Search more for "${searchValue}"`;
+
+    lastQuery = searchValue;
+    searchResultContainer.innerHTML = "";
+    searchCounter = 0;
+
+    if (searchValue.length <= 2) return;
+
+    searchBarSearchContainer.style.display = "flex";
+
+    try {
+      const books = await searchBooks(searchValue);
+
+      if (searchValue !== lastQuery || !books?.length) return;
+
+      for (const book of books) {
+        if (searchCounter >= maxMiniSearch) break;
+        searchResultContainer.append(createSearchCard(book));
+        searchCounter++;
+      }
+    } catch (err) {
+      console.log("Search failed");
+    }
+  });
+
+  searchBarActionContainer.append(searchInput);
+
+  searchBar.append(
+    searchBarHeader,
+    searchBarActionContainer,
+    searchBarSearchContainer,
+  );
 
   return searchBar;
+}
+
+function createSearchCard(book) {
+  const searchCard = document.createElement("div");
+  searchCard.classList.add("search-card");
+
+  searchCard.innerHTML = `
+  
+  <figure>
+    <img src="/ecommerce/assets/images/${book.cover_image}" alt="${book.title} cover image">
+  </figure>
+  <div class="search-card-info">
+    <p class="search-card-price">
+      ${
+        book.is_onSale === 1
+          ? `<span class='pre-sale-price'> $${book.price} </span><span class='post-sale-price'> $${book.final_price} </span>`
+          : `<span class='base-price'> $${book.final_price} </span>`
+      }
+    </p>
+    <a href="" class="search-card-title">
+      ${book.title}
+    </a>
+  </div>
+  `;
+
+  return searchCard;
 }

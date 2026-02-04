@@ -1,5 +1,56 @@
 <?php
 
+function get_books_under_price($conn , $price)
+{
+    $query = <<<SQL
+
+    SELECT
+        b.id,
+        b.title,
+        b.price,
+        b.cover_image,
+        a.name AS author_name,
+        bf.name AS format_name,
+        b.is_onSale,
+        b.is_inStock,
+        b.discount_percentage,
+        CASE
+            WHEN b.is_onSale = 1
+                THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
+            ELSE 
+                b.price
+            END AS final_price
+        FROM books b
+        JOIN authors a ON b.author_id = a.id
+        JOIN book_formats bf ON b.format_id = bf.id
+        WHERE 
+            (
+                CASE
+                    WHEN b.is_onSale = 1
+                        THEN ROUND(b.price - (b.price * b.discount_percentage) / 100, 2)
+                    ELSE b.price
+                END
+            )  <= ?
+        LIMIT 10;
+    SQL;
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i" , $price);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $books_under_price = [];
+
+    if($result)
+    {
+        while($row = $result->fetch_assoc())
+        {
+            $books_under_price[] = $row;
+        }
+    }
+
+    return $books_under_price;
+}
+
 function get_new_arrivals_books($conn)
 {
     $result = $conn->query("
@@ -11,6 +62,7 @@ function get_new_arrivals_books($conn)
             a.name AS author_name,
             bf.name AS format_name,
             b.is_onSale,
+            b.is_inStock,
             b.discount_percentage,
             CASE 
                 WHEN b.is_onSale = 1

@@ -147,7 +147,16 @@
                                         <span class="product-card-format"><?= $format_name ?></span>
                                     </p>
                                 </div>
-                                <a href="" class="product-card-redirection-button">View Product</a>             
+                                <?php
+                                    if($best_seller['is_inStock'] === "0")
+                                    {
+                                     echo "<a class='sold-out-button' disable>Sold Out</a>";
+                                    }
+                                    else
+                                    {
+                                        echo "<a href='' class='product-card-redirection-button'>View Product</a>";
+                                    }
+                                ?>             
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -159,16 +168,7 @@
                 </button>
             </div>
         </section>
-        <div class="moving-advertisement">
-            <div class="ad-track">
-                <span>🆘 All Revenue this month for @CharityForHope</span>
-                <span>30% OFF on Game of Thrones Books</span>
-                <span>🆘 All Revenue this month for @CharityForHope</span>
-                <span>30% OFF on Game of Thrones Books</span>
-                <span>🆘 All Revenue this month for @CharityForHope</span>
-                <span>30% OFF on Game of Thrones Books</span>
-            </div>
-        </div>
+        <?php require __DIR__ . '/../includes/advertisement.php' ?>
         <section id="new-arrivals">
             <?php 
                 $new_arrivals = get_new_arrivals_books($conn);
@@ -231,7 +231,16 @@
                                     <span class="product-card-format"><?= $format_name ?></span>
                                 </p>
                             </div>
-                            <a href="" class="product-card-redirection-button">View Product</a>             
+                            <?php
+                            if($new_arrival['is_inStock'] === "0")
+                            {
+                            echo "<a class='sold-out-button' disable>Sold Out</a>";
+                            }
+                            else
+                            {
+                                echo "<a href='' class='product-card-redirection-button'>View Product</a>";
+                            }
+                            ?>            
                         </div>
                         <?php endforeach;?>
                     </div>
@@ -243,6 +252,92 @@
                 </button>
             </div>
         </section>
+        <section id="books-under-price">
+            <?php
+            $price = 10;
+            $books_under = get_books_under_price($conn , 10);
+            
+            ?>
+            <h3 class="section-title">Books under $<?= $price ?></h3>
+            <div class="carousel">
+                <button class="carousel-button prev">
+                    <svg class="left-caret" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" fill="none" viewBox="0 0 24 24">
+                        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m7 10 5 5 5-5"/>
+                    </svg>
+                </button>
+                <div class="carousel-viewport">
+                    <div class="carousel-track">
+                        <?php foreach($books_under as $book):
+
+                            $title = htmlspecialchars($book['title'] , ENT_QUOTES , 'UTF-8');
+                            $total_price = htmlspecialchars($book['price'] , ENT_QUOTES , 'UTF-8');
+                            $image = htmlspecialchars($book['cover_image'] , ENT_QUOTES , 'UTF-8');
+                            $author_name = htmlspecialchars($book['author_name'] , ENT_QUOTES , 'UTF-8');
+                            $format_name = htmlspecialchars($book['format_name'] , ENT_QUOTES , 'UTF-8');
+                            $url = "../../../assets/images/$image";
+                            
+                        ?>
+                        <div class="product-card">
+                            <figure>
+                                <a href="">
+                                    <img src="<?= $url ?>" alt="<?= $title ?> cover image">
+                                </a>
+                                <div class="product-card-actions">
+                                    <button class="product-card-add-wishlist-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="product-card-add-cart-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.3 5H21l-2 7H7.377M20 16H8L6 3H3m6 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm11 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <?php 
+                                
+                                echo $book['is_onSale'] === 1 ? 
+                                 "<div class='product-card-sale-badge'>- %{$book['discount_percentage']}</div>" : 
+                                 "" ; 
+                                ?>
+                            </figure>
+                            <div class="product-card-text">
+                                <p class="product-card-price">
+                                    <?php
+                                        echo $book['is_onSale'] === 1 ?
+                                        "<span class='pre-sale-price'> \${$book['price']} </span> <span class='post-sale-price'> \${$book['final_price']} </span>":
+                                        "<span class='base-price'> \${$book['final_price']} </span>";  
+                                    ?>
+                                </p>
+                                <a class="product-card-title"><?= $title ?></a>
+                                <p class="product-card-author-format"> 
+                                    <a href="" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?> </span></a>     
+                                    <span class="separator">,</span>
+                                    <span class="product-card-format"><?= $format_name ?></span>
+                                </p>
+                            </div>
+                            <?php
+                            if($book['is_inStock'] === 0)
+                            {
+                            echo "<a class='sold-out-button' disable>Sold Out</a>";
+                            }
+                            else
+                            {
+                                echo "<a href='' class='product-card-redirection-button'>View Product</a>";
+                            }
+                            ?>            
+                        </div>
+                        <?php endforeach;?>
+                    </div>
+                </div>
+                <button class="carousel-button next">
+                    <svg class="right-caret" xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" fill="none" viewBox="0 0 24 24">
+                        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m7 10 5 5 5-5"/>
+                    </svg>
+                </button>
+            </div>
+        </section>
+        <?php require __DIR__ . '/../includes/advertisement.php' ?>
         <section id="reviews">
             <?php
             

@@ -261,6 +261,11 @@ document.addEventListener("click", async (e) => {
 
     listState.entity = entity;
     listState.filters = { [filterf]: id };
+    listState.page = 1;
+    listState.perPage = 10;
+    listState.totalPages = 1;
+
+    console.log(listState, loadEntityElements);
 
     // Load Books
     loadEntityElements(); // author_id : 3

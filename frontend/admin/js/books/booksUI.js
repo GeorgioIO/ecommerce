@@ -46,6 +46,8 @@ export async function loadBooks() {
     });
 
     const books = booksResponse.data;
+
+    console.log(listState.filters);
     const paginationData = booksResponse.pagination;
 
     listState.page = paginationData.page;

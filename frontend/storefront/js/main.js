@@ -20,9 +20,11 @@ const header = document.querySelector("#site-header");
 const hero = document.querySelector("#hero");
 const newArrivals = document.querySelector("#new-arrivals");
 const bestSellers = document.querySelector("#best-sellers");
+const booksUnder = document.querySelector("#books-under-price");
 
 const newArrivalsCarousel = createCarousel(newArrivals);
 const bestSellersCarousel = createCarousel(bestSellers);
+const booksUnderPriceCarousel = createCarousel(booksUnder);
 
 const storeReviews = document.querySelector("#reviews");
 let reviewSliderToggler = true;
@@ -190,6 +192,19 @@ newArrivals.addEventListener("click", (e) => {
 
   if (carouselNextButton) {
     newArrivalsCarousel.goNext();
+  }
+});
+
+booksUnder.addEventListener("click", (e) => {
+  const carouselPreviousButton = e.target.closest(".carousel-button.prev");
+  const carouselNextButton = e.target.closest(" .carousel-button.next");
+
+  if (carouselPreviousButton) {
+    booksUnderPriceCarousel.goPrev();
+  }
+
+  if (carouselNextButton) {
+    booksUnderPriceCarousel.goNext();
   }
 });
 
