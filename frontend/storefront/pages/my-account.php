@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . '../../../../configuration/session.php';
+require_once __DIR__ . '../../../../configuration/session.php';
 
 ?>
 
@@ -21,18 +21,6 @@ include __DIR__ . '../../../../configuration/session.php';
     <?php  require __DIR__ . '/../includes/header.php' ?>
 
     <?php require __DIR__ . '/../includes/sidebar.php' ?>
-
-    <div class="register-modal">
-        <?php
-        
-        if(isset($_SESSION['redirect-message']))
-        {
-            
-        }
-        
-        ?>
-    </div>
-
     <?php
     
         if(!isset($_SESSION['user_id']))

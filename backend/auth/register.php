@@ -77,7 +77,7 @@ $hashedPassword = password_hash($password , PASSWORD_DEFAULT);
 // Generate Customer Code
 $customer_code = generate_customer_code();
 
-$params = [$customer_code , $username , $email , $phone_number ,$hashedPassword];
+$params = [$customer_code , $username , $email , $phone_number , $hashedPassword];
 $types = "sssss";
 
 // Add user

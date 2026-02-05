@@ -2,10 +2,10 @@
     <section id="account-forms">
         <div>
             <h3 class="form-title">Login</h3>
-            <form id="log-in-form">
+            <form action="../../../backend/auth/user_login.php" method="post" id="log-in-form">
                 <div class="form-row">
-                    <label for="username-email">Username or email address <span class="required-asteriks">*</span></label>
-                    <input type="text" id="username-email" name="username-email" autocomplete="off">
+                    <label for="useremail">Email address <span class="required-asteriks">*</span></label>
+                    <input type="text" id="useremail" name="useremail" autocomplete="off">
                 </div>
                 <div class="form-row">
                     <label for="password">Password <span class="required-asteriks">*</span></label>
