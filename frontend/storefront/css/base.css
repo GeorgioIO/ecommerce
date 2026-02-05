@@ -48,6 +48,7 @@ ol {
   --primary-color: #00cdbc;
   --secondary-color: white;
   --accent-color: black;
+  --border-primary-color: rgb(145, 145, 145);
 
   /* === Sizes === */
   --sides-padding: 20px;
@@ -195,6 +196,10 @@ h6 {
 
 .section-redirection-button:hover {
   border: 1px solid var(--accent-color);
+}
+
+.required-asteriks {
+  color: red;
 }
 
 /* STYLES */

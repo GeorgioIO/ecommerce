@@ -6,7 +6,8 @@
 #services,
 #community,
 #books-under-price,
-#hero {
+#hero,
+#account-forms {
   width: 100%;
   height: auto;
   padding: 25px var(--sides-padding);
@@ -286,7 +287,7 @@
 .search-card-info > .search-card-price > .pre-sale-price {
   font-weight: 300;
   text-decoration: line-through;
-  color: rgb(145, 145, 145);
+  color: var(--border-primary-color);
 }
 .search-card-info > .search-card-price > .base-price,
 .search-card-info > .search-card-price > .post-sale-price,
@@ -457,7 +458,7 @@
   border-radius: 10px;
   background-color: var(--secondary-color);
   padding: 15px 20px;
-  border: 1px solid rgb(145, 145, 145);
+  border: 1px solid var(--border-primary-color);
 }
 
 .store-review-card > .card-header {
@@ -513,7 +514,7 @@
   align-items: center;
   gap: 12px;
   border-radius: 10px;
-  border: 1px solid rgb(145, 145, 145);
+  border: 1px solid var(--border-primary-color);
   cursor: pointer;
   transition: ease-in-out 300ms;
 }
@@ -613,4 +614,94 @@
 .community-info > .community-action > button {
   position: absolute;
   right: 10px;
+}
+
+/* ================ Account forms ================ */
+#account-forms > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  width: 100%;
+}
+
+#account-forms > div > form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  border: 1px solid var(--border-primary-color);
+  padding: 15px var(--sides-padding);
+  border-radius: 10px;
+  background-color: var(--secondary-color);
+}
+
+#register-form > p {
+  font-family: var(--primary-font);
+  font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+}
+
+.form-title {
+  font-family: var(--secondary-font);
+  font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 65px;
+}
+
+.remember-me-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+.remember-me-row > label {
+  font-family: var(--primary-font);
+  font-weight: 400;
+  font-size: clamp(0.8rem, 1.3vw, 0.9rem);
+}
+
+.form-row > label {
+  font-family: var(--primary-font);
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+}
+
+.form-row > input {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--border-primary-color);
+  padding: 10px var(--sides-padding);
+  font-family: var(--secondary-font);
+}
+
+.form-row > input:focus {
+  outline: none;
+}
+
+#log-in-button,
+#register-button {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  width: 100px;
+  height: 40px;
+  font-family: var(--primary-font);
+  color: var(--secondary-color);
+}
+
+.lost-password-link {
+  font-size: clamp(0.8rem, 1.3vw, 1rem);
+  color: var(--primary-color);
+  text-decoration: underline;
+  font-family: var(--primary-font);
 }

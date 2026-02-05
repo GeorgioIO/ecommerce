@@ -381,6 +381,8 @@
 
 /* ===== FOOTER ===== */
 .footer {
+  position: sticky;
+  bottom: 0;
   background-color: var(--primary-color);
   display: grid;
   grid-template-columns: 1fr;
