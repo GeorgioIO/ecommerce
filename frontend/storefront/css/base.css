@@ -1,0 +1,221 @@
+/* This file contains resets, font faces, variables, general global styles, animatons */
+
+/* RESETS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style-type: none;
+}
+
+/* === Font Faces === */
+@font-face {
+  font-family: "Inter";
+  src: url("../../../assets/fonts/Inter-VariableFont_opsz\,wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Libre";
+  src: url("../../../assets/fonts/LibreBaskerville-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* VARIABLES */
+:root {
+  /* === Colors === */
+  --primary-color: #00cdbc;
+  --secondary-color: white;
+  --accent-color: black;
+
+  /* === Sizes === */
+  --sides-padding: 20px;
+
+  /* === Fonts === */
+  --primary-font: "Inter", sans-serif;
+  --secondary-font: "Libre", sans-serif;
+}
+
+/* === Animations + Animation classes */
+@keyframes slide_in_sidebar {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.slide-in-sidebar {
+  animation: slide_in_sidebar ease-in-out 500ms forwards;
+}
+
+@keyframes slide_out_sidebar {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.slide-out-sidebar {
+  animation: slide_out_sidebar ease-in-out 500ms forwards;
+}
+
+@keyframes slide_in_right {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.slide-in-right {
+  animation: slide_in_right ease-in-out 500ms forwards;
+}
+
+@keyframes slide_out_right {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.slide-out-right {
+  animation: slide_out_right ease-in-out 500ms forwards;
+}
+
+@keyframes slide_out_hero_card {
+  0% {
+    transform: translateX(0px);
+  }
+
+  100% {
+    transform: translateX(-1500px);
+  }
+}
+
+.slide-out-hero-card {
+  animation: slide_out_hero_card ease-in-out 500ms forwards;
+}
+
+@keyframes slide_in_hero_card {
+  0% {
+    transform: translateX(-1500px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.slide-in-hero-card {
+  animation: slide_in_hero_card ease-in-out 500ms forwards;
+}
+
+@keyframes scroll-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* === GENERALS === */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--secondary-font);
+}
+
+.right-caret {
+  transform: rotate(-90deg);
+}
+
+.left-caret {
+  transform: rotate(90deg);
+}
+
+.section-title {
+  font-family: var(--secondary-font);
+  font-weight: bold;
+  text-align: center;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+}
+
+.section-redirection-button {
+  width: 100%;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1px solid rgb(145, 145, 145);
+  border-radius: 8px;
+  font-family: var(--secondary-font);
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: ease-in-out 400ms;
+}
+
+.section-redirection-button:hover {
+  border: 1px solid var(--accent-color);
+}
+
+/* STYLES */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
