@@ -5,11 +5,14 @@ createCarousel is a Factory function that return an object that allow the contro
 */
 
 export function createCarousel(root) {
+  if (!root) return null;
   const track = root.querySelector(".carousel-track");
   const cards = Array.from(root.querySelectorAll(".carousel .product-card"));
   const btnPrevious = root.querySelector(".prev");
   const btnNext = root.querySelector(".next");
   const viewport = root.querySelector(".carousel-viewport");
+
+  if (!track || cards.length === 0 || !btnPrevious || !btnNext) return null;
 
   let index = 0;
   let step = 0;
