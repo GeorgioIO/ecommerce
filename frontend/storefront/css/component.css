@@ -705,3 +705,12 @@
   text-decoration: underline;
   font-family: var(--primary-font);
 }
+
+.error-message {
+  color: red;
+  font-family: var(--primary-font);
+}
+
+.error-message.hidden {
+  display: none;
+}

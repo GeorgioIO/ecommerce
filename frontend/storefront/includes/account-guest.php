@@ -5,38 +5,47 @@
             <form id="log-in-form">
                 <div class="form-row">
                     <label for="username-email">Username or email address <span class="required-asteriks">*</span></label>
-                    <input type="text" id="username-email" name="username-email" autocomplete="off" required>
+                    <input type="text" id="username-email" name="username-email" autocomplete="off">
                 </div>
                 <div class="form-row">
                     <label for="password">Password <span class="required-asteriks">*</span></label>
-                    <input type="password" autocomplete="off" id="password" name="userpassword" required>
+                    <input type="password" autocomplete="off" id="password" name="userpassword" >
                 </div>
                 <span class="remember-me-row">
                     <input type="checkbox" id="remember-pass">
                     <label for="remember-pass">Remember me</label>
                 </span>
+                <button type="submit" id="log-in-button">Log in</button>
+                <p class="error-message hidden"></p>
 
-                <button type="button" id="log-in-button">Log in</button>
                 <a href="" class="lost-password-link">Lost your password?</a>
             </form>
         </div>
         <div>
             <h3 class="form-title">Register</h3>
-            <form action="" id="register-form">
+            <form action="../../../backend/auth/register.php" method="post" id="register-form">
                 <div class="form-row">
                     <label for="register-username">Username <span class="required-asteriks">*</span></label>
-                    <input type="text" id="register-username" name="username" autocomplete="off" required>
+                    <input type="text" id="register-username" name="username" autocomplete="off">
                 </div>
                 <div class="form-row">
                     <label for="register-email">Email address <span class="required-asteriks">*</span></label>
-                    <input type="text" id="register-email" name="email" autocomplete="off" required>
+                    <input type="text" id="register-email" name="email" autocomplete="off" >
+                </div>
+                <div class="form-row">
+                    <label for="register-phone">Phone number</label>
+                    <input type="text" id="register-phone" name="phone" autocomplete="off">
                 </div>
                 <div class="form-row">
                     <label for="register-password">Password <span class="required-asteriks">*</span></label>
-                    <input type="text" id="register-password" name="password" autocomplete="off" required>
+                    <input type="password" id="register-password" name="password" autocomplete="off">
                 </div>
+                
                 <p>Your personal data will be used solely to improve your experience throughout this website.</p>
-                <button type="button" id="register-button">Register</button>
+                <button type="submit" id="register-button">Register</button>
+                <p class="error-message hidden"> 
+                    
+                </p>
             </form>
         </div>
     </section>

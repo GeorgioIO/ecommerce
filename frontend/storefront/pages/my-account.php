@@ -15,11 +15,23 @@ include __DIR__ . '../../../../configuration/session.php';
     <link rel="stylesheet" href="../css/component.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <script defer type="module" src="../js/main.js"></script>
+    <script defer type="module" src="../js/pages/registration.js"></script>
 </head>
 <body>
     <?php  require __DIR__ . '/../includes/header.php' ?>
 
     <?php require __DIR__ . '/../includes/sidebar.php' ?>
+
+    <div class="register-modal">
+        <?php
+        
+        if(isset($_SESSION['redirect-message']))
+        {
+            
+        }
+        
+        ?>
+    </div>
 
     <?php
     

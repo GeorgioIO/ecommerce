@@ -95,4 +95,8 @@ function validate_email($email)
 
 }
 
+function is_valid_password($password) {
+    return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/', $password);
+}
+
 ?>
