@@ -10,7 +10,7 @@
     <div class="navigation-list">
         <h4>Navigate</h4>
         <ul>
-            <li><a href="">Home</a></li>
+            <li><a href="../pages/about-us.php">About us</a></li>
             <li><a href="">Shop</a></li>
             <li><a href="">Collections</a></li>
             <li><a href="">Contact Us</a></li>

@@ -59,7 +59,7 @@ ol {
 }
 
 /* === Animations + Animation classes */
-@keyframes slide_in_sidebar {
+@keyframes slide_in_left {
   0% {
     transform: translateX(-100%);
   }
@@ -69,11 +69,11 @@ ol {
   }
 }
 
-.slide-in-sidebar {
-  animation: slide_in_sidebar ease-in-out 500ms forwards;
+.slide-in-left {
+  animation: slide_in_left ease-in-out 500ms forwards;
 }
 
-@keyframes slide_out_sidebar {
+@keyframes slide_out_left {
   0% {
     transform: translateX(0);
   }
@@ -83,8 +83,8 @@ ol {
   }
 }
 
-.slide-out-sidebar {
-  animation: slide_out_sidebar ease-in-out 500ms forwards;
+.slide-out-left {
+  animation: slide_out_left ease-in-out 500ms forwards;
 }
 
 @keyframes slide_in_right {
@@ -202,6 +202,16 @@ h6 {
   color: red;
 }
 
+.log-in-link {
+  color: var(--primary-color);
+  font-family: var(--primary-font);
+  text-decoration: underline;
+}
+
+a {
+  cursor: pointer;
+}
+
 /* STYLES */
 html {
   scroll-behavior: smooth;
@@ -217,10 +227,12 @@ body {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 main {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 40px;
 }

@@ -10,6 +10,18 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
   }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .message-box {
+    width: 70%;
+  }
+
+  #about-us > div > figure {
+    align-self: center;
+  }
 }
 
 @media (min-width: 768px) {
@@ -80,10 +92,33 @@
     flex-direction: row;
     align-items: flex-start;
   }
+
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .message-box {
+    width: 50%;
+  }
+
+  #about-us > div {
+    padding: 40px 60px;
+  }
+  #about-us > .our-story-container > figure {
+    align-self: flex-start;
+  }
+
+  #about-us > .our-aim-container > figure {
+    align-self: flex-end;
+  }
 }
 
 /* Laptop */
 @media (min-width: 1024px) {
+  #wishlist {
+    padding: 25px 75px;
+  }
+
   #search-bar {
     width: 30%;
   }
@@ -123,6 +158,18 @@
     margin: 0 auto;
     width: 70%;
   }
+
+  .products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .message-box {
+    width: 40%;
+  }
+
+  #about-us > div {
+    flex-direction: row;
+  }
 }
 
 @media (min-width: 1240px) {
@@ -141,6 +188,18 @@
   .footer > .policies-list,
   .footer > .newsletter-list {
     padding: 25px var(--sides-padding) 25px var(--sides-padding);
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .message-box {
+    width: 20%;
+  }
+
+  #about-us > div {
+    padding: 40px 120px;
   }
 }
 

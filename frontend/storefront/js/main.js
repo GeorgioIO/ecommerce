@@ -13,6 +13,8 @@ import { buildMiniWishlistBar } from "./components/miniWishlistBar.js";
 import { buildSearchBar } from "./components/searchBar.js";
 import { getGenres_DB } from "./services/booksServices.js";
 import { createCarousel } from "./components/carousel.js";
+import { addToWishlist } from "./services/wishlistServices.js";
+import { handleWishlistButton } from "./components/productCard.js";
 
 const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
@@ -41,7 +43,7 @@ sidebar.addEventListener("click", async (e) => {
   const openCollectionContainer = e.target.closest(".sidebar-collection-li");
 
   if (closeSidebarButton) {
-    swapClass(sidebar, "slide-out-sidebar", "slide-in-sidebar");
+    swapClass(sidebar, "slide-out-left", "slide-in-left");
   }
 
   if (closeCollectionContainer) {
@@ -115,7 +117,7 @@ header.addEventListener("click", (e) => {
   }
 
   if (hamburgerMenu) {
-    swapClass(sidebar, "slide-in-sidebar", "slide-out-sidebar");
+    swapClass(sidebar, "slide-in-left", "slide-out-left");
   }
 
   if (showSearchButton) {
@@ -168,10 +170,15 @@ hero.addEventListener("click", async (e) => {
   }
 });
 
-bestSellers.addEventListener("click", (e) => {
+bestSellers.addEventListener("click", async (e) => {
   const carouselPreviousButton = e.target.closest(".carousel-button.prev");
-
   const carouselNextButton = e.target.closest(".carousel-button.next");
+  const wishlistButton = e.target.closest(".product-card-add-wishlist-button");
+
+  if (wishlistButton) {
+    const productCard = e.target.closest(".product-card");
+    handleWishlistButton(productCard, wishlistButton);
+  }
 
   if (carouselPreviousButton) {
     bestSellersCarousel.goPrev();

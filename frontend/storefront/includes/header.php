@@ -1,9 +1,11 @@
 <header id="site-header">
-    <img src="../../../assets/images/BookNest.svg" alt="booknest logo">
+    <a href="../pages/home.php">
+        <img src="../../../assets/images/BookNest.svg" alt="booknest logo">
+    </a>
     <nav class="site-header-navbar">
         <ul>
             <li>
-                <a href="">About Us</a>
+                <a href="../pages/about-us.php">About Us</a>
             </li>
             <li>
                 <a href="">Shop</a>
