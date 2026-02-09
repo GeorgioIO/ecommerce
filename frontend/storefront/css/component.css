@@ -252,13 +252,27 @@
 }
 
 /* ================ Product Grid ================ */
+.products-catalog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
 .products-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 25px;
 }
 
-/* ================ Product cards ================ */
+.empty-container {
+  font-family: var(--primary-font);
+}
+
+.empty-container a {
+  color: var(--primary-color);
+}
+
+/* ================ Product cards + sidebar product card ================ */
 .product-card {
   width: 100%;
   height: auto;
@@ -349,7 +363,7 @@
 }
 
 .product-card-text > .product-card-price,
-.search-card-info > .search-card-price {
+.sidebar-product-card-text > .sidebar-product-card-price {
   font-family: var(--primary-font);
   display: flex;
   align-items: center;
@@ -357,13 +371,12 @@
 }
 
 .product-card-price > .pre-sale-price,
-.search-card-info > .search-card-price > .pre-sale-price {
+.sidebar-product-card-text > .sidebar-product-card-price > .pre-sale-price {
   font-weight: 300;
   text-decoration: line-through;
   color: var(--border-primary-color);
 }
-.search-card-info > .search-card-price > .base-price,
-.search-card-info > .search-card-price > .post-sale-price,
+
 .product-card-price > .base-price,
 .product-card-price > .post-sale-price {
   font-weight: 700;
@@ -439,6 +452,56 @@
   border: 1px solid var(--accent-color);
 }
 
+.sidebar-product-card {
+  display: grid;
+  align-items: center;
+  grid-template-rows: 1fr;
+  grid-template-columns: 0.8fr 1fr;
+  gap: 18px;
+}
+
+.sidebar-product-card > figure {
+  width: 145px;
+  height: 200px;
+  border-radius: 10px;
+}
+.sidebar-product-card > figure > img {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.sidebar-product-card > .sidebar-product-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-product-card-price > .base-price,
+.sidebar-product-card-price > .post-sale-price {
+  font-family: var(--primary-font);
+  font-weight: 700;
+  font-size: clamp(0.8rem, 0.8vw, 1rem);
+}
+
+.sidebar-product-card-title {
+  font-family: var(--primary-font);
+  font-weight: 700;
+  font-size: clamp(0.8rem, 0.7vw, 1.15rem);
+}
+
+.sidebar-product-card-information {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0px;
+}
+
+.sidebar-product-card-action {
+  display: flex;
+  gap: 20px;
+}
 /* ================ Pagination ================ */
 .pagination {
   display: flex;

@@ -1,13 +1,15 @@
-import { loadWishlist } from "../pages/wishlistUI.js";
+import { listState } from "../pages/wishlistUI.js";
 import {
   removeFromWishlist,
   addToWishlist,
+  getWishlistItems,
 } from "../services/wishlistServices.js";
 import {
   activateMessageBox,
   appendMessageBox,
   createMesssageBox,
 } from "./messageBox.js";
+import { renderProductsCatalog } from "./productsCatalog.js";
 
 document.addEventListener("click", async (e) => {
   const removeFromWishlistButton = e.target.closest(
@@ -15,31 +17,6 @@ document.addEventListener("click", async (e) => {
   );
 
   if (removeFromWishlistButton) {
-    // Get product id
-    const productid = e.target.closest(".product-card").dataset.productid;
-
-    // Response
-    const response = await removeFromWishlist(productid);
-
-    if (response.success) {
-      loadWishlist();
-
-      activateMessageBox();
-
-      const messageBox = createMesssageBox(response.message);
-
-      appendMessageBox(messageBox);
-
-      // loadWishlist();
-      // Load wishlist again
-      //
-    } else {
-      activateMessageBox();
-
-      const messageBox = createMesssageBox(response.message);
-
-      appendMessageBox(messageBox);
-    }
   }
 });
 
@@ -201,6 +178,7 @@ export function buildProductCard(product, type = "normal") {
     );
     removeFromWishlistButton.textContent = "Remove";
 
+    setRemoveFromWishlistEvent(removeFromWishlistButton, listState);
     productCard.append(removeFromWishlistButton);
   }
 
@@ -242,4 +220,43 @@ export async function handleWishlistButton(card, button) {
     }
   } else if (state === "active") {
   }
+}
+
+async function setRemoveFromWishlistEvent(button, state) {
+  button.onclick = async (e) => {
+    // Get section
+    const closestSection = e.target.closest("section");
+    const card = e.target.closest(".product-card");
+
+    // Get product id
+    const productid = card.dataset.productid;
+
+    // Response
+    const deleteResponse = await removeFromWishlist(productid);
+
+    if (deleteResponse.success) {
+      const fetchResponse = await getWishlistItems({
+        page: listState.page,
+        perPage: listState.perPage,
+      });
+
+      const { data, pagination } = fetchResponse;
+
+      if (state.page > pagination.totalPages) {
+        state.page = pagination.totalPages || 1;
+      }
+
+      activateMessageBox();
+      const messageBox = createMesssageBox(deleteResponse.message);
+      appendMessageBox(messageBox);
+
+      await renderProductsCatalog(closestSection, state);
+    } else {
+      activateMessageBox();
+
+      const messageBox = createMesssageBox(deleteResponse.message);
+
+      appendMessageBox(messageBox);
+    }
+  };
 }

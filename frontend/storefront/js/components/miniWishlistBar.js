@@ -1,4 +1,6 @@
 import { swapClass } from "../../../admin/js/UIhelpers.js";
+import { getWishlistItems } from "../services/wishlistServices.js";
+import { buildSidebarCard } from "./sidebarProductCard.js";
 
 export function buildMiniWishlistBar() {
   let miniWishlist = document.querySelector("#mini-wishlist-bar") ?? null;
@@ -29,11 +31,36 @@ export function buildMiniWishlistBar() {
 
   miniWishlistHeader.append(miniWishlistTitle, closeWishlistBar);
 
+  const wishlistlistBody = document.createElement("div");
+  wishlistlistBody.classList.add("mini-wishlist-body");
+
   closeWishlistBar.onclick = function () {
     swapClass(miniWishlist, "slide-out-right", "slide-in-right");
   };
 
-  miniWishlist.append(miniWishlistHeader);
+  miniWishlist.append(miniWishlistHeader, wishlistlistBody);
 
   return miniWishlist;
+}
+
+export async function createMiniWishlistContainer() {
+  const wishlistItemsContainer = document.createElement("div");
+  wishlistItemsContainer.classList.add("wishlist-items-container");
+
+  const wishlist_items = await getWishlistItems();
+  const data = wishlist_items.data;
+
+  data.forEach((product) => {
+    wishlistItemsContainer.append(buildSidebarCard(product, "wishlist"));
+  });
+
+  return wishlistItemsContainer;
+}
+
+export function createViewWishlistButton() {
+  const viewWishlistButton = document.createElement("a");
+  viewWishlistButton.classList.add("view-more-button");
+  viewWishlistButton.href = "../pages/wishlist.php";
+  viewWishlistButton.textContent = "View wishlist";
+  return viewWishlistButton;
 }

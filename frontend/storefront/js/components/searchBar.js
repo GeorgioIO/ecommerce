@@ -1,5 +1,6 @@
 import { swapClass } from "../../../admin/js/UIhelpers.js";
 import { searchBooks } from "../services/booksServices.js";
+import { buildSidebarCard } from "./sidebarProductCard.js";
 let maxMiniSearch = 4;
 let searchCounter = 0;
 export function buildSearchBar() {
@@ -56,7 +57,7 @@ export function buildSearchBar() {
   searchResultContainer.classList.add("search-result-container");
 
   const searchMoreButton = document.createElement("button");
-  searchMoreButton.id = "search-more-button";
+  searchMoreButton.classList.add("view-more-button");
   searchMoreButton.textContent = `Search`;
 
   searchBarSearchContainer.append(
@@ -93,7 +94,7 @@ export function buildSearchBar() {
 
       for (const book of books) {
         if (searchCounter >= maxMiniSearch) break;
-        searchResultContainer.append(createSearchCard(book));
+        searchResultContainer.append(buildSidebarCard(book, "search"));
         searchCounter++;
       }
     } catch (err) {
@@ -110,30 +111,4 @@ export function buildSearchBar() {
   );
 
   return searchBar;
-}
-
-function createSearchCard(book) {
-  const searchCard = document.createElement("div");
-  searchCard.classList.add("search-card");
-
-  searchCard.innerHTML = `
-  
-  <figure>
-    <img src="/ecommerce/assets/images/${book.cover_image}" alt="${book.title} cover image">
-  </figure>
-  <div class="search-card-info">
-    <p class="search-card-price">
-      ${
-        book.is_onSale === 1
-          ? `<span class='pre-sale-price'> $${book.price} </span><span class='post-sale-price'> $${book.final_price} </span>`
-          : `<span class='base-price'> $${book.final_price} </span>`
-      }
-    </p>
-    <a href="" class="search-card-title">
-      ${book.title}
-    </a>
-  </div>
-  `;
-
-  return searchCard;
 }

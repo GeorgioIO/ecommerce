@@ -13,8 +13,5 @@
 <main>
     <section id="wishlist">
         <h3 class="section-title">My wishlist</h3>
-        <div class="products-grid">
-            
-        </div>
     </section>
 </main>
