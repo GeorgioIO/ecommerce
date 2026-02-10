@@ -101,7 +101,14 @@ require_once __DIR__ . '/../../../configuration/session.php';
             <h3 class="section-title">Best Sellers</h3>
             <?php 
                 
-                $best_sellers = get_best_seller_books($conn);
+                if(isset($_SESSION['user_id']))
+                {
+                    $best_sellers = get_best_seller_books($conn , $_SESSION['user_id']);
+                }
+                else
+                {
+                    $best_sellers = get_best_seller_books($conn);
+                }
             ?>
             <div class="carousel">
                 <button class="carousel-button prev">
@@ -119,6 +126,7 @@ require_once __DIR__ . '/../../../configuration/session.php';
                             $image = htmlspecialchars($best_seller['cover_image'] , ENT_QUOTES , 'UTF-8');
                             $author_name = htmlspecialchars($best_seller['author_name'] , ENT_QUOTES , 'UTF-8');
                             $format_name = htmlspecialchars($best_seller['format_name'] , ENT_QUOTES , 'UTF-8');
+                            $in_wishlist = htmlspecialchars($best_seller['is_inWishlist'] , ENT_QUOTES , 'UTF-8');
                             $url = "../../../assets/images/$image";
                         ?> 
 
@@ -128,8 +136,8 @@ require_once __DIR__ . '/../../../configuration/session.php';
                                         <img src="<?= $url ?>" alt="<?= $title ?> cover image">
                                     </a>
                                     <div class="product-card-actions">
-                                        <button class="product-card-add-wishlist-button" data-state="inactive" data-enabled="<?= isset($_SESSION['user_id']) ? "true" : "false" ?>">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+                                        <button class="product-card-add-wishlist-button" data-state="<?= $in_wishlist === '1' ? 'active' : 'inactive' ?>" data-enabled="<?= isset($_SESSION['user_id']) ? "true" : "false" ?>">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="<?= $in_wishlist === '1' ? 'black' : 'none' ?>" viewBox="0 0 24 24">
                                                 <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
                                             </svg>
                                         </button>
@@ -140,7 +148,7 @@ require_once __DIR__ . '/../../../configuration/session.php';
                                         </button>
                                     </div>
                                     <?php 
-                                        echo $best_seller['is_onSale'] === "1" ? 
+                                        echo $best_seller['is_onSale'] === 1 ? 
                                         "<div class='product-card-sale-badge'>- %{$best_seller['discount_percentage']}</div>" : 
                                         "" ; 
                                     ?>
@@ -149,7 +157,7 @@ require_once __DIR__ . '/../../../configuration/session.php';
                                     <p class="product-card-price">
                                         <?php
                                         
-                                        echo $best_seller['is_onSale'] === "1" ?
+                                        echo $best_seller['is_onSale'] === 1 ?
                                         "<span class='pre-sale-price'> \${$best_seller['price']} </span> <span class='post-sale-price'> \${$best_seller['final_price']} </span>":
                                         "<span class='base-price'> \${$best_seller['final_price']} </span>";
                                         
@@ -163,7 +171,7 @@ require_once __DIR__ . '/../../../configuration/session.php';
                                     </p>
                                 </div>
                                 <?php
-                                    if($best_seller['is_inStock'] === "0")
+                                    if($best_seller['is_inStock'] === 0)
                                     {
                                      echo "<a class='sold-out-button' disable>Sold Out</a>";
                                     }
@@ -186,7 +194,14 @@ require_once __DIR__ . '/../../../configuration/session.php';
         <?php require __DIR__ . '/../includes/advertisement.php' ?>
         <section id="new-arrivals">
             <?php 
-                $new_arrivals = get_new_arrivals_books($conn);
+                if(isset($_SESSION['user_id']))
+                {
+                    $new_arrivals = get_new_arrivals_books($conn , $_SESSION['user_id']);
+                }
+                else
+                {
+                    $new_arrivals = get_new_arrivals_books($conn);
+                }
             ?>
             <h3 class="section-title">New Arrivals</h3>
             <div class="carousel">
@@ -199,26 +214,28 @@ require_once __DIR__ . '/../../../configuration/session.php';
                     <div class="carousel-track">
                         <?php foreach($new_arrivals as $new_arrival):
 
+                            $id = $new_arrival['id'];
                             $title = htmlspecialchars($new_arrival['title'] , ENT_QUOTES , 'UTF-8');
                             $total_price = htmlspecialchars($new_arrival['price'] , ENT_QUOTES , 'UTF-8');
                             $image = htmlspecialchars($new_arrival['cover_image'] , ENT_QUOTES , 'UTF-8');
+                            $in_wishlist = htmlspecialchars($new_arrival['is_inWishlist'] , ENT_QUOTES , 'UTF-8');
                             $author_name = htmlspecialchars($new_arrival['author_name'] , ENT_QUOTES , 'UTF-8');
                             $format_name = htmlspecialchars($new_arrival['format_name'] , ENT_QUOTES , 'UTF-8');
                             $url = "../../../assets/images/$image";
                             
                         ?>
-                        <div class="product-card">
+                        <div class="product-card" data-productid="<?= $id ?>">
                             <figure>
                                 <a href="">
                                     <img src="<?= $url ?>" alt="<?= $title ?> cover image">
                                 </a>
                                 <div class="product-card-actions">
-                                    <button class="product-card-add-wishlist-button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+                                    <button class="product-card-add-wishlist-button" data-state="<?= $in_wishlist === '1' ? 'active' : 'inactive' ?>" data-enabled="<?= isset($_SESSION['user_id']) ? "true" : "false" ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="<?= $in_wishlist === '1' ? 'black' : 'none' ?>" viewBox="0 0 24 24">
                                             <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
                                         </svg>
                                     </button>
-                                    <button class="product-card-add-cart-button">
+                                    <button class="product-card-add-cart-button <?= $best_seller['is_inStock'] === "0" ? "unclickable" : "" ?> " <?= $best_seller['is_inStock'] === "0" ? "disabled" : "" ?>>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
                                             <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.3 5H21l-2 7H7.377M20 16H8L6 3H3m6 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm11 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
                                         </svg>
@@ -226,7 +243,7 @@ require_once __DIR__ . '/../../../configuration/session.php';
                                 </div>
                                 <?php 
                                 
-                                echo $new_arrival['is_onSale'] === "1" ? 
+                                echo $new_arrival['is_onSale'] === 1 ? 
                                  "<div class='product-card-sale-badge'>- %{$new_arrival['discount_percentage']}</div>" : 
                                  "" ; 
                                 ?>
@@ -234,7 +251,7 @@ require_once __DIR__ . '/../../../configuration/session.php';
                             <div class="product-card-text">
                                 <p class="product-card-price">
                                     <?php
-                                        echo $new_arrival['is_onSale'] === "1" ?
+                                        echo $new_arrival['is_onSale'] === 1 ?
                                         "<span class='pre-sale-price'> \${$new_arrival['price']} </span> <span class='post-sale-price'> \${$new_arrival['final_price']} </span>":
                                         "<span class='base-price'> \${$new_arrival['final_price']} </span>";  
                                     ?>
@@ -247,7 +264,7 @@ require_once __DIR__ . '/../../../configuration/session.php';
                                 </p>
                             </div>
                             <?php
-                            if($new_arrival['is_inStock'] === "0")
+                            if($new_arrival['is_inStock'] === 0)
                             {
                             echo "<a class='sold-out-button' disable>Sold Out</a>";
                             }
@@ -270,7 +287,15 @@ require_once __DIR__ . '/../../../configuration/session.php';
         <section id="books-under-price">
             <?php
             $price = 10;
-            $books_under = get_books_under_price($conn , 10);
+            
+            if(isset($_SESSION['user_id']))
+            {
+                $books_under = get_books_under_price($conn , 10 , $_SESSION['user_id']);
+            }
+            else
+            {
+                $books_under = get_books_under_price($conn , 10);
+            }
             
             ?>
             <h3 class="section-title">Books under $<?= $price ?></h3>
@@ -284,6 +309,7 @@ require_once __DIR__ . '/../../../configuration/session.php';
                     <div class="carousel-track">
                         <?php foreach($books_under as $book):
 
+                            $id = $book['id'];
                             $title = htmlspecialchars($book['title'] , ENT_QUOTES , 'UTF-8');
                             $total_price = htmlspecialchars($book['price'] , ENT_QUOTES , 'UTF-8');
                             $image = htmlspecialchars($book['cover_image'] , ENT_QUOTES , 'UTF-8');
@@ -292,18 +318,18 @@ require_once __DIR__ . '/../../../configuration/session.php';
                             $url = "../../../assets/images/$image";
                             
                         ?>
-                        <div class="product-card">
+                        <div class="product-card" data-productid="<?= $id ?>">
                             <figure>
                                 <a href="">
                                     <img src="<?= $url ?>" alt="<?= $title ?> cover image">
                                 </a>
                                 <div class="product-card-actions">
-                                    <button class="product-card-add-wishlist-button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+                                    <button class="product-card-add-wishlist-button" data-state="<?= $in_wishlist === '1' ? 'active' : 'inactive' ?>" data-enabled="<?= isset($_SESSION['user_id']) ? "true" : "false" ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="<?= $in_wishlist === '1' ? 'black' : 'none' ?>" viewBox="0 0 24 24">
                                             <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
                                         </svg>
                                     </button>
-                                    <button class="product-card-add-cart-button">
+                                    <button class="product-card-add-cart-button <?= $best_seller['is_inStock'] === "0" ? "unclickable" : "" ?> " <?= $best_seller['is_inStock'] === "0" ? "disabled" : "" ?>>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
                                             <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.3 5H21l-2 7H7.377M20 16H8L6 3H3m6 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm11 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
                                         </svg>

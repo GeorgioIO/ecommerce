@@ -210,6 +210,12 @@ bestSellers.addEventListener("click", async (e) => {
 newArrivals.addEventListener("click", (e) => {
   const carouselPreviousButton = e.target.closest(".carousel-button.prev");
   const carouselNextButton = e.target.closest(" .carousel-button.next");
+  const wishlistButton = e.target.closest(".product-card-add-wishlist-button");
+
+  if (wishlistButton) {
+    const productCard = e.target.closest(".product-card");
+    handleWishlistButton(productCard, wishlistButton);
+  }
 
   if (carouselPreviousButton) {
     newArrivalsCarousel.goPrev();
@@ -223,6 +229,12 @@ newArrivals.addEventListener("click", (e) => {
 booksUnder.addEventListener("click", (e) => {
   const carouselPreviousButton = e.target.closest(".carousel-button.prev");
   const carouselNextButton = e.target.closest(" .carousel-button.next");
+  const wishlistButton = e.target.closest(".product-card-add-wishlist-button");
+
+  if (wishlistButton) {
+    const productCard = e.target.closest(".product-card");
+    handleWishlistButton(productCard, wishlistButton);
+  }
 
   if (carouselPreviousButton) {
     booksUnderPriceCarousel.goPrev();

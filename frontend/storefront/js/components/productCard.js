@@ -11,15 +11,6 @@ import {
 } from "./messageBox.js";
 import { renderProductsCatalog } from "./productsCatalog.js";
 
-document.addEventListener("click", async (e) => {
-  const removeFromWishlistButton = e.target.closest(
-    ".product-card-remove-wishlist-button",
-  );
-
-  if (removeFromWishlistButton) {
-  }
-});
-
 // ========== EXPORTED FUNCTIONS ==========
 
 export function buildProductCard(product, type = "normal") {
@@ -207,9 +198,10 @@ export async function handleWishlistButton(card, button) {
   }
 
   const state = button.dataset.state;
+  const productid = card.dataset.productid;
+  const svg = button.querySelector("svg");
 
   if (state === "inactive") {
-    const productid = card.dataset.productid;
     const response = await addToWishlist(productid);
 
     const messageBox = createMesssageBox(response.message);
@@ -217,8 +209,18 @@ export async function handleWishlistButton(card, button) {
 
     if (response.success) {
       button.dataset.state = "active";
+      svg.setAttribute("fill", "black");
     }
   } else if (state === "active") {
+    const response = await removeFromWishlist(productid);
+
+    const messageBox = createMesssageBox(response.message);
+    appendMessageBox(messageBox);
+
+    if (response.success) {
+      button.dataset.state = "inactive";
+      svg.setAttribute("fill", "none");
+    }
   }
 }
 

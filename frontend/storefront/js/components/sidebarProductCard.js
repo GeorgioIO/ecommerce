@@ -1,6 +1,9 @@
 import { handleWishlistButton } from "./productCard.js";
 
 export function buildSidebarCard(product, type) {
+  const svg_fill = type === "wishlist" ? "black" : "none";
+  const buttons_state = type === "wishlist" ? "active" : "inactive";
+
   // Create sidebar card
   const sidebarProductCard = document.createElement("div");
   sidebarProductCard.classList.add("sidebar-product-card");
@@ -55,15 +58,18 @@ export function buildSidebarCard(product, type) {
   const wishlistButton = document.createElement("button");
   wishlistButton.classList.add("product-card-add-wishlist-button");
   wishlistButton.dataset.enabled = "true";
-  wishlistButton.dataset.state = "inactive";
+  wishlistButton.dataset.state = buttons_state;
   wishlistButton.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="${svg_fill}" viewBox="0 0 24 24">
         <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
     </svg>
   `;
 
   wishlistButton.onclick = () => {
     handleWishlistButton(sidebarProductCard, wishlistButton);
+    setTimeout(() => {
+      sidebarProductCard.remove();
+    }, 50);
   };
 
   const cartButton = document.createElement("button");

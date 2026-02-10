@@ -1,6 +1,6 @@
 <?php
 
-function get_books_under_price($conn , $price)
+function get_books_under_price($conn , $price , $user_id=null)
 {
     $query = <<<SQL
 
@@ -15,12 +15,19 @@ function get_books_under_price($conn , $price)
         b.is_inStock,
         b.discount_percentage,
         CASE
+            WHEN w.book_id IS NOT NULL
+                THEN 1
+            ELSE
+                0
+            END AS is_inWishlist,
+        CASE
             WHEN b.is_onSale = 1
                 THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
             ELSE 
                 b.price
             END AS final_price
         FROM books b
+        LEFT JOIN wishlist_items w ON b.id = w.book_id AND w.user_id = ?
         JOIN authors a ON b.author_id = a.id
         JOIN book_formats bf ON b.format_id = bf.id
         WHERE 
@@ -34,8 +41,10 @@ function get_books_under_price($conn , $price)
         LIMIT 10;
     SQL;
 
+    $uid = $user_id ? $user_id : 0;
+
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("i" , $price);
+    $stmt->bind_param("ii" , $uid ,  $price);
     $stmt->execute();
     $result = $stmt->get_result();
     $books_under_price = [];
@@ -51,9 +60,9 @@ function get_books_under_price($conn , $price)
     return $books_under_price;
 }
 
-function get_new_arrivals_books($conn)
+function get_new_arrivals_books($conn , $user_id = null)
 {
-    $result = $conn->query("
+    $query = "
         SELECT 
             b.id,
             b.title,
@@ -65,6 +74,11 @@ function get_new_arrivals_books($conn)
             b.is_inStock,
             b.discount_percentage,
             CASE 
+                WHEN w.book_ID IS NOT NULL 
+                    THEN 1
+                ELSE 0
+            END AS is_inWishlist,
+            CASE 
                 WHEN b.is_onSale = 1
                     THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
                 ELSE
@@ -73,9 +87,17 @@ function get_new_arrivals_books($conn)
         FROM books b
         JOIN authors a ON b.author_id = a.id
         JOIN book_formats bf ON b.format_id = bf.id
+        LEFT JOIN wishlist_items w ON b.id = w.book_id AND w.user_id = ?
         ORDER BY b.date_added DESC
         LIMIT 10;
-    ");
+    ";
+
+    $uid = $user_id ? $user_id : 0;
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i" , $uid);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     $new_arrivals = [];
 
@@ -90,9 +112,9 @@ function get_new_arrivals_books($conn)
     return $new_arrivals;
 }
 
-function get_best_seller_books($conn)
+function get_best_seller_books($conn , $user_id= null)
 {
-    $result = $conn->query("
+    $query = "
         SELECT
             b.id,
             b.title,
@@ -103,6 +125,12 @@ function get_best_seller_books($conn)
             b.is_inStock,
             b.is_onSale,
             b.discount_percentage,
+            CASE 
+                WHEN w.book_id IS NOT NULL 
+                    THEN 1
+                ELSE 
+                    0
+            END AS is_inWishlist,  
             CASE 
                 WHEN b.is_onSale = 1
                     THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
@@ -115,10 +143,20 @@ function get_best_seller_books($conn)
         JOIN orders o ON oi.order_id = o.id 
         JOIN authors a ON b.author_id = a.id
         JOIN book_formats bf ON b.format_id = bf.id
+        LEFT JOIN wishlist_items w ON b.id = w.book_id AND w.user_id = ?
         WHERE o.status NOT IN ('Refunded' , 'Cancelled' , 'Pending' , 'Processing')
         GROUP BY b.id , b.title , b.cover_image , a.name , bf.name 
         LIMIT 10;
-    ");
+    ";
+
+    $uid = $user_id ? $user_id : 0;
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i" , $uid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+
     $best_sellers = [];
 
     if($result)
