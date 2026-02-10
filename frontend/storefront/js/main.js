@@ -205,14 +205,15 @@ bestSellers.addEventListener("click", async (e) => {
   }
 });
 
-newArrivals.addEventListener("click", (e) => {
+newArrivals.addEventListener("click", async (e) => {
   const carouselPreviousButton = e.target.closest(".carousel-button.prev");
   const carouselNextButton = e.target.closest(" .carousel-button.next");
   const wishlistButton = e.target.closest(".product-card-add-wishlist-button");
 
   if (wishlistButton) {
     const productCard = e.target.closest(".product-card");
-    handleWishlistButton(productCard, wishlistButton);
+    await handleWishlistButton(productCard, wishlistButton);
+    await updateMiniWishlistBody();
   }
 
   if (carouselPreviousButton) {
@@ -224,14 +225,15 @@ newArrivals.addEventListener("click", (e) => {
   }
 });
 
-booksUnder.addEventListener("click", (e) => {
+booksUnder.addEventListener("click", async (e) => {
   const carouselPreviousButton = e.target.closest(".carousel-button.prev");
   const carouselNextButton = e.target.closest(" .carousel-button.next");
   const wishlistButton = e.target.closest(".product-card-add-wishlist-button");
 
   if (wishlistButton) {
     const productCard = e.target.closest(".product-card");
-    handleWishlistButton(productCard, wishlistButton);
+    await handleWishlistButton(productCard, wishlistButton);
+    await updateMiniWishlistBody();
   }
 
   if (carouselPreviousButton) {

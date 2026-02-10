@@ -39,18 +39,18 @@ require_once __DIR__ . '/../../../configuration/session.php';
                 </div>
                 <div class="hero-card" id="hero-card-two">
                     <div class="hero-text-container">
-                        <h3>Our book of the month</h3>
+                        <h3>30% OFF on George R. R. Martin Books</h3>
                     </div>
                     <a href="" class="call-to-action-button">
-                        Shop Now
+                        Buy Now
                     </a>
                 </div>
                 <div class="hero-card" id="hero-card-three">
                     <div class="hero-text-container">
-                        <h3>For each three books get 30% OFF</h3>
+                        <h3>Our book of the month</h3>
                     </div>
                     <a href="" class="call-to-action-button">
-                        Buy Now
+                        Shop Now
                     </a>
                 </div>
             </div>

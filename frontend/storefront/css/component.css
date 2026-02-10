@@ -20,6 +20,9 @@
   overflow: hidden;
 }
 
+#hero {
+  height: 700px !important;
+}
 #about-us {
   padding: 0px;
 }
@@ -164,7 +167,7 @@
 }
 
 #hero-card-two {
-  background: url("../../../assets/images/temporary-hero-two.jpg");
+  background: url("../../../assets/images/hero-image-two.png");
 }
 #hero-card-three {
   background: url("../../../assets/images/temporary-hero-three.jpg");
