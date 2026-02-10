@@ -88,3 +88,19 @@ function setNextEventListener(button, state) {
     renderProductsCatalog(closestSection, state);
   };
 }
+
+function handlePaginationButtonsColor(pageNumber) {
+  const paginationButtons = document.querySelectorAll(".page-button");
+
+  paginationButtons.forEach((button) =>
+    button.classList.remove("active-page-button"),
+  );
+
+  const targetPageButton = document.querySelector(
+    `.page-button[data-page="${pageNumber}"]`,
+  );
+
+  if (!targetPageButton) return;
+
+  targetPageButton.classList.add("active-page-button");
+}

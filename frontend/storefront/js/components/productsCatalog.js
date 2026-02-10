@@ -1,6 +1,7 @@
 import { buildPaginationContainer } from "./pagination.js";
 import { buildProductCard } from "./productCard.js";
 import { getWishlistItems } from "../services/wishlistServices.js";
+import { handlePaginationButtonsColor } from "../../../admin/js/UIhelpers.js";
 /*
 
 This function is responsible of the idea of building the product catalog its the centralized that makes the product catalog appear in the pages
@@ -39,6 +40,8 @@ export async function renderProductsCatalog(section, state) {
     } else {
       section.append(newCatalog);
     }
+
+    handlePaginationButtonsColor(state.page);
   } else {
     const currentCatalog = document.querySelector(".products-catalog");
     currentCatalog.remove();
