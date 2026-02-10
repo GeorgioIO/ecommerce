@@ -812,7 +812,7 @@
   right: 10px;
 }
 
-/* ================ Account forms ================ */
+/* ================ Account forms + lost password form ================ */
 #account-forms > div {
   display: flex;
   flex-direction: column;
@@ -821,7 +821,8 @@
   width: 100%;
 }
 
-#account-forms > div > form {
+#account-forms > div > form,
+#lost-password-form {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -833,7 +834,8 @@
   background-color: var(--secondary-color);
 }
 
-#register-form > p {
+#register-form > p,
+#lost-password-form > p {
   font-family: var(--primary-font);
   font-size: clamp(0.85rem, 1.2vw, 1.1rem);
 }
@@ -886,10 +888,11 @@
 }
 
 #log-in-button,
-#register-button {
+#register-button,
+#reset-email-button {
   background-color: var(--primary-color);
   border-radius: 10px;
-  width: 100px;
+  width: 120px;
   height: 40px;
   font-family: var(--primary-font);
   color: var(--secondary-color);

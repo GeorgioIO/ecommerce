@@ -111,6 +111,10 @@
   #about-us > .our-aim-container > figure {
     align-self: flex-end;
   }
+
+  #lost-password-form {
+    width: 720px;
+  }
 }
 
 /* Laptop */

@@ -25,15 +25,19 @@ require_once __DIR__ . '../../../../backend/auth/auth_customer.php';
     
     <main>
         <section id="forgot-password">
-            <h3 class="section-title">Lost your password ?</h3>
+            <?php
             
-            <form action="" id="lost-password-form">
-                <p>Please enter your email , you will receive a email to create a new password.</p>
-                <div class="form-row">
-                    <label for="lost-pass-email">Email <span class="required-asteriks">*</span> </label>
-                    <input type="text" id="lost-pass-email" name="useremail" autocomplete="off">
-                </div>
-            </form>
+            if($_SERVER['REQUEST_METHOD'] === "GET")
+            {
+                include __DIR__ . '../../includes/forgot-password.php';
+            }
+            else if($_SERVER['REQUEST_METHOD'] === "POST")
+            {
+                echo "test";
+            }
+
+            
+            ?>
         </section>
     </main>
 
