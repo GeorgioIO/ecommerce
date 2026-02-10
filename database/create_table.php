@@ -183,8 +183,22 @@ $conn->query("
     
 ");
 
+$conn->query("
+    CREATE TABLE remember_tokens (
+        id INT AUTO_INCREMENT,
+        user_id INT,
+        token_hash VARCHAR(255) NOT NULL,
+        expires_date DATETIME NOT NULL,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY(id),
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    );
+");
+
 
 // Indexes
+$conn->query("CREATE INDEX IF NOT EXISTS token_user ON remember_tokens(user_id);");
+$conn->query("CREATE INDEX IF NOT EXISTS token_expiry_date ON remember_tokens(expires_date);");
 $conn->query("CREATE INDEX IF NOT EXISTS book_added_date_index ON books (date_added);");
 $conn->query("CREATE INDEX IF NOT EXISTS notif_read_index ON admin_notifications (is_read);");
 $conn->query("CREATE INDEX IF NOT EXISTS notif_date_index ON admin_notifications (created_at);");

@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../../../configuration/session.php';
+require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
 
 ?>
 

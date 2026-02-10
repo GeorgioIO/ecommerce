@@ -76,6 +76,23 @@ $_SESSION['user_id'] = $user_data['id'];
 $_SESSION['user_email'] = $user_data['email'];
 $_SESSION['user_name'] = $user_data['name'];
 
+if(!empty($_POST['remember-me']))
+{
+    $raw_token = bin2hex(random_bytes(32));
+    $token_hash = password_hash($raw_token , PASSWORD_DEFAULT);
+
+    $expires = date("Y-m-d H:i:s" , time() + (86400 * 30));
+
+    $query = "INSERT INTO remember_tokens(user_id , token_hash , expires_date) VALUES (? , ? , ?)";
+    $token_stmt = $conn->prepare($query);
+    $token_stmt->bind_param("iss" , $user_data['id'] , $token_hash , $expires);
+    $token_stmt->execute();
+    $token_stmt->close();
+
+    setcookie("remember_me" , $raw_token , time() + (86400 * 30) , "/" , "" , true , true);
+}
+
+
 $stmt->close();
 $conn->close();
 

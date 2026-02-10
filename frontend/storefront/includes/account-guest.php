@@ -12,8 +12,8 @@
                     <input type="password" autocomplete="off" id="password" name="userpassword" >
                 </div>
                 <span class="remember-me-row">
-                    <input type="checkbox" id="remember-pass">
-                    <label for="remember-pass">Remember me</label>
+                    <input type="checkbox" id="remember-me" name="remember-me" value="1">
+                    <label for="remember-me">Remember me</label>
                 </span>
                 <button type="submit" id="log-in-button">Log in</button>
                 <p class="error-message hidden"></p>
