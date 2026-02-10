@@ -114,6 +114,9 @@ export async function createMiniWishlistContainer(
 
 export async function updateMiniWishlistBody() {
   const miniWishlistBody = document.querySelector(".mini-wishlist-body");
+
+  if (!miniWishlistBody) return;
+
   const itemsContainer = miniWishlistBody.querySelector(
     ".wishlist-items-container",
   );

@@ -23,7 +23,15 @@ export async function removeFromWishlist(productID) {
     }),
   });
 
+  console.log(productID);
+  document.dispatchEvent(
+    new CustomEvent("wishlistUpdated", {
+      detail: { id: productID },
+    }),
+  );
+
   return result.json();
+  // console.log(result.text());
 }
 
 export async function getWishlistItems(pagination = null) {

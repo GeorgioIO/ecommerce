@@ -51,17 +51,17 @@ if(!$book_existence_validation['success'])
 }
 
 // Book exist in wishlist ?
-$book_wishlist_existence_validation = validate_book_in_wishlist($conn , $_SESSION['user_id'] , $book_id);
-if($book_wishlist_existence_validation['success'])
-{
-    http_response_code(404);
+// $book_wishlist_existence_validation = validate_book_in_wishlist($conn , $_SESSION['user_id'] , $book_id);
+// if($book_wishlist_existence_validation['success'])
+// {
+//     http_response_code(404);
 
-    echo json_encode([
-        'success' => false,
-        'message' => $book_wishlist_existence_validation['message']
-    ]);
-    exit;
-}
+//     echo json_encode([
+//         'success' => false,
+//         'message' => $book_wishlist_existence_validation['message']
+//     ]);
+//     exit;
+// }
 
 // Request
 $query = "DELETE FROM wishlist_items WHERE user_id = ? AND book_id = ?";

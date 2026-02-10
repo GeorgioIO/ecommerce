@@ -52,8 +52,6 @@ export function buildProductCard(product, type = "normal") {
     </svg>
     `;
 
-    setAddToWishlistButtonEvent(addToWishlistButton);
-
     // add to card button
     const addToCartButton = document.createElement("button");
     addToCartButton.classList.add("product-card-add-cart-button");
@@ -174,10 +172,6 @@ export function buildProductCard(product, type = "normal") {
   }
 
   return productCard;
-}
-
-async function setAddToWishlistButtonEvent(button) {
-  button.onclick = async () => {};
 }
 
 export async function handleWishlistButton(card, button) {

@@ -44,7 +44,7 @@ export async function renderProductsCatalog(section, state) {
     handlePaginationButtonsColor(state.page);
   } else {
     const currentCatalog = document.querySelector(".products-catalog");
-    currentCatalog.remove();
+    if (currentCatalog) currentCatalog.remove();
 
     const emptyContainer = document.createElement("div");
     emptyContainer.classList.add("empty-container");

@@ -3,17 +3,15 @@ import {
   buildCollectionsBar,
   populateCollectionsBar,
 } from "./components/collectionsBar.js";
-import {
-  buildHeroCard,
-  showNextCard,
-  showPreviousCard,
-} from "./components/heroCards.js";
+import { showNextCard, showPreviousCard } from "./components/heroCards.js";
 import { BuildMiniCartBar } from "./components/miniCartBart.js";
-import { renderMiniWishlist } from "./components/miniWishlistBar.js";
+import {
+  renderMiniWishlist,
+  updateMiniWishlistBody,
+} from "./components/miniWishlistBar.js";
 import { buildSearchBar } from "./components/searchBar.js";
 import { getGenres_DB } from "./services/booksServices.js";
 import { createCarousel } from "./components/carousel.js";
-import { addToWishlist } from "./services/wishlistServices.js";
 import { handleWishlistButton } from "./components/productCard.js";
 
 const body = document.body;
@@ -35,6 +33,27 @@ let heroCardNavigationIndex = 0;
 window.addEventListener("resize", () => {
   newArrivalsCarousel.recalc();
   bestSellersCarousel.recalc();
+});
+
+document.addEventListener("wishlistUpdated", (e) => {
+  const id = e.detail.id;
+
+  const cards = document.querySelectorAll(
+    `.product-card[data-productid="${id}"]`,
+  );
+
+  if (!cards) return;
+
+  cards.forEach((card) => {
+    const wishlistButton = card.querySelector(
+      ".product-card-add-wishlist-button",
+    );
+    const svg = wishlistButton.querySelector("svg");
+    if (wishlistButton.dataset.state === "active") {
+      wishlistButton.dataset.state = "inactive";
+      svg.setAttribute("fill", "none");
+    }
+  });
 });
 
 sidebar.addEventListener("click", async (e) => {
@@ -173,7 +192,8 @@ bestSellers.addEventListener("click", async (e) => {
 
   if (wishlistButton) {
     const productCard = e.target.closest(".product-card");
-    handleWishlistButton(productCard, wishlistButton);
+    await handleWishlistButton(productCard, wishlistButton);
+    await updateMiniWishlistBody();
   }
 
   if (carouselPreviousButton) {
