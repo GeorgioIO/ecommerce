@@ -18,7 +18,7 @@
                 <button type="submit" id="log-in-button">Log in</button>
                 <p class="error-message hidden"></p>
 
-                <a href="" class="lost-password-link">Lost your password?</a>
+                <a href="../pages/forgot-password.php" class="lost-password-link">Lost your password?</a>
             </form>
         </div>
         <div>
