@@ -203,7 +203,8 @@ h6 {
 }
 
 .log-in-link,
-.login-reminder {
+.login-reminder,
+.empty-text {
   color: var(--primary-color);
   font-family: var(--primary-font);
   text-decoration: underline;

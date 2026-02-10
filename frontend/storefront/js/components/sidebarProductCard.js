@@ -1,6 +1,7 @@
+import { updateMiniWishlistBody } from "./miniWishlistBar.js";
 import { handleWishlistButton } from "./productCard.js";
 
-export function buildSidebarCard(product, type) {
+export async function buildSidebarCard(product, type) {
   const svg_fill = type === "wishlist" ? "black" : "none";
   const buttons_state = type === "wishlist" ? "active" : "inactive";
 
@@ -65,11 +66,14 @@ export function buildSidebarCard(product, type) {
     </svg>
   `;
 
-  wishlistButton.onclick = () => {
-    handleWishlistButton(sidebarProductCard, wishlistButton);
-    setTimeout(() => {
-      sidebarProductCard.remove();
-    }, 50);
+  wishlistButton.onclick = async () => {
+    // From wishlist
+    if (type === "wishlist") {
+      await handleWishlistButton(sidebarProductCard, wishlistButton);
+      await updateMiniWishlistBody();
+    }
+
+    // From search
   };
 
   const cartButton = document.createElement("button");

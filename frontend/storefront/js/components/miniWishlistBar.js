@@ -21,7 +21,7 @@ export async function renderMiniWishlist(body) {
   );
 
   // Create view wishlist button
-  if (success) {
+  if (success && data.length > 0) {
     const viewWishlistButton = createViewWishlistButton();
     wishlistBody.append(itemsContainer, viewWishlistButton);
   } else {
@@ -87,11 +87,21 @@ export async function createMiniWishlistContainer(
   const wishlistItemsContainer = document.createElement("div");
   wishlistItemsContainer.classList.add("wishlist-items-container");
 
-  if (success) {
-    data.forEach((product) => {
-      wishlistItemsContainer.append(buildSidebarCard(product, "wishlist"));
+  if (success && data.length > 0) {
+    data.forEach(async (product) => {
+      wishlistItemsContainer.append(
+        await buildSidebarCard(product, "wishlist"),
+      );
     });
+  } else if (success && data.length === 0) {
+    // WISHLIST EMPTY
+    const emptyText = document.createElement("a");
+    emptyText.classList.add("empty-text");
+    emptyText.href = "../pages/shop.php";
+    emptyText.textContent = "No product in your wishlist";
+    wishlistItemsContainer.append(emptyText);
   } else if (!success && status === 401) {
+    // USER NOT LOGGED IN
     const loginReminder = document.createElement("a");
     loginReminder.classList.add("login-reminder");
     loginReminder.href = "../pages/my-account.php";
@@ -100,6 +110,31 @@ export async function createMiniWishlistContainer(
   }
 
   return wishlistItemsContainer;
+}
+
+export async function updateMiniWishlistBody() {
+  const miniWishlistBody = document.querySelector(".mini-wishlist-body");
+  const itemsContainer = miniWishlistBody.querySelector(
+    ".wishlist-items-container",
+  );
+
+  // Get wishlist data
+  const { data, success } = await getWishlistItems();
+  itemsContainer.innerHTML = "";
+  if (success && data.length > 0) {
+    data.forEach(async (product) => {
+      itemsContainer.append(await buildSidebarCard(product, "wishlist"));
+    });
+  } else if (success && data.length === 0) {
+    // WISHLIST EMPTY
+    const emptyText = document.createElement("a");
+    emptyText.classList.add("empty-text");
+    emptyText.href = "../pages/shop.php";
+    emptyText.textContent = "No product in your wishlist";
+    itemsContainer.append(emptyText);
+
+    miniWishlistBody.querySelector(".view-more-button").remove();
+  }
 }
 
 export function createViewWishlistButton() {

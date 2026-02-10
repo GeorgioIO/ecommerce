@@ -206,7 +206,8 @@
   justify-content: flex-start;
 }
 
-.wishlist-items-container > .login-reminder {
+.wishlist-items-container > .login-reminder,
+.wishlist-items-container > .empty-text {
   align-self: center;
 }
 

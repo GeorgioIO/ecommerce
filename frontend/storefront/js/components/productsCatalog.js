@@ -47,7 +47,7 @@ export async function renderProductsCatalog(section, state) {
     emptyContainer.classList.add("empty-container");
 
     const emptyText = document.createElement("p");
-    emptyText.innerHTML = `You don't have any prodect <a href="">Click here to add</a>`;
+    emptyText.innerHTML = `You don't have any product <a href="">Click here to add</a>`;
 
     emptyContainer.append(emptyText);
 
