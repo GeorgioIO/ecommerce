@@ -1,5 +1,7 @@
+import { listState } from "../pages/wishlistUI.js";
 import { updateMiniWishlistBody } from "./miniWishlistBar.js";
 import { handleWishlistButton } from "./productCard.js";
+import { renderProductsCatalog } from "./productsCatalog.js";
 
 export async function buildSidebarCard(product, type) {
   const svg_fill = type === "wishlist" ? "black" : "none";
@@ -71,6 +73,10 @@ export async function buildSidebarCard(product, type) {
     if (type === "wishlist") {
       await handleWishlistButton(sidebarProductCard, wishlistButton);
       await updateMiniWishlistBody();
+      if (window.location.pathname.includes("wishlist.php")) {
+        const wishlistSection = document.querySelector("section#wishlist");
+        renderProductsCatalog(wishlistSection, listState);
+      }
     }
 
     // From search
