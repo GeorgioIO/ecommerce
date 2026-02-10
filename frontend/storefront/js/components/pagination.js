@@ -54,6 +54,7 @@ export function buildPaginationContainer(pagination, listState) {
     paginationPageButton.classList.add("page-button");
     paginationPageButton.textContent = i;
     paginationPageButton.dataset.page = i;
+    setPaginationButtonEventListener(paginationPageButton, listState);
     paginationInnerContainer.append(paginationPageButton);
   }
 
@@ -64,6 +65,16 @@ export function buildPaginationContainer(pagination, listState) {
   );
 
   return paginationContainer;
+}
+
+function setPaginationButtonEventListener(button, state) {
+  button.onclick = (e) => {
+    const pageButton = parseInt(e.target.dataset.page);
+    if (pageButton > state.totalPages || pageButton === state.page) return;
+    state.page = pageButton;
+    const closestSection = e.target.closest("section");
+    renderProductsCatalog(closestSection, state);
+  };
 }
 
 function setPreviousEventListener(button, state) {
