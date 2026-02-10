@@ -2,6 +2,41 @@ import { swapClass } from "../../../admin/js/UIhelpers.js";
 import { getWishlistItems } from "../services/wishlistServices.js";
 import { buildSidebarCard } from "./sidebarProductCard.js";
 
+export async function renderMiniWishlist(body) {
+  // Create wishlist sidebar
+  const miniWishlist = buildMiniWishlistBar();
+
+  // Get the wishlist body
+  const wishlistBody = miniWishlist.querySelector(".mini-wishlist-body");
+
+  // Get wishlist data
+  const { data, success, status, message } = await getWishlistItems();
+
+  // populate it with data
+  const itemsContainer = await createMiniWishlistContainer(
+    data,
+    success,
+    status,
+    message,
+  );
+
+  // Create view wishlist button
+  if (success) {
+    const viewWishlistButton = createViewWishlistButton();
+    wishlistBody.append(itemsContainer, viewWishlistButton);
+  } else {
+    wishlistBody.append(itemsContainer);
+  }
+
+  miniWishlist.append(wishlistBody);
+
+  // append to body
+  body.append(miniWishlist);
+
+  // show it
+  swapClass(miniWishlist, "slide-in-right", "slide-out-right");
+}
+
 export function buildMiniWishlistBar() {
   let miniWishlist = document.querySelector("#mini-wishlist-bar") ?? null;
 
@@ -43,16 +78,26 @@ export function buildMiniWishlistBar() {
   return miniWishlist;
 }
 
-export async function createMiniWishlistContainer() {
+export async function createMiniWishlistContainer(
+  data,
+  success,
+  status,
+  message,
+) {
   const wishlistItemsContainer = document.createElement("div");
   wishlistItemsContainer.classList.add("wishlist-items-container");
 
-  const wishlist_items = await getWishlistItems();
-  const data = wishlist_items.data;
-
-  data.forEach((product) => {
-    wishlistItemsContainer.append(buildSidebarCard(product, "wishlist"));
-  });
+  if (success) {
+    data.forEach((product) => {
+      wishlistItemsContainer.append(buildSidebarCard(product, "wishlist"));
+    });
+  } else if (!success && status === 401) {
+    const loginReminder = document.createElement("a");
+    loginReminder.classList.add("login-reminder");
+    loginReminder.href = "../pages/my-account.php";
+    loginReminder.textContent = message;
+    wishlistItemsContainer.append(loginReminder);
+  }
 
   return wishlistItemsContainer;
 }

@@ -9,11 +9,7 @@ import {
   showPreviousCard,
 } from "./components/heroCards.js";
 import { BuildMiniCartBar } from "./components/miniCartBart.js";
-import {
-  buildMiniWishlistBar,
-  createMiniWishlistContainer,
-  createViewWishlistButton,
-} from "./components/miniWishlistBar.js";
+import { renderMiniWishlist } from "./components/miniWishlistBar.js";
 import { buildSearchBar } from "./components/searchBar.js";
 import { getGenres_DB } from "./services/booksServices.js";
 import { createCarousel } from "./components/carousel.js";
@@ -97,25 +93,7 @@ header.addEventListener("click", async (e) => {
   }
 
   if (openWishlistButton) {
-    // Create wishlist sidebar
-    const miniWishlist = buildMiniWishlistBar();
-
-    // append to body
-    body.append(miniWishlist);
-
-    const wishlistBody = miniWishlist.querySelector(".mini-wishlist-body");
-
-    // populate it with data
-    const itemsContainer = await createMiniWishlistContainer();
-
-    // Create view wishlist button
-    const viewWishlistButton = createViewWishlistButton();
-
-    wishlistBody.append(itemsContainer, viewWishlistButton);
-
-    miniWishlist.append(wishlistBody);
-    // show it
-    swapClass(miniWishlist, "slide-in-right", "slide-out-right");
+    await renderMiniWishlist(body);
   }
 
   if (expandGenresButton) {

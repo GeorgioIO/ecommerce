@@ -206,6 +206,10 @@
   justify-content: flex-start;
 }
 
+.wishlist-items-container > .login-reminder {
+  align-self: center;
+}
+
 .view-more-button {
   margin-top: auto;
   background: var(--secondary-color);

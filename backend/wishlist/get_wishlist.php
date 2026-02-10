@@ -9,11 +9,11 @@ require_once __DIR__ . '../../../configuration/database.php';
 // User logged in ?
 if(!isset($_SESSION['user_id']))
 {
-    http_response_code(401);
 
     echo json_encode([
         'success' => false,
-        'message' => 'User not authenticated'
+        'status' => 401,
+        'message' => 'Please log in to use wishlist'
     ]);
     exit;
 }

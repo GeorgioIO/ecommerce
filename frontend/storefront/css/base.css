@@ -202,10 +202,15 @@ h6 {
   color: red;
 }
 
-.log-in-link {
+.log-in-link,
+.login-reminder {
   color: var(--primary-color);
   font-family: var(--primary-font);
   text-decoration: underline;
+}
+
+.login-reminder {
+  text-align: center;
 }
 
 a {
