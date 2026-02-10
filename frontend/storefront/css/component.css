@@ -502,6 +502,13 @@
   display: flex;
   gap: 20px;
 }
+
+.out-of-stock-button {
+  font-family: var(--primary-font);
+  color: rgb(180, 180, 180);
+  font-style: italic;
+  cursor: not-allowed;
+}
 /* ================ Pagination ================ */
 .pagination {
   display: flex;

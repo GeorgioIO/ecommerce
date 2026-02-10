@@ -94,7 +94,7 @@ export function buildSearchBar() {
 
       for (const book of books) {
         if (searchCounter >= maxMiniSearch) break;
-        searchResultContainer.append(buildSidebarCard(book, "search"));
+        searchResultContainer.append(await buildSidebarCard(book, "search"));
         searchCounter++;
       }
     } catch (err) {
