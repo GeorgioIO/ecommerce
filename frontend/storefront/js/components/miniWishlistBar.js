@@ -128,6 +128,13 @@ export async function updateMiniWishlistBody() {
     data.forEach(async (product) => {
       itemsContainer.append(await buildSidebarCard(product, "wishlist"));
     });
+
+    if (data.length === 1) {
+      const viewMoreButton =
+        miniWishlistBody.querySelector(".view-more-button");
+      if (viewMoreButton) return;
+      miniWishlistBody.append(createViewWishlistButton());
+    }
   } else if (success && data.length === 0) {
     // WISHLIST EMPTY
     const emptyText = document.createElement("a");
