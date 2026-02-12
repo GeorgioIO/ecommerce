@@ -363,6 +363,27 @@
   font-size: 1rem;
 }
 
+/* ===== User dashboard ===== */
+#user-dashboard {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+#user-dashboard-sidebar {
+  background-color: red;
+}
+
+#user-dashboard-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+#user-dashboard-content {
+  background-color: yellow;
+}
 /* ===== FOOTER ===== */
 .footer {
   margin-top: 40px;

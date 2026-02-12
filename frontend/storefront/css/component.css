@@ -12,7 +12,8 @@
 #about-us,
 #forgot-password,
 #collections,
-#reset-password {
+#reset-password,
+#user-dashboard-section {
   width: 100%;
   height: auto;
   padding: 25px var(--sides-padding);
