@@ -1,5 +1,59 @@
 <?php
 
+function get_reset_password_email_bd($data)
+{
+      $resetLink = $data['reset_link'];
+    $customerName = $data['customer_name'] ?? 'Customer';
+
+    return <<<EOT
+    <div style="font-family: Arial, Helvetica, sans-serif; color:#333; line-height:1.6; max-width:600px; margin:0 auto;">
+
+        <h2 style="background:#2563eb; color:#fff; padding:12px 16px; border-radius:6px;">
+            🔐 Password Reset Request
+        </h2>
+
+        <p>
+            Hi <strong>{$customerName}</strong>,
+        </p>
+
+        <p>
+            We received a request to reset your password for your BookNest account.
+        </p>
+
+        <p style="margin:24px 0;">
+            <a href="{$resetLink}" 
+               style="display:inline-block; padding:12px 20px; background:#2563eb; color:#fff; text-decoration:none; border-radius:6px; font-weight:bold;">
+               Reset My Password
+            </a>
+        </p>
+
+        <p>
+            This link will expire in <strong>30 minutes</strong>.
+        </p>
+
+        <p>
+            If you did not request this password reset, you can safely ignore this email.
+            Your account remains secure.
+        </p>
+
+        <hr style="margin:24px 0; border:none; border-top:1px solid #ddd;">
+
+        <p style="font-size:13px; color:#666;">
+            If the button above does not work, copy and paste this link into your browser:
+        </p>
+
+        <p style="font-size:12px; word-break:break-all; color:#555;">
+            {$resetLink}
+        </p>
+
+        <p style="margin-top:24px; font-size:13px; color:#666;">
+            — BookNest Team
+        </p>
+
+    </div>
+EOT;
+}
+
 function get_new_order_email_bd($data) {
     $order = $data['order_data'];
 

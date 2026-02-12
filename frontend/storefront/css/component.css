@@ -10,17 +10,22 @@
 #account-forms,
 #wishlist,
 #about-us,
-#forgot-password {
+#forgot-password,
+#collections,
+#reset-password {
   width: 100%;
   height: auto;
   padding: 25px var(--sides-padding);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 40px;
   overflow: hidden;
 }
 
+#forgot-password {
+  flex: 1;
+}
 #hero {
   height: 700px !important;
 }
@@ -822,7 +827,8 @@
 }
 
 #account-forms > div > form,
-#lost-password-form {
+#lost-password-form,
+#reset-password-form {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -889,7 +895,8 @@
 
 #log-in-button,
 #register-button,
-#reset-email-button {
+#reset-email-button,
+#submit-pass-reset-button {
   background-color: var(--primary-color);
   border-radius: 10px;
   width: 120px;
@@ -950,4 +957,69 @@
   font-size: clamp(1.05rem, 1.5vw, 1.2rem);
   color: var(--accent-color);
   font-family: var(--primary-font);
+}
+
+.email-sent-message,
+.successfull-password-reset-message {
+  font-family: var(--primary-font);
+  text-align: center;
+  background-color: rgb(235, 235, 235);
+  width: auto;
+  height: auto;
+  padding: 10px var(--sides-padding);
+  border-radius: 5px;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* ================ Collections ================ */
+.collections-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 45px;
+}
+
+.collection-card {
+  position: relative;
+  border-radius: 10px;
+}
+
+.collections-grid > .collection-card > figure,
+.collections-grid > .collection-card > figure img {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.collections-grid > .collection-card > figure {
+  position: relative;
+}
+
+.collections-grid > .collection-card > figure::before {
+  position: absolute;
+  border-radius: inherit;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.178);
+}
+
+.collection-card > .view-collection-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: max-content;
+  padding: 10px var(--sides-padding);
+  background-color: var(--secondary-color);
+  border-radius: 6px;
+  font-family: var(--primary-font);
+  font-size: clamp(0.7rem, 1.3vw, 1rem);
+  font-weight: bold;
+  transition: ease-in-out 300ms;
+}
+
+.collection-card > .view-collection-button:hover {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
 }

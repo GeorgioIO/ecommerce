@@ -37,7 +37,7 @@
                         </li>
                     <?php endforeach; ?>
                     <li>
-                        <a href="">View All</a>
+                        <a href="../pages/collections.php">View All</a>
                     </li>
                 </ul>
             </li>

@@ -31,8 +31,17 @@ let reviewSliderToggler = true;
 let heroCardNavigationIndex = 0;
 
 window.addEventListener("resize", () => {
-  newArrivalsCarousel.recalc();
-  bestSellersCarousel.recalc();
+  if (newArrivalsCarousel) {
+    newArrivalsCarousel.recalc();
+  }
+
+  if (bestSellersCarousel) {
+    bestSellersCarousel.recalc();
+  }
+
+  if (booksUnderPriceCarousel) {
+    booksUnderPriceCarousel.recalc();
+  }
 });
 
 document.addEventListener("wishlistUpdated", (e) => {

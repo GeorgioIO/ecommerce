@@ -112,8 +112,15 @@
     align-self: flex-end;
   }
 
-  #lost-password-form {
+  #lost-password-form,
+  #reset-password-form {
     width: 720px;
+  }
+
+  .collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(0, 400px);
+    gap: 25px;
   }
 }
 

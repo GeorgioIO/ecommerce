@@ -1,0 +1,1 @@
+<p class="successfull-password-reset-message">Your password is successfully changed</p>

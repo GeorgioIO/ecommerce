@@ -31,11 +31,10 @@ require_once __DIR__ . '../../../../backend/auth/auth_customer.php';
             {
                 include __DIR__ . '../../includes/forgot-password.php';
             }
-            else if($_SERVER['REQUEST_METHOD'] === "POST")
+            else if ($_SERVER['REQUEST_METHOD'] === "POST")
             {
-                echo "test";
+                include __DIR__ . '../../includes/sent_reset_pass_link.php';
             }
-
             
             ?>
         </section>

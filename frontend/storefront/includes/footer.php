@@ -12,7 +12,7 @@
         <ul>
             <li><a href="../pages/about-us.php">About us</a></li>
             <li><a href="">Shop</a></li>
-            <li><a href="">Collections</a></li>
+            <li><a href="../pages/collections.php">Collections</a></li>
             <li><a href="">Contact Us</a></li>
         </ul>
     </div>

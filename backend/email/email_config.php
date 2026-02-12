@@ -57,6 +57,10 @@ function sendEmail($type , $subject , $data , $receiver='georgiojabbour.g.gj@gma
         {
             $body = get_update_order_email_bd($data);
         }
+        else if($type === "reset_password")
+        {
+            $body = get_reset_password_email_bd($data);
+        }
 
         $mail->Body = $body; 
         $mail->send(); 

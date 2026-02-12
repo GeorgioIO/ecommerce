@@ -34,7 +34,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                     <div class="hero-text-container">
                         <h3>Discover a huge variety of genres</h3>
                     </div>
-                    <a href="" class="call-to-action-button">
+                    <a href="../pages/collections.php" class="call-to-action-button">
                         Explore Our Collections
                     </a>
                 </div>
@@ -94,7 +94,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                     </a>
                 <?php endforeach; ?>
             </div>
-            <a href="" class="section-redirection-button">
+            <a href="../pages/collections.php" class="section-redirection-button">
                 View all genres
             </a>
         </section>

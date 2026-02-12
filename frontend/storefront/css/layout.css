@@ -365,6 +365,7 @@
 
 /* ===== FOOTER ===== */
 .footer {
+  margin-top: 40px;
   position: sticky;
   bottom: 0;
   background-color: var(--primary-color);

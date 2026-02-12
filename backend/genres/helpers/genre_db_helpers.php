@@ -56,4 +56,29 @@ function get_genres_by_alphabet($conn)
     return $genres;
 }
 
+function get_all_genres($conn)
+{
+    $result = $conn->query("        
+        SELECT
+            id,
+            name,
+            image
+        FROM
+            genres g
+        ORDER BY name ASC;
+        ");
+    
+        $genres = [];
+
+        if($result)
+        {
+            while($row = $result->fetch_assoc())
+            {
+                $genres[] = $row;
+            }
+        }
+
+    return $genres;
+}
+
 ?>

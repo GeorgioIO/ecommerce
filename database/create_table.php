@@ -195,6 +195,17 @@ $conn->query("
     );
 ");
 
+$conn->query("
+    CREATE TABLE IF NOT EXISTS password_resets (
+        id INT AUTO_INCREMENT,
+        user_id INT NOT NULL,
+        token_hash VARCHAR(64) NOT NULL,
+        expires_at DATETIME NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY(id),
+        FOREIGN KEY(user_id) REFERENCES users(id)
+    );
+");
 
 // Indexes
 $conn->query("CREATE INDEX IF NOT EXISTS token_user ON remember_tokens(user_id);");
