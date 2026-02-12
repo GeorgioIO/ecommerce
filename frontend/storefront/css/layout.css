@@ -368,22 +368,54 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 15px;
-}
-
-#user-dashboard-sidebar {
-  background-color: red;
+  gap: 25px;
 }
 
 #user-dashboard-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+}
+
+#user-dashboard-sidebar > li {
+  width: 100%;
+  border-top: 1px solid rgb(222, 222, 222);
+}
+
+#user-dashboard-sidebar > li:last-of-type {
+  border-bottom: 1px solid rgb(222, 222, 222);
+}
+
+#user-dashboard-sidebar > li > button {
+  padding: 20px 0px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--primary-font);
+}
+
+.active-subsection > button {
+  color: var(--primary-color);
+}
+
+.active-subsection > button svg {
+  stroke: var(--primary-color);
+}
+
+.active-subsection > button svg > path {
+  fill: var(--primary-color);
 }
 
 #user-dashboard-content {
-  background-color: yellow;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
+
+.dashboard-introduction {
+  line-height: 1.55;
+}
+
 /* ===== FOOTER ===== */
 .footer {
   margin-top: 40px;

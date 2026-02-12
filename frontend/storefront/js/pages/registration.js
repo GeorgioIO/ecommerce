@@ -11,10 +11,10 @@ import {
   activateMessageBox,
 } from "../components/messageBox.js";
 
-const registerForm = document.querySelector("#register-form");
-const loginForm = document.querySelector("#log-in-form");
+const registerForm = document.querySelector("#register-form") ?? null;
+const loginForm = document.querySelector("#log-in-form") ?? null;
 
-loginForm.addEventListener("submit", (e) => {
+loginForm?.addEventListener("submit", (e) => {
   const errorMessage = loginForm.querySelector(".error-message");
   errorMessage.textContent = "";
 
@@ -44,7 +44,7 @@ loginForm.addEventListener("submit", (e) => {
   }
 });
 
-registerForm.addEventListener("submit", (e) => {
+registerForm?.addEventListener("submit", (e) => {
   const errorMessage = registerForm.querySelector(".error-message");
   errorMessage.textContent = "";
 
