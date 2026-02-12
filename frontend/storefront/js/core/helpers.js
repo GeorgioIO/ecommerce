@@ -3,7 +3,7 @@ export function isValidEmail(email) {
 }
 
 export function isValidPhone(phone) {
-  return /^[+]?[\d\s()-]{7,20}$/.test(phone);
+  return /^\+\d{7,15}$/.test(phone);
 }
 
 export function isValidPassword(password) {

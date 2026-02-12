@@ -5,6 +5,12 @@ import {
   validateUsername,
 } from "../core/validators/registrationValidators.js";
 
+import {
+  createMesssageBox,
+  appendMessageBox,
+  activateMessageBox,
+} from "../components/messageBox.js";
+
 const registerForm = document.querySelector("#register-form");
 const loginForm = document.querySelector("#log-in-form");
 
@@ -20,18 +26,20 @@ loginForm.addEventListener("submit", (e) => {
   email = identifier.value.trim();
   password = password.value.trim();
 
+  activateMessageBox();
+
   if (!email && !password) {
     e.preventDefault();
-    errorMessage.classList.remove("hidden");
-    errorMessage.textContent = "All fields are required";
+    const messageBox = createMesssageBox("All fields are required");
+    appendMessageBox(messageBox);
     return;
   }
 
   const emailValidation = validateUseremail(email);
   if (!emailValidation.valid) {
     e.preventDefault();
-    errorMessage.classList.remove("hidden");
-    errorMessage.textContent = emailValidation.error;
+    const messageBox = createMesssageBox(emailValidation.error);
+    appendMessageBox(messageBox);
     return;
   }
 });
@@ -52,37 +60,38 @@ registerForm.addEventListener("submit", (e) => {
   phone = phone.value.replace(/\s+/g, "");
   password = password.value.trim();
 
-  console.log(password);
+  activateMessageBox();
+
   // Validate Data
   const nameValidation = validateUsername(name);
   if (!nameValidation.valid) {
     e.preventDefault();
-    errorMessage.classList.remove("hidden");
-    errorMessage.textContent = nameValidation.error;
+    const messageBox = createMesssageBox(nameValidation.error);
+    appendMessageBox(messageBox);
     return;
   }
 
   const emailValidation = validateUseremail(email);
   if (!emailValidation.valid) {
     e.preventDefault();
-    errorMessage.classList.remove("hidden");
-    errorMessage.textContent = emailValidation.error;
+    const messageBox = createMesssageBox(emailValidation.error);
+    appendMessageBox(messageBox);
     return;
   }
 
   const phoneValidation = validateUserPhoneNumber(phone);
   if (!phoneValidation.valid) {
     e.preventDefault();
-    errorMessage.classList.remove("hidden");
-    errorMessage.textContent = phoneValidation.error;
+    const messageBox = createMesssageBox(phoneValidation.error);
+    appendMessageBox(messageBox);
     return;
   }
 
   const passwordValidation = validateUserPassword(password);
   if (!passwordValidation.valid) {
     e.preventDefault();
-    errorMessage.classList.remove("hidden");
-    errorMessage.textContent = passwordValidation.error;
+    const messageBox = createMesssageBox(passwordValidation.error);
+    appendMessageBox(messageBox);
     return;
   }
 });

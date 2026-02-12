@@ -16,9 +16,12 @@ require_once __DIR__ . '../../../../backend/auth/auth_customer.php';
     <link rel="stylesheet" href="../css/component.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <script defer type="module" src="../js/main.js"></script>
+    <script defer type="module" src="../js/components/lostPasswordForm.js"></script>
 </head>
 <body>
+    <div class="message-box-container">
 
+    </div>
     <?php include __DIR__ . '../../includes/header.php'?>
 
     <?php include __DIR__ . '../../includes/sidebar.php'?>

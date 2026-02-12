@@ -54,7 +54,7 @@ if($result->num_rows === 0)
 {    
     $stmt->close();
     $conn->close();
-    $_SESSION['redirect-message'] = "Invalid username or password $password";
+    $_SESSION['redirect-message'] = "Invalid username or password";
     $_SESSION['redirect-message-type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
@@ -66,7 +66,7 @@ if(!password_verify($password , $user_data['password']))
 {    
     $stmt->close();
     $conn->close();
-    $_SESSION['redirect-message'] = " 1 Invalid username or password $password";
+    $_SESSION['redirect-message'] = "Invalid username or password";
     $_SESSION['redirect-message-type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;

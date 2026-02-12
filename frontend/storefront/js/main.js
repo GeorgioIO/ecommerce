@@ -13,6 +13,13 @@ import { buildSearchBar } from "./components/searchBar.js";
 import { getGenres_DB } from "./services/booksServices.js";
 import { createCarousel } from "./components/carousel.js";
 import { handleWishlistButton } from "./components/productCard.js";
+import { getSession } from "./services/sessionServices.js";
+
+import {
+  createMesssageBox,
+  appendMessageBox,
+  activateMessageBox,
+} from "./components/messageBox.js";
 
 const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
@@ -29,6 +36,16 @@ const booksUnderPriceCarousel = createCarousel(booksUnder);
 const storeReviews = document.querySelector("#reviews");
 let reviewSliderToggler = true;
 let heroCardNavigationIndex = 0;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const messages = await getSession();
+
+  if (messages["redirect-message"]) {
+    activateMessageBox();
+    const messageBox = createMesssageBox(messages["redirect-message"]);
+    appendMessageBox(messageBox);
+  }
+});
 
 window.addEventListener("resize", () => {
   if (newArrivalsCarousel) {

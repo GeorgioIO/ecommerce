@@ -49,6 +49,7 @@ $phone_validation = validate_customer_phone($phone_number);
 if(!$phone_validation['success'])
 {
     $_SESSION['redirect-message'] = $phone_validation['message'];
+    $_SESSION['redirect-message-type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 }
@@ -100,6 +101,7 @@ if($stmt->execute())
     $conn->close();
 
     $_SESSION['redirect-message'] = 'Account created successfully';
+    $_SESSION['redirect-message-type'] = 'success';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 

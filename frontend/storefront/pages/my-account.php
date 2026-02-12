@@ -3,6 +3,7 @@
 require_once __DIR__ . '../../../../configuration/session.php';
 require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
 
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +20,9 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
     <script defer type="module" src="../js/pages/registration.js"></script>
 </head>
 <body>
+    <div class="message-box-container">
+
+    </div>
     <?php  require __DIR__ . '/../includes/header.php' ?>
 
     <?php require __DIR__ . '/../includes/sidebar.php' ?>

@@ -7,7 +7,6 @@ import {
 import { validateUserPassword } from "../core/validators/registrationValidators.js";
 
 const form = document.querySelector("#reset-password-form") ?? null;
-console.log(form);
 if (form) {
   form.addEventListener("submit", (e) => {
     const password = form.querySelector("#new-password");

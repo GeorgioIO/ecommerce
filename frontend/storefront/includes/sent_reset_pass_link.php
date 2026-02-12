@@ -8,16 +8,16 @@ require_once __DIR__ . '../../../../backend/email/email_config.php';
 $email = trim($_POST['useremail']);
 
 // Validate email
-$email_validation = validate_email($email);
-if(!$email_validation['valid'])
-{
-    echo json_encode([
-        'success' => false,
-        'status' => 400,
-        'message' => $email_validation['message']
-    ]);
-    exit;
-}
+// $email_validation = validate_email($email);
+// if(!$email_validation['valid'])
+// {
+//     echo json_encode([
+//         'success' => false,
+//         'status' => 400,
+//         'message' => $email_validation['message']
+//     ]);
+//     exit;
+// }
 
 // Check email exist in database
 $query = "SELECT id , name FROM users WHERE email = ?";
