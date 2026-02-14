@@ -1,22 +1,23 @@
 <?php
 
 require __DIR__ . '/../../configuration/session.php';
-
-header("Content-Type: application/json");
-
-
-if (!isset($_SESSION['admin_id'])) {
-    http_response_code(401);
-    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
-}
-
-
 require_once __DIR__ . '/../../configuration/database.php';
 require_once __DIR__ . '/validators/order_validators.php';
 
+header("Content-Type: application/json");
+
+if (!isset($_SESSION['admin_id']) && !isset($_SESSION['user_id'])) {
+    echo json_encode([
+        'user_id' => $_SESSION['user_id'],
+        'success' => false,
+        'status' => 401,
+        'message' => 'Unauthorized'
+    ]);
+    exit;
+}
+
 // Get ID
 $id = $_POST['id'] ?? null;
-
 
 // Validate ID
 $order_id_result = validate_order_id($id);

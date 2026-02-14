@@ -122,6 +122,10 @@
     grid-auto-rows: minmax(0, 400px);
     gap: 25px;
   }
+
+  .orders-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Laptop */
@@ -181,6 +185,11 @@
   #about-us > div {
     flex-direction: row;
   }
+
+  #user-dashboard {
+    gap: 35px;
+    grid-template-columns: 300px 1fr;
+  }
 }
 
 @media (min-width: 1240px) {
@@ -211,6 +220,19 @@
 
   #about-us > div {
     padding: 40px 120px;
+  }
+
+  #user-dashboard {
+    gap: 35px;
+    grid-template-columns: 300px 1fr;
+  }
+
+  /* #user-dashboard-section {
+    padding: 25px 100px;
+  } */
+
+  .orders-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

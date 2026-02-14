@@ -19,6 +19,7 @@ Input :
     - total pages
 
 */
+
 export async function renderProductsCatalog(section, state) {
   const response = await getWishlistItems({
     page: state.page,
@@ -31,7 +32,12 @@ export async function renderProductsCatalog(section, state) {
   state.totalItems = pagination.total;
 
   if (data.length > 0) {
-    const newCatalog = await buildProductsCatalog(data, pagination, state);
+    const newCatalog = await buildProductsCatalog(
+      data,
+      pagination,
+      state,
+      renderProductsCatalog,
+    );
 
     const oldCatalog = document.querySelector(".products-catalog");
 
@@ -58,7 +64,12 @@ export async function renderProductsCatalog(section, state) {
   }
 }
 
-export async function buildProductsCatalog(products, pagination, state) {
+export async function buildProductsCatalog(
+  products,
+  pagination,
+  state,
+  renderFunction,
+) {
   // Create product catalog = the main element that will be returned
   const productCatalog = document.createElement("div");
   productCatalog.classList.add("products-catalog");
@@ -67,7 +78,11 @@ export async function buildProductsCatalog(products, pagination, state) {
   const grid = buildProductGrid(products);
 
   // Pagination Container
-  const paginationContainer = buildPaginationContainer(pagination, state);
+  const paginationContainer = buildPaginationContainer(
+    pagination,
+    state,
+    renderFunction,
+  );
 
   productCatalog.append(grid, paginationContainer);
 

@@ -1,5 +1,44 @@
 <?php
 
+function get_select_orders_query($role)
+{
+    if($role === "admin")
+    {
+        return 
+        "
+            SELECT
+                o.id,
+                o.order_code,
+                u.name,
+                u.email,
+                u.phone_number,
+                o.status,
+                o.total_price,
+                o.date_added,
+                DATE_FORMAT(o.date_added, '%m-%d-%Y') AS display_date
+            FROM
+                orders o
+            JOIN users u ON o.user_id = u.id
+        ";
+    }
+    else if($role === "user")
+    {
+        return "
+                SELECT
+                    o.id,
+                    o.order_code AS 'Code',
+                    o.status AS 'Status',
+                    o.total_price AS 'Total Price',
+                    o.date_added,
+                    DATE_FORMAT(o.date_added, '%m-%d-%Y') AS 'Date'
+                FROM
+                    orders o
+                WHERE o.user_id = ?
+                ORDER BY o.date_added
+        ";
+    }
+}
+
 function update_order_meta($conn , $id , $new_status , $new_price , $new_address = null)
 {
     if($new_address)

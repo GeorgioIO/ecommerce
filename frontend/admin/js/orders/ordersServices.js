@@ -50,6 +50,7 @@ export async function fetchOrders_DB(pagination) {
     `../../backend/orders/get_orders.php?${params.toString()}`,
   );
 
+  // console.log(result.text());
   return result.json();
 }
 

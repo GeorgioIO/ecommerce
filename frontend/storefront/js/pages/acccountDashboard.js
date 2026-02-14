@@ -1,14 +1,21 @@
+import { fetchOrders_DB } from "../services/ordersServices.js";
 import { getSession } from "../services/sessionServices.js";
+import { renderOrdersCatalog } from "../components/ordersCatalog.js";
 
 const dashboard = document.querySelector("#user-dashboard") ?? null;
 const dashboardSidebar = dashboard?.querySelector("#user-dashboard-sidebar");
+
+export const ordersListState = {
+  page: 1,
+  perPage: 5,
+};
 
 document.addEventListener("DOMContentLoaded", async () => {
   const path = window.location.pathname;
   const sessionData = await getSession();
 
   if (path.includes("my-account.php") && sessionData.user_id) {
-    loadDashboardSection(sessionData);
+    renderDashboardSection(sessionData);
   }
 });
 
@@ -17,21 +24,35 @@ dashboardSidebar?.addEventListener("click", async (e) => {
 
   if (sidebarList) {
     if (sidebarList.classList.contains("active-subsection")) return;
+    const content = document.querySelector("#user-dashboard-content");
     const section = sidebarList.dataset.section;
-    console.log(section);
     changeSidebarSection(dashboardSidebar, sidebarList);
+    content.innerHTML = "";
 
     if (section === "dashboard") {
       const sessionData = await getSession();
-      loadDashboardSection(sessionData);
+      renderDashboardSection(sessionData);
     } else if (section === "orders") {
+      // TODO : Load orders function
+      await renderOrdersCatalog(content, ordersListState);
+    } else if (section === "log-out") {
+      window.location.href = "/ecommerce/backend/auth/user_logout.php";
     } else {
       document.querySelector("#user-dashboard-content").innerHTML = "";
     }
   }
 });
 
-function loadDashboardSection(data) {
+export async function renderOrdersSection(state) {
+  const response = await fetchOrders_DB({
+    page: state.page,
+    perPage: state.perPage,
+  });
+
+  console.log(response);
+}
+
+function renderDashboardSection(data) {
   const contentSection = document.querySelector("#user-dashboard-content");
   contentSection.innerHTML = "";
 

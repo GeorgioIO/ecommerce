@@ -1,6 +1,10 @@
 import { renderProductsCatalog } from "./productsCatalog.js";
 
-export function buildPaginationContainer(pagination, listState) {
+export function buildPaginationContainer(
+  pagination,
+  listState,
+  renderFunction,
+) {
   let currentPaginationContainer =
     document.querySelector(".pagination") ?? null;
 
@@ -20,7 +24,7 @@ export function buildPaginationContainer(pagination, listState) {
     </svg>
     `;
 
-  setPreviousEventListener(previousPageButton, listState);
+  setPreviousEventListener(previousPageButton, listState, renderFunction);
 
   // Next button
   const nextPageButton = document.createElement("button");
@@ -32,7 +36,7 @@ export function buildPaginationContainer(pagination, listState) {
     `;
   nextPageButton.id = "next-page-button";
 
-  setNextEventListener(nextPageButton, listState);
+  setNextEventListener(nextPageButton, listState, renderFunction);
 
   // Handle buttons appearance
   if (pagination.totalPages === 1) {
@@ -54,7 +58,11 @@ export function buildPaginationContainer(pagination, listState) {
     paginationPageButton.classList.add("page-button");
     paginationPageButton.textContent = i;
     paginationPageButton.dataset.page = i;
-    setPaginationButtonEventListener(paginationPageButton, listState);
+    setPaginationButtonEventListener(
+      paginationPageButton,
+      listState,
+      renderFunction,
+    );
     paginationInnerContainer.append(paginationPageButton);
   }
 
@@ -67,28 +75,28 @@ export function buildPaginationContainer(pagination, listState) {
   return paginationContainer;
 }
 
-function setPaginationButtonEventListener(button, state) {
+function setPaginationButtonEventListener(button, state, renderFunction) {
   button.onclick = (e) => {
     const pageButton = parseInt(e.target.dataset.page);
     if (pageButton > state.totalPages || pageButton === state.page) return;
     state.page = pageButton;
     const closestSection = e.target.closest("section");
-    renderProductsCatalog(closestSection, state);
+    renderFunction(closestSection, state);
   };
 }
 
-function setPreviousEventListener(button, state) {
+function setPreviousEventListener(button, state, renderFunction) {
   button.onclick = (e) => {
     if (state.page > 1) {
       state.page--;
     }
 
     const closestSection = e.target.closest("section");
-    renderProductsCatalog(closestSection, state);
+    renderFunction(closestSection, state);
   };
 }
 
-function setNextEventListener(button, state) {
+function setNextEventListener(button, state, renderFunction) {
   button.onclick = (e) => {
     console.log(state);
     if (state.page < state.totalPages) {
@@ -96,7 +104,7 @@ function setNextEventListener(button, state) {
     }
 
     const closestSection = e.target.closest("section");
-    renderProductsCatalog(closestSection, state);
+    renderFunction(closestSection, state);
   };
 }
 
