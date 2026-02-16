@@ -4,6 +4,250 @@
 require_once  __DIR__ .  '/../../../configuration/database.php';
 require_once  __DIR__ . '/../../helpers.php';
 
+
+function validate_customer_ad_first_name($first_name)
+{
+    if($first_name === null || empty($first_name) || empty(trim($first_name)))
+    {
+        return [
+            'success' => false,
+            'message' => "First Name is required"
+        ];
+    }
+
+    $first_name = ucfirst(trim($first_name)) ;
+
+    if(strlen($first_name) > 255)
+    {
+        return [
+            'success' => false,
+            'message' => 'First name cannot succeed 255 characters'
+        ];    
+    }
+
+    return [
+        'success' => true,
+        'value' => $first_name
+    ];
+}
+
+function validate_customer_ad_last_name($last_name)
+{
+    if($last_name === null || empty($last_name) || empty(trim($last_name)))
+    {
+        return [
+            'success' => false,
+            'message' => "Last Name is required"
+        ];
+    }
+
+    $last_name = ucfirst(trim($last_name)) ;
+
+    if(strlen($last_name) > 255)
+    {
+        return [
+            'success' => false,
+            'message' => 'Last name cannot succeed 255 characters'
+        ];    
+    }
+
+    return [
+        'success' => true,
+        'value' => $last_name
+    ];
+}
+
+function validate_customer_ad_email($email)
+{
+    if($email === null || empty($email) || empty(trim($email)))
+    {
+        return [
+            'success' => false,
+            'message' => "Email is required"
+        ];
+    }
+    
+    $email = strtolower(trim($email));
+    $email_validation_result = validate_email($email);
+
+    if(!$email_validation_result['valid'])
+    {
+        return [
+            'success' => false,
+            'message' => 'Email is invalid'
+        ];    
+    }
+
+    if(strlen($email) > 55)
+    {
+        return [
+            'success' => false,
+            'message' => 'Email cannot succeed 55 characters'
+        ];    
+    }
+
+        return [
+        'success' => true,
+        'value' => $email
+    ];
+}   
+
+function validate_customer_ad_phone($phone)
+{
+    $phone = trim($phone ?? '');
+
+    if($phone === '')
+    {
+        return [
+            'success' => false,
+            'message' => 'Phone number is required'
+        ];   
+    }
+
+    if(!isValidPhone($phone))
+    {
+        return [
+            'success' => false,
+            'message' => 'Invalid phone number'
+        ];
+    }
+
+    return [
+        'success' => true,
+        'value' => $phone
+    ];
+}
+
+function validate_customer_ad_state($state)
+{
+    $state = trim($state ?? '');
+
+    if($state === '')
+    {
+        return [
+            'success' => false,
+            'message' => 'State is required'
+        ];   
+    }
+
+    if(strlen($state) > 55)
+    {
+        return [
+            'success' => false,
+            'message' => 'State cannot succeed 55 characters'
+        ];   
+    }
+
+    return [
+        'success' => true,
+        'value' => ucfirst($state)
+    ];
+}
+
+function validate_customer_ad_city($city)
+{
+    $city = trim($city ?? '');
+
+    if($city === '')
+    {
+        return [
+            'success' => false,
+            'message' => 'City is required'
+        ];   
+    }
+
+    if(strlen($city) > 55)
+    {
+        return [
+            'success' => false,
+            'message' => 'City cannot succeed 55 characters'
+        ];   
+    }
+
+    return [
+        'success' => true,
+        'value' => ucfirst($city)
+    ];
+}
+
+function validate_customer_ad_line1($ad_line1)
+{
+    $ad_line1 = trim($ad_line1 ?? '');
+
+    if($ad_line1 === '')
+    {
+        return [
+            'success' => false,
+            'message' => 'Address Line 1 is required'
+        ];   
+    }
+
+    if(strlen($ad_line1) > 55)
+    {
+        return [
+            'success' => false,
+            'message' => 'Address Line 1 cannot succeed 255 characters'
+        ];   
+    }
+
+    return [
+        'success' => true,
+        'value' => ucfirst($ad_line1)
+    ];
+}
+
+function validate_customer_ad_line2($ad_line2)
+{
+    $ad_line2 = trim($ad_line2 ?? '');
+
+    if($ad_line2 === '')
+    {
+        return [
+            'success' => true,
+            'value' => null
+        ];   
+    }
+
+    if(strlen($ad_line2) > 255)
+    {
+        return [
+            'success' => false,
+            'message' => 'Address Line 2 cannot succeed 255 character'
+        ];    
+    }
+
+    return [
+        'success' => true,
+        'value' => null
+    ];   
+}
+
+function validate_customer_ad_notes($notes)
+{
+    $notes = trim($notes ?? '');
+
+    if($notes === '')
+    {
+        return [
+            'success' => true,
+            'value' => null
+        ];   
+    }
+
+    if(strlen($notes) > 255)
+    {
+        return [
+            'success' => false,
+            'message' => 'Additional notes cannot succeed 255 character'
+        ];    
+    }
+
+    return [
+        'success' => true,
+        'value' => null
+    ];   
+}
+
 function validate_customer_name($name)
 {
     // Name is empty

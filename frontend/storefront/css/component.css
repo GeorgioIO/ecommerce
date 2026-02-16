@@ -454,7 +454,9 @@
 .sold-out-button,
 .product-card-remove-wishlist-button,
 .product-card-add-to-card-button,
-.view-order-details-button {
+.view-order-details-button,
+#delete-address-button,
+#save-address-button {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -834,7 +836,7 @@
   right: 10px;
 }
 
-/* ================ Account forms + lost password form ================ */
+/* ================ Account forms + lost password form + address-form ================ */
 #account-forms > div {
   display: flex;
   flex-direction: column;
@@ -845,7 +847,8 @@
 
 #account-forms > div > form,
 #lost-password-form,
-#reset-password-form {
+#reset-password-form,
+#address-form {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -868,14 +871,22 @@
   font-size: clamp(1.2rem, 1.5vw, 1.5rem);
 }
 
-.form-row {
+.form-double-row {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.form-row,
+.double-field {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   gap: 8px;
   width: 100%;
-  height: 65px;
+  min-height: 65px;
 }
 
 .remember-me-row {
@@ -891,13 +902,16 @@
   font-size: clamp(0.8rem, 1.3vw, 0.9rem);
 }
 
-.form-row > label {
+.form-row > label,
+.double-field > label {
   font-family: var(--primary-font);
   font-weight: 700;
   font-size: clamp(0.85rem, 1.3vw, 1.05rem);
 }
 
-.form-row > input {
+.form-row > input,
+.form-row > textarea,
+.double-field > input {
   width: 100%;
   height: 100%;
   border-radius: 10px;
@@ -906,7 +920,12 @@
   font-family: var(--secondary-font);
 }
 
-.form-row > input:focus {
+.form-row > textarea {
+  height: 100px;
+}
+
+.form-row > input:focus,
+.double-field > input:focus {
   outline: none;
 }
 
@@ -936,6 +955,20 @@
 
 .error-message.hidden {
   display: none;
+}
+
+.buttons-container {
+  display: flex;
+  width: 100%;
+  height: 35px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.buttons-container > button {
+  width: 50%;
+  height: 100%;
 }
 
 /* ================ About us ================ */

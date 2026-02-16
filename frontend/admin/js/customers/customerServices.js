@@ -32,7 +32,7 @@ export async function get_customer_data_DB(customer_id) {
 
 // Function responsible to get addresses of a given customer if
 
-export async function get_customer_addresses_DB(customer_id) {
+export async function get_customer_addresses_DB(customer_id = null) {
   const result = await fetch(
     "../../backend/customers/get_customer_addresses.php",
     {

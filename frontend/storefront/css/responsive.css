@@ -126,6 +126,10 @@
   .orders-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .form-double-row {
+    flex-direction: row;
+  }
 }
 
 /* Laptop */
@@ -186,8 +190,12 @@
     flex-direction: row;
   }
 
+  #user-dashboard-section {
+    padding: 20px 80px;
+  }
+
   #user-dashboard {
-    gap: 35px;
+    gap: 85px;
     grid-template-columns: 300px 1fr;
   }
 }
@@ -238,4 +246,7 @@
 
 /* Large desktop (optional) */
 @media (min-width: 1440px) {
+  #user-dashboard-section {
+    padding: 20px 150px;
+  }
 }

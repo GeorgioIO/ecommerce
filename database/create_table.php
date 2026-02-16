@@ -91,6 +91,7 @@ $conn->query("
         user_id INT,
         address_id INT,
         is_default BOOLEAN DEFAULT 0,
+        is_active BOOLEAN DEFAULT 1,
         PRIMARY KEY (user_id , address_id),
         FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
         FOREIGN KEY (address_id) REFERENCES shipping_addresses (id) ON DELETE CASCADE

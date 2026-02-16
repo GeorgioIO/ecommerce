@@ -36,13 +36,6 @@ export function hydrateCustomerForm(form, data, addresses) {
       addressToggle.classList.add("address-toggle");
       addressToggle.textContent = `Address ${addresses_counter + 1}`;
 
-      if (address.is_default === 1) {
-        const defaultSpan = document.createElement("span");
-        defaultSpan.classList.add("address-badge");
-        defaultSpan.textContent = "Default";
-        addressToggle.append(defaultSpan);
-      }
-
       addressToggle.innerHTML += downIcon;
 
       const addressDetails = document.createElement("div");
