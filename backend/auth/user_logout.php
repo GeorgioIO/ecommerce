@@ -25,6 +25,7 @@ if(!empty($_COOKIE['remember-me']))
 }
 
 setcookie("remember_me" , "", time() - 3600 , "/" , "" , true , true);
+setcookie("username" , "" , time() - 3600 , "/" , "" , true , true);
 
 $_SESSION = [];
 session_unset();

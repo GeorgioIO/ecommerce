@@ -90,6 +90,7 @@ if(!empty($_POST['remember-me']))
     $token_stmt->close();
 
     setcookie("remember_me" , $raw_token , time() + (86400 * 30) , "/" , "" , true , true);
+    setcookie("username" , $user_data['name'] , time() + (86400 * 30) , "/" , "" , true , true);
 }
 
 

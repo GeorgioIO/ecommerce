@@ -28,8 +28,8 @@ export const ordersListState = {
 document.addEventListener("DOMContentLoaded", async () => {
   const path = window.location.pathname;
   const sessionData = await getSession();
-
-  if (path.includes("my-account.php") && sessionData.user_id) {
+  console.log(sessionData);
+  if (path.includes("my-account.php") && sessionData.session.user_id) {
     renderDashboardSection(sessionData);
   }
 });
@@ -147,12 +147,16 @@ export async function renderOrdersSection(state) {
 }
 
 function renderDashboardSection(data) {
+  const username = data.cookie.username
+    ? data.cookie.username
+    : data.session.user_name;
+
   const contentSection = document.querySelector("#user-dashboard-content");
   contentSection.innerHTML = "";
 
   const firstParagraph = document.createElement("p");
   firstParagraph.classList.add("welcome-text");
-  firstParagraph.innerHTML = `Hello <strong>${data.user_name}</span>`;
+  firstParagraph.innerHTML = `Hello <strong>${username}</span>`;
 
   const secondParagraph = document.createElement("p");
   secondParagraph.textContent =
