@@ -1,3 +1,10 @@
+export async function getCustomerData_DB() {
+  const result = await fetch("../../../backend/customers/get_customer.php");
+
+  // console.log(result.text());
+  return result.json();
+}
+
 export async function get_customer_addresses_DB(customer_id) {
   const result = await fetch(
     "../../../backend/customers/get_customer_addresses.php",

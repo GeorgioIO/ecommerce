@@ -4,16 +4,26 @@ header('Content-Type: application/json');
 
 require __DIR__ . '/../../configuration/session.php';
 
-if (!isset($_SESSION['admin_id'])) {
-    http_response_code(401);
-    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+if (!isset($_SESSION['admin_id']) && !isset($_SESSION['user_id'])) {
+    echo json_encode([
+        'success' => false,
+        'status' => 401,
+        'message' => 'Unauthorized'
+    ]);
+    exit;
 }
 
 require_once  __DIR__ . '/../../configuration/database.php';
 require_once  __DIR__ . '/validators/customer_validators.php';
 
-
-$id = $_POST["id"] ?? null;
+if(!isset($_POST["id"]))
+{
+    $id = $_SESSION['user_id'];
+}
+else
+{
+    $id = $_POST["id"];
+}
 
 // validate author id
 $customer_id_result = validate_customer_id($id);
@@ -61,14 +71,14 @@ if($result->num_rows === 0){
     exit;
 }
 
-$author = $result->fetch_assoc();
+$customer = $result->fetch_assoc();
 
 $stmt->close();
 $conn->close();
 
 echo json_encode([
     'success' => true,
-    'data' => $author
+    'data' => $customer
 ]);
 exit;
 

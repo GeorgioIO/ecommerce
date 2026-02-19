@@ -4,6 +4,7 @@ import { renderOrdersCatalog } from "../components/ordersCatalog.js";
 import {
   deleteCustomerAddress_DB,
   get_customer_addresses_DB,
+  getCustomerData_DB,
   saveCustomerAddress_DB,
 } from "../services/customerServices.js";
 import { buildAddressFormSkeleton } from "../components/addressForm/addressFormBuilder.js";
@@ -16,6 +17,8 @@ import { hydrateAddressForm } from "../components/addressForm/addressFormHydrato
 import { validateAddressID } from "../core/validators/addressValidators.js";
 import { collectFormData } from "../components/addressForm/addressFormCollector.js";
 import { validateAddressData } from "../components/addressForm/addressFormValidator.js";
+import { buildAccountDetailFormSkeleton } from "../components/accountDetailsForm/accountDetailsFormBuilder.js";
+import { hydrateAccountDetailsForm } from "../components/accountDetailsForm/accountDetailsFormHydrator.js";
 
 const dashboard = document.querySelector("#user-dashboard") ?? null;
 const dashboardSidebar = dashboard?.querySelector("#user-dashboard-sidebar");
@@ -108,11 +111,31 @@ dashboardSidebar?.addEventListener("click", async (e) => {
       await renderAddressSection(content);
     } else if (section === "log-out") {
       window.location.href = "/ecommerce/backend/auth/user_logout.php";
+    } else if (section === "account") {
+      await renderAccountDetailsSection(content);
     } else {
       document.querySelector("#user-dashboard-content").innerHTML = "";
     }
   }
 });
+
+async function renderAccountDetailsSection(content) {
+  const customerData = await getCustomerData_DB();
+
+  if (!customerData.success) {
+    activateMessageBox();
+    const messageBox = createMesssageBox("Fail loading customer data");
+    appendMessageBox(messageBox);
+  }
+
+  const form = buildAccountDetailFormSkeleton();
+
+  if (customerData.success) {
+    hydrateAccountDetailsForm(form, customerData.data);
+  }
+
+  content.append(form);
+}
 
 async function renderAddressSection(content) {
   // Display first paragraph tell him that the address will be used as default
