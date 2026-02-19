@@ -1,5 +1,17 @@
 <?php
 
+function extract_account_data($post)
+{
+    return [
+        'name' => $post['name'] ?? null,
+        'email' => $post['email'] ?? null,
+        'phone_number' => $post['phone_number'] ?? null,
+        'current_password' => $post['current_password'] ?? null,
+        'new_password' => $post['new_password'] ?? null,
+        'confirm_password' => $post['confirm_password'] ?? null,
+    ];
+}
+
 function extract_address_data($post)
 {
     return [

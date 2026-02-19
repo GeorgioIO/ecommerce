@@ -5,6 +5,7 @@ require_once __DIR__ . '/../../configuration/database.php';
 require_once __DIR__ . '/../customers/helpers/customers_db_helpers.php';
 require_once __DIR__ . '/../customers/helpers/customers_helpers.php';
 require_once __DIR__ . '/../customers/validators/customer_validators.php';
+require_once __DIR__ . '/../customers/validators/customer_db_validators.php';
 
 if (
     empty($_POST['username']) ||

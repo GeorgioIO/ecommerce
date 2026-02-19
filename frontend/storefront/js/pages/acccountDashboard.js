@@ -6,6 +6,7 @@ import {
   get_customer_addresses_DB,
   getCustomerData_DB,
   saveCustomerAddress_DB,
+  updateAccountDetails_DB,
 } from "../services/customerServices.js";
 import { buildAddressFormSkeleton } from "../components/addressForm/addressFormBuilder.js";
 import {
@@ -19,6 +20,9 @@ import { collectFormData } from "../components/addressForm/addressFormCollector.
 import { validateAddressData } from "../components/addressForm/addressFormValidator.js";
 import { buildAccountDetailFormSkeleton } from "../components/accountDetailsForm/accountDetailsFormBuilder.js";
 import { hydrateAccountDetailsForm } from "../components/accountDetailsForm/accountDetailsFormHydrator.js";
+import { accountDetailsFormCollector } from "../components/accountDetailsForm/accountDetailsFormCollector.js";
+import { validateAccountDetailsData } from "../components/accountDetailsForm/accountDetailsFormValidator.js";
+import { resetPasswordFields } from "../components/accountDetailsForm/accountDetailsFormResetter.js";
 
 const dashboard = document.querySelector("#user-dashboard") ?? null;
 const dashboardSidebar = dashboard?.querySelector("#user-dashboard-sidebar");
@@ -40,6 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 dashboard.addEventListener("click", async (e) => {
   const deleteAddressButton = e.target.closest("#delete-address-button");
   const saveAddressButton = e.target.closest("#save-address-button");
+  const saveDetailsButton = e.target.closest("#save-account-changes-button");
 
   if (deleteAddressButton) {
     // Get address id
@@ -88,6 +93,35 @@ dashboard.addEventListener("click", async (e) => {
 
     const messageBox = createMesssageBox(response.message);
     appendMessageBox(messageBox);
+  }
+
+  if (saveDetailsButton) {
+    activateMessageBox();
+    const form = document.querySelector("#account-details-form");
+
+    // Collect data
+    const data = accountDetailsFormCollector(form);
+
+    // Validate data
+    const dataValidation = validateAccountDetailsData(data);
+    if (!dataValidation.valid) {
+      const messageBox = createMesssageBox(dataValidation.error);
+      appendMessageBox(messageBox);
+      return;
+    }
+
+    const response = await updateAccountDetails_DB(data);
+
+    if (!response.success) {
+      const messageBox = createMesssageBox(response.message);
+      appendMessageBox(messageBox);
+      return;
+    }
+
+    const messageBox = createMesssageBox(response.message);
+    appendMessageBox(messageBox);
+
+    resetPasswordFields(form);
   }
 });
 

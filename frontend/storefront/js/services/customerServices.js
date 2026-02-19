@@ -1,3 +1,21 @@
+export async function updateAccountDetails_DB(data) {
+  const formData = new FormData();
+  formData.append("name", data.name);
+  formData.append("email", data.email);
+  formData.append("phone_number", data.phoneNumber);
+  formData.append("current_password", data.currentPassword);
+  formData.append("new_password", data.newPassword);
+  formData.append("confirm_password", data.confirmPassword);
+
+  const result = await fetch("../../../backend/customers/update_customer.php", {
+    method: "POST",
+    body: formData,
+  });
+
+  return result.json();
+  // console.log(result.text());
+}
+
 export async function getCustomerData_DB() {
   const result = await fetch("../../../backend/customers/get_customer.php");
 
