@@ -64,7 +64,7 @@ export async function saveCustomerAddress_DB(data) {
   formData.append("city", data.city);
   formData.append("address_line1", data.addressLine1);
   formData.append("address_line2", data.addressLine2);
-  formData.append("additional_notes", data.additional_notes);
+  formData.append("additional_notes", data.additionalNotes);
 
   const result = await fetch(
     "../../../backend/customers/save_customer_address.php",

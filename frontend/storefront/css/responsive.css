@@ -26,7 +26,8 @@
 
 @media (min-width: 768px) {
   #site-sidebar,
-  #search-bar {
+  #search-bar,
+  .order-lines-container {
     width: 50%;
   }
 
@@ -197,6 +198,10 @@
   #user-dashboard {
     gap: 85px;
     grid-template-columns: 300px 1fr;
+  }
+
+  .order-lines-container {
+    width: 510px;
   }
 }
 

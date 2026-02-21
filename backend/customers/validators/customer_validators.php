@@ -218,7 +218,7 @@ function validate_customer_ad_line2($ad_line2)
 
     return [
         'success' => true,
-        'value' => null
+        'value' => ucfirst($ad_line2)
     ];   
 }
 
@@ -244,7 +244,7 @@ function validate_customer_ad_notes($notes)
 
     return [
         'success' => true,
-        'value' => null
+        'value' => ucfirst($notes)
     ];   
 }
 

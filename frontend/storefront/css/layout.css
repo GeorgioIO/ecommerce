@@ -144,7 +144,8 @@
 
 .search-bar-header,
 .mini-wishlist-bar-header,
-.mini-cart-bar-header {
+.mini-cart-bar-header,
+.order-lines-container-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -155,7 +156,8 @@
 
 .search-bar-header > .search-bar-title,
 .mini-wishlist-bar-header > .mini-wishlist-bar-title,
-.mini-cart-bar-header > .mini-cart-bar-title {
+.mini-cart-bar-header > .mini-cart-bar-title,
+.order-lines-container-header > .order-lines-container-title {
   font-family: var(--primary-font);
   font-size: 1.2rem;
 }

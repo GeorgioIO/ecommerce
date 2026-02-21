@@ -360,19 +360,20 @@ function insert_new_order($conn , $order_code , $order_payload , $user_id , $add
 function insert_new_address($conn , $address_payload)
 {
     $admin_made = 1;
+    $is_active = 0;
     $query = <<<EOT
 
     INSERT INTO shipping_addresses
-    (first_name , last_name, email, phone_number, state, city, address_line1, address_line2 , additional_notes, admin_made)
+    (first_name , last_name, email, phone_number, state, city, address_line1, address_line2 , additional_notes, admin_made , is_active)
     VALUES
-    (? , ? , ? , ? , ? , ? , ? , ? , ? , ?)
+    (? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)
 
     EOT;
 
 
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("sssssssssi", 
+    $stmt->bind_param("sssssssssii", 
                         $address_payload['first_name'], 
                         $address_payload['last_name'], 
                         $address_payload['email'], 
@@ -382,7 +383,8 @@ function insert_new_address($conn , $address_payload)
                         $address_payload['address_line1'], 
                         $address_payload['address_line2'], 
                         $address_payload['additional_notes'],
-                        $admin_made
+                        $admin_made,
+                        $is_active 
                         );
     
     $stmt->execute();

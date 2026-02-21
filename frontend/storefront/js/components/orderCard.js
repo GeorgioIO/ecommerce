@@ -2,6 +2,7 @@
 // Input : Order data (id , title...)
 // Output : Order card element
 
+import { swapClass } from "../../../admin/js/UIhelpers.js";
 import { fetchOrderLines_DB } from "../services/ordersServices.js";
 
 export async function buildOrderCard(order) {
@@ -49,7 +50,7 @@ export async function buildOrderCard(order) {
 
   viewDetailsButton.onclick = async (e) => {
     // Show order lines
-    // await setViewDetailsEventListener(order);
+    await setViewDetailsEventListener(order);
   };
 
   orderCardFooter.append(viewDetailsButton);
@@ -60,20 +61,64 @@ export async function buildOrderCard(order) {
 }
 
 function buildOrderLinesContainer(lines) {
-  const orderLinesContainer = document.createElement("div");
+  let orderLinesContainer = document.querySelector(".order-lines-container");
+  if (orderLinesContainer) orderLinesContainer.remove();
+
+  orderLinesContainer = document.createElement("div");
   orderLinesContainer.classList.add("order-lines-container");
+
+  // Build Order lines header
+  const orderLinesHeader = document.createElement("div");
+  orderLinesHeader.classList.add("order-lines-container-header");
+
+  const orderLinesHeaderTitle = document.createElement("h2");
+  orderLinesHeaderTitle.classList.add("order-lines-container-title");
+  orderLinesHeaderTitle.textContent = "Order Lines";
+
+  const orderLinesContainerCloseButton = document.createElement("button");
+  orderLinesContainerCloseButton.type = "button";
+  orderLinesContainerCloseButton.id = "close-order-lines-button";
+  orderLinesContainerCloseButton.innerHTML = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="none" viewBox="-0.5 0 25 25">
+    <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m3 21.32 18-18M3 3.32l18 18"/>
+  </svg>
+  `;
+
+  orderLinesContainerCloseButton.onclick = () => {
+    swapClass(orderLinesContainer, "slide-out-right", "slide-in-right");
+  };
+
+  orderLinesHeader.append(
+    orderLinesHeaderTitle,
+    orderLinesContainerCloseButton,
+  );
+
+  orderLinesContainer.append(orderLinesHeader);
 
   lines.forEach((line) => {
     const orderLine = document.createElement("div");
     orderLine.classList.add("order-line");
 
     Object.keys(line).forEach((key) => {
-      if (key != "book_id") {
-        const cell = document.createElement("div");
-        cell.innerHTML = `<p> ${line[key]} </p>`;
+      if (key === "book_id" || key === "title") return;
+      const cell = document.createElement("div");
 
-        orderLine.append(cell);
+      if (key === "cover_image") {
+        cell.classList.add("image-cell");
+        const figure = document.createElement("figure");
+        const image = document.createElement("img");
+        image.src = "../../../assets/images/" + line[key];
+        image.alt = `${line["title"]} image`;
+
+        figure.append(image);
+        cell.append(figure);
+      } else if (key.includes("price")) {
+        cell.innerHTML = `<p> $${line[key]} </p>`;
+      } else {
+        cell.innerHTML = `<p> ${line[key]} </p>`;
       }
+
+      orderLine.append(cell);
     });
 
     orderLinesContainer.append(orderLine);
@@ -85,6 +130,6 @@ function buildOrderLinesContainer(lines) {
 async function setViewDetailsEventListener(order) {
   const lines = await fetchOrderLines_DB(order.id);
   const linesContainer = buildOrderLinesContainer(lines);
-  linesContainer.style.display = "flex";
+  swapClass(linesContainer, "slide-in-right", "slide-out-right");
   document.body.append(linesContainer);
 }

@@ -3,7 +3,7 @@
 function validate_address_ownership($conn , $customer_id , $address_id)
 {
     $query = <<<EOT
-        SELECT address_id FROM user_addresses WHERE user_id = ? AND address_id = ?
+        SELECT address_id FROM users WHERE id = ? AND address_id = ?
     EOT;
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ii" , $customer_id , $address_id);

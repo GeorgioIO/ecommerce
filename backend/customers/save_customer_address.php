@@ -133,7 +133,7 @@ $address_line2 = $address_line_2_validation['value'];
 $additional_notes = $additional_notes_validation['value'];
 
 // check if user has an address
-$check_query = "SELECT address_id FROM user_addresses WHERE user_id = ? AND is_active = 1";
+$check_query = "SELECT address_id FROM users WHERE id = ?";
 $check_stmt = $conn->prepare($check_query);
 $check_stmt->bind_param("i" , $user_id);
 $check_stmt->execute();
@@ -145,7 +145,7 @@ $conn->begin_transaction();
 try
 {
     // User already has an address so goal is to update
-    if($result->num_rows !== 0)
+    if(isset($result->fetch_assoc()['address_id']))
     {
         $address_id = $result->fetch_assoc()['address_id'];
         $update_query = "
@@ -172,7 +172,8 @@ try
             echo json_encode(
                 ['success' => true,
                 'status' => 200,
-                'message' => 'Address is updated successfully']
+                'message' => 'Address is updated successfully here ' . $result->num_rows
+                ]
             );
             exit;
         }
@@ -191,19 +192,20 @@ try
     }
 
     // User doesnt have an address so goal is to insert
+    $is_active = 1;
     $insert_address_query = "
         INSERT INTO
             shipping_addresses
-        (first_name , last_name , email , phone_number , state , city , address_line1, address_line2 , additional_notes) VALUES (? , ? , ? , ? , ? , ? , ? , ? , ?)";
+        (first_name , last_name , email , phone_number , state , city , address_line1, address_line2 , additional_notes , is_active) VALUES (? , ? , ? , ? , ? , ? , ? , ? , ? , ?)";
     $insert_address_stmt = $conn->prepare($insert_address_query);
-    $insert_address_stmt->bind_param("sssssssss" , $first_name , $last_name , $email , $phone_number , $state , $city , $address_line1 , $address_line2 , $additional_notes);
+    $insert_address_stmt->bind_param("sssssssssi" , $first_name , $last_name , $email , $phone_number , $state , $city , $address_line1 , $address_line2 , $additional_notes , $is_active);
     $insert_address_stmt->execute();
     $new_address_id = $conn->insert_id;
 
 
-    $insert_user_address = "INSERT INTO user_addresses (user_id , address_id) VALUES (? , ?)";
+    $insert_user_address = "UPDATE users SET address_id = ? WHERE id = ?";
     $insert_user_address_stmt = $conn->prepare($insert_user_address);
-    $insert_user_address_stmt->bind_param("ii" , $user_id , $new_address_id);
+    $insert_user_address_stmt->bind_param("ii" , $new_address_id  , $user_id);
     $insert_user_address_stmt->execute();
 
     $conn->commit();
@@ -213,7 +215,6 @@ try
         'status' => 200,
         'message' => 'Address created successfully'
     ]);
-
     exit;
 }
 catch (Exception $e)

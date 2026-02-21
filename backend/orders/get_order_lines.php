@@ -36,6 +36,7 @@ $DB_order_id = $order_id_result['value'];
 $query = <<<EOT
     SELECT
         oi.book_id,
+        b.cover_image,
         b.title,
         oi.quantity,
         oi.selling_price,

@@ -74,6 +74,7 @@ formContainer.addEventListener("change", async (e) => {
   } else if (existingAddressSelect) {
     // Get address id
     const addressID = Number(existingAddressSelect.value);
+    console.log(addressID);
     // When 'New address' is selected
     if (!addressID) {
       resetAddressSection();

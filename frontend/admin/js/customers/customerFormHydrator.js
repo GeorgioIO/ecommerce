@@ -43,7 +43,7 @@ export function hydrateCustomerForm(form, data, addresses) {
         if (detail === "admin_made" || detail === "address_id") return;
         const addressDetail = document.createElement("p");
         addressDetail.innerHTML = `
-          <strong>${detail}:</strong> ${
+          <strong>${detail.replaceAll("_", " ")}:</strong> ${
             address[detail] === null ? "Not Defined" : address[detail]
           }`;
         addressDetails.append(addressDetail);

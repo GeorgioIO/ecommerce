@@ -34,7 +34,6 @@ import {
   handleEntityImageElement,
   swapClass,
   changeSidebarSection,
-  handlePaginationButtonsColor,
 } from "./UIhelpers.js";
 import { validateIDEligibility, handleImageFormat } from "./helpers.js";
 import {} from "./helpers.js";

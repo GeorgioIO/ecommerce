@@ -1141,27 +1141,32 @@
 }
 
 /* Order Lines */
-/* .order-lines-container {
+.order-lines-container {
   position: fixed;
   z-index: 1000;
+  top: 0;
+  right: 0;
   background-color: var(--secondary-color);
-  bottom: 0;
+  transform: translateX(100%);
   width: 100%;
-  height: auto;
-  padding: 10px;
+  height: 100%;
+  padding: 10px var(--sides-padding) 20px;
   display: flex;
   flex-direction: column;
-  height: 200x;
-  padding: 10px;
   overflow-y: auto;
-  gap: 15px;
+  gap: 5px;
 }
 
 .order-lines-container > .order-line {
   padding: 20px 0px;
   display: grid;
-  grid-template-columns: 150px 0.3fr 0.3fr 0.3fr;
+  grid-template-columns: 100px 0.2fr 0.2fr 0.2fr;
   align-items: center;
   justify-content: space-between;
-  gap: 50px;
-} */
+}
+
+.order-line > .image-cell,
+.image-cell > figure,
+.image-cell > figure > img {
+  width: 100%;
+}

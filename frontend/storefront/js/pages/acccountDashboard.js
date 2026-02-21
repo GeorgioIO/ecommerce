@@ -35,13 +35,12 @@ export const ordersListState = {
 document.addEventListener("DOMContentLoaded", async () => {
   const path = window.location.pathname;
   const sessionData = await getSession();
-  console.log(sessionData);
   if (path.includes("my-account.php") && sessionData.session.user_id) {
     renderDashboardSection(sessionData);
   }
 });
 
-dashboard.addEventListener("click", async (e) => {
+dashboard?.addEventListener("click", async (e) => {
   const deleteAddressButton = e.target.closest("#delete-address-button");
   const saveAddressButton = e.target.closest("#save-address-button");
   const saveDetailsButton = e.target.closest("#save-account-changes-button");
@@ -80,6 +79,8 @@ dashboard.addEventListener("click", async (e) => {
       appendMessageBox(messageBox);
       return;
     }
+
+    console.log("new data before request : ", data);
 
     // Send request
     const response = await saveCustomerAddress_DB(data);
@@ -177,8 +178,6 @@ async function renderAddressSection(content) {
   // If not tell him that He can fill the form and save address
   // Add delete address button that delete the address and make the form empty
   const address = await get_customer_addresses_DB();
-  const sessionData = await getSession();
-
   if (address.success === false) {
     activateMessageBox();
     const message = createMesssageBox("Fail loading address");
