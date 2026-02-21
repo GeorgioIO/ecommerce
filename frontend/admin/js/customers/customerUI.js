@@ -50,7 +50,7 @@ async function openForm(data = {}, customer_addresses = {}) {
 }
 
 export function resetCustomerForm(form) {
-  const addressesList = form.querySelector(".addresses-list");
+  const addressesList = form.querySelector(".address-list");
 
   const ordersCountText = form.querySelector(".orders-count-form");
   const totalSpentText = form.querySelector(".total-spent-form");
@@ -60,7 +60,7 @@ export function resetCustomerForm(form) {
   addressesList.innerHTML = "";
 
   const emptyAddressesText = document.createElement("p");
-  emptyAddressesText.classList.add("empty-addresses-text");
+  emptyAddressesText.classList.add("empty-address-text");
   emptyAddressesText.textContent = "No Current Addresses";
   addressesList.append(emptyAddressesText);
 

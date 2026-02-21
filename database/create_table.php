@@ -67,6 +67,8 @@ $conn->query("
         address_line1 VARCHAR(255) NOT NULL,
         address_line2 VARCHAR(255),
         additional_notes VARCHAR(255),
+        is_active BOOLEAN DEFAULT 1,
+        admin_made BOOLEAN DEFAULT 0
         PRIMARY KEY (id)
     )
 ");
@@ -81,7 +83,9 @@ $conn->query("
         phone_number VARCHAR(25) UNIQUE,
         password VARCHAR(255) NOT NULL,
         date_added DATETIME DEFAULT CURRENT_TIMESTAMP,
+        address_id INT,
         PRIMARY KEY (id)
+        FOREIGN KEY (address_id) REFERENCES shipping_addresses(id)
     );
 ");
 

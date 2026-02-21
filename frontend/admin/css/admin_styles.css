@@ -678,7 +678,7 @@ form {
 
 .input-container,
 .textarea-container,
-.addresses-container {
+.address-container {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -689,7 +689,7 @@ form {
 .input-container > label,
 .textarea-container > label,
 .double-input-container > div > label,
-.addresses-container > .addresses-container-title {
+.address-container > .address-container-title {
   font-family: var(--source-sans-font);
   font-weight: 600;
   font-size: 0.9rem;
@@ -1000,7 +1000,7 @@ form {
   font-weight: 500;
 }
 
-.addresses-list {
+.address-list {
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -1009,7 +1009,7 @@ form {
   gap: 4px;
 }
 
-.addresses-list > .address-item {
+.address-list > .address-item {
   background-color: #ededed;
   width: 100%;
   min-height: 50px;
@@ -1061,7 +1061,7 @@ form {
   font-size: 0.8rem;
 }
 
-.empty-addresses-text {
+.empty-address-text {
   font-size: 0.8rem;
   font-family: var(--source-sans-font);
   font-style: italic;

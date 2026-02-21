@@ -52,14 +52,14 @@ export function buildCustomerForm(config) {
 
     if (inputTag.type === "password") {
       const addressesContainer = document.createElement("div");
-      addressesContainer.classList.add("addresses-container");
+      addressesContainer.classList.add("address-container");
 
       const addressesTitle = document.createElement("p");
-      addressesTitle.classList.add("addresses-container-title");
-      addressesTitle.textContent = "Addresses";
+      addressesTitle.classList.add("address-container-title");
+      addressesTitle.textContent = "Shipping address";
 
       const addressesList = document.createElement("ul");
-      addressesList.classList.add("addresses-list");
+      addressesList.classList.add("address-list");
 
       addressesContainer.append(addressesTitle, addressesList);
       form.append(addressesContainer);

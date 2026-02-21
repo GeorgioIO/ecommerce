@@ -37,23 +37,22 @@ $DB_customer_id = $customer_id_result['value'];
 
 $query = <<<EOT
     SELECT
-        ua.address_id, 
-        sd.first_name,
-        sd.last_name,
-        sd.email,
-        sd.phone_number,
-        sd.state,
-        sd.city,
-        sd.address_line1,
-        sd.address_line2,
-        sd.additional_notes,
+        u.address_id, 
+        sd.first_name AS "First Name",
+        sd.last_name AS "Last Name",
+        sd.email AS "Email",
+        sd.phone_number AS "Phone Number",
+        sd.state AS "State",
+        sd.city AS "City",
+        sd.address_line1 AS "Address Line 1",
+        sd.address_line2 AS "Address Line 2",
+        sd.additional_notes AS "Additional Notes",
         sd.admin_made
     FROM 
-        user_addresses ua
-    JOIN 
-        shipping_addresses sd ON ua.address_id = sd.id
+        users u
+    JOIN shipping_addresses sd ON u.address_id = sd.id 
     WHERE 
-        ua.user_id = ? AND ua.is_active = 1
+        u.id = ? AND sd.is_active = 1
 EOT;
 
 if(isset($_SESSION['user_id']))

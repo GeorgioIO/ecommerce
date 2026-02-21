@@ -7,7 +7,7 @@ const downIcon = `
 export function hydrateCustomerForm(form, data, addresses) {
   const ordersCountText = form.querySelector(".orders-count-form");
   const totalSpentText = form.querySelector(".total-spent-form");
-  const addressesList = form.querySelector(".addresses-list");
+  const addressesList = form.querySelector(".address-list");
 
   ordersCountText.textContent = `Orders Count: ${data.total_orders}`;
   totalSpentText.textContent = `Total Spent: $${data.total_spent}`;
@@ -18,12 +18,10 @@ export function hydrateCustomerForm(form, data, addresses) {
     input.value = data[key];
   });
 
-  var addresses_counter = 0;
-
   if (addresses.length === 0) {
     const emptyAddressesText = document.createElement("p");
-    emptyAddressesText.classList.add("empty-addresses-text");
-    emptyAddressesText.textContent = "No Current Addresses";
+    emptyAddressesText.classList.add("empty-address-text");
+    emptyAddressesText.textContent = "No Current Address";
     addressesList.append(emptyAddressesText);
   } else {
     addresses.forEach((address) => {
@@ -34,7 +32,7 @@ export function hydrateCustomerForm(form, data, addresses) {
       const addressToggle = document.createElement("button");
       addressToggle.type = "button";
       addressToggle.classList.add("address-toggle");
-      addressToggle.textContent = `Address ${addresses_counter + 1}`;
+      addressToggle.textContent = "Main Address";
 
       addressToggle.innerHTML += downIcon;
 
@@ -42,19 +40,17 @@ export function hydrateCustomerForm(form, data, addresses) {
       addressDetails.classList.add("address-details");
 
       Object.keys(address).forEach((detail) => {
-        if (detail !== "is_default") {
-          const addressDetail = document.createElement("p");
-          addressDetail.innerHTML = `
+        if (detail === "admin_made" || detail === "address_id") return;
+        const addressDetail = document.createElement("p");
+        addressDetail.innerHTML = `
           <strong>${detail}:</strong> ${
             address[detail] === null ? "Not Defined" : address[detail]
           }`;
-          addressDetails.append(addressDetail);
-        }
+        addressDetails.append(addressDetail);
       });
 
       addressLi.append(addressToggle, addressDetails);
       addressesList.append(addressLi);
-      addresses_counter++;
     });
   }
 }
