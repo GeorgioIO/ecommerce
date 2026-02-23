@@ -38,7 +38,7 @@
                 <a href="../pages/about-us.php">About Us</a>
             </li>
             <li>
-                <a>Shop</a>
+                <a href="../pages/products.php">Shop</a>
             </li>
             <li class="sidebar-collection-li">
                 <button type="button">

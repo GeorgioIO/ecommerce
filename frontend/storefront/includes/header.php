@@ -8,7 +8,7 @@
                 <a href="../pages/about-us.php">About Us</a>
             </li>
             <li>
-                <a href="">Shop</a>
+                <a href="../pages/products.php">Shop</a>
             </li>
             <li>
                 <button id="show-genres-header-submenu-button">

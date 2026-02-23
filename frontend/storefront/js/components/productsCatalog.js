@@ -1,7 +1,11 @@
 import { buildPaginationContainer } from "./pagination.js";
 import { buildProductCard } from "./productCard.js";
 import { getWishlistItems } from "../services/wishlistServices.js";
-import { handlePaginationButtonsColor } from "../../../admin/js/UIhelpers.js";
+import {
+  handlePaginationButtonsColor,
+  swapClass,
+} from "../../../admin/js/UIhelpers.js";
+import { buildFilteringBar } from "./filteringBar/filteringBar.js";
 /*
 
 This function is responsible of the idea of building the product catalog its the centralized that makes the product catalog appear in the pages
@@ -19,6 +23,17 @@ Input :
     - total pages
 
 */
+
+const showFilterBarButton =
+  document.querySelector("#show-filtering-bar-button") ?? null;
+
+showFilterBarButton?.addEventListener("click", () => {
+  const filteringBar = buildFilteringBar();
+
+  document.body.append(filteringBar);
+
+  swapClass(filteringBar, "slide-in-right", "slide-out-right");
+});
 
 export async function renderProductsCatalog(section, state) {
   const response = await getWishlistItems({
