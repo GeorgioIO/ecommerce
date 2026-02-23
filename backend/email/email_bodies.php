@@ -1,5 +1,40 @@
 <?php
 
+function get_contact_us_body($data)
+{
+        return <<<EOT
+    <div style="font-family: Arial, Helvetica, sans-serif; color:#333; line-height:1.6; max-width:600px; margin:0 auto;">
+
+        <h2 style="background:#2563eb; color:#fff; padding:12px 16px; border-radius:6px;">
+            🔐 Email sent from {$data['name']}
+        </h2>
+
+        <p>
+            <strong>User {$data['name']} - {$data['email']} just submitted a message from contact us form.</strong>,
+        </p>
+
+        <p>
+            Here what he said :
+        </p>
+
+        <p>
+            {$data['message']}
+        </p>
+
+        <hr style="margin:24px 0; border:none; border-top:1px solid #ddd;">
+
+        <p style="font-size:13px; color:#666;">
+            Do not forget to reply to him as soon as possible
+        </p>
+
+        <p style="margin-top:24px; font-size:13px; color:#666;">
+            — BookNest Team
+        </p>
+
+    </div>
+EOT;
+}
+
 function get_reset_password_email_bd($data)
 {
       $resetLink = $data['reset_link'];

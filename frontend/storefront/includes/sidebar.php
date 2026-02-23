@@ -49,7 +49,7 @@
                 </button>
             </li>
             <li>
-                <a>Contact Us</a>
+                <a href="../pages/contact-us.php">Contact Us</a>
             </li>
         </ul>
     </nav>

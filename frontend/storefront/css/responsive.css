@@ -131,6 +131,10 @@
   .form-double-row {
     flex-direction: row;
   }
+
+  .contact-us-inner-section {
+    flex-direction: row;
+  }
 }
 
 /* Laptop */
@@ -247,11 +251,16 @@
   .orders-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .contact-us-inner-section > figure {
+    height: auto;
+  }
 }
 
 /* Large desktop (optional) */
 @media (min-width: 1440px) {
-  #user-dashboard-section {
+  #user-dashboard-section,
+  #contact-us {
     padding: 20px 150px;
   }
 }

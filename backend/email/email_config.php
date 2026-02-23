@@ -60,6 +60,8 @@ function sendEmail($type , $subject , $data , $receiver='georgiojabbour.g.gj@gma
         else if($type === "reset_password")
         {
             $body = get_reset_password_email_bd($data);
+        } else if ($type === "contact_us") {
+            $body = get_contact_us_body($data);
         }
 
         $mail->Body = $body; 

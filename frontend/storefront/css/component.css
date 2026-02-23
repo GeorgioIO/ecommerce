@@ -13,7 +13,8 @@
 #forgot-password,
 #collections,
 #reset-password,
-#user-dashboard-section {
+#user-dashboard-section,
+#contact-us {
   width: 100%;
   height: auto;
   padding: 25px var(--sides-padding);
@@ -850,7 +851,8 @@
 #reset-password-form,
 #address-form,
 #account-details-form,
-#account-password-fieldset {
+#account-password-fieldset,
+#contact-us-form {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -935,7 +937,8 @@
 #register-button,
 #reset-email-button,
 #submit-pass-reset-button,
-#save-account-changes-button {
+#save-account-changes-button,
+#submit-contact-message-button {
   background-color: var(--primary-color);
   border-radius: 10px;
   width: 120px;
@@ -1169,4 +1172,21 @@
 .image-cell > figure,
 .image-cell > figure > img {
   width: 100%;
+}
+
+/* contact us */
+.contact-us-inner-section {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.contact-us-inner-section > figure {
+  width: 100%;
+  height: auto;
+}
+
+.contact-us-inner-section > figure > img {
+  width: 100%;
+  height: 100%;
 }

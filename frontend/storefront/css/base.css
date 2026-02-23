@@ -24,6 +24,10 @@ ol {
   list-style-type: none;
 }
 
+textarea {
+  resize: vertical;
+}
+
 /* === Font Faces === */
 @font-face {
   font-family: "Inter";

@@ -39,7 +39,7 @@ let heroCardNavigationIndex = 0;
 
 document.addEventListener("DOMContentLoaded", async () => {
   const messages = await getSession();
-
+  console.log(messages);
   if (messages.session["redirect-message"]) {
     activateMessageBox();
     const messageBox = createMesssageBox(messages.session["redirect-message"]);
