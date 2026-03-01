@@ -1,10 +1,14 @@
-import { renderProductsCatalog } from "./productsCatalog.js";
+import { loadProducts } from "../pages/productsPageUI.js";
+import { loadWishlist } from "../pages/wishlistUI.js";
+let productLoader = null;
 
-export function buildPaginationContainer(
-  pagination,
-  listState,
-  renderFunction,
-) {
+export function buildPaginationContainer(type, pagination, listState) {
+  if (type === "normal") {
+    productLoader = loadProducts;
+  } else if (type === "wishlist") {
+    productLoader = loadWishlist;
+  }
+
   let currentPaginationContainer =
     document.querySelector(".pagination") ?? null;
 
@@ -24,7 +28,7 @@ export function buildPaginationContainer(
     </svg>
     `;
 
-  setPreviousEventListener(previousPageButton, listState, renderFunction);
+  setPreviousEventListener(previousPageButton, type, listState);
 
   // Next button
   const nextPageButton = document.createElement("button");
@@ -36,7 +40,7 @@ export function buildPaginationContainer(
     `;
   nextPageButton.id = "next-page-button";
 
-  setNextEventListener(nextPageButton, listState, renderFunction);
+  setNextEventListener(nextPageButton, type, listState);
 
   // Handle buttons appearance
   if (pagination.totalPages === 1) {
@@ -60,8 +64,9 @@ export function buildPaginationContainer(
     paginationPageButton.dataset.page = i;
     setPaginationButtonEventListener(
       paginationPageButton,
+      type,
       listState,
-      renderFunction,
+      pagination,
     );
     paginationInnerContainer.append(paginationPageButton);
   }
@@ -75,36 +80,36 @@ export function buildPaginationContainer(
   return paginationContainer;
 }
 
-function setPaginationButtonEventListener(button, state, renderFunction) {
-  button.onclick = (e) => {
+// Normal pagination buttons
+function setPaginationButtonEventListener(button, type, state, pagination) {
+  button.onclick = async (e) => {
     const pageButton = parseInt(e.target.dataset.page);
     if (pageButton > state.totalPages || pageButton === state.page) return;
     state.page = pageButton;
-    const closestSection = e.target.closest("section");
-    renderFunction(closestSection, state);
+
+    await productLoader();
   };
 }
 
-function setPreviousEventListener(button, state, renderFunction) {
-  button.onclick = (e) => {
+// < Previous pagination button
+function setPreviousEventListener(button, type, state) {
+  button.onclick = async (e) => {
     if (state.page > 1) {
       state.page--;
     }
 
-    const closestSection = e.target.closest("section");
-    renderFunction(closestSection, state);
+    await productLoader();
   };
 }
 
-function setNextEventListener(button, state, renderFunction) {
-  button.onclick = (e) => {
-    console.log(state);
+// > Next pagination button
+function setNextEventListener(button, type, state) {
+  button.onclick = async (e) => {
     if (state.page < state.totalPages) {
       state.page++;
     }
 
-    const closestSection = e.target.closest("section");
-    renderFunction(closestSection, state);
+    await productLoader();
   };
 }
 

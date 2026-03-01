@@ -10,9 +10,12 @@ import {
   updateMiniWishlistBody,
 } from "./components/miniWishlistBar.js";
 import { buildSearchBar } from "./components/searchBar.js";
-import { getGenres_DB } from "./services/booksServices.js";
+import { getBooksStats_DB, getGenres_DB } from "./services/booksServices.js";
 import { createCarousel } from "./components/carousel.js";
-import { handleWishlistButton } from "./components/productCard.js";
+import {
+  handleCartButton,
+  handleWishlistButton,
+} from "./components/productCard.js";
 import { getSession } from "./services/sessionServices.js";
 
 import {
@@ -20,6 +23,7 @@ import {
   appendMessageBox,
   activateMessageBox,
 } from "./components/messageBox.js";
+import { updateProductCount } from "./pages/productsPageUI.js";
 
 const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
@@ -39,11 +43,17 @@ let heroCardNavigationIndex = 0;
 
 document.addEventListener("DOMContentLoaded", async () => {
   const messages = await getSession();
-  console.log(messages);
+  const path = window.location.pathname;
+
   if (messages.session["redirect-message"]) {
     activateMessageBox();
     const messageBox = createMesssageBox(messages.session["redirect-message"]);
     appendMessageBox(messageBox);
+  }
+
+  if (path.includes("products.php")) {
+    const bookStats = await getBooksStats_DB();
+    updateProductCount(bookStats.books_count);
   }
 });
 
@@ -170,7 +180,7 @@ header.addEventListener("click", async (e) => {
   }
 });
 
-hero.addEventListener("click", async (e) => {
+hero?.addEventListener("click", async (e) => {
   const previousHeroCardButton = e.target.closest("#previous-hero-card-button");
   const nextHeroCardButton = e.target.closest("#next-hero-card-button");
 
@@ -211,15 +221,21 @@ hero.addEventListener("click", async (e) => {
   }
 });
 
-bestSellers.addEventListener("click", async (e) => {
+bestSellers?.addEventListener("click", async (e) => {
   const carouselPreviousButton = e.target.closest(".carousel-button.prev");
   const carouselNextButton = e.target.closest(".carousel-button.next");
   const wishlistButton = e.target.closest(".product-card-add-wishlist-button");
+  const cartButton = e.target.closest(".product-card-add-cart-button");
 
   if (wishlistButton) {
     const productCard = e.target.closest(".product-card");
     await handleWishlistButton(productCard, wishlistButton);
     await updateMiniWishlistBody();
+  }
+
+  if (cartButton) {
+    const productCard = e.target.closest(".product-card");
+    handleCartButton(productCard, cartButton);
   }
 
   if (carouselPreviousButton) {
@@ -231,7 +247,7 @@ bestSellers.addEventListener("click", async (e) => {
   }
 });
 
-newArrivals.addEventListener("click", async (e) => {
+newArrivals?.addEventListener("click", async (e) => {
   const carouselPreviousButton = e.target.closest(".carousel-button.prev");
   const carouselNextButton = e.target.closest(" .carousel-button.next");
   const wishlistButton = e.target.closest(".product-card-add-wishlist-button");
@@ -251,7 +267,7 @@ newArrivals.addEventListener("click", async (e) => {
   }
 });
 
-booksUnder.addEventListener("click", async (e) => {
+booksUnder?.addEventListener("click", async (e) => {
   const carouselPreviousButton = e.target.closest(".carousel-button.prev");
   const carouselNextButton = e.target.closest(" .carousel-button.next");
   const wishlistButton = e.target.closest(".product-card-add-wishlist-button");
@@ -271,7 +287,7 @@ booksUnder.addEventListener("click", async (e) => {
   }
 });
 
-storeReviews.addEventListener("click", (e) => {
+storeReviews?.addEventListener("click", (e) => {
   const track = storeReviews.querySelector(".review-track");
   const toggle = e.target.closest(".control-review-slider-button");
 

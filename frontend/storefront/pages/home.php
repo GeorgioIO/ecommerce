@@ -128,6 +128,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                             $author_name = htmlspecialchars($best_seller['author_name'] , ENT_QUOTES , 'UTF-8');
                             $format_name = htmlspecialchars($best_seller['format_name'] , ENT_QUOTES , 'UTF-8');
                             $in_wishlist = htmlspecialchars($best_seller['is_inWishlist'] , ENT_QUOTES , 'UTF-8');
+                            $in_cart = htmlspecialchars($best_seller['is_inCart'] , ENT_QUOTES , 'UTF-8');
                             $url = "../../../assets/images/$image";
                         ?> 
 
@@ -142,8 +143,9 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                                                 <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
                                             </svg>
                                         </button>
-                                        <button class="product-card-add-cart-button <?= $best_seller['is_inStock'] === "0" ? "unclickable" : "" ?>" <?= $best_seller['is_inStock'] === "0" ? "disabled" : "" ?>>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+                                        <!--  $best_seller['is_inStock'] === "0" ? "unclickable" : "" ?>" $best_seller['is_inStock'] === "0" ? "disabled" : ""  -->
+                                        <button class="product-card-add-cart-button" data-state="<?= $in_cart === '1' ? 'active' : 'inactive' ?>">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="<?= $in_cart === '1' ? 'black' : 'none' ?>" viewBox="0 0 24 24">
                                                 <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.3 5H21l-2 7H7.377M20 16H8L6 3H3m6 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm11 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
                                             </svg>
                                         </button>

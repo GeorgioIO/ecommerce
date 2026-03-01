@@ -22,8 +22,6 @@ if(!isset($_SESSION['user_id']))
     <link rel="stylesheet" href="../css/component.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <script defer type="module" src="../js/main.js"></script>
-    <script defer type="module" src="../js/pages/wishlistUI.js"></script>
-    <script defer type="module" src="../js/components/productCard.js"></script> 
 </head>
 <body>
     <div class="message-box-container">
@@ -33,12 +31,7 @@ if(!isset($_SESSION['user_id']))
 
     <?php require __DIR__ . '/../includes/sidebar.php' ?>
 
-    <?php
-
-    // User logged in
-    require __DIR__ . '/../includes/user-wishlist.php';
-    
-    ?>
+<main></main>
     <?php require __DIR__ . '/../includes/footer.php' ?>
 
 </body>

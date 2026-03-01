@@ -160,78 +160,7 @@ function delete_order_line($conn , $order_id , $book_id)
     $stmt->close();
 }
 
-function get_book_data($conn , $id)
-{
-    $query = <<<EOT
-        SELECT
-            title,
-            isbn,
-            sku,
-            stock_quantity AS old_stock
-        FROM 
-            books
-        WHERE id = ?
-    EOT;
 
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i" , $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    return $result->fetch_assoc();
-}
-
-function get_book_title($conn , $id)
-{
-    $query = <<<EOT
-        SELECT
-            title
-        FROM 
-            books
-        WHERE id = ?
-    EOT;
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i" , $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    return $result->fetch_assoc()['title'];
-}
-
-
-function get_book_stock($conn , $id)
-{
-    $query = <<<EOT
-        SELECT
-            stock_quantity
-        FROM 
-            books
-        WHERE id = ?
-    EOT;
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i" , $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    return $result->fetch_assoc()['stock_quantity'];
-}
-
-function get_book_price($conn , $id)
-{
-    $query = <<<EOT
-        SELECT
-            price
-        FROM 
-            books
-        WHERE id = ?
-    EOT;
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i" , $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    return $result->fetch_assoc();
-}
 
 function get_order_lines_by_order($conn , $id)
 {

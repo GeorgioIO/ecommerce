@@ -1,4 +1,4 @@
-import { listState } from "../pages/wishlistUI.js";
+import { loadWishlist, wishlistListState } from "../pages/wishlistUI.js";
 import {
   removeFromWishlist,
   addToWishlist,
@@ -9,9 +9,12 @@ import {
   appendMessageBox,
   createMesssageBox,
 } from "./messageBox.js";
-import { renderProductsCatalog } from "./productsCatalog.js";
+import { getSession } from "../services/sessionServices.js";
+import { addToCart_DB } from "../services/cartServices.js";
 
 // ========== EXPORTED FUNCTIONS ==========
+
+const sessionData = await getSession();
 
 export function buildProductCard(product, type = "normal") {
   // This function is responsible of building a single product card
@@ -24,9 +27,10 @@ export function buildProductCard(product, type = "normal") {
   */
 
   // Product card
+  const bookid = product.book_id ? product.book_id : product.id;
   const productCard = document.createElement("div");
   productCard.classList.add("product-card");
-  productCard.dataset.productid = product.book_id;
+  productCard.dataset.productid = bookid;
 
   // Figure
   const figure = document.createElement("figure");
@@ -41,16 +45,35 @@ export function buildProductCard(product, type = "normal") {
 
   if (type === "normal") {
     const productCardActions = document.createElement("div");
-    productCardActions.classList.add("product-card-action");
+    productCardActions.classList.add("product-card-actions");
 
     // add to wishlist button
     const addToWishlistButton = document.createElement("button");
     addToWishlistButton.classList.add("product-card-add-wishlist-button");
+    let wishlistIconFill = "none";
+
+    if (!sessionData.session.user_id && !sessionData.cookie.username) {
+      addToWishlistButton.dataset.enabled = "false";
+      addToWishlistButton.dataset.state = "inactive";
+    } else {
+      addToWishlistButton.dataset.enabled = "true";
+
+      if (product.is_inWishlist) {
+        addToWishlistButton.dataset.state = "active";
+        wishlistIconFill = "black";
+      } else {
+        addToWishlistButton.dataset.state = "inactive";
+      }
+    }
+
     addToWishlistButton.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="${wishlistIconFill}" viewBox="0 0 24 24">
         <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
     </svg>
     `;
+    addToWishlistButton.onclick = () => {
+      handleWishlistButton(productCard, addToWishlistButton);
+    };
 
     // add to card button
     const addToCartButton = document.createElement("button");
@@ -61,10 +84,9 @@ export function buildProductCard(product, type = "normal") {
       </svg>
     `;
 
-    if (product.is_inStock === 0) {
-      addToCartButton.classList.add("unclickable");
-      addToCartButton.disabled = true;
-    }
+    addToCartButton.onclick = () => {
+      handleCartButton(productCard, addToCartButton);
+    };
 
     productCardActions.append(addToWishlistButton, addToCartButton);
 
@@ -136,15 +158,14 @@ export function buildProductCard(product, type = "normal") {
       const soldOutButton = document.createElement("button");
       soldOutButton.disabled = true;
       soldOutButton.classList.add("sold-out-button");
-
+      soldOutButton.textContent = "Sold Out";
       productCard.append(soldOutButton);
     } else {
       const redirectionButton = document.createElement("a");
       redirectionButton.classList.add("product-card-redirection-button");
       redirectionButton.textContent = "View Product";
+      productCard.append(redirectionButton);
     }
-
-    productCard.append(redirectionButton);
   } else if (type === "wishlist") {
     if (product.is_inStock === 0) {
       const soldOutButton = document.createElement("button");
@@ -167,11 +188,56 @@ export function buildProductCard(product, type = "normal") {
     );
     removeFromWishlistButton.textContent = "Remove";
 
-    setRemoveFromWishlistEvent(removeFromWishlistButton, listState);
+    setRemoveFromWishlistEvent(removeFromWishlistButton, wishlistListState);
     productCard.append(removeFromWishlistButton);
   }
 
   return productCard;
+}
+
+export async function handleCartButton(card, button) {
+  /*
+  Condition for cart to work :
+    - User logged in (1)
+    - Then we add 
+
+  Condition for cart not to work :
+    - User is not logged in
+    - if logged in if the book is out of stock
+
+  state : 
+  */
+  const currentSessionData = await getSession();
+  const isLoggedIn =
+    currentSessionData.session.user_id || currentSessionData.cookie.username;
+
+  activateMessageBox();
+
+  if (!isLoggedIn) {
+    const messageBox = createMesssageBox("Log in required");
+    appendMessageBox(messageBox);
+    return;
+  }
+
+  const state = button.dataset.state;
+  const productid = card.dataset.productid;
+  const svg = button.querySelector("svg");
+
+  // Book is not in cart
+  if (state === "inactive") {
+    const response = await addToCart_DB(productid);
+
+    const messageBox = createMesssageBox(response.message);
+    appendMessageBox(messageBox);
+
+    if (response.success) {
+      button.dataset.state = "active";
+      svg.setAttribute("fill", "black");
+    }
+  }
+  // Book is already in cart
+  else if (state === "active") {
+  }
 }
 
 export async function handleWishlistButton(card, button) {
@@ -232,8 +298,8 @@ async function setRemoveFromWishlistEvent(button, state) {
 
     if (deleteResponse.success) {
       const fetchResponse = await getWishlistItems({
-        page: listState.page,
-        perPage: listState.perPage,
+        page: wishlistListState.page,
+        perPage: wishlistListState.perPage,
       });
 
       const { data, pagination } = fetchResponse;
@@ -242,11 +308,11 @@ async function setRemoveFromWishlistEvent(button, state) {
         state.page = pagination.totalPages || 1;
       }
 
+      await loadWishlist();
+
       activateMessageBox();
       const messageBox = createMesssageBox(deleteResponse.message);
       appendMessageBox(messageBox);
-
-      await renderProductsCatalog(closestSection, state);
     } else {
       activateMessageBox();
 

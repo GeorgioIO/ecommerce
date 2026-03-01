@@ -16,6 +16,8 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
     <link rel="stylesheet" href="../css/component.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <script defer type="module" src="../js/main.js"></script>
+    <script defer type="module" src="../js/pages/productsPageUI.js"></script>
+    <script defer type="module" src="../js/components/productCard.js"></script>
 </head>
 <body>
     <div class="message-box-container">
@@ -28,14 +30,12 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
     <main>
         <section id="products">
             <h3 class="section-title products-section-title">Products</h3>
-            <div class="products-container">
-                <div class="products-catalog">
-                    <div class="products-catalog-header">
-                        <button id="show-filtering-bar-button">
-                            Filter and Sort 
-                        </button>
-                        <p>Showing <span class="products-count">0</span> products</p>
-                    </div>
+            <div class="filtering-container">
+                <div class="products-catalog-header">
+                    <button id="show-filtering-bar-button">
+                        Filter and Sort 
+                    </button>
+                    <p>Showing <span class="products-count">0</span> products</p>
                 </div>
             </div>
         </section>

@@ -871,6 +871,10 @@
   border: none;
 }
 
+.laptop-form {
+  display: none !important;
+}
+
 #register-form > p,
 #lost-password-form > p {
   font-family: var(--primary-font);

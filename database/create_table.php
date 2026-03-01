@@ -89,8 +89,6 @@ $conn->query("
     );
 ");
 
-
-
 // Orders Table
 $conn->query("
     CREATE TABLE IF NOT EXISTS orders (
@@ -149,15 +147,30 @@ $conn->query("
     );
 ");
 
+$conn->query("
+    CREATE TABLE IF NOT EXISTS carts (
+        id INT AUTO_INCREMENT,
+        user_id INT,
+        status ENUM('active' , 'ordered' , 'abandoned') DEFAULT 'active',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_AT DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    );
+");
+
 // Carts Table
 $conn->query("
     CREATE TABLE IF NOT EXISTS cart_items (
-        user_id INT,
+        id INT AUTO_INCREMENT,
+        cart_id INT,
         book_id INT,
         quantity INT NOT NULL DEFAULT 1,
+        unit_price DECIMAL(10,2) NOT NULL,
         added_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        PRIMARY KEY (user_id , book_id),
-        FOREIGN KEY (user_id) REFERENCES users (id),
+        PRIMARY KEY (id),
+        UNIQUE(cart_id , book_id),
+        FOREIGN KEY (cart_id) REFERENCES carts (id),
         FOREIGN KEY (book_id) REFERENCES books (id)
     );
 ");

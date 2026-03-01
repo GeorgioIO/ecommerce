@@ -426,14 +426,17 @@
 /* ===== Products page ===== */
 .products-section-title {
   align-self: flex-start;
+  grid-area: "title";
 }
 
-.products-container {
+.filtering-container {
   width: 100%;
+  grid-area: "filtering";
 }
 
-.products-container > .products-catalog {
+#products > .products-catalog {
   width: 100%;
+  grid-area: "catalog";
 }
 
 .products-catalog-header {

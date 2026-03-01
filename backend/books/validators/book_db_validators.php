@@ -3,6 +3,31 @@
 require_once  __DIR__ . '/../../../configuration/database.php';
 require_once  __DIR__ . '/../../helpers.php';
 
+
+function validate_book_in_stock($conn , $id)
+{
+    $query = "
+        SELECT 
+            is_inStock
+        FROM books 
+        WHERE id = ?
+    ";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i" , $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stock = (int) $result->fetch_assoc()['is_inStock'];
+
+    if($stock === 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 function DB_validate_book_exists($conn , $id)
 {
     $query = "SELECT id FROM books WHERE id = ?";

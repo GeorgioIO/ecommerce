@@ -1,4 +1,4 @@
-import { listState } from "../pages/wishlistUI.js";
+import { loadWishlist, wishlistListState } from "../pages/wishlistUI.js";
 import { updateMiniWishlistBody } from "./miniWishlistBar.js";
 import { handleWishlistButton } from "./productCard.js";
 import { renderProductsCatalog } from "./productsCatalog.js";
@@ -75,7 +75,7 @@ export async function buildSidebarCard(product, type) {
       await updateMiniWishlistBody();
       if (window.location.pathname.includes("wishlist.php")) {
         const wishlistSection = document.querySelector("section#wishlist");
-        renderProductsCatalog(wishlistSection, listState);
+        await loadWishlist();
       }
     }
 
