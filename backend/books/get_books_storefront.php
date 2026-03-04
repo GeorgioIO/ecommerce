@@ -140,13 +140,15 @@ $fitlers_types = $types;
 
 if(isset($_SESSION['user_id']))
 {
+    // User is logged in we use his id
     array_unshift($params , (int) $_SESSION['user_id']);
     array_unshift($params , (int) $_SESSION['user_id']);
-
 }
 else
 {
-    $params[] = 0;
+    // User is not logged in we use 0 (no one id)
+    array_unshift($params , 0);
+    array_unshift($params , 0);
 }
 
 $types = "ii" . $types;

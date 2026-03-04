@@ -4,10 +4,7 @@ header('Content-Type: application/json');
 
 require __DIR__ . '/../../configuration/session.php';
 
-if (!isset($_SESSION['admin_id'])) {
-    http_response_code(401);
-    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
-}
+
 
 require_once  __DIR__ . '/../../configuration/database.php';
 require_once  __DIR__ . '/validators/book_validators.php';

@@ -4,10 +4,7 @@ require __DIR__ . '/../../configuration/session.php';
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['admin_id']) && !isset($_SESSION['user_id'])) {
-    http_response_code(401);
-    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
-}
+
 
 
 require_once  __DIR__ .  "/../../configuration/database.php";

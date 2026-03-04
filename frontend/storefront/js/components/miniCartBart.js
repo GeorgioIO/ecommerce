@@ -53,7 +53,7 @@ export async function updateCart() {
     document.querySelector(".mini-cart-body .section-redirection-button") ??
     null;
 
-  if (data.length === 0) {
+  if (data !== null && data.length === 0) {
     if (cartItemsContainer) cartItemsContainer.innerHTML = "";
     if (!emptyText && !shoppingButton) {
       emptyText = document.createElement("p");
