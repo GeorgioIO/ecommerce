@@ -130,16 +130,5 @@ export const bookFormConfigs = {
       disabled: false,
       required: false,
     },
-    {
-      name: "Discount Price",
-      labelText: "Discount Price",
-      containerClass: "discount-info",
-      key: "discount_price",
-      tag: "input",
-      type: "number",
-      step: "0.01",
-      disabled: true,
-      required: true,
-    },
   ],
 };
