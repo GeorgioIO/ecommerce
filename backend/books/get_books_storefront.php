@@ -137,15 +137,19 @@ SQL;
 $filters_params = $params;
 $fitlers_types = $types;
 
-$types = "ii" . $types;
 
 if(isset($_SESSION['user_id']))
 {
-    $params[] = (int) $_SESSION['user_id'];
-    $params[] = (int) $_SESSION['user_id'];
+    array_unshift($params , (int) $_SESSION['user_id']);
+    array_unshift($params , (int) $_SESSION['user_id']);
+
 }
 else
+{
     $params[] = 0;
+}
+
+$types = "ii" . $types;
 
 // Pagination params
 $params[] = $perPage;
