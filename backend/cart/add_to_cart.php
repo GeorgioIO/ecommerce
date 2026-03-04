@@ -61,7 +61,7 @@ if(!$book_id_validation['success']){
     echo json_encode([
         'success' => false,
         'status' => 400,
-        'message' => 'No current active cart'
+        'message' => 'Invalid book'
     ]);
     exit;
 }

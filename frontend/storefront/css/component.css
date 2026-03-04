@@ -459,7 +459,9 @@
 .view-order-details-button,
 #delete-address-button,
 #save-address-button,
-#show-filtering-bar-button {
+#show-filtering-bar-button,
+#view-cart-button,
+#checkout-button {
   width: 100%;
   display: flex;
   justify-content: center;

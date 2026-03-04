@@ -4,7 +4,10 @@ import {
   populateCollectionsBar,
 } from "./components/collectionsBar.js";
 import { showNextCard, showPreviousCard } from "./components/heroCards.js";
-import { BuildMiniCartBar } from "./components/miniCartBart.js";
+import {
+  BuildMiniCartBar,
+  renderMiniCartBar,
+} from "./components/miniCartBart.js";
 import {
   renderMiniWishlist,
   updateMiniWishlistBody,
@@ -24,6 +27,7 @@ import {
   activateMessageBox,
 } from "./components/messageBox.js";
 import { updateProductCount } from "./pages/productsPageUI.js";
+import { getCartItems } from "./services/cartServices.js";
 
 const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
@@ -140,11 +144,7 @@ header.addEventListener("click", async (e) => {
   );
 
   if (openMiniCartMenuButton) {
-    const miniCart = BuildMiniCartBar();
-
-    body.append(miniCart);
-
-    swapClass(miniCart, "slide-in-right", "slide-out-right");
+    await renderMiniCartBar(body);
   }
 
   if (openWishlistButton) {
@@ -251,6 +251,12 @@ newArrivals?.addEventListener("click", async (e) => {
   const carouselPreviousButton = e.target.closest(".carousel-button.prev");
   const carouselNextButton = e.target.closest(" .carousel-button.next");
   const wishlistButton = e.target.closest(".product-card-add-wishlist-button");
+  const cartButton = e.target.closest(".product-card-add-cart-button");
+
+  if (cartButton) {
+    const productCard = e.target.closest(".product-card");
+    handleCartButton(productCard, cartButton);
+  }
 
   if (wishlistButton) {
     const productCard = e.target.closest(".product-card");
@@ -271,6 +277,12 @@ booksUnder?.addEventListener("click", async (e) => {
   const carouselPreviousButton = e.target.closest(".carousel-button.prev");
   const carouselNextButton = e.target.closest(" .carousel-button.next");
   const wishlistButton = e.target.closest(".product-card-add-wishlist-button");
+  const cartButton = e.target.closest(".product-card-add-cart-button");
+
+  if (cartButton) {
+    const productCard = e.target.closest(".product-card");
+    handleCartButton(productCard, cartButton);
+  }
 
   if (wishlistButton) {
     const productCard = e.target.closest(".product-card");

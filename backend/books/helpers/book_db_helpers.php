@@ -14,22 +14,15 @@ function get_books_under_price($conn , $price , $user_id=null)
         b.is_onSale,
         b.is_inStock,
         b.discount_percentage,
-        CASE
-            WHEN w.book_id IS NOT NULL
-                THEN 1
-            ELSE
-                0
-            END AS is_inWishlist,
-        CASE
-            WHEN b.is_onSale = 1
-                THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
-            ELSE 
-                b.price
-            END AS final_price
+        CASE WHEN ci.book_id IS NOT NULL THEN 1 ELSE 0 END AS is_inCart,
+        CASE WHEN w.book_id IS NOT NULL THEN 1 ELSE 0 END AS is_inWishlist,
+        CASE WHEN b.is_onSale = 1 THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2) ELSE b.price END AS final_price
         FROM books b
         LEFT JOIN wishlist_items w ON b.id = w.book_id AND w.user_id = ?
         JOIN authors a ON b.author_id = a.id
         JOIN book_formats bf ON b.format_id = bf.id
+        LEFT JOIN carts c ON c.user_id = ? AND c.status = 'active' 
+        LEFT JOIN cart_items ci ON b.id = ci.book_id AND ci.cart_id = c.id
         WHERE 
             (
                 CASE
@@ -44,7 +37,7 @@ function get_books_under_price($conn , $price , $user_id=null)
     $uid = $user_id ? $user_id : 0;
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii" , $uid ,  $price);
+    $stmt->bind_param("iii" , $uid , $uid ,  $price);
     $stmt->execute();
     $result = $stmt->get_result();
     $books_under_price = [];
@@ -73,21 +66,15 @@ function get_new_arrivals_books($conn , $user_id = null)
             b.is_onSale,
             b.is_inStock,
             b.discount_percentage,
-            CASE 
-                WHEN w.book_ID IS NOT NULL 
-                    THEN 1
-                ELSE 0
-            END AS is_inWishlist,
-            CASE 
-                WHEN b.is_onSale = 1
-                    THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
-                ELSE
-                    b.price
-            END AS final_price
+            CASE WHEN ci.book_id IS NOT NULL THEN 1 ELSE 0 END AS is_inCart, 
+            CASE WHEN w.book_ID IS NOT NULL THEN 1 ELSE 0 END AS is_inWishlist,
+            CASE WHEN b.is_onSale = 1 THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2) ELSE b.price END AS final_price
         FROM books b
         JOIN authors a ON b.author_id = a.id
         JOIN book_formats bf ON b.format_id = bf.id
         LEFT JOIN wishlist_items w ON b.id = w.book_id AND w.user_id = ?
+        LEFT JOIN carts c ON c.user_id = ? AND c.status = 'active' 
+        LEFT JOIN cart_items ci ON b.id = ci.book_id AND ci.cart_id = c.id
         ORDER BY b.date_added DESC
         LIMIT 10;
     ";
@@ -95,7 +82,7 @@ function get_new_arrivals_books($conn , $user_id = null)
     $uid = $user_id ? $user_id : 0;
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("i" , $uid);
+    $stmt->bind_param("ii" , $uid , $uid);
     $stmt->execute();
     $result = $stmt->get_result();
 

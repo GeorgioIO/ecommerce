@@ -10,7 +10,7 @@ import {
   createMesssageBox,
 } from "./messageBox.js";
 import { getSession } from "../services/sessionServices.js";
-import { addToCart_DB } from "../services/cartServices.js";
+import { addToCart_DB, removeFromCart_DB } from "../services/cartServices.js";
 
 // ========== EXPORTED FUNCTIONS ==========
 
@@ -237,6 +237,15 @@ export async function handleCartButton(card, button) {
   }
   // Book is already in cart
   else if (state === "active") {
+    const response = await removeFromCart_DB(productid);
+
+    const messageBox = createMesssageBox(response.message);
+    appendMessageBox(messageBox);
+
+    if (response.success) {
+      button.dataset.state = "inactive";
+      svg.setAttribute("fill", "none");
+    }
   }
 }
 
