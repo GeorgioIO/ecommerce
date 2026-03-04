@@ -118,22 +118,16 @@ $query = <<<SQL
         b.price,
         b.is_onSale,
         b.discount_percentage,
-        CASE 
-            WHEN w.book_id IS NOT NULL
-                THEN 1
-            ELSE 0
-        END AS is_inWishlist,
-        CASE 
-            WHEN b.is_onSale = 1
-                THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
-            ELSE
-                b.price
-        END AS final_price
+        CASE WHEN w.book_id IS NOT NULL THEN 1 ELSE 0 END AS is_inWishlist,
+        CASE WHEN b.is_onSale = 1 THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2) ELSE b.price END AS final_price,
+        CASE WHEN ci.book_id IS NOT NULL THEN 1 ELSE 0 END AS is_inCart  
     FROM books b
     LEFT JOIN genres g ON b.genre_id = g.id
     LEFT JOIN authors a ON b.author_id = a.id
     LEFT JOIN book_formats bf ON b.format_id = bf.id
     LEFT JOIN wishlist_items w ON b.id = w.book_id AND w.user_id = ?
+    LEFT JOIN carts c ON c.user_id = ? AND c.status = 'active' 
+    LEFT JOIN cart_items ci ON b.id = ci.book_id AND ci.cart_id = c.id
     $where_sql
     ORDER BY $order_by
     LIMIT ? OFFSET ?;
@@ -143,10 +137,11 @@ SQL;
 $filters_params = $params;
 $fitlers_types = $types;
 
-$types = "i" . $types;
+$types = "ii" . $types;
 
 if(isset($_SESSION['user_id']))
 {
+    $params[] = (int) $_SESSION['user_id'];
     $params[] = (int) $_SESSION['user_id'];
 }
 else

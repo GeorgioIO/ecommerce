@@ -11,6 +11,7 @@ import {
 } from "./messageBox.js";
 import { getSession } from "../services/sessionServices.js";
 import { addToCart_DB, removeFromCart_DB } from "../services/cartServices.js";
+import { calculateCartTotal, updateCart } from "./miniCartBart.js";
 
 // ========== EXPORTED FUNCTIONS ==========
 
@@ -51,18 +52,42 @@ export function buildProductCard(product, type = "normal") {
     const addToWishlistButton = document.createElement("button");
     addToWishlistButton.classList.add("product-card-add-wishlist-button");
     let wishlistIconFill = "none";
+    let cartIconFill = "none";
+    addToWishlistButton.onclick = () => {
+      handleWishlistButton(productCard, addToWishlistButton);
+    };
+
+    // add to card button
+    const addToCartButton = document.createElement("button");
+    addToCartButton.classList.add("product-card-add-cart-button");
+
+    addToCartButton.onclick = async () => {
+      await handleCartButton(productCard, addToCartButton);
+      await updateCart();
+      await calculateCartTotal();
+    };
 
     if (!sessionData.session.user_id && !sessionData.cookie.username) {
       addToWishlistButton.dataset.enabled = "false";
       addToWishlistButton.dataset.state = "inactive";
+
+      addToCartButton.dataset.enabled = "false";
+      addToCartButton.dataset.state = "inactive";
     } else {
       addToWishlistButton.dataset.enabled = "true";
-
+      addToCartButton.dataset.enabled = "true";
       if (product.is_inWishlist) {
         addToWishlistButton.dataset.state = "active";
         wishlistIconFill = "black";
       } else {
         addToWishlistButton.dataset.state = "inactive";
+      }
+
+      if (product.is_inCart) {
+        addToCartButton.dataset.state = "active";
+        cartIconFill = "black";
+      } else {
+        addToCartButton.dataset.state = "inactive";
       }
     }
 
@@ -71,22 +96,12 @@ export function buildProductCard(product, type = "normal") {
         <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
     </svg>
     `;
-    addToWishlistButton.onclick = () => {
-      handleWishlistButton(productCard, addToWishlistButton);
-    };
 
-    // add to card button
-    const addToCartButton = document.createElement("button");
-    addToCartButton.classList.add("product-card-add-cart-button");
     addToCartButton.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="none" viewBox="0 0 24 24">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="${cartIconFill}" viewBox="0 0 24 24">
         <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.3 5H21l-2 7H7.377M20 16H8L6 3H3m6 17a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm11 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
       </svg>
     `;
-
-    addToCartButton.onclick = () => {
-      handleCartButton(productCard, addToCartButton);
-    };
 
     productCardActions.append(addToWishlistButton, addToCartButton);
 
