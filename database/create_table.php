@@ -36,6 +36,7 @@ $conn->query("
         isbn VARCHAR(17) NOT NULL UNIQUE,
         sku VARCHAR(100) NOT NULL UNIQUE,
         title VARCHAR(100) NOT NULL,
+        slug VARCHAR(200) NOT NULL UNIQUE,
         description TEXT,
         language VARCHAR(100) NOT NULL CHECK(language IN('French' , 'English' , 'Not Defined')),
         stock_quantity INT CHECK(stock_quantity >= 0),

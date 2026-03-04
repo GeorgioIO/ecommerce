@@ -1,5 +1,29 @@
 <?php
 
+function form_add_book_query($is_onsale)
+{
+    if($is_onsale)
+    {
+        return 
+        <<<EOT
+            INSERT INTO books
+            (isbn , sku , title , description , language , stock_quantity , is_inStock , is_onSale , discount_percentage , cover_image , price , genre_id , author_id , format_id)
+            VALUES
+            (? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?);
+        EOT;
+    }
+    else
+    {
+        return 
+        <<<EOT
+            INSERT INTO books
+            (isbn , sku , title , description , language , stock_quantity , is_inStock , cover_image , price , genre_id , author_id , format_id)
+            VALUES
+            (? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?);
+        EOT;
+    }
+}
+
 function get_books_under_price($conn , $price , $user_id=null)
 {
     $query = <<<SQL

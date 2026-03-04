@@ -174,6 +174,7 @@ if(!$DB_sku_validation_result['success'])
 }
 
 
+// Prepare data from validations
 $DB_book_language = $book_language_result['value'];
 $DB_book_author = $book_author_result['value'];
 $DB_book_genre = $book_genre_result['value'];
@@ -183,37 +184,61 @@ $DB_book_price = $book_price_result['value'];
 $DB_book_in_stock = $DB_book_quantity === 0 ? 0 : 1;
 $DB_book_on_sale = !$book_payload['is_on_sale'] ? 0 : 1; 
 
-
 if($book_payload['is_on_sale'] === "1")
 {
     $DB_book_discount = $book_discount_result['value'];
 }
 
-$query = form_add_book_query($book_payload['is_on_sale']);
-
-$stmt = $conn->prepare($query);
-
-if($book_payload['is_on_sale'] === "1")
+$conn->begin_transaction();
+try
 {
-    $stmt->bind_param("sssssiiiisdiii" , $DB_book_isbn , $DB_book_sku , $DB_book_title , $book_payload['description'] , $DB_book_language , $DB_book_quantity , $DB_book_in_stock , $DB_book_on_sale , $DB_book_discount , $DB_cover_filename , $DB_book_price , $DB_book_genre , $DB_book_author , $DB_book_format);
+    $query = form_add_book_query($book_payload['is_on_sale']);
+    $insert_stmt = $conn->prepare($query);
+
+    if($book_payload['is_on_sale'] === "1")
+    {
+        $insert_stmt->bind_param("sssssiiiisdiii" , $DB_book_isbn , $DB_book_sku , $DB_book_title , $book_payload['description'] , $DB_book_language , $DB_book_quantity , $DB_book_in_stock , $DB_book_on_sale , $DB_book_discount , $DB_cover_filename , $DB_book_price , $DB_book_genre , $DB_book_author , $DB_book_format);
+    }
+    else
+    {
+        $insert_stmt->bind_param("sssssiisdiii" , $DB_book_isbn , $DB_book_sku , $DB_book_title , $book_payload['description'] , $DB_book_language , $DB_book_quantity , $DB_book_in_stock , $DB_cover_filename , $DB_book_price , $DB_book_genre , $DB_book_author , $DB_book_format);
+    }
+
+    $insert_stmt->execute();
+
+    // Add slug to book
+    $insert_id = $insert_stmt->insert_id;
+    $book_slug = create_book_slug($DB_book_title , $insert_id);
+    $update_query = "UPDATE books SET slug = ? WHERE id = ?";
+    $update_stmt = $conn->prepare($update_query);
+    $update_stmt->bind_param("si" , $book_slug , $insert_id);
+    $update_stmt->execute();
+
+    if($update_stmt->error || $update_stmt->affected_rows === 0)
+    {
+        throw new Exception("Error adding slug");
+    }
+
+    $conn->commit();
+    $insert_stmt->close();
+    $update_stmt->close();
+
+    echo json_encode([
+        'success' => true,
+        'status' => 200,
+        'message' => 'Book is added successfully'
+    ]);
+    exit;
+
 }
-else
+catch(Exception $e)
 {
-    $stmt->bind_param("sssssiisdiii" , $DB_book_isbn , $DB_book_sku , $DB_book_title , $book_payload['description'] , $DB_book_language , $DB_book_quantity , $DB_book_in_stock , $DB_cover_filename , $DB_book_price , $DB_book_genre , $DB_book_author , $DB_book_format);
+    echo json_encode([
+        'success' => false,
+        'status' => 500,
+        'message' => $e->getMessage()
+    ]);
+    exit;
 }
-
-if($stmt->execute()){
-    $response = ['success' => true , 'message' => 'New book is added!'];
-}
-else
-{
-    $response = ['success' => false , 'message' => 'Problem in adding book'];
-}
-
-$stmt->close();
-$conn->close();
-
-echo json_encode($response);
-exit;
 
 ?>

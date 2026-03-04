@@ -1,5 +1,25 @@
 <?php
 
+function create_book_slug ($title , $id)
+{
+    // Convert to lowercase
+    $slug = strtolower($title);
+
+    // Remove any character that is not a letter, number, or space
+    $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
+
+    // Replace spaces and multiple dashes with a single dash
+    $slug = preg_replace('/[\s-]+/', '-', $slug);
+
+    // Trim any leading or trailing dash
+    $slug = trim($slug, '-');
+
+    // Append the ID at the end
+    $slug .= '-' . $id;
+
+    return $slug;
+}
+
 function extract_book_payload(array $post , array $files) : array
 {
     return [
@@ -21,27 +41,5 @@ function extract_book_payload(array $post , array $files) : array
 }
 
 
-function form_add_book_query($is_onsale)
-{
-    if($is_onsale)
-    {
-        return 
-        <<<EOT
-            INSERT INTO books
-            (isbn , sku , title , description , language , stock_quantity , is_inStock , is_onSale , discount_percentage , cover_image , price , genre_id , author_id , format_id)
-            VALUES
-            (? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?);
-        EOT;
-    }
-    else
-    {
-        return 
-        <<<EOT
-            INSERT INTO books
-            (isbn , sku , title , description , language , stock_quantity , is_inStock , cover_image , price , genre_id , author_id , format_id)
-            VALUES
-            (? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?);
-        EOT;
-    }
-}
+
 ?>
