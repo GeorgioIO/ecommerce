@@ -40,11 +40,11 @@ $query = <<<EOT
         ci.book_id,
         ci.quantity,
         ci.unit_price,
-        b.price,
+        b.price * ci.quantity AS price,
         b.title,
         b.cover_image,
         b.is_onSale,
-        CASE WHEN b.is_onSale = 1 THEN ROUND(ci.unit_price - (ci.unit_price * b.discount_percentage) / 100 , 2) ELSE ci.unit_price END AS final_price
+        CASE WHEN b.is_onSale = 1 THEN (ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)) * ci.quantity ELSE b.price * ci.quantity END AS final_price
     FROM
         carts c
     JOIN cart_items ci ON c.id = ci.cart_id

@@ -1,5 +1,12 @@
 import { createCartButton } from "../core/UIhelpers.js";
 import { loadWishlist } from "../pages/wishlistUI.js";
+import { addToCart_DB, removeFromCart_DB } from "../services/cartServices.js";
+import {
+  activateMessageBox,
+  appendMessageBox,
+  createMesssageBox,
+} from "./messageBox.js";
+import { calculateCartTotal, updateCart } from "./miniCartBart.js";
 import { updateMiniWishlistBody } from "./miniWishlistBar.js";
 import { handleWishlistButton } from "./productCard.js";
 
@@ -99,6 +106,12 @@ export async function buildSidebarCard(product, type) {
   } else {
     const cartButton = createCartButton("product-card-add-cart-button", "cart");
     actionContainer.append(cartButton);
+
+    cartButton.onclick = async () => {
+      await removeFromCart_DB(product.book_id);
+      await updateCart();
+      await calculateCartTotal();
+    };
   }
 
   if (type === "cart") {
@@ -107,6 +120,20 @@ export async function buildSidebarCard(product, type) {
     quantityInput.value = product.quantity;
     quantityInput.classList.add("cart-item-quantity");
     quantityInput.step = 1;
+    quantityInput.min = 1;
+
+    quantityInput.onchange = async () => {
+      const response = await addToCart_DB(product.book_id, quantityInput.value);
+
+      if (!response.success) {
+        activateMessageBox();
+        const messageBox = createMesssageBox(response.message);
+        appendMessageBox(messageBox);
+        return;
+      }
+      await updateCart();
+      await calculateCartTotal(response.data);
+    };
 
     actionContainer.append(quantityInput);
   }

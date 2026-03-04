@@ -5,8 +5,9 @@ import {
 } from "./components/collectionsBar.js";
 import { showNextCard, showPreviousCard } from "./components/heroCards.js";
 import {
-  BuildMiniCartBar,
+  calculateCartTotal,
   renderMiniCartBar,
+  updateCart,
 } from "./components/miniCartBart.js";
 import {
   renderMiniWishlist,
@@ -27,7 +28,6 @@ import {
   activateMessageBox,
 } from "./components/messageBox.js";
 import { updateProductCount } from "./pages/productsPageUI.js";
-import { getCartItems } from "./services/cartServices.js";
 
 const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
@@ -73,6 +73,26 @@ window.addEventListener("resize", () => {
   if (booksUnderPriceCarousel) {
     booksUnderPriceCarousel.recalc();
   }
+});
+
+document.addEventListener("cartUpdated", (e) => {
+  const id = e.detail.id;
+
+  const cards = document.querySelectorAll(
+    `.product-card[data-productid="${id}"]`,
+  );
+
+  if (!cards) return;
+
+  cards.forEach((card) => {
+    const cartButton = card.querySelector(".product-card-add-cart-button");
+
+    const svg = cartButton.querySelector("svg");
+    if (cartButton.dataset.state === "active") {
+      cartButton.dataset.state = "inactive";
+      svg.setAttribute("fill", "none");
+    }
+  });
 });
 
 document.addEventListener("wishlistUpdated", (e) => {
@@ -235,7 +255,9 @@ bestSellers?.addEventListener("click", async (e) => {
 
   if (cartButton) {
     const productCard = e.target.closest(".product-card");
-    handleCartButton(productCard, cartButton);
+    await handleCartButton(productCard, cartButton);
+    await updateCart();
+    await calculateCartTotal();
   }
 
   if (carouselPreviousButton) {
@@ -255,7 +277,9 @@ newArrivals?.addEventListener("click", async (e) => {
 
   if (cartButton) {
     const productCard = e.target.closest(".product-card");
-    handleCartButton(productCard, cartButton);
+    await handleCartButton(productCard, cartButton);
+    await updateCart();
+    await calculateCartTotal();
   }
 
   if (wishlistButton) {
@@ -281,7 +305,9 @@ booksUnder?.addEventListener("click", async (e) => {
 
   if (cartButton) {
     const productCard = e.target.closest(".product-card");
-    handleCartButton(productCard, cartButton);
+    await handleCartButton(productCard, cartButton);
+    await updateCart();
+    await calculateCartTotal();
   }
 
   if (wishlistButton) {

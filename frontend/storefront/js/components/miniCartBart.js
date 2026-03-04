@@ -2,7 +2,8 @@ import { swapClass } from "../../../admin/js/UIhelpers.js";
 import { getCartItems } from "../services/cartServices.js";
 import { buildSidebarCard } from "./sidebarProductCard.js";
 
-export async function renderMiniCartBar(body) {
+export async function renderMiniCartBar(body = null) {
+  if (!body) body = document.body;
   // Get cart data
   const { data, success, status, message } = await getCartItems();
   let dataAvailable = false;
@@ -13,13 +14,14 @@ export async function renderMiniCartBar(body) {
 
   // Get cart body
   const cartBody = miniCart.querySelector(".mini-cart-body");
+  const cartFooter = miniCart.querySelector(".mini-cart-footer");
 
   body.append(miniCart);
 
   if (success && data.length > 0) {
     const cartItemsContainer = createCartItemsContainer(data);
     cartBody.append(cartItemsContainer);
-
+    cartFooter.style.display = "flex";
     calculateCartTotal(data);
   }
 
@@ -37,6 +39,56 @@ export function createCartItemsContainer(data = null) {
   });
 
   return cartItemsContainer;
+}
+
+export async function updateCart() {
+  // TODO : After each delete it checks if cart becomes empty
+  const { data } = await getCartItems();
+  const cartBody = document.querySelector(".mini-cart-body") ?? null;
+  const cartFooter = document.querySelector(".mini-cart-footer") ?? null;
+  const cartItemsContainer =
+    document.querySelector(".mini-cart-items-container") ?? null;
+  let emptyText = document.querySelector(".empty-cart-text") ?? null;
+  let shoppingButton =
+    document.querySelector(".mini-cart-body .section-redirection-button") ??
+    null;
+
+  if (data.length === 0) {
+    if (cartItemsContainer) cartItemsContainer.innerHTML = "";
+    if (!emptyText && !shoppingButton) {
+      emptyText = document.createElement("p");
+      emptyText.classList.add("empty-cart-text");
+      emptyText.textContent = "Your cart is currently empty";
+
+      shoppingButton = document.createElement("a");
+      shoppingButton.textContent = "Browse Products";
+      shoppingButton.classList.add("section-redirection-button");
+      cartBody?.append(emptyText, shoppingButton);
+    } else {
+      emptyText.style.display = "flex";
+      shoppingButton.style.display = "flex";
+    }
+
+    cartBody?.classList.add("empty");
+    cartFooter.style.display = "none";
+  } else {
+    console.log(cartItemsContainer, cartBody, cartFooter);
+    if (!cartItemsContainer) return;
+    if (emptyText && shoppingButton) {
+      emptyText.style.display = "none";
+      shoppingButton.style.display = "none";
+    }
+
+    cartBody.classList.remove("empty");
+    cartFooter.style.display = "flex";
+    cartItemsContainer.innerHTML = "";
+    console.log(cartBody, cartFooter);
+
+    data.forEach(async (item) => {
+      const sidebarCard = await buildSidebarCard(item, "cart");
+      cartItemsContainer.append(sidebarCard);
+    });
+  }
 }
 
 export function BuildMiniCartBar(dataAvailable) {
@@ -76,6 +128,7 @@ export function BuildMiniCartBar(dataAvailable) {
   if (dataAvailable) {
     const cartFooter = document.createElement("div");
     cartFooter.classList.add("mini-cart-footer");
+    cartFooter.style.display = "none";
 
     const priceRow = document.createElement("div");
     priceRow.classList.add("mini-cart-footer-price-row");
@@ -137,11 +190,15 @@ export function BuildMiniCartBar(dataAvailable) {
   return miniCartMenu;
 }
 
-export function calculateCartTotal(data) {
-  const totalPriceTag = document.querySelector(".mini-cart-price");
-  console.log(totalPriceTag);
+export async function calculateCartTotal(data = null) {
+  let backupResponse;
+  if (!data) {
+    backupResponse = await getCartItems();
+    data = backupResponse.data;
+  }
 
-  if (!totalPriceTag) return;
+  const totalPriceTag = document.querySelector(".mini-cart-price");
+  if (!totalPriceTag || data.length === 0) return;
 
   let total = 0;
 

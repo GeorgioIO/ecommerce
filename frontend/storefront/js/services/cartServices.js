@@ -18,6 +18,12 @@ export async function removeFromCart_DB(bookID) {
     body: formData,
   });
 
+  document.dispatchEvent(
+    new CustomEvent("cartUpdated", {
+      detail: { id: bookID },
+    }),
+  );
+
   return result.json();
 }
 

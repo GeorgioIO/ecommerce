@@ -165,7 +165,7 @@ try
     // Book exist in cart = UPDATE
     {
         $update_query = "
-            UPDATE cart_items SET quantity = quantity + ? WHERE cart_id = ? AND book_id = ?
+            UPDATE cart_items SET quantity =  ? WHERE cart_id = ? AND book_id = ?
         ";
         $update_stmt = $conn->prepare($update_query);
         $update_stmt->bind_param("iii" , $quantity , $active_cart_id , $book_id);

@@ -23,7 +23,6 @@ export async function removeFromWishlist(productID) {
     }),
   });
 
-  console.log(productID);
   document.dispatchEvent(
     new CustomEvent("wishlistUpdated", {
       detail: { id: productID },
