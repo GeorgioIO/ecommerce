@@ -82,11 +82,13 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
             ?>
             <div class="genres-grid">
                 <?php foreach($genres as $genre):
+
+                $id = htmlspecialchars($genre['id'] , ENT_QUOTES , 'UTF-8');
                     $image = htmlspecialchars($genre['image'] , ENT_QUOTES , 'UTF-8');
                     $name = htmlspecialchars($genre['name'] , ENT_QUOTES , 'UTF-8');
                     $url = "../../../assets/images/$image";
                 ?> 
-                    <a href="">
+                    <a href="../pages/products.php?genre=<?= $id ?>">
                         <figure class="genre-grid-card">
                             <img src="<?=  $url ?>" alt='<?= $name ?> books genre'>
                             <figcaption><?= $name ?></figcaption>

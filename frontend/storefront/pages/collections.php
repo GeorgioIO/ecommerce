@@ -34,7 +34,7 @@ require_once __DIR__ . '../../../../backend/auth/auth_customer.php';
             <div class="collections-grid">
                 <?php foreach ($genres as $genre) : 
                 
-
+                $id = htmlspecialchars($genre['id'] , ENT_QUOTES , 'UTF-8');
                 $name = htmlspecialchars($genre['name'] , ENT_QUOTES , 'UTF-8');
                 $image = htmlspecialchars($genre['image'] , ENT_QUOTES , 'UTF-8');
                 $url = empty($image) ?  "../../../assets/images/no-image-photo.png" : "../../../assets/images/$image" ;
@@ -44,7 +44,7 @@ require_once __DIR__ . '../../../../backend/auth/auth_customer.php';
                     <figure>
                         <img src="<?= $url ?>" alt="<?= $name ?>">
                     </figure>
-                    <a href="" class="view-collection-button">Shop now</a>
+                    <a href="../pages/products.php?genre=<?= $id ?>" class="view-collection-button">Shop now</a>
                 </div>
 
 

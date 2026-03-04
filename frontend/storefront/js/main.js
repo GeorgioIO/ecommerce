@@ -28,6 +28,7 @@ import {
   activateMessageBox,
 } from "./components/messageBox.js";
 import { updateProductCount } from "./pages/productsPageUI.js";
+import { currentFilters } from "./core/currentFilters.js";
 
 const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
@@ -44,6 +45,17 @@ const booksUnderPriceCarousel = createCarousel(booksUnder);
 const storeReviews = document.querySelector("#reviews");
 let reviewSliderToggler = true;
 let heroCardNavigationIndex = 0;
+
+document.addEventListener("click", (e) => {
+  const redirectGenreButton = e.target.closest(
+    ".redirect-genre-products-button",
+  );
+
+  if (redirectGenreButton) {
+    currentFilters.genre = redirectGenreButton.dataset.genreid;
+    console.log(currentFilters);
+  }
+});
 
 document.addEventListener("DOMContentLoaded", async () => {
   const messages = await getSession();

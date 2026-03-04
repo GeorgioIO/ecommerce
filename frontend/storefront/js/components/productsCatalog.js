@@ -3,7 +3,7 @@ import { buildProductCard } from "./productCard.js";
 import { swapClass } from "../../../admin/js/UIhelpers.js";
 import { buildFilteringBar } from "./filteringBar/filteringBar.js";
 import { populateFilteringBar } from "./filteringBar/filteringBarPopulator.js";
-import { currentFilters } from "../pages/productsPageUI.js";
+import { currentFilters } from "../core/currentFilters.js";
 import { populateExistingFilters } from "./filteringBar/filteringBarPopulator.js";
 
 /*

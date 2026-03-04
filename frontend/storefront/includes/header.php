@@ -30,10 +30,11 @@
                 <ul class="header-submenu-collections inactive-submenu">
                     <?php foreach($genres as $genre):
 
+                        $id = htmlspecialchars($genre['id'] , ENT_QUOTES , 'UTF-8');
                         $name = htmlspecialchars($genre['name'] , ENT_QUOTES , 'UTF-8');
                     ?>
                         <li>
-                            <a href=""><?= $name ?></a>
+                            <a href="../pages/products.php?genre=<?= $id  ?>" class="redirect-genre-products-button"><?= $name ?></a>
                         </li>
                     <?php endforeach; ?>
                     <li>

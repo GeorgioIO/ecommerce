@@ -45,7 +45,7 @@ export function populateCollectionsBar(container, genres) {
   genres.data.forEach((genre) => {
     const genreItem = document.createElement("li");
     const genreAnchor = document.createElement("a");
-
+    genreAnchor.href = `../pages/products.php?genre=${genre.id}`;
     genreAnchor.textContent = genre.name;
     genreItem.append(genreAnchor);
 

@@ -1,17 +1,23 @@
 import { renderProductsCatalog } from "../components/productsCatalog.js";
 import { getBooks_DB } from "../services/booksServices.js";
 import { handlePaginationButtonsColor } from "../../../admin/js/UIhelpers.js";
-
+import { currentFilters } from "../core/currentFilters.js";
 export const productsListState = {
   page: 1,
   perPage: 20,
 };
-export let currentFilters = null;
 
 const productsSection = document.querySelector("#products") ?? null;
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (productsSection) {
+    const params = new URLSearchParams(window.location.search);
+    let genreFromURL = params.get("genre") ?? null;
+
+    if (genreFromURL) {
+      currentFilters.genre = genreFromURL;
+    }
+
     await loadProducts();
     handlePaginationButtonsColor(productsListState.page);
   }
@@ -23,7 +29,7 @@ document.addEventListener("change", async () => {
 
   if (!form) return;
 
-  currentFilters = {
+  Object.assign(currentFilters, {
     sortOption: form.querySelector("#sortOption").value ?? null,
     minPrice: form.querySelector("#minPrice").value ?? null,
     maxPrice: form.querySelector("#maxPrice").value ?? null,
@@ -31,7 +37,7 @@ document.addEventListener("change", async () => {
     genre: form.querySelector("#genre").value ?? null,
     format: form.querySelector("#format").value ?? null,
     language: form.querySelector("#language").value ?? null,
-  };
+  });
 
   const inStock = form.querySelector("#available-checkbox");
   const outOfStock = form.querySelector("#outofstock-checkbox");
