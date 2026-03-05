@@ -212,7 +212,7 @@ export function buildProductCard(product, type = "normal") {
   return productCard;
 }
 
-export async function handleCartButton(card, button) {
+export async function handleCartButton(product, button) {
   /*
   Condition for cart to work :
     - User logged in (1)
@@ -236,32 +236,46 @@ export async function handleCartButton(card, button) {
     return;
   }
 
-  const state = button.dataset.state;
-  const productid = card.dataset.productid;
-  const svg = button.querySelector("svg");
+  const state = button.dataset.state ?? "inactive";
+  const productid = product.dataset.productid;
+  const svg = button.querySelector("svg") ?? null;
+
+  const quantityInput =
+    document.querySelector("#single-product-quantity") ?? null;
+  let quantity = null;
+
+  if (quantityInput) {
+    quantity = quantityInput.value;
+  }
 
   // Book is not in cart
-  if (state === "inactive") {
-    const response = await addToCart_DB(productid);
+  if (state === "inactive" || button.id === "single-product-adc-button") {
+    const response = await addToCart_DB(productid, quantity);
 
     const messageBox = createMesssageBox(response.message);
     appendMessageBox(messageBox);
 
     if (response.success) {
       button.dataset.state = "active";
-      svg.setAttribute("fill", "black");
+      if (svg) svg.setAttribute("fill", "black");
     }
   }
   // Book is already in cart
   else if (state === "active") {
     const response = await removeFromCart_DB(productid);
-
+    const addToCardButton =
+      document.querySelector("#single-product-adc-button") ?? null;
     const messageBox = createMesssageBox(response.message);
     appendMessageBox(messageBox);
 
     if (response.success) {
       button.dataset.state = "inactive";
-      svg.setAttribute("fill", "none");
+
+      if (addToCardButton && addToCardButton.dataset.state === "active") {
+        addToCardButton.dataset.state = "inactive";
+      }
+
+      if (svg) svg.setAttribute("fill", "none");
     }
   }
 }

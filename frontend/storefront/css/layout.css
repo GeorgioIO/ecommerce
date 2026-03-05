@@ -574,7 +574,6 @@
   padding: 16px;
   border-radius: 14px;
   background-color: var(--secondary-color);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
 }
 
 #product > figure img {
@@ -595,7 +594,6 @@
   padding: 20px;
   border-radius: 14px;
   background-color: var(--secondary-color);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
 }
 
 .product-information > .product-title {
@@ -677,6 +675,13 @@
     transform 120ms ease,
     box-shadow 160ms ease,
     background-color 160ms ease;
+}
+
+.product-buttons-container > #single-product-ofs-button {
+  background-color: rgb(207, 207, 207);
+  width: 100%;
+  border: 2px solid transparent;
+  cursor: not-allowed;
 }
 
 .product-buttons-container > #buy-now-button {

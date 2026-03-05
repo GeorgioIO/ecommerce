@@ -15,6 +15,7 @@ require_once __DIR__ . '/../../../configuration/session.php';
     <link rel="stylesheet" href="../css/component.css">
     <link rel="stylesheet" href="../css/responsive.css">
     <script defer type="module" src="../js/main.js"></script>
+    <script defer type="module" src="../js/pages/singleProductPage.js"></script>
 </head>
 <body>
     <div class="message-box-container">

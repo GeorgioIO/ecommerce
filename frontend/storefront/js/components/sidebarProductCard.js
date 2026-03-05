@@ -8,7 +8,7 @@ import {
 } from "./messageBox.js";
 import { calculateCartTotal, updateCart } from "./miniCartBart.js";
 import { updateMiniWishlistBody } from "./miniWishlistBar.js";
-import { handleWishlistButton } from "./productCard.js";
+import { handleCartButton, handleWishlistButton } from "./productCard.js";
 
 export async function buildSidebarCard(product, type) {
   // cart , search , wishlist
@@ -112,7 +112,8 @@ export async function buildSidebarCard(product, type) {
     actionContainer.append(cartButton);
 
     cartButton.onclick = async () => {
-      await removeFromCart_DB(product.book_id);
+      await handleCartButton(sidebarProductCard, cartButton);
+      // await removeFromCart_DB(product.book_id);
       await updateCart();
       await calculateCartTotal();
     };

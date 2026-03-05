@@ -1,5 +1,6 @@
 <?php
 
+$id = htmlspecialchars($product['id'] , ENT_QUOTES , 'UTF-8');
 $product_title = htmlspecialchars($product['title'] , ENT_QUOTES ,'UTF-8');
 $image = htmlspecialchars($product['cover_image'] , ENT_QUOTES , 'UTF-8');
 $url = "../../../assets/images/$image";
@@ -9,10 +10,12 @@ $genre = htmlspecialchars($product['genre_name'] , ENT_QUOTES , 'UTF-8');
 $author = htmlspecialchars($product['author_name'] , ENT_QUOTES , 'UTF-8');
 $book_format = htmlspecialchars($product['format_name'] , ENT_QUOTES , 'UTF-8');
 $cart_quantity = htmlspecialchars($product['cart_quantity'] , ENT_QUOTES , 'UTF-8');
+$in_cart = htmlspecialchars($product['is_inCart'] , ENT_QUOTES , 'UTF-8');
+$is_inStock = htmlspecialchars($product['is_inStock'] , ENT_QUOTES , 'uTF-8');
 ?>
 
 
-<section id="product">
+<section id="product" data-productid="<?= $id ?>">
     <figure>
         <img src="<?= $url ?>" alt="<?= $product_title ?>">
     </figure>
@@ -33,8 +36,19 @@ $cart_quantity = htmlspecialchars($product['cart_quantity'] , ENT_QUOTES , 'UTF-
         </div>
         <div class="product-buttons-container">
             <input  type="number" id="single-product-quantity" value="<?= $cart_quantity ?>" min="1"/>
-            <button id="single-product-adc-button">ADD TO CART</button>
-            <button id="buy-now-button">BUY IT NOW</button>
+            <?php
+
+                if ($product['is_inStock'] === 1) {
+                    echo '<button id="single-product-adc-button" >ADD TO CART</button>';
+                    echo '<button id="buy-now-button">BUY IT NOW</button>';
+                    }
+                else
+                {
+                    echo '<button id="single-product-ofs-button" disabled> OUT OF STOCK </button>';
+                }
+            
+            ?>
+            
         </div>
         <div class="product-description">
             <p><?= $product['description'] ?></p>
@@ -65,3 +79,11 @@ $cart_quantity = htmlspecialchars($product['cart_quantity'] , ENT_QUOTES , 'UTF-
         </table>
     </div>
 </section>
+
+<?php
+
+include __DIR__ . '../../includes/advertisement.php';
+
+include __DIR__ . '../../includes/services.php';
+
+?>
