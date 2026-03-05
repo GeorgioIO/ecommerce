@@ -26,6 +26,7 @@ $query = "
         b.language,
         b.cover_image,
         b.price,
+        b.slug,
         g.name AS genre_name,
         a.name AS author_name,
         bf.name AS format_name,

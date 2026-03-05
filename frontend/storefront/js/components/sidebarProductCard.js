@@ -23,11 +23,15 @@ export async function buildSidebarCard(product, type) {
 
   // Figure
   const figure = document.createElement("figure");
+  const imageAnchorTag = document.createElement("a");
+  console.log(imageAnchorTag);
+  imageAnchorTag.href = `../../pages/products?slug=${product.slug}`;
   const image = document.createElement("img");
   image.src = "../../../assets/images/" + product.cover_image;
   image.alt = `${product.title} cover image`;
 
-  figure.append(image);
+  imageAnchorTag.append(image);
+  figure.append(imageAnchorTag);
 
   // information section
   const informationContainer = document.createElement("div");

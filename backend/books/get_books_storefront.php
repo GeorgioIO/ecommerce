@@ -111,6 +111,7 @@ $query = <<<SQL
         a.name AS author_name,
         bf.name AS format_name,
         b.description,
+        b.slug,
         b.language,
         b.stock_quantity,
         b.is_inStock,

@@ -42,6 +42,7 @@ $query = <<<EOT
         ci.unit_price,
         b.price * ci.quantity AS price,
         b.title,
+        b.slug,
         b.cover_image,
         b.is_onSale,
         CASE WHEN b.is_onSale = 1 THEN (ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)) * ci.quantity ELSE b.price * ci.quantity END AS final_price

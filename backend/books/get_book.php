@@ -41,7 +41,8 @@ SELECT
     discount_percentage,
     genre_id,
     author_id,
-    format_id
+    format_id,
+    slug
 FROM
     books 
 WHERE id = ?

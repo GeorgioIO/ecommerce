@@ -498,7 +498,8 @@
   height: 200px;
   border-radius: 10px;
 }
-.sidebar-product-card > figure > img {
+.sidebar-product-card > figure > a,
+.sidebar-product-card > figure > a img {
   width: 100%;
   height: 100%;
   border-radius: inherit;

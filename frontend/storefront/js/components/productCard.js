@@ -36,6 +36,7 @@ export function buildProductCard(product, type = "normal") {
   // Figure
   const figure = document.createElement("figure");
   const imageAnchorTag = document.createElement("a");
+  imageAnchorTag.href = `../../pages/products?slug=${product.slug}`;
   const image = document.createElement("img");
   image.src = "../../../assets/images/" + product.cover_image;
   image.alt = `${product.title} book cover`;
@@ -177,6 +178,7 @@ export function buildProductCard(product, type = "normal") {
       productCard.append(soldOutButton);
     } else {
       const redirectionButton = document.createElement("a");
+      redirectionButton.href = `../../pages/products?slug=${product.slug}`;
       redirectionButton.classList.add("product-card-redirection-button");
       redirectionButton.textContent = "View Product";
       productCard.append(redirectionButton);

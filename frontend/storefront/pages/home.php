@@ -128,6 +128,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                             $total_price = htmlspecialchars($best_seller['price'] , ENT_QUOTES , 'UTF-8');
                             $image = htmlspecialchars($best_seller['cover_image'] , ENT_QUOTES , 'UTF-8');
                             $author_name = htmlspecialchars($best_seller['author_name'] , ENT_QUOTES , 'UTF-8');
+                            $slug = htmlspecialchars($best_seller['slug'] , ENT_QUOTES , 'UTF-8');
                             $format_name = htmlspecialchars($best_seller['format_name'] , ENT_QUOTES , 'UTF-8');
                             $in_wishlist = htmlspecialchars($best_seller['is_inWishlist'] , ENT_QUOTES , 'UTF-8');
                             $in_cart = htmlspecialchars($best_seller['is_inCart'] , ENT_QUOTES , 'UTF-8');
@@ -136,7 +137,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
 
                             <div class="product-card" data-productid="<?= $id ?>">
                                 <figure>
-                                    <a href="">
+                                    <a href="../pages/product.php?slug=<?= $slug ?>">
                                         <img src="<?= $url ?>" alt="<?= $title ?> cover image">
                                     </a>
                                     <div class="product-card-actions">
@@ -182,7 +183,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                                     }
                                     else
                                     {
-                                        echo "<a href='' class='product-card-redirection-button'>View Product</a>";
+                                        echo "<a href='../pages/product.php?slug=$slug' class='product-card-redirection-button'>View Product</a>";
                                     }
                                 ?>             
                             </div>
@@ -223,6 +224,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                             $title = htmlspecialchars($new_arrival['title'] , ENT_QUOTES , 'UTF-8');
                             $total_price = htmlspecialchars($new_arrival['price'] , ENT_QUOTES , 'UTF-8');
                             $image = htmlspecialchars($new_arrival['cover_image'] , ENT_QUOTES , 'UTF-8');
+                            $slug = htmlspecialchars($new_arrival['slug'] , ENT_QUOTES , 'UTF-8');
                             $in_wishlist = htmlspecialchars($new_arrival['is_inWishlist'] , ENT_QUOTES , 'UTF-8');
                             $in_cart = htmlspecialchars($new_arrival['is_inCart'] , ENT_QUOTES , 'UTF-8');
                             $author_name = htmlspecialchars($new_arrival['author_name'] , ENT_QUOTES , 'UTF-8');
@@ -232,7 +234,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                         ?>
                         <div class="product-card" data-productid="<?= $id ?>">
                             <figure>
-                                <a href="">
+                                <a href="../pages/product.php?slug=<?= $slug ?>">
                                     <img src="<?= $url ?>" alt="<?= $title ?> cover image">
                                 </a>
                                 <div class="product-card-actions">
@@ -276,7 +278,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                             }
                             else
                             {
-                                echo "<a href='' class='product-card-redirection-button'>View Product</a>";
+                                echo "<a href='../pages/product.php?slug=$slug' class='product-card-redirection-button'>View Product</a>";
                             }
                             ?>            
                         </div>
@@ -321,6 +323,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                             $image = htmlspecialchars($book['cover_image'] , ENT_QUOTES , 'UTF-8');
                             $author_name = htmlspecialchars($book['author_name'] , ENT_QUOTES , 'UTF-8');
                             $in_wishlist = htmlspecialchars($book['is_inWishlist'] , ENT_QUOTES , 'UTF-8');
+                            $slug = htmlspecialchars($book['slug'] , ENT_QUOTES , 'UTF-8');
                             $format_name = htmlspecialchars($book['format_name'] , ENT_QUOTES , 'UTF-8');
                             $in_cart = htmlspecialchars($book['is_inCart'] , ENT_QUOTES , 'UTF-8');
                             $url = "../../../assets/images/$image";
@@ -328,7 +331,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                         ?>
                         <div class="product-card" data-productid="<?= $id ?>">
                             <figure>
-                                <a href="">
+                                <a href="../pages/product.php?slug=<?= $slug ?>">
                                     <img src="<?= $url ?>" alt="<?= $title ?> cover image">
                                 </a>
                                 <div class="product-card-actions">
@@ -372,7 +375,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                             }
                             else
                             {
-                                echo "<a href='' class='product-card-redirection-button'>View Product</a>";
+                                echo "<a href='../pages/product.php?slug=$slug' class='product-card-redirection-button'>View Product</a>";
                             }
                             ?>            
                         </div>
