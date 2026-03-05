@@ -548,6 +548,206 @@
   justify-content: space-between;
 }
 
+/* ==== SINGLE PRODUCT ==== */
+#product {
+  width: 100%;
+  height: auto;
+  padding: 40px var(--sides-padding);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: stretch;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+#product > figure,
+#product > .product-information {
+  flex: 1;
+}
+
+#product > figure {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 16px;
+  border-radius: 14px;
+  background-color: var(--secondary-color);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+#product > figure img {
+  width: 100%;
+  height: 100%;
+  max-height: 750px;
+  object-fit: contain;
+  border-radius: 10px;
+  display: block;
+}
+
+.product-information {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: 14px;
+  background-color: var(--secondary-color);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.product-information > .product-title {
+  font-family: var(--primary-font);
+  line-height: 1.15;
+  font-weight: 700;
+  font-size: clamp(1.45rem, 1.6vw, 2.2rem);
+}
+
+.product-information > .product-author {
+  color: var(--primary-color);
+  font-style: italic;
+  text-underline-offset: 3px;
+}
+
+.product-information > .product-genre {
+  color: rgb(85, 85, 85);
+}
+
+.product-price-container {
+  display: flex;
+  gap: 12px;
+  font-family: var(--primary-font);
+  align-items: baseline;
+  font-size: 1.15rem;
+}
+
+.product-price-container > .pre-sale-price {
+  font-weight: 300;
+  color: grey;
+  text-decoration: line-through;
+}
+
+.product-price-container > .post-sale-price,
+.product-price-container > .base-price {
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.product-buttons-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(92px, 120px) 1fr;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.product-buttons-container > * {
+  min-height: 42px;
+  border-radius: 10px;
+  padding: 0px 16px;
+  font-family: var(--primary-font);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.product-buttons-container > #single-product-quantity {
+  background-color: var(--secondary-color);
+  border: 2px solid var(--border-primary-color);
+  text-align: center;
+  width: 100%;
+  padding: 0px 10px;
+  font-weight: 600;
+  outline: 2px solid transparent;
+  transition: outline-color 200ms ease;
+}
+
+.product-buttons-container > #single-product-quantity:focus {
+  outline-color: rgba(0, 0, 0, 0.25);
+}
+
+.product-buttons-container > #single-product-adc-button {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  width: 100%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.product-buttons-container > #buy-now-button {
+  border: 2px solid var(--border-primary-color);
+  width: 100%;
+  grid-column: 1 / -1;
+  background-color: transparent;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.product-buttons-container > #single-product-adc-button:focus-visible,
+.product-buttons-container > #buy-now-button:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.25);
+  outline-offset: 2px;
+}
+
+.product-buttons-container > #single-product-adc-button:hover,
+.product-buttons-container > #buy-now-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
+}
+
+.product-description {
+  width: 100%;
+}
+
+.product-description > p {
+  line-height: 1.65;
+  color: rgb(55, 55, 55);
+}
+
+.additional-product-information {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  height: auto;
+  border: 1px solid var(--primary-color);
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: var(--secondary-color);
+}
+
+.additional-product-information th {
+  text-align: left;
+  padding: 12px 14px;
+  background-color: rgba(0, 0, 0, 0.03);
+  color: rgb(45, 45, 45);
+  font-weight: 700;
+  width: 38%;
+}
+
+.additional-product-information td {
+  text-align: left;
+  padding: 12px 14px;
+  color: rgb(55, 55, 55);
+  word-break: break-word;
+}
+
+.additional-product-information tr + tr th,
+.additional-product-information tr + tr td {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.additional-product-information th + td {
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+
 /* ===== FOOTER ===== */
 .footer {
   margin-top: 40px;

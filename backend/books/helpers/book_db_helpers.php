@@ -1,5 +1,40 @@
 <?php
 
+function get_single_book($conn , $slug)
+{
+    return <<<SQL
+
+    SELECT
+        b.id,
+        b.title,
+        b.description,
+        b.isbn,
+        b.language,
+        b.stock_quantity,
+        b.cover_image,
+        b.price,
+        b.is_onSale,
+        b.language,
+        b.is_inStock,
+        COALESCE(ci.quantity , 1) AS cart_quantity,
+        CASE WHEN b.is_onSale = 1 THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2) ELSE b.price END AS final_price,
+        CASE WHEN w.book_id IS NOT NULL THEN 1 ELSE 0 END AS is_inWishlist,
+        CASE WHEN ci.book_id IS NOT NULL THEN 1 ELSE 0 END AS is_inCart,
+        g.name AS genre_name,
+        a.name AS author_name,
+        bf.name AS format_name
+    FROM
+        books b
+    JOIN genres g ON b.genre_id = g.id
+    JOIN authors a ON b.author_id = a.id
+    JOIN book_formats bf ON b.format_id = bf.id
+    LEFT JOIN wishlist_items w ON b.id = w.book_id AND w.user_id = ?
+    LEFT JOIN carts c ON c.user_id = ? AND c.status = 'active'
+    LEFT JOIN cart_items ci ON c.id = ci.cart_id AND ci.book_id = b.id
+    WHERE slug = ?
+    SQL;
+}
+
 function form_add_book_query($is_onsale)
 {
     if($is_onsale)

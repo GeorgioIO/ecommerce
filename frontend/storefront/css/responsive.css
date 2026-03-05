@@ -135,6 +135,24 @@
   .contact-us-inner-section {
     flex-direction: row;
   }
+
+  #product {
+    padding: 44px 60px;
+    grid-template-columns: minmax(320px, 520px) 1fr;
+    gap: 28px;
+  }
+
+  .product-information {
+    gap: 15px;
+  }
+
+  .product-buttons-container {
+    grid-template-columns: minmax(92px, 120px) 1fr 1fr;
+  }
+
+  .product-buttons-container > #buy-now-button {
+    grid-column: auto;
+  }
 }
 
 /* Laptop */
@@ -206,6 +224,10 @@
 
   .order-lines-container {
     width: 510px;
+  }
+
+  #product {
+    padding: 50px 80px;
   }
 }
 

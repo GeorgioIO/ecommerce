@@ -36,7 +36,7 @@ export function buildProductCard(product, type = "normal") {
   // Figure
   const figure = document.createElement("figure");
   const imageAnchorTag = document.createElement("a");
-  imageAnchorTag.href = `../../pages/products?slug=${product.slug}`;
+  imageAnchorTag.href = `../pages/product.php?slug=${product.slug}`;
   const image = document.createElement("img");
   image.src = "../../../assets/images/" + product.cover_image;
   image.alt = `${product.title} book cover`;
