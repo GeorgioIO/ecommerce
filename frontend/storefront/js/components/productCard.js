@@ -242,7 +242,7 @@ export async function handleCartButton(product, button) {
 
   const quantityInput =
     document.querySelector("#single-product-quantity") ?? null;
-  let quantity = null;
+  let quantity = 1;
 
   if (quantityInput) {
     quantity = quantityInput.value;
