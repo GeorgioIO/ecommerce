@@ -144,6 +144,7 @@ export function buildProductCard(product, type = "normal") {
 
   // Product title
   const titleAnchorTag = document.createElement("a");
+  titleAnchorTag.href = `../pages/product.php?slug=${product.slug}`;
   titleAnchorTag.classList.add("product-card-title");
   titleAnchorTag.textContent = product.title;
 
@@ -152,6 +153,7 @@ export function buildProductCard(product, type = "normal") {
   authorAndFormat.classList.add("product-card-author-format");
 
   const authorAnchorTag = document.createElement("a");
+  authorAnchorTag.href = `../pages/products.php?author=${product.author_id}`;
   authorAnchorTag.classList.add("product-card-author");
   authorAnchorTag.innerHTML = `By <span class="product-card-author-name"> ${product.author_name} </span>`;
 

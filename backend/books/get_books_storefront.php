@@ -108,6 +108,7 @@ $query = <<<SQL
         b.sku,
         g.name AS genre_title,
         b.title,
+        b.author_id,
         a.name AS author_name,
         bf.name AS format_name,
         b.description,

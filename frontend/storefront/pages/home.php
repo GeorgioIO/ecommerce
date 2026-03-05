@@ -124,6 +124,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                         <?php foreach($best_sellers as $best_seller):
 
                             $id = $best_seller['id'];
+                            $author_id = $best_seller['author_id'];
                             $title = htmlspecialchars($best_seller['title'] , ENT_QUOTES , 'UTF-8');
                             $total_price = htmlspecialchars($best_seller['price'] , ENT_QUOTES , 'UTF-8');
                             $image = htmlspecialchars($best_seller['cover_image'] , ENT_QUOTES , 'UTF-8');
@@ -169,9 +170,9 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                                         
                                         ?>
                                     </p>    
-                                    <a class="product-card-title"><?= $title ?></a>
+                                    <a href="../pages/product.php?slug=<?= $slug ?>" class="product-card-title"><?= $title ?></a>
                                     <p class="product-card-author-format"> 
-                                        <a href="" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?></span></a>     
+                                        <a href="../pages/products.php?author=<?= $author_id  ?>" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?></span></a>     
                                         <span class="separator">,</span>
                                         <span class="product-card-format"><?= $format_name ?></span>
                                     </p>
@@ -221,6 +222,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                         <?php foreach($new_arrivals as $new_arrival):
 
                             $id = $new_arrival['id'];
+                            $author_id = $new_arrival['author_id'];
                             $title = htmlspecialchars($new_arrival['title'] , ENT_QUOTES , 'UTF-8');
                             $total_price = htmlspecialchars($new_arrival['price'] , ENT_QUOTES , 'UTF-8');
                             $image = htmlspecialchars($new_arrival['cover_image'] , ENT_QUOTES , 'UTF-8');
@@ -264,9 +266,9 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                                         "<span class='base-price'> \${$new_arrival['final_price']} </span>";  
                                     ?>
                                 </p>
-                                <a class="product-card-title"><?= $title ?></a>
+                                <a href="../pages/product.php?slug=<?= $slug ?>" class="product-card-title"><?= $title ?></a>
                                 <p class="product-card-author-format"> 
-                                    <a href="" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?> </span></a>     
+                                    <a href="../pages/products.php?author=<?= $author_id  ?>" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?> </span></a>     
                                     <span class="separator">,</span>
                                     <span class="product-card-format"><?= $format_name ?></span>
                                 </p>
@@ -318,6 +320,7 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                         <?php foreach($books_under as $book):
 
                             $id = $book['id'];
+                            $author_id = $book['author_id'];
                             $title = htmlspecialchars($book['title'] , ENT_QUOTES , 'UTF-8');
                             $total_price = htmlspecialchars($book['price'] , ENT_QUOTES , 'UTF-8');
                             $image = htmlspecialchars($book['cover_image'] , ENT_QUOTES , 'UTF-8');
@@ -361,9 +364,9 @@ require_once __DIR__ . '/../../../backend/auth/auth_customer.php';
                                         "<span class='base-price'> \${$book['final_price']} </span>";  
                                     ?>
                                 </p>
-                                <a class="product-card-title"><?= $title ?></a>
+                                <a href="../pages/product.php?slug=<?= $slug ?>" class="product-card-title"><?= $title ?></a>
                                 <p class="product-card-author-format"> 
-                                    <a href="" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?> </span></a>     
+                                    <a href="../pages/products.php?author=<?= $author_id  ?>" class="product-card-author">By <span class="product-card-author-name"> <?= $author_name ?> </span></a>     
                                     <span class="separator">,</span>
                                     <span class="product-card-format"><?= $format_name ?></span>
                                 </p>

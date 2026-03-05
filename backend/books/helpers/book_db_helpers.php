@@ -21,6 +21,7 @@ function get_single_book($conn , $slug)
         CASE WHEN w.book_id IS NOT NULL THEN 1 ELSE 0 END AS is_inWishlist,
         CASE WHEN ci.book_id IS NOT NULL THEN 1 ELSE 0 END AS is_inCart,
         g.name AS genre_name,
+        b.author_id,
         a.name AS author_name,
         bf.name AS format_name
     FROM
@@ -70,6 +71,7 @@ function get_books_under_price($conn , $price , $user_id=null)
         b.cover_image,
         a.name AS author_name,
         bf.name AS format_name,
+        b.author_id,
         b.is_onSale,
         b.is_inStock,
         slug,
@@ -122,6 +124,7 @@ function get_new_arrivals_books($conn , $user_id = null)
             b.price,
             b.cover_image,
             a.name AS author_name,
+            b.author_id,
             bf.name AS format_name,
             b.is_onSale,
             b.is_inStock,
@@ -168,6 +171,7 @@ function get_best_seller_books($conn , $user_id= null)
             b.title,
             b.price,
             b.cover_image,
+            b.author_id,
             a.name AS author_name,
             bf.name AS format_name,
             b.is_inStock,

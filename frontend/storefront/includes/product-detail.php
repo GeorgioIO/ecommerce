@@ -1,6 +1,7 @@
 <?php
 
 $id = htmlspecialchars($product['id'] , ENT_QUOTES , 'UTF-8');
+$author_id = htmlspecialchars($product['author_id'] , ENT_QUOTES , 'UTF-8');
 $product_title = htmlspecialchars($product['title'] , ENT_QUOTES ,'UTF-8');
 $image = htmlspecialchars($product['cover_image'] , ENT_QUOTES , 'UTF-8');
 $url = "../../../assets/images/$image";
@@ -21,7 +22,7 @@ $is_inStock = htmlspecialchars($product['is_inStock'] , ENT_QUOTES , 'uTF-8');
     </figure>
     <div class="product-information">
         <h2 class="product-title"><?= $product_title ?></h2>
-        <a href="" class="product-author"> By <?= $author ?></a>
+        <a href="../pages/products.php?author=<?= $author_id ?>" class="product-author"> By <?= $author ?></a>
         <p class="product-genre"> Genre : <?= $genre ?></p>
         <div class="product-price-container">
             <?php

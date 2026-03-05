@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (productsSection) {
     const params = new URLSearchParams(window.location.search);
     let genreFromURL = params.get("genre") ?? null;
+    let authorFormURL = params.get("author") ?? null;
 
-    if (genreFromURL) {
-      currentFilters.genre = genreFromURL;
-    }
+    if (genreFromURL) currentFilters.genre = genreFromURL;
+    if (authorFormURL) currentFilters.author = authorFormURL;
 
     await loadProducts();
     handlePaginationButtonsColor(productsListState.page);
