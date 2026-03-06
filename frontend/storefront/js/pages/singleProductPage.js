@@ -8,6 +8,8 @@ document.addEventListener("click", async (e) => {
     const product = e.target.closest("#product");
     await handleCartButton(product, addToCartButton);
     await updateCart();
-    await calculateCartTotal();
+    const total = await calculateCartTotal();
+    const priceElement = document.querySelector(".mini-cart-price") ?? null;
+    if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
   }
 });

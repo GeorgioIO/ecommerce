@@ -22,7 +22,9 @@ export async function renderMiniCartBar(body = null) {
     const cartItemsContainer = createCartItemsContainer(data);
     cartBody.append(cartItemsContainer);
     cartFooter.style.display = "flex";
-    calculateCartTotal(data);
+    const total = await calculateCartTotal();
+    const priceElement = document.querySelector(".mini-cart-price") ?? null;
+    if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
   }
 
   swapClass(miniCart, "slide-in-right", "slide-out-right");
@@ -61,6 +63,7 @@ export async function updateCart() {
       emptyText.textContent = "Your cart is currently empty";
 
       shoppingButton = document.createElement("a");
+      shoppingButton.href = "../pages/products.php";
       shoppingButton.textContent = "Browse Products";
       shoppingButton.classList.add("section-redirection-button");
       cartBody?.append(emptyText, shoppingButton);
@@ -72,7 +75,6 @@ export async function updateCart() {
     cartBody?.classList.add("empty");
     cartFooter.style.display = "none";
   } else {
-    console.log(cartItemsContainer, cartBody, cartFooter);
     if (!cartItemsContainer) return;
     if (emptyText && shoppingButton) {
       emptyText.style.display = "none";
@@ -82,7 +84,6 @@ export async function updateCart() {
     cartBody.classList.remove("empty");
     cartFooter.style.display = "flex";
     cartItemsContainer.innerHTML = "";
-    console.log(cartBody, cartFooter);
 
     data.forEach(async (item) => {
       const sidebarCard = await buildSidebarCard(item, "cart");
@@ -153,6 +154,7 @@ export function BuildMiniCartBar(dataAvailable) {
     buttonsContainer.classList.add("mini-cart-footer-buttons-container");
 
     const viewCartButton = document.createElement("a");
+    viewCartButton.href = "../pages/cart.php";
     viewCartButton.id = "view-cart-button";
     viewCartButton.textContent = "VIEW CART";
 
@@ -176,6 +178,7 @@ export function BuildMiniCartBar(dataAvailable) {
     emptyText.textContent = "Your cart is currently empty";
 
     const shoppingButton = document.createElement("a");
+    shoppingButton.href = "../pages/products.php";
     shoppingButton.textContent = "Browse Products";
     shoppingButton.classList.add("section-redirection-button");
 
@@ -197,14 +200,12 @@ export async function calculateCartTotal(data = null) {
     data = backupResponse.data;
   }
 
-  const totalPriceTag = document.querySelector(".mini-cart-price");
-  if (!totalPriceTag || data.length === 0) return;
-
+  if (data.length === 0) return;
   let total = 0;
 
   data.forEach((item) => {
     total += parseFloat(item.final_price);
   });
 
-  totalPriceTag.textContent = `$${total.toFixed(2)} USD`;
+  return total;
 }

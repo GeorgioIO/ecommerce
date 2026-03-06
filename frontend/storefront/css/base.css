@@ -39,8 +39,8 @@ textarea {
 }
 
 @font-face {
-  font-family: "Libre";
-  src: url("../../../assets/fonts/LibreBaskerville-VariableFont_wght.ttf")
+  font-family: "Outfit";
+  src: url("../../../assets/fonts/Outfit-VariableFont_wght.ttf")
     format("truetype");
   font-weight: 100 900;
   font-style: normal;
@@ -54,13 +54,14 @@ textarea {
   --secondary-color: white;
   --accent-color: black;
   --border-primary-color: rgb(145, 145, 145);
+  --border-feint-color: rgb(219, 219, 219);
 
   /* === Sizes === */
   --sides-padding: 20px;
 
   /* === Fonts === */
   --primary-font: "Inter", sans-serif;
-  --secondary-font: "Libre", sans-serif;
+  --secondary-font: "Outfit", sans-serif;
 }
 
 /* === Animations + Animation classes */
@@ -178,6 +179,8 @@ h6 {
 }
 
 .section-title {
+  width: 100%;
+
   font-family: var(--secondary-font);
   font-weight: bold;
   text-align: center;
@@ -243,7 +246,8 @@ body {
 
 main {
   display: flex;
+  height: auto;
   flex: 1;
   flex-direction: column;
-  gap: 60px;
+  /* gap: 60px; */
 }

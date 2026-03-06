@@ -269,7 +269,9 @@ bestSellers?.addEventListener("click", async (e) => {
     const productCard = e.target.closest(".product-card");
     await handleCartButton(productCard, cartButton);
     await updateCart();
-    await calculateCartTotal();
+    const total = await calculateCartTotal();
+    const priceElement = document.querySelector(".mini-cart-price") ?? null;
+    if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
   }
 
   if (carouselPreviousButton) {
@@ -291,7 +293,9 @@ newArrivals?.addEventListener("click", async (e) => {
     const productCard = e.target.closest(".product-card");
     await handleCartButton(productCard, cartButton);
     await updateCart();
-    await calculateCartTotal();
+    const total = await calculateCartTotal();
+    const priceElement = document.querySelector(".mini-cart-price") ?? null;
+    if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
   }
 
   if (wishlistButton) {
@@ -319,7 +323,9 @@ booksUnder?.addEventListener("click", async (e) => {
     const productCard = e.target.closest(".product-card");
     await handleCartButton(productCard, cartButton);
     await updateCart();
-    await calculateCartTotal();
+    const total = await calculateCartTotal();
+    const priceElement = document.querySelector(".mini-cart-price") ?? null;
+    if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
   }
 
   if (wishlistButton) {

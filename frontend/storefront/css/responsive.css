@@ -22,6 +22,12 @@
   #about-us > div > figure {
     align-self: center;
   }
+
+  .empty-cart-container > .empty-container-redirection-button {
+    width: 200px;
+    height: 45px;
+    align-self: center;
+  }
 }
 
 @media (min-width: 768px) {
@@ -153,6 +159,27 @@
   .product-buttons-container > #buy-now-button {
     grid-column: auto;
   }
+
+  #cart {
+    padding: 35px 75px;
+  }
+
+  #cart > .section-title {
+    text-align: left;
+  }
+
+  .cart-outer-container {
+    gap: 50px;
+    grid-template-columns: 1.5fr 350px;
+  }
+
+  .empty-cart-container > p {
+    text-align: left;
+  }
+
+  .empty-cart-container > .empty-container-redirection-button {
+    align-self: flex-start;
+  }
 }
 
 /* Laptop */
@@ -228,6 +255,10 @@
 
   #product {
     padding: 50px 80px;
+  }
+
+  #cart {
+    padding: 35px 105px;
   }
 }
 

@@ -65,7 +65,9 @@ export function buildProductCard(product, type = "normal") {
     addToCartButton.onclick = async () => {
       await handleCartButton(productCard, addToCartButton);
       await updateCart();
-      await calculateCartTotal();
+      const total = await calculateCartTotal();
+      const priceElement = document.querySelector(".mini-cart-price") ?? null;
+      if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
     };
 
     if (!sessionData.session.user_id && !sessionData.cookie.username) {

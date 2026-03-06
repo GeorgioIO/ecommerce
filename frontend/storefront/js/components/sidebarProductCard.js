@@ -115,7 +115,9 @@ export async function buildSidebarCard(product, type) {
       await handleCartButton(sidebarProductCard, cartButton);
       // await removeFromCart_DB(product.book_id);
       await updateCart();
-      await calculateCartTotal();
+      const total = await calculateCartTotal();
+      const priceElement = document.querySelector(".mini-cart-price") ?? null;
+      if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
     };
   }
 
@@ -137,7 +139,9 @@ export async function buildSidebarCard(product, type) {
         return;
       }
       await updateCart();
-      await calculateCartTotal(response.data);
+      const total = await calculateCartTotal();
+      const priceElement = document.querySelector(".mini-cart-price") ?? null;
+      if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
     };
 
     actionContainer.append(quantityInput);
