@@ -23,7 +23,7 @@
             <li><a href="">Privacy Policy</a></li>
             <li><a href="">Refund Policy</a></li>
             <li><a href="">Shipping Policy</a></li>
-            <li><a href="">Terms of Service</a></li>
+            
         </ul>
     </div>
     <div class="newsletter-list">
