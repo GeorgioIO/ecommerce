@@ -20,12 +20,7 @@ $query = <<<SQL
             b.is_onSale,
             b.is_inStock,
             b.discount_percentage,
-            CASE 
-                WHEN b.is_onSale = 1
-                    THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
-                ELSE
-                    b.price
-            END AS final_price
+            CASE WHEN b.is_onSale = 1 THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2) ELSE b.price END AS final_price
         FROM books b
         JOIN genres g ON b.genre_id = g.id
         JOIN authors a ON b.author_id = a.id

@@ -14,7 +14,6 @@ export async function searchBooks(value) {
   }
 
   return result.json();
-  // console.log(result.text());
 }
 
 export async function getBooks_DB(filters = null, pagination = null) {
