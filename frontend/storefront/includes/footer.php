@@ -19,10 +19,9 @@
     <div class="policies-list">
         <h4>Policies</h4>
         <ul>
-            <li><a href="">Contact Information</a></li>
-            <li><a href="">Privacy Policy</a></li>
-            <li><a href="">Refund Policy</a></li>
-            <li><a href="">Shipping Policy</a></li>
+            <li><a href="../pages/privacy-policy.php">Privacy Policy</a></li>
+            <li><a href="../pages/refund-policy.php">Refund Policy</a></li>
+            <li><a href="../pages/shipping-policy.php">Shipping Policy</a></li>
             
         </ul>
     </div>

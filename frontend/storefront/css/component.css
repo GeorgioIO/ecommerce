@@ -16,7 +16,10 @@
 #user-dashboard-section,
 #contact-us,
 #products,
-#cart {
+#cart,
+#refund-policy,
+#shipping-policy,
+#privacy-policy {
   width: 100%;
   height: auto;
   padding: 35px var(--sides-padding);
@@ -34,9 +37,11 @@
 #forgot-password {
   flex: 1;
 }
+
 #hero {
   height: 700px !important;
 }
+
 #about-us {
   padding: 0px;
 }
@@ -55,6 +60,24 @@
 
 #reviews > .section-title {
   padding: 15px var(--sides-padding);
+}
+
+#refund-policy,
+#shipping-policy,
+#privacy-policy {
+  align-items: flex-start;
+}
+
+#refund-policy > .section-title,
+#shipping-policy > .section-title,
+#privacy-policy > .section-title {
+  text-align: left;
+}
+
+#refund-policy > p,
+#shipping-policy > p,
+#privacy-policy > p {
+  text-align: left;
 }
 
 /* ================ Error Message =============== */
