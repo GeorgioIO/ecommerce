@@ -11,7 +11,7 @@ import {
 } from "./messageBox.js";
 import { getSession } from "../services/sessionServices.js";
 import { addToCart_DB, removeFromCart_DB } from "../services/cartServices.js";
-import { calculateCartTotal, updateCart } from "./miniCartBart.js";
+import { calculateCartTotal, updateCart } from "./miniCartBar.js";
 
 // ========== EXPORTED FUNCTIONS ==========
 
@@ -182,7 +182,7 @@ export function buildProductCard(product, type = "normal") {
       productCard.append(soldOutButton);
     } else {
       const redirectionButton = document.createElement("a");
-      redirectionButton.href = `../../pages/products?slug=${product.slug}`;
+      redirectionButton.href = `../pages/product.php?slug=${product.slug}`;
       redirectionButton.classList.add("product-card-redirection-button");
       redirectionButton.textContent = "View Product";
       productCard.append(redirectionButton);
@@ -237,7 +237,7 @@ export async function handleCartButton(product, button) {
   if (!isLoggedIn) {
     const messageBox = createMesssageBox("Log in required");
     appendMessageBox(messageBox);
-    return;
+    return false;
   }
 
   const state = button.dataset.state ?? "inactive";
@@ -255,13 +255,21 @@ export async function handleCartButton(product, button) {
   // Book is not in cart
   if (state === "inactive" || button.id === "single-product-adc-button") {
     const response = await addToCart_DB(productid, quantity);
-
     const messageBox = createMesssageBox(response.message);
     appendMessageBox(messageBox);
 
     if (response.success) {
       button.dataset.state = "active";
       if (svg) svg.setAttribute("fill", "black");
+      return {
+        success: true,
+        message: response.message,
+      };
+    } else {
+      return {
+        success: false,
+        message: response.message,
+      };
     }
   }
   // Book is already in cart
@@ -280,6 +288,16 @@ export async function handleCartButton(product, button) {
       }
 
       if (svg) svg.setAttribute("fill", "none");
+
+      return {
+        success: true,
+        message: response.message,
+      };
+    } else {
+      return {
+        success: false,
+        message: response.message,
+      };
     }
   }
 }

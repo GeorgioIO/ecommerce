@@ -1,20 +1,32 @@
-import { createCartButton } from "../core/UIhelpers.js";
-import { loadWishlist } from "../pages/wishlistUI.js";
-import { addToCart_DB, removeFromCart_DB } from "../services/cartServices.js";
+import {
+  createCartButton,
+  createOutOfStockButton,
+  createWishlistButton,
+} from "../core/UIhelpers.js";
+import { addToCart_DB } from "../services/cartServices.js";
 import {
   activateMessageBox,
   appendMessageBox,
   createMesssageBox,
 } from "./messageBox.js";
-import { calculateCartTotal, updateCart } from "./miniCartBart.js";
-import { updateMiniWishlistBody } from "./miniWishlistBar.js";
-import { handleCartButton, handleWishlistButton } from "./productCard.js";
+import { calculateCartTotal, updateCart } from "./miniCartBar.js";
 
 export async function buildSidebarCard(product, type) {
   // cart , search , wishlist
-  const svg_fill = type === "wishlist" || type === "cart" ? "black" : "none";
-  const buttons_state =
-    type === "wishlist" || type === "cart" ? "active" : "inactive";
+  let wishlistSvgFill = product.is_inWishlist === 1 ? "black" : "none";
+  let cartSvgFill = product.is_inCart === 1 ? "black" : "none";
+  let wishlistButtonState = product.is_inWishlist === 1 ? "active" : "inactive";
+  let cartButtonState = product.is_inCart === 1 ? "active" : "inactive";
+
+  if (type === "wishlist") {
+    wishlistButtonState = "active";
+    wishlistSvgFill = "black";
+  }
+
+  if (type === "cart") {
+    cartButtonState = "active";
+    cartSvgFill = "black";
+  }
 
   // Create sidebar card
   const sidebarProductCard = document.createElement("div");
@@ -24,7 +36,7 @@ export async function buildSidebarCard(product, type) {
   // Figure
   const figure = document.createElement("figure");
   const imageAnchorTag = document.createElement("a");
-  console.log(imageAnchorTag);
+
   imageAnchorTag.href = `../pages/product.php?slug=${product.slug}`;
   const image = document.createElement("img");
   image.src = "../../../assets/images/" + product.cover_image;
@@ -73,52 +85,68 @@ export async function buildSidebarCard(product, type) {
 
   // Cart button
   // TODO : if type is search or wishlist we check if its in stock or not + we add wishlist button
-  if (type === "search" || type === "wishlist") {
-    if (product.is_inStock === 0) {
-      const outOfStockButton = document.createElement("button");
-      outOfStockButton.classList.add("out-of-stock-button");
-      outOfStockButton.innerHTML = "Out of stock";
-
-      actionContainer.append(outOfStockButton);
-    } else {
-      const cartButton = createCartButton("product-card-add-cart-button");
+  if (type === "search") {
+    // ! Cart Button
+    if (product.is_inStock === 1) {
+      const cartButton = createCartButton(
+        sidebarProductCard,
+        "product-card-add-cart-button",
+        null,
+        cartButtonState,
+        cartSvgFill,
+      );
       actionContainer.append(cartButton);
+    } else {
+      const outOfStockButton = createOutOfStockButton("out-of-stock-button");
+      actionContainer.append(outOfStockButton);
     }
 
-    // ! Wishlist button for search + wishlist
-    const wishlistButton = document.createElement("button");
-    wishlistButton.classList.add("product-card-add-wishlist-button");
-    wishlistButton.dataset.enabled = "true";
-    wishlistButton.dataset.state = buttons_state;
-    wishlistButton.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="${svg_fill}" viewBox="0 0 24 24">
-        <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7.694C10 3 3 3.5 3 9.5s9 11 9 11 9-5 9-11-7-6.5-9-1.806Z"/>
-    </svg>
-  `;
-
-    wishlistButton.onclick = async () => {
-      // From wishlist
-      if (type === "wishlist") {
-        await handleWishlistButton(sidebarProductCard, wishlistButton);
-        await updateMiniWishlistBody();
-        if (window.location.pathname.includes("wishlist.php")) {
-          await loadWishlist();
-        }
-      }
-    };
+    // ! Wishlist Button
+    const wishlistButton = createWishlistButton(
+      sidebarProductCard,
+      "product-card-add-wishlist-button",
+      type,
+      wishlistButtonState,
+      wishlistSvgFill,
+    );
     actionContainer.prepend(wishlistButton);
-  } else {
-    const cartButton = createCartButton("product-card-add-cart-button", "cart");
-    actionContainer.append(cartButton);
+  }
 
-    cartButton.onclick = async () => {
-      await handleCartButton(sidebarProductCard, cartButton);
-      // await removeFromCart_DB(product.book_id);
-      await updateCart();
-      const total = await calculateCartTotal();
-      const priceElement = document.querySelector(".mini-cart-price") ?? null;
-      if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
-    };
+  if (type === "wishlist") {
+    console.log(wishlistButtonState);
+    const wishlistButton = createWishlistButton(
+      sidebarProductCard,
+      "product-card-add-wishlist-button",
+      type,
+      wishlistButtonState,
+      wishlistSvgFill,
+    );
+    actionContainer.prepend(wishlistButton);
+
+    if (product.is_inStock === 1) {
+      const cartButton = createCartButton(
+        sidebarProductCard,
+        "product-card-add-cart-button",
+        null,
+        cartButtonState,
+        cartSvgFill,
+      );
+      actionContainer.append(cartButton);
+    } else {
+      const outOfStockButton = createOutOfStockButton("out-of-stock-button");
+      actionContainer.append(outOfStockButton);
+    }
+  }
+
+  if (type === "cart") {
+    const cartButton = createCartButton(
+      sidebarProductCard,
+      "product-card-add-cart-button",
+      "cart",
+      cartButtonState,
+      cartSvgFill,
+    );
+    actionContainer.append(cartButton);
   }
 
   if (type === "cart") {

@@ -1,4 +1,4 @@
-import { calculateCartTotal, updateCart } from "../components/miniCartBart.js";
+import { calculateCartTotal, updateCart } from "../components/miniCartBar.js";
 import { handleCartButton } from "../components/productCard.js";
 
 document.addEventListener("click", async (e) => {

@@ -8,7 +8,7 @@ import {
   calculateCartTotal,
   renderMiniCartBar,
   updateCart,
-} from "./components/miniCartBart.js";
+} from "./components/miniCartBar.js";
 import {
   renderMiniWishlist,
   updateMiniWishlistBody,
@@ -29,6 +29,7 @@ import {
 } from "./components/messageBox.js";
 import { updateProductCount } from "./pages/productsPageUI.js";
 import { currentFilters } from "./core/currentFilters.js";
+import { updateExistingBarsButton } from "./core/UIhelpers.js";
 
 const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
@@ -103,6 +104,9 @@ document.addEventListener("cartUpdated", (e) => {
     if (cartButton.dataset.state === "active") {
       cartButton.dataset.state = "inactive";
       svg.setAttribute("fill", "none");
+    } else {
+      cartButton.dataset.state = "active";
+      svg.setAttribute("fill", "black");
     }
   });
 });
@@ -124,6 +128,9 @@ document.addEventListener("wishlistUpdated", (e) => {
     if (wishlistButton.dataset.state === "active") {
       wishlistButton.dataset.state = "inactive";
       svg.setAttribute("fill", "none");
+    } else {
+      wishlistButton.dataset.state = "active";
+      svg.setAttribute("fill", "black");
     }
   });
 });
@@ -263,15 +270,25 @@ bestSellers?.addEventListener("click", async (e) => {
     const productCard = e.target.closest(".product-card");
     await handleWishlistButton(productCard, wishlistButton);
     await updateMiniWishlistBody();
+
+    // Update open bars
+    const id = productCard.dataset.productid;
+    updateExistingBarsButton(id, "wishlist");
   }
 
   if (cartButton) {
     const productCard = e.target.closest(".product-card");
-    await handleCartButton(productCard, cartButton);
-    await updateCart();
-    const total = await calculateCartTotal();
-    const priceElement = document.querySelector(".mini-cart-price") ?? null;
-    if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
+    const id = productCard.dataset.productid;
+    const operationResponse = await handleCartButton(productCard, cartButton);
+
+    if (operationResponse.success) {
+      await updateCart();
+      const total = await calculateCartTotal();
+      const priceElement = document.querySelector(".mini-cart-price") ?? null;
+      if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
+
+      updateExistingBarsButton(id, "cart");
+    }
   }
 
   if (carouselPreviousButton) {
@@ -291,17 +308,28 @@ newArrivals?.addEventListener("click", async (e) => {
 
   if (cartButton) {
     const productCard = e.target.closest(".product-card");
-    await handleCartButton(productCard, cartButton);
-    await updateCart();
-    const total = await calculateCartTotal();
-    const priceElement = document.querySelector(".mini-cart-price") ?? null;
-    if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
+    const id = productCard.dataset.productid;
+    const operationResponse = await handleCartButton(productCard, cartButton);
+
+    if (operationResponse.success) {
+      await updateCart();
+      const total = await calculateCartTotal();
+      const priceElement = document.querySelector(".mini-cart-price") ?? null;
+      if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
+
+      // Update open bars
+
+      updateExistingBarsButton(id, "cart");
+    }
   }
 
   if (wishlistButton) {
     const productCard = e.target.closest(".product-card");
     await handleWishlistButton(productCard, wishlistButton);
     await updateMiniWishlistBody();
+
+    const id = productCard.dataset.productid;
+    updateExistingBarsButton(id, "wishlist");
   }
 
   if (carouselPreviousButton) {
@@ -321,17 +349,26 @@ booksUnder?.addEventListener("click", async (e) => {
 
   if (cartButton) {
     const productCard = e.target.closest(".product-card");
-    await handleCartButton(productCard, cartButton);
-    await updateCart();
-    const total = await calculateCartTotal();
-    const priceElement = document.querySelector(".mini-cart-price") ?? null;
-    if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
+    const id = productCard.dataset.productid;
+
+    const response = await handleCartButton(productCard, cartButton);
+    if (response.success) {
+      await updateCart();
+      const total = await calculateCartTotal();
+      const priceElement = document.querySelector(".mini-cart-price") ?? null;
+      if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
+
+      updateExistingBarsButton(id, "cart");
+    }
   }
 
   if (wishlistButton) {
     const productCard = e.target.closest(".product-card");
     await handleWishlistButton(productCard, wishlistButton);
     await updateMiniWishlistBody();
+
+    const id = productCard.dataset.productid;
+    updateExistingBarsButton(id, "wishlist");
   }
 
   if (carouselPreviousButton) {

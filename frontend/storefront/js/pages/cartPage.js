@@ -1,6 +1,6 @@
 import { buildCartCard } from "../components/cartCard.js";
 import { getCartItems } from "../services/cartServices.js";
-import { calculateCartTotal } from "../components/miniCartBart.js";
+import { calculateCartTotal } from "../components/miniCartBar.js";
 
 const cartOuterContainer = document.querySelector(".cart-outer-container");
 

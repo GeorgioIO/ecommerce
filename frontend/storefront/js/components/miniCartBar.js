@@ -44,52 +44,78 @@ export function createCartItemsContainer(data = null) {
 }
 
 export async function updateCart() {
-  // TODO : After each delete it checks if cart becomes empty
   const { data } = await getCartItems();
-  const cartBody = document.querySelector(".mini-cart-body") ?? null;
-  const cartFooter = document.querySelector(".mini-cart-footer") ?? null;
-  const cartItemsContainer =
-    document.querySelector(".mini-cart-items-container") ?? null;
-  let emptyText = document.querySelector(".empty-cart-text") ?? null;
-  let shoppingButton =
-    document.querySelector(".mini-cart-body .section-redirection-button") ??
-    null;
 
-  if (data !== null && data.length === 0) {
-    if (cartItemsContainer) cartItemsContainer.innerHTML = "";
-    if (!emptyText && !shoppingButton) {
-      emptyText = document.createElement("p");
-      emptyText.classList.add("empty-cart-text");
-      emptyText.textContent = "Your cart is currently empty";
+  // Get cart elements
+  const cart = document.querySelector("#mini-cart-bar");
+  const cartBody = document.querySelector(".mini-cart-body");
+  const cartFooter = document.querySelector(".mini-cart-footer");
+  const cartItemsContainer = document.querySelector(
+    ".mini-cart-items-container",
+  );
 
-      shoppingButton = document.createElement("a");
-      shoppingButton.href = "../pages/products.php";
-      shoppingButton.textContent = "Browse Products";
-      shoppingButton.classList.add("section-redirection-button");
-      cartBody?.append(emptyText, shoppingButton);
-    } else {
-      emptyText.style.display = "flex";
-      shoppingButton.style.display = "flex";
-    }
+  if (!cart || !cartBody) return;
 
-    cartBody?.classList.add("empty");
-    cartFooter.style.display = "none";
+  if (!data || data.length === 0) {
+    // TODO : Show empty cart
+    showEmptyCart(cartBody, cartItemsContainer, cartFooter);
   } else {
-    if (!cartItemsContainer) return;
-    if (emptyText && shoppingButton) {
-      emptyText.style.display = "none";
-      shoppingButton.style.display = "none";
-    }
-
-    cartBody.classList.remove("empty");
-    cartFooter.style.display = "flex";
-    cartItemsContainer.innerHTML = "";
-
-    data.forEach(async (item) => {
-      const sidebarCard = await buildSidebarCard(item, "cart");
-      cartItemsContainer.append(sidebarCard);
-    });
+    // TODO : Show cart items
+    showCartItems(cart, cartBody, cartFooter, cartItemsContainer, data);
   }
+}
+
+function showEmptyCart(cartBody, cartItemsContainer, cartFooter) {
+  if (cartItemsContainer) cartItemsContainer.innerHTML = "";
+  let emptyText = document.querySelector(".empty-cart-text");
+  let shoppingButton = document.querySelector(
+    ".mini-cart-body .section-redirection-button",
+  );
+
+  if (!emptyText) {
+    emptyText = document.createElement("p");
+    emptyText.classList.add("empty-cart-text");
+    emptyText.textContent = "Your cart is currently empty";
+  }
+
+  if (!shoppingButton) {
+    shoppingButton = document.createElement("a");
+    shoppingButton.href = "../pages/products.php";
+    shoppingButton.textContent = "Browse Products";
+    shoppingButton.classList.add("section-redirection-button");
+  }
+
+  emptyText.style.display = "flex";
+  shoppingButton.style.display = "flex";
+  cartBody.append(emptyText, shoppingButton);
+  cartBody.classList.add("empty");
+  cartFooter.style.display = "none";
+}
+
+function showCartItems(cart, cartBody, cartFooter, cartItemsContainer, data) {
+  if (!cartItemsContainer) {
+    cartItemsContainer = createCartItemsContainer(data);
+    cartBody.append(cartItemsContainer);
+
+    if (!cartFooter) {
+      cartFooter = buildMiniCartFooter();
+      cart.append(cartFooter);
+    }
+  } else {
+    const newItems = createCartItemsContainer(data);
+    cartItemsContainer.replaceWith(newItems);
+  }
+
+  const emptyText = document.querySelector(".empty-cart-text");
+  const shoppingButton = document.querySelector(
+    ".mini-cart-body .section-redirection-button",
+  );
+
+  if (emptyText) emptyText.style.display = "none";
+  if (shoppingButton) shoppingButton.style.display = "none";
+
+  cartBody.classList.remove("empty");
+  cartFooter.style.display = "flex";
 }
 
 export function BuildMiniCartBar(dataAvailable) {
@@ -127,45 +153,7 @@ export function BuildMiniCartBar(dataAvailable) {
   miniCartMenu.append(miniCartMenuHeader, cartBody);
 
   if (dataAvailable) {
-    const cartFooter = document.createElement("div");
-    cartFooter.classList.add("mini-cart-footer");
-    cartFooter.style.display = "none";
-
-    const priceRow = document.createElement("div");
-    priceRow.classList.add("mini-cart-footer-price-row");
-
-    const total = document.createElement("p");
-    total.textContent = "Total";
-
-    const price = document.createElement("p");
-    price.classList.add("mini-cart-price");
-    price.textContent = "$0 USD";
-
-    priceRow.append(total, price);
-
-    const divider = document.createElement("div");
-    divider.classList.add("divider");
-
-    const taxShipping = document.createElement("p");
-    taxShipping.style.textAlign = "center";
-    taxShipping.textContent = "Taxes and shipping collected at checkout";
-
-    const buttonsContainer = document.createElement("div");
-    buttonsContainer.classList.add("mini-cart-footer-buttons-container");
-
-    const viewCartButton = document.createElement("a");
-    viewCartButton.href = "../pages/cart.php";
-    viewCartButton.id = "view-cart-button";
-    viewCartButton.textContent = "VIEW CART";
-
-    const checkoutButton = document.createElement("a");
-    checkoutButton.id = "checkout-button";
-    checkoutButton.textContent = "CHECKOUT";
-
-    buttonsContainer.append(viewCartButton, checkoutButton);
-
-    cartFooter.append(priceRow, divider, taxShipping, buttonsContainer);
-
+    const cartFooter = buildMiniCartFooter();
     miniCartMenu.append(cartFooter);
     /*
     Total ---------- $10.00 USD
@@ -175,6 +163,7 @@ export function BuildMiniCartBar(dataAvailable) {
     */
   } else {
     const emptyText = document.createElement("p");
+    emptyText.classList.add("empty-cart-text");
     emptyText.textContent = "Your cart is currently empty";
 
     const shoppingButton = document.createElement("a");
@@ -191,6 +180,49 @@ export function BuildMiniCartBar(dataAvailable) {
   };
 
   return miniCartMenu;
+}
+
+export function buildMiniCartFooter() {
+  const cartFooter = document.createElement("div");
+  cartFooter.classList.add("mini-cart-footer");
+  cartFooter.style.display = "none";
+
+  const priceRow = document.createElement("div");
+  priceRow.classList.add("mini-cart-footer-price-row");
+
+  const total = document.createElement("p");
+  total.textContent = "Total";
+
+  const price = document.createElement("p");
+  price.classList.add("mini-cart-price");
+  price.textContent = "$0 USD";
+
+  priceRow.append(total, price);
+
+  const divider = document.createElement("div");
+  divider.classList.add("divider");
+
+  const taxShipping = document.createElement("p");
+  taxShipping.style.textAlign = "center";
+  taxShipping.textContent = "Taxes and shipping collected at checkout";
+
+  const buttonsContainer = document.createElement("div");
+  buttonsContainer.classList.add("mini-cart-footer-buttons-container");
+
+  const viewCartButton = document.createElement("a");
+  viewCartButton.href = "../pages/cart.php";
+  viewCartButton.id = "view-cart-button";
+  viewCartButton.textContent = "VIEW CART";
+
+  const checkoutButton = document.createElement("a");
+  checkoutButton.id = "checkout-button";
+  checkoutButton.textContent = "CHECKOUT";
+
+  buttonsContainer.append(viewCartButton, checkoutButton);
+
+  cartFooter.append(priceRow, divider, taxShipping, buttonsContainer);
+
+  return cartFooter;
 }
 
 export async function calculateCartTotal(data = null) {

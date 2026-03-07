@@ -9,6 +9,12 @@ export async function addToWishlist(productID) {
     }),
   });
 
+  document.dispatchEvent(
+    new CustomEvent("wishlistUpdated", {
+      detail: { id: productID },
+    }),
+  );
+
   return result.json();
 }
 

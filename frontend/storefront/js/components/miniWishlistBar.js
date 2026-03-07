@@ -97,7 +97,7 @@ export async function createMiniWishlistContainer(
     // WISHLIST EMPTY
     const emptyText = document.createElement("a");
     emptyText.classList.add("empty-text");
-    emptyText.href = "../pages/shop.php";
+    emptyText.href = "../pages/products.php";
     emptyText.textContent = "No product in your wishlist";
     wishlistItemsContainer.append(emptyText);
   } else if (!success && status === 401) {
@@ -139,7 +139,7 @@ export async function updateMiniWishlistBody() {
     // WISHLIST EMPTY
     const emptyText = document.createElement("a");
     emptyText.classList.add("empty-text");
-    emptyText.href = "../pages/shop.php";
+    emptyText.href = "../pages/products.php";
     emptyText.textContent = "No product in your wishlist";
     itemsContainer.append(emptyText);
 

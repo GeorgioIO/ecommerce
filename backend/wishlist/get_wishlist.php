@@ -33,24 +33,22 @@ $query = "
         b.is_inStock,
         b.is_onSale,
         b.discount_percentage,
-        CASE
-            WHEN b.is_onSale = 1 THEN
-                ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
-            ELSE
-                b.price
-            END AS final_price
+        CASE WHEN b.is_onSale = 1 THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2) ELSE b.price END AS final_price,
+        CASE WHEN ci.book_id IS NOT NULL THEN 1 ELSE 0 END AS is_inCart
     FROM wishlist_items w
     JOIN books b ON w.book_id = b.id
     JOIN authors a ON b.author_id = a.id
     JOIN genres g ON b.genre_id = g.id
     JOIN book_formats bf ON b.format_id = bf.id
-    WHERE user_id = ?
+    LEFT JOIN carts c ON c.user_id = ? AND c.status = 'active'
+    LEFT JOIN cart_items ci ON c.id = ci.cart_id AND ci.book_id = w.book_id 
+    WHERE w.user_id = ?
     ORDER BY b.title ASC
     
 ";
 
-$params = [$_SESSION['user_id']];
-$types = "i";
+$params = [$_SESSION['user_id'] , $_SESSION['user_id']];
+$types = "ii";
 
 $hasPagination = isset($_GET['page']) && isset($_GET['perPage']);
 
