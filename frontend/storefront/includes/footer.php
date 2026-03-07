@@ -11,7 +11,7 @@
         <h4>Navigate</h4>
         <ul>
             <li><a href="../pages/about-us.php">About us</a></li>
-            <li><a href="">Shop</a></li>
+            <li><a href="../pages/products.php">Shop</a></li>
             <li><a href="../pages/collections.php">Collections</a></li>
             <li><a href="../pages/contact-us.php">Contact Us</a></li>
         </ul>
