@@ -1,3 +1,4 @@
+import { updateCardPrice } from "../components/cartCard.js";
 import { calculateCartTotal, updateCart } from "../components/miniCartBar.js";
 import { handleCartButton } from "../components/productCard.js";
 
@@ -13,5 +14,13 @@ document.addEventListener("click", async (e) => {
       const priceElement = document.querySelector(".mini-cart-price") ?? null;
       if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
     }
+  }
+});
+
+document.addEventListener("change", (e) => {
+  const quantity = document.querySelector("#single-product-quantity");
+  if (quantity) {
+    const product = document.querySelector("#product");
+    updateCardPrice(product, quantity.value);
   }
 });

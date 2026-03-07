@@ -176,7 +176,7 @@ try
             echo json_encode([
                 'success' => true,
                 'status' => 200,
-                'message' => 'Book added to cart'
+                'message' => 'Book quantity updated'
             ]);
             exit;
         }

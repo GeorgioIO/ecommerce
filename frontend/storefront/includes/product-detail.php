@@ -28,9 +28,9 @@ $is_inStock = htmlspecialchars($product['is_inStock'] , ENT_QUOTES , 'uTF-8');
             <?php
             
             echo $product['is_onSale'] === 1 ?
-            "<span class='pre-sale-price'> \${$product['price']} </span> <span class='post-sale-price'> \${$product['final_price']} </span>" 
+            "<span class='pre-sale-price' data-base='{$product['price']}' > \${$product['price']} </span> <span class='post-sale-price' data-base='{$product['final_price']}'> \${$product['final_price']} </span>" 
             : 
-            "<span class='base-price'> \${$product['price']} </span>"
+            "<span class='base-price' data-base='{$product['price']}'> \${$product['price']} </span>"
             ;
 
             ?>

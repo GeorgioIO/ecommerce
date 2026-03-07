@@ -1,5 +1,5 @@
 import { addToCart_DB } from "../services/cartServices.js";
-import { calculateCartTotal } from "./miniCartBart.js";
+import { calculateCartTotal } from "./miniCartBar.js";
 import { handleCartButton } from "./productCard.js";
 import { renderCartContainer } from "../pages/cartPage.js";
 export async function buildCartCard(product) {
@@ -108,7 +108,7 @@ export async function buildCartCard(product) {
   return cartCard;
 }
 
-function updateCardPrice(card, quantity) {
+export function updateCardPrice(card, quantity) {
   // Get card price
   const cardBasePrice = card.querySelector(".base-price") ?? null;
   const cardPreSalePrice = card.querySelector(".pre-sale-price") ?? null;
