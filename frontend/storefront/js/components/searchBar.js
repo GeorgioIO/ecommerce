@@ -1,4 +1,5 @@
 import { swapClass } from "../../../admin/js/UIhelpers.js";
+import { currentFilters } from "../core/currentFilters.js";
 import { searchBooks } from "../services/booksServices.js";
 import { buildSidebarCard } from "./sidebarProductCard.js";
 let maxMiniSearch = 4;
@@ -56,9 +57,17 @@ export function buildSearchBar() {
   const searchResultContainer = document.createElement("div");
   searchResultContainer.classList.add("search-result-container");
 
-  const searchMoreButton = document.createElement("button");
+  const searchMoreButton = document.createElement("a");
   searchMoreButton.classList.add("view-more-button");
   searchMoreButton.textContent = `Search`;
+  searchMoreButton.href = "../pages/products.php";
+
+  searchMoreButton.onclick = (e) => {
+    e.preventDefault();
+
+    let currentSearchValue = searchInput.value.trim();
+    window.location.href = `../pages/products.php?title=${currentSearchValue}`;
+  };
 
   searchBarSearchContainer.append(
     title,

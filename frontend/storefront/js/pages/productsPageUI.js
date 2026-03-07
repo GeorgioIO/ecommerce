@@ -9,20 +9,6 @@ export const productsListState = {
 
 const productsSection = document.querySelector("#products") ?? null;
 
-document.addEventListener("DOMContentLoaded", async () => {
-  if (productsSection) {
-    const params = new URLSearchParams(window.location.search);
-    let genreFromURL = params.get("genre") ?? null;
-    let authorFormURL = params.get("author") ?? null;
-
-    if (genreFromURL) currentFilters.genre = genreFromURL;
-    if (authorFormURL) currentFilters.author = authorFormURL;
-
-    await loadProducts();
-    handlePaginationButtonsColor(productsListState.page);
-  }
-});
-
 document.addEventListener("change", async () => {
   // Collect all filters
   const form = document.querySelector("#filtering-form");
@@ -32,6 +18,7 @@ document.addEventListener("change", async () => {
   Object.assign(currentFilters, {
     sortOption: form.querySelector("#sortOption").value ?? null,
     minPrice: form.querySelector("#minPrice").value ?? null,
+    title: form.querySelector("#title").value ?? null,
     maxPrice: form.querySelector("#maxPrice").value ?? null,
     author: form.querySelector("#author").value ?? null,
     genre: form.querySelector("#genre").value ?? null,
@@ -66,8 +53,6 @@ export async function loadProducts() {
   });
 
   const { data, pagination } = response;
-
-  console.log(data);
 
   productsListState.totalPages = pagination.totalPages;
   productsListState.totalItems = pagination.total;

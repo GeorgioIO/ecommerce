@@ -31,6 +31,7 @@ import { updateProductCount } from "./pages/productsPageUI.js";
 import { currentFilters } from "./core/currentFilters.js";
 import { updateExistingBarsButton } from "./core/UIhelpers.js";
 import { renderDashboardSection } from "./pages/acccountDashboard.js";
+import { loadProducts } from "./pages/productsPageUI.js";
 
 const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
@@ -64,6 +65,22 @@ if (path.includes("products.php")) {
 
 if (path.includes("my-account.php") && data.session.user_id) {
   renderDashboardSection(data);
+}
+
+if (path.includes("products.php")) {
+  const productsSection = document.querySelector("#products") ?? null;
+  if (productsSection) {
+    const params = new URLSearchParams(window.location.search);
+    let genreFromURL = params.get("genre") ?? null;
+    let authorFromURL = params.get("author") ?? null;
+    let titleFromURL = params.get("title") ?? null;
+
+    if (titleFromURL) currentFilters.title = titleFromURL;
+    if (genreFromURL) currentFilters.genre = genreFromURL;
+    if (authorFromURL) currentFilters.author = authorFromURL;
+
+    await loadProducts();
+  }
 }
 
 document.addEventListener("click", (e) => {

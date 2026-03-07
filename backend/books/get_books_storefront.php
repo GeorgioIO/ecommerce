@@ -39,6 +39,14 @@ if(isset($_GET['stock']))
     $types .= "i"; 
 }
 
+if(isset($_GET['title']))
+{
+    $filters[] = "b.title LIKE ?";
+    $title_search = '%' . $_GET['title'] . '%';
+    $params[] = $title_search;
+    $types .= "s"; 
+}
+
 if(isset($_GET['minPrice']))
 {
     $filters[] = "$finalPriceExpression >= ?";
