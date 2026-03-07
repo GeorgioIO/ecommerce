@@ -17,7 +17,7 @@ import { calculateCartTotal, updateCart } from "./miniCartBar.js";
 
 const sessionData = await getSession();
 
-export function buildProductCard(product, type = "normal") {
+export async function buildProductCard(product, type = "normal") {
   // This function is responsible of building a single product card
   // Input : Product data (id , title...)
   // Output : Product card element
@@ -71,6 +71,10 @@ export function buildProductCard(product, type = "normal") {
         if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
       }
     };
+
+    if (!sessionData) {
+      sessionData = await getSession();
+    }
 
     if (!sessionData.session.user_id && !sessionData.cookie.username) {
       addToWishlistButton.dataset.enabled = "false";

@@ -116,8 +116,8 @@ function buildProductGrid(products, productsType) {
   const productsGrid = document.createElement("div");
   productsGrid.classList.add("products-grid");
 
-  products.forEach((product) => {
-    const productCard = buildProductCard(product, productsType);
+  products.forEach(async (product) => {
+    const productCard = await buildProductCard(product, productsType);
     productsGrid.append(productCard);
   });
 

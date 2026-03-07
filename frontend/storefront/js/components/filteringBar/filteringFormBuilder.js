@@ -62,6 +62,20 @@ export function buildFilteringForm() {
 
   sortByContainer.append(sortByTitle, sortBySelect);
 
+  // Title
+  const titleContainer = document.createElement("div");
+  titleContainer.classList.add("form-row");
+
+  const titleLabel = document.createElement("label");
+  titleLabel.textContent = "Title";
+  titleLabel.id = "title-label";
+  titleLabel.htmlFor = "title-input";
+
+  const titleInput = document.createElement("input");
+  titleInput.id = "title";
+
+  titleContainer.append(titleLabel, titleInput);
+
   // Stock options
   const stockContainer = document.createElement("div");
   stockContainer.classList.add("form-row");
@@ -137,8 +151,9 @@ export function buildFilteringForm() {
   const authorContainer = document.createElement("div");
   authorContainer.classList.add("form-row");
 
-  const authorTitle = document.createElement("p");
-  authorTitle.textContent = "Author:";
+  const authorLabel = document.createElement("label");
+  authorLabel.textContent = "Author:";
+  authorLabel.htmlFor = "author";
 
   const authorSelect = document.createElement("select");
   authorSelect.id = "author";
@@ -149,14 +164,15 @@ export function buildFilteringForm() {
 
   authorSelect.append(defaultAuthorOption);
 
-  authorContainer.append(authorTitle, authorSelect);
+  authorContainer.append(authorLabel, authorSelect);
 
   // Genre options
   const genreContainer = document.createElement("div");
   genreContainer.classList.add("form-row");
 
-  const genreTitle = document.createElement("p");
-  genreTitle.textContent = "Genre:";
+  const genreLabel = document.createElement("label");
+  genreLabel.textContent = "Genre:";
+  genreLabel.htmlFor = "genre";
 
   const genreSelect = document.createElement("select");
   genreSelect.id = "genre";
@@ -167,14 +183,15 @@ export function buildFilteringForm() {
 
   genreSelect.append(defaultGenreOption);
 
-  genreContainer.append(genreTitle, genreSelect);
+  genreContainer.append(genreLabel, genreSelect);
 
   // Format options
   const formatContainer = document.createElement("div");
   formatContainer.classList.add("form-row");
 
-  const formatTitle = document.createElement("p");
-  formatTitle.textContent = "Format:";
+  const formatLabel = document.createElement("label");
+  formatLabel.textContent = "Format:";
+  formatLabel.htmlFor = "format";
 
   const formatSelect = document.createElement("select");
   formatSelect.id = "format";
@@ -185,14 +202,15 @@ export function buildFilteringForm() {
 
   formatSelect.append(defaultFormatOption);
 
-  formatContainer.append(formatTitle, formatSelect);
+  formatContainer.append(formatLabel, formatSelect);
 
   // Language options
   const languageContainer = document.createElement("div");
   languageContainer.classList.add("form-row");
 
-  const languageTitle = document.createElement("p");
-  languageTitle.textContent = "Language:";
+  const languageLabel = document.createElement("label");
+  languageLabel.textContent = "Language:";
+  languageLabel.htmlFor = "language";
 
   const languageSelect = document.createElement("select");
   languageSelect.id = "language";
@@ -211,11 +229,12 @@ export function buildFilteringForm() {
     languageSelect.append(optionElement);
   });
 
-  languageContainer.append(languageTitle, languageSelect);
+  languageContainer.append(languageLabel, languageSelect);
 
   filteringForm.append(
     sortByContainer,
     stockContainer,
+    titleContainer,
     priceContainer,
     authorContainer,
     genreContainer,
