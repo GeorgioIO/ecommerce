@@ -23,8 +23,8 @@ $email_validation = validate_customer_email($email);
 if(!$email_validation['success'])
 {    
     $conn->close();
-    $_SESSION['redirect-message'] = $email_validation['message'];
-    $_SESSION['redirect-message-type'] = 'error';
+    $_SESSION['redirect_message'] = $email_validation['message'];
+    $_SESSION['redirect_message_type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 }
@@ -54,8 +54,8 @@ if($result->num_rows === 0)
 {    
     $stmt->close();
     $conn->close();
-    $_SESSION['redirect-message'] = "Invalid username or password";
-    $_SESSION['redirect-message-type'] = 'error';
+    $_SESSION['redirect_message'] = "Invalid username or password";
+    $_SESSION['redirect_message_type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 }
@@ -66,8 +66,8 @@ if(!password_verify($password , $user_data['password']))
 {    
     $stmt->close();
     $conn->close();
-    $_SESSION['redirect-message'] = "Invalid username or password";
-    $_SESSION['redirect-message-type'] = 'error';
+    $_SESSION['redirect_message'] = "Invalid username or password";
+    $_SESSION['redirect_message_type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 }
@@ -97,8 +97,8 @@ if(!empty($_POST['remember-me']))
 $stmt->close();
 $conn->close();
 
-$_SESSION['redirect-message'] = 'Logged in successfully';
-$_SESSION['redirect-message-type'] = 'success';
+$_SESSION['redirect_message'] = 'Logged in successfully';
+$_SESSION['redirect_message_type'] = 'success';
 header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
 exit;
 

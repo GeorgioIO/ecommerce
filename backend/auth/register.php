@@ -31,8 +31,8 @@ $phone_number = $phone_number === null ? '' : $phone_number;
 $name_validation = validate_customer_name($username);
 if(!$name_validation['success'])
 {
-    $_SESSION['redirect-message'] = $name_validation['message'];
-    $_SESSION['redirect-message-type'] = 'error';
+    $_SESSION['redirect_message'] = $name_validation['message'];
+    $_SESSION['redirect_message_type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 }
@@ -40,8 +40,8 @@ if(!$name_validation['success'])
 $email_validation = validate_customer_email($email);
 if(!$email_validation['success'])
 {
-    $_SESSION['redirect-message'] = $email_validation['message'];
-    $_SESSION['redirect-message-type'] = 'error';
+    $_SESSION['redirect_message'] = $email_validation['message'];
+    $_SESSION['redirect_message_type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 }
@@ -49,8 +49,8 @@ if(!$email_validation['success'])
 $phone_validation = validate_customer_phone($phone_number);
 if(!$phone_validation['success'])
 {
-    $_SESSION['redirect-message'] = $phone_validation['message'];
-    $_SESSION['redirect-message-type'] = 'error';
+    $_SESSION['redirect_message'] = $phone_validation['message'];
+    $_SESSION['redirect_message_type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 }
@@ -58,8 +58,8 @@ if(!$phone_validation['success'])
 $password_validation = validate_customer_password($password);
 if(!$password_validation['success'])
 {
-    $_SESSION['redirect-message'] = $password_validation['message'];
-    $_SESSION['redirect-message-type'] = 'error';
+    $_SESSION['redirect_message'] = $password_validation['message'];
+    $_SESSION['redirect_message_type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 }
@@ -67,8 +67,8 @@ if(!$password_validation['success'])
 $creds_existence_validation = validate_creds_existence($conn , $email , $phone_number);
 if(!$creds_existence_validation['success'])
 {
-    $_SESSION['redirect-message'] = $creds_existence_validation['message'];
-    $_SESSION['redirect-message-type'] = 'error';
+    $_SESSION['redirect_message'] = $creds_existence_validation['message'];
+    $_SESSION['redirect_message_type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 }
@@ -101,8 +101,8 @@ if($stmt->execute())
     $stmt->close();
     $conn->close();
 
-    $_SESSION['redirect-message'] = 'Account created successfully';
-    $_SESSION['redirect-message-type'] = 'success';
+    $_SESSION['redirect_message'] = 'Account created successfully';
+    $_SESSION['redirect_message_type'] = 'success';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 
@@ -112,8 +112,8 @@ else
     $stmt->close();
     $conn->close();
 
-    $_SESSION['redirect-message'] = 'Problem in registering...';
-    $_SESSION['redirect-message-type'] = 'error';
+    $_SESSION['redirect_message'] = 'Problem in registering...';
+    $_SESSION['redirect_message_type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
     exit;
 }
