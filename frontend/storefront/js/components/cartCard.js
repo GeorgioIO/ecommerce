@@ -95,8 +95,8 @@ export async function buildCartCard(product) {
   removeButton.dataset.state = "active";
 
   removeButton.onclick = async () => {
-    await handleCartButton(cartCard, removeButton);
-    await renderCartContainer();
+    const response = await handleCartButton(cartCard, removeButton);
+    if (response.success) await renderCartContainer();
   };
 
   actionContainer.append(quantityInput, removeButton);

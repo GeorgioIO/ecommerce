@@ -100,15 +100,33 @@ document.addEventListener("cartUpdated", (e) => {
   cards.forEach((card) => {
     const cartButton = card.querySelector(".product-card-add-cart-button");
 
-    const svg = cartButton.querySelector("svg");
+    if (!cartButton) return;
+
+    const svg = cartButton.querySelector("svg") ?? null;
     if (cartButton.dataset.state === "active") {
       cartButton.dataset.state = "inactive";
-      svg.setAttribute("fill", "none");
+      if (svg) svg.setAttribute("fill", "none");
     } else {
       cartButton.dataset.state = "active";
-      svg.setAttribute("fill", "black");
+      if (svg) svg.setAttribute("fill", "black");
     }
   });
+
+  if (window.location.pathname.includes("wishlist.php")) {
+    const card = document.querySelector(
+      `.product-card[data-productid="${id}"]`,
+    );
+
+    if (!card) return;
+
+    const cartButton = card.querySelector(".product-card-add-to-card-button");
+
+    if (cartButton.dataset.state === "active") {
+      cartButton.dataset.state = "inactive";
+    } else {
+      cartButton.dataset.state = "active";
+    }
+  }
 });
 
 document.addEventListener("wishlistUpdated", (e) => {

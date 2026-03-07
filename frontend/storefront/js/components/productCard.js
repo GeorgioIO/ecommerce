@@ -63,11 +63,13 @@ export function buildProductCard(product, type = "normal") {
     addToCartButton.classList.add("product-card-add-cart-button");
 
     addToCartButton.onclick = async () => {
-      await handleCartButton(productCard, addToCartButton);
-      await updateCart();
-      const total = await calculateCartTotal();
-      const priceElement = document.querySelector(".mini-cart-price") ?? null;
-      if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
+      const response = await handleCartButton(productCard, addToCartButton);
+      if (response.success) {
+        await updateCart();
+        const total = await calculateCartTotal();
+        const priceElement = document.querySelector(".mini-cart-price") ?? null;
+        if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
+      }
     };
 
     if (!sessionData.session.user_id && !sessionData.cookie.username) {
@@ -196,9 +198,31 @@ export function buildProductCard(product, type = "normal") {
 
       productCard.append(soldOutButton);
     } else {
-      const addToCardButton = document.createElement("a");
+      const addToCardButton = document.createElement("button");
       addToCardButton.classList.add("product-card-add-to-card-button");
       addToCardButton.textContent = "Add To Cart";
+      if (product.is_inCart === "1") {
+        addToCardButton.dataset.state = "active";
+      } else {
+        addToCardButton.dataset.state = "inactive";
+      }
+
+      addToCardButton.onclick = async () => {
+        const response = await handleCartButton(productCard, addToCardButton);
+        if (response.success) {
+          await updateCart();
+
+          const total = await calculateCartTotal();
+          const priceElement =
+            document.querySelector(".mini-cart-price") ?? null;
+          if (priceElement)
+            priceElement.textContent = `$${total.toFixed(2)} USD`;
+
+          // Update open bars
+
+          updateExistingBarsButton(id, "cart");
+        }
+      };
 
       productCard.append(addToCardButton);
     }
@@ -244,6 +268,7 @@ export async function handleCartButton(product, button) {
   const productid = product.dataset.productid;
   const svg = button.querySelector("svg") ?? null;
 
+  console.log(state, productid, svg);
   const quantityInput =
     document.querySelector("#single-product-quantity") ?? null;
   let quantity = 1;

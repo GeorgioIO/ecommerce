@@ -6,10 +6,12 @@ document.addEventListener("click", async (e) => {
 
   if (addToCartButton) {
     const product = e.target.closest("#product");
-    await handleCartButton(product, addToCartButton);
-    await updateCart();
-    const total = await calculateCartTotal();
-    const priceElement = document.querySelector(".mini-cart-price") ?? null;
-    if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
+    const response = await handleCartButton(product, addToCartButton);
+    if (response.success) {
+      await updateCart();
+      const total = await calculateCartTotal();
+      const priceElement = document.querySelector(".mini-cart-price") ?? null;
+      if (priceElement) priceElement.textContent = `$${total.toFixed(2)} USD`;
+    }
   }
 });
