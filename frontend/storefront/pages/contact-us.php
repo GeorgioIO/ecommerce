@@ -1,3 +1,9 @@
+<?php
+
+require_once __DIR__ . '../../../../configuration/session.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +17,7 @@
     <script defer type="module" src="../js/main.js"></script>
 
 </head>
-<body>    
+<body>  
     <div class="message-box-container">
 
     </div>

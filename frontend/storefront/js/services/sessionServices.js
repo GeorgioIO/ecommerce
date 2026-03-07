@@ -1,6 +1,12 @@
-export async function getSession() {
-  const response = await fetch("../../../backend/auth/get_session.php");
+let sessionCache = null;
 
-  return response.json();
+export async function getSession() {
+  if (sessionCache) return sessionCache;
+
+  const response = await fetch("../../../backend/auth/get_session.php");
+  const data = response.json();
+  sessionCache = data;
+
+  return data;
   // console.log(response.text());
 }

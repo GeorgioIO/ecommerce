@@ -30,6 +30,7 @@ import {
 import { updateProductCount } from "./pages/productsPageUI.js";
 import { currentFilters } from "./core/currentFilters.js";
 import { updateExistingBarsButton } from "./core/UIhelpers.js";
+import { renderDashboardSection } from "./pages/acccountDashboard.js";
 
 const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
@@ -47,6 +48,24 @@ const storeReviews = document.querySelector("#reviews");
 let reviewSliderToggler = true;
 let heroCardNavigationIndex = 0;
 
+const data = await getSession();
+const path = window.location.pathname;
+
+if (data.session.redirect_message) {
+  activateMessageBox();
+  const messageBox = createMesssageBox(data.session.redirect_message);
+  appendMessageBox(messageBox);
+}
+
+if (path.includes("products.php")) {
+  const bookStats = await getBooksStats_DB();
+  updateProductCount(bookStats.books_count);
+}
+
+if (path.includes("my-account.php") && data.session.user_id) {
+  renderDashboardSection(data);
+}
+
 document.addEventListener("click", (e) => {
   const redirectGenreButton = e.target.closest(
     ".redirect-genre-products-button",
@@ -54,23 +73,6 @@ document.addEventListener("click", (e) => {
 
   if (redirectGenreButton) {
     currentFilters.genre = redirectGenreButton.dataset.genreid;
-    console.log(currentFilters);
-  }
-});
-
-document.addEventListener("DOMContentLoaded", async () => {
-  const messages = await getSession();
-  const path = window.location.pathname;
-
-  if (messages.session["redirect-message"]) {
-    activateMessageBox();
-    const messageBox = createMesssageBox(messages.session["redirect-message"]);
-    appendMessageBox(messageBox);
-  }
-
-  if (path.includes("products.php")) {
-    const bookStats = await getBooksStats_DB();
-    updateProductCount(bookStats.books_count);
   }
 });
 

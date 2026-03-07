@@ -13,7 +13,7 @@
             <li><a href="../pages/about-us.php">About us</a></li>
             <li><a href="">Shop</a></li>
             <li><a href="../pages/collections.php">Collections</a></li>
-            <li><a href="">Contact Us</a></li>
+            <li><a href="../pages/contact-us.php">Contact Us</a></li>
         </ul>
     </div>
     <div class="policies-list">

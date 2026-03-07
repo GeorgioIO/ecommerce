@@ -15,7 +15,6 @@ import {
   createMesssageBox,
 } from "../components/messageBox.js";
 import { hydrateAddressForm } from "../components/addressForm/addressFormHydrator.js";
-import { validateAddressID } from "../core/validators/addressValidators.js";
 import { collectFormData } from "../components/addressForm/addressFormCollector.js";
 import { validateAddressData } from "../components/addressForm/addressFormValidator.js";
 import { buildAccountDetailFormSkeleton } from "../components/accountDetailsForm/accountDetailsFormBuilder.js";
@@ -31,14 +30,6 @@ export const ordersListState = {
   page: 1,
   perPage: 5,
 };
-
-document.addEventListener("DOMContentLoaded", async () => {
-  const path = window.location.pathname;
-  const sessionData = await getSession();
-  if (path.includes("my-account.php") && sessionData.session.user_id) {
-    renderDashboardSection(sessionData);
-  }
-});
 
 dashboard?.addEventListener("click", async (e) => {
   const deleteAddressButton = e.target.closest("#delete-address-button");
@@ -79,8 +70,6 @@ dashboard?.addEventListener("click", async (e) => {
       appendMessageBox(messageBox);
       return;
     }
-
-    console.log("new data before request : ", data);
 
     // Send request
     const response = await saveCustomerAddress_DB(data);
@@ -202,7 +191,7 @@ export async function renderOrdersSection(state) {
   console.log(response);
 }
 
-function renderDashboardSection(data) {
+export function renderDashboardSection(data) {
   const username = data.cookie.username
     ? data.cookie.username
     : data.session.user_name;
