@@ -26,7 +26,11 @@ export async function renderOrdersCatalog(
     }
   } else {
     // if empty
-    console.log("test");
+    const emptyText = document.createElement("p");
+    emptyText.classList.add("empty-orders-catalog-text");
+    emptyText.textContent = "No current orders yet";
+
+    section.append(emptyText);
   }
 }
 

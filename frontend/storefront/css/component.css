@@ -323,6 +323,16 @@
   color: var(--primary-color);
 }
 
+.empty-orders-catalog-text {
+  width: 100%;
+  height: 35px;
+  border-radius: 10px;
+  color: var(--secondary-color);
+  background-color: #8fe7e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* ================ Product cards + sidebar product card ================ */
 .product-card {
   width: 100%;
