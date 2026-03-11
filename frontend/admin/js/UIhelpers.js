@@ -10,7 +10,6 @@ export function toggleDiscountInfo() {
 
 export function handlePaginationButtonsColor(pageNumber) {
   const paginationsButtons = document.querySelectorAll(".page-button");
-
   paginationsButtons.forEach((button) => {
     if (
       button.id !== "previous-page-button" &&

@@ -1,28 +1,20 @@
-import { fetchOrders_DB } from "../services/ordersServices.js";
 import { buildPaginationContainer } from "./pagination.js";
 import { buildOrderCard } from "./orderCard.js";
-import { handlePaginationButtonsColor } from "../../../admin/js/UIhelpers.js";
 
-export async function renderOrdersCatalog(section, state) {
-  // Get orders for the user
-  const response = await fetchOrders_DB({
-    page: state.page,
-    perPage: state.perPage,
-  });
-
-  const { data, pagination } = response;
-
-  // Set pagination data
-  state.totalPages = pagination.totalPages;
-  state.totalItems = pagination.total;
-
+export async function renderOrdersCatalog(
+  section,
+  state,
+  data,
+  type,
+  pagination,
+) {
   // Available data
   if (data.length > 0) {
     const newOrderCatalog = await buildOrdersCatalog(
       data,
+      type,
       pagination,
       state,
-      renderOrdersCatalog,
     );
 
     const oldCatalog = document.querySelector(".orders-catalog");
@@ -32,20 +24,13 @@ export async function renderOrdersCatalog(section, state) {
     } else {
       section.append(newOrderCatalog);
     }
-
-    handlePaginationButtonsColor(state.page);
   } else {
     // if empty
     console.log("test");
   }
 }
 
-export async function buildOrdersCatalog(
-  orders,
-  pagination,
-  state,
-  renderFunction,
-) {
+export async function buildOrdersCatalog(orders, type, pagination, state) {
   // Orders catalog = the item that will be return
   const ordersCatalog = document.createElement("div");
   ordersCatalog.classList.add("orders-catalog");
@@ -54,11 +39,7 @@ export async function buildOrdersCatalog(
   const grid = buildOrdersGrid(orders);
 
   // Pagination container
-  const paginationContainer = buildPaginationContainer(
-    pagination,
-    state,
-    renderFunction,
-  );
+  const paginationContainer = buildPaginationContainer(type, pagination, state);
 
   ordersCatalog.append(grid, paginationContainer);
 

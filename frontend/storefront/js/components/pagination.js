@@ -1,3 +1,4 @@
+import { loadOrders } from "../pages/acccountDashboard.js";
 import { loadProducts } from "../pages/productsPageUI.js";
 import { loadWishlist } from "../pages/wishlistUI.js";
 let productLoader = null;
@@ -7,6 +8,8 @@ export function buildPaginationContainer(type, pagination, listState) {
     productLoader = loadProducts;
   } else if (type === "wishlist") {
     productLoader = loadWishlist;
+  } else if (type === "orders") {
+    productLoader = loadOrders;
   }
 
   let currentPaginationContainer =

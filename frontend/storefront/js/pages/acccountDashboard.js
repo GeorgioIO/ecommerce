@@ -22,7 +22,7 @@ import { hydrateAccountDetailsForm } from "../components/accountDetailsForm/acco
 import { accountDetailsFormCollector } from "../components/accountDetailsForm/accountDetailsFormCollector.js";
 import { validateAccountDetailsData } from "../components/accountDetailsForm/accountDetailsFormValidator.js";
 import { resetPasswordFields } from "../components/accountDetailsForm/accountDetailsFormResetter.js";
-
+import { handlePaginationButtonsColor } from "../../../admin/js/UIhelpers.js";
 const dashboard = document.querySelector("#user-dashboard") ?? null;
 const dashboardSidebar = dashboard?.querySelector("#user-dashboard-sidebar");
 
@@ -130,7 +130,7 @@ dashboardSidebar?.addEventListener("click", async (e) => {
       renderDashboardSection(sessionData);
     } else if (section === "orders") {
       // TODO : Load orders function
-      await renderOrdersCatalog(content, ordersListState);
+      await loadOrders(content, ordersListState);
     } else if (section === "addresses") {
       await renderAddressSection(content);
     } else if (section === "log-out") {
@@ -142,6 +142,29 @@ dashboardSidebar?.addEventListener("click", async (e) => {
     }
   }
 });
+
+export async function loadOrders(content, state) {
+  if (!state) state = ordersListState;
+  // Get orders for the user
+  const response = await fetchOrders_DB({
+    page: state.page,
+    perPage: state.perPage,
+  });
+
+  const { data, pagination } = response;
+
+  // Set pagination data
+  state.totalPages = pagination.totalPages;
+  state.totalItems = pagination.total;
+
+  if (state.page > pagination.totalPages) {
+    state.page = pagination.totalPages;
+  }
+
+  await renderOrdersCatalog(content, state, data, "orders", pagination);
+
+  handlePaginationButtonsColor(state.page);
+}
 
 async function renderAccountDetailsSection(content) {
   const customerData = await getCustomerData_DB();
