@@ -53,6 +53,7 @@ export async function deleteBook_DB(book_ID) {
   });
 
   return result.json();
+  // console.log(result.text());
 }
 
 export async function update_book_DB(bookData) {

@@ -248,6 +248,7 @@ function form_load_books_query($author_id , $genre_id)
         LEFT JOIN genres g ON b.genre_id = g.id
         LEFT JOIN authors a ON b.author_id = a.id
         LEFT JOIN book_formats bf ON b.format_id = bf.id
+        WHERE b.is_deleted = 0
         ORDER BY b.title ASC
         
         EOT;
@@ -282,7 +283,7 @@ function form_load_books_query($author_id , $genre_id)
         LEFT JOIN genres g ON b.genre_id = g.id
         LEFT JOIN authors a ON b.author_id = a.id
         LEFT JOIN book_formats bf ON b.format_id = bf.id
-        WHERE b.author_id = ?
+        WHERE b.author_id = ? AND b.is_deleted = 0
         ORDER BY b.title ASC
        
         
@@ -318,7 +319,7 @@ function form_load_books_query($author_id , $genre_id)
         LEFT JOIN genres g ON b.genre_id = g.id
         LEFT JOIN authors a ON b.author_id = a.id
         LEFT JOIN book_formats bf ON b.format_id = bf.id
-        WHERE b.genre_id = ?
+        WHERE b.genre_id = ? AND b.is_deleted = 0
         ORDER BY b.title ASC
        
         EOT;

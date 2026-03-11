@@ -264,8 +264,6 @@ document.addEventListener("click", async (e) => {
     listState.perPage = 10;
     listState.totalPages = 1;
 
-    console.log(listState, loadEntityElements);
-
     // Load Books
     loadEntityElements(); // author_id : 3
   }
@@ -314,7 +312,6 @@ confirmationModal.addEventListener("click", async (e) => {
       const loadEntityElements = entityHandlers?.[entity]?.loader;
       if (deleteEntity) {
         const deleteEntityResult = await deleteEntity(id);
-        console.log(deleteEntityResult);
         if (!deleteEntityResult?.success) {
           showMessageLog("error", deleteEntityResult.message);
         } else {

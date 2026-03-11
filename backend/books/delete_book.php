@@ -30,7 +30,7 @@ if($validation_result['valid'] === false)
 $DB_book_id = trim($book_id);
 $DB_book_id = (int) $DB_book_id;
 
-$query = "DELETE FROM books WHERE id = ?";
+$query = "UPDATE books SET is_deleted = 1 WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i" , $DB_book_id);
 
