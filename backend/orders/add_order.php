@@ -19,6 +19,7 @@ require_once __DIR__ . '/helpers/order_helpers.php';
 require_once __DIR__ . '/helpers/order_db_helpers.php';
 require_once __DIR__ . '/../notifications/admin_notifications/helpers/admin_notifcations_db_helpers.php';
 require_once __DIR__ . '/../email/email_config.php';
+require_once __DIR__ . '/../books/helpers/book_db_helpers.php';
 
 $order_payload = extract_order_payload($_POST);
 $email_queue = [];
@@ -212,7 +213,7 @@ try
     if(empty($order_payload['address']['existing_address_id']) || $order_payload['address']['existing_address_id'] === "null")
     {
         // Admin typed a new address
-        $DB_address_id = insert_new_address($conn , $order_payload['address']);    
+        $DB_address_id = insert_new_address($conn , $order_payload['address'] , 1);    
     } 
     else 
     {

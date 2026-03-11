@@ -2,6 +2,105 @@
 
 require_once __DIR__ . '/../../helpers.php';
 
+function validate_address_details($address)
+{
+    $order_first_name_result = validate_order_ad_first_name($address['first_name']);
+    if(!$order_first_name_result['success'])
+    {
+        return [
+            'success' => false,
+            'status' => 400,
+            'message' => $order_first_name_result['message']
+        ];
+    }    
+    
+    $order_last_name_result = validate_order_ad_last_name($address['last_name']);
+    if(!$order_last_name_result['success'])
+    {
+        return [
+            'success' => false,
+            'status' => 400,
+            'message' => $order_last_name_result['message']
+        ];
+    }    
+    
+    $order_email_result = validate_order_ad_email($address['email']);
+    if(!$order_email_result['success'])
+    {
+        return [
+            'success' => false,
+            'status' => 400,
+            'message' => $order_email_result['message']
+        ];
+        
+    }    
+
+    $order_phone_number_result = validate_order_ad_phone($address['phone_number']);
+    if(!$order_phone_number_result['success'])
+    {
+        return [
+            'success' => false,
+            'status' => 400,
+            'message' => $order_phone_number_result['message']
+        ];
+    }    
+
+    $order_state_result = validate_order_ad_state($address['state']);
+    if(!$order_state_result['success'])
+    {
+        return [
+            'success' => false,
+            'status' => 400,
+            'message' => $order_state_result['message']
+        ];
+    }    
+
+    $order_city_result = validate_order_ad_city($address['city']);
+    if(!$order_city_result['success'])
+    {
+        return [
+            'success' => false,
+            'status' => 400,
+            'message' => $order_city_result['message']
+        ];
+    }    
+
+    $order_address_line1_result = validate_order_ad_line1($address['address_line1']);
+    if(!$order_address_line1_result['success'])
+    {
+        return [
+            'success' => false,
+            'status' => 400,
+            'message' => $order_address_line1_result['message']
+        ];
+    }    
+
+    $order_address_line2_result = validate_order_ad_line2($address['address_line2']);
+    if(!$order_address_line2_result['success'])
+    {
+        return [
+            'success' => false,
+            'status' => 400,
+            'message' => $order_address_line2_result['message']
+        ];
+    }    
+
+    $order_additional_notes_result = validate_order_ad_notes($address['additional_notes']);
+    if(!$order_additional_notes_result['success'])
+    {
+        return [
+            'success' => false,
+            'status' => 400,
+            'message' => $order_additional_notes_result['message']
+        ];
+    }
+    
+    return [
+        'success' => true,
+        'status' => 200
+    ];
+}
+
 function validate_order_customer($id)
 {
     if($id === null || empty($id) || empty(trim($id)))

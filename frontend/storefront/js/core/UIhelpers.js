@@ -7,7 +7,7 @@ import { calculateCartTotal } from "../components/miniCartBar.js";
 import { getCustomerAddresses_DB } from "../services/customerServices.js";
 import { hydrateAddressForm } from "../components/addressForm/addressFormHydrator.js";
 
-export function buildAddressOptionContainer() {
+export function buildAddressOptionContainer(addressID) {
   const addressOptionContainer = document.createElement("div");
   addressOptionContainer.classList.add("address-option-container");
 
@@ -19,6 +19,7 @@ export function buildAddressOptionContainer() {
   defaultRadio.id = "default-address-radio";
   defaultRadio.name = "address-radio";
   defaultRadio.checked = true;
+  defaultRadio.value = addressID;
 
   defaultRadio.onchange = async () => {
     const form = document.querySelector("#address-form");

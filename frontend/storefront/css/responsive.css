@@ -28,6 +28,10 @@
     height: 45px;
     align-self: center;
   }
+
+  .checkout-redirection-button {
+    width: 250px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -262,25 +266,12 @@
   }
 
   #checkout {
-    grid-template-areas: "information summary";
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .checkout-order-summary-container {
-    grid-area: summary;
+    flex-direction: row-reverse;
+    gap: 0px;
   }
 
   .checkout-order-summary-container {
     border-left: 1px solid var(--border-primary-color);
-  }
-
-  .order-information-container {
-    grid-area: information;
-  }
-
-  .checkout-order-summary-container {
-    position: sticky;
-    top: 0;
   }
 }
 

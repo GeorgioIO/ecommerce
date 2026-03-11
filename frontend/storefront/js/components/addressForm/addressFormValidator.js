@@ -1,6 +1,7 @@
 import { isValidEmail, isValidPhone } from "../../core/helpers.js";
 
 export function validateAddressData(data) {
+  console.log(data);
   // first name
   const first_name = data.firstName.trim();
 

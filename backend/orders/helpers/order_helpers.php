@@ -2,6 +2,21 @@
 
 require_once __DIR__ . '/../../notifications/admin_notifications/helpers/admin_notifcations_db_helpers.php';
 
+function normalize_address_payload($payload)
+{
+    return [
+        'first_name' => $payload['first_name'] ?? $payload['firstName'] ?? null,
+        'last_name' => $payload['last_name'] ?? $payload['lastName'] ?? null,
+        'email' => $payload['email'] ?? null,
+        'phone_number' => $payload['phone_number'] ?? $payload['phoneNumber'] ?? null,
+        'state' => $payload['state'] ?? null,
+        'city' => $payload['city'] ?? null,
+        'address_line1' => $payload['address_line1'] ?? $payload['addressLine1'] ?? null,
+        'address_line2' => $payload['address_line2'] ?? $payload['addressLine2'] ?? null,
+        'additional_notes' => $payload['additional_notes'] ?? $payload['additionalNotes'] ?? null
+    ];
+}
+
 function handle_stock_transition($conn , $book_id , $title , $old_stock , $new_stock , &$email_queue)
 {
     // Book is out of stock

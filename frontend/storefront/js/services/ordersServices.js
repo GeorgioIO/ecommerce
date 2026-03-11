@@ -24,3 +24,17 @@ export async function fetchOrderLines_DB(orderID) {
 
   return result.json();
 }
+
+export async function placeOrder(addressID, newAddress) {
+  console.log(addressID, newAddress);
+  const formData = new FormData();
+  formData.append("address_id", addressID);
+  formData.append("new_address", JSON.stringify(newAddress));
+  const result = await fetch("../../../backend/orders/add_order_customer.php", {
+    method: "POST",
+    body: formData,
+  });
+
+  // console.log(result.text());
+  return result.json();
+}

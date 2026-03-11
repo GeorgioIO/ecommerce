@@ -34,7 +34,7 @@ function get_select_orders_query($role)
                 FROM
                     orders o
                 WHERE o.user_id = ?
-                ORDER BY o.date_added
+                ORDER BY o.date_added DESC
         ";
     }
 }
@@ -286,9 +286,8 @@ function insert_new_order($conn , $order_code , $order_payload , $user_id , $add
     return $DB_order_id;
 }
 
-function insert_new_address($conn , $address_payload)
+function insert_new_address($conn , $address_payload , $admin_made)
 {
-    $admin_made = 1;
     $is_active = 0;
     $query = <<<EOT
 

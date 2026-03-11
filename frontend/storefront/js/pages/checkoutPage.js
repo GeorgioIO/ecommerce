@@ -10,6 +10,8 @@ import { getCustomerAddresses_DB } from "../services/customerServices.js";
 import { getSession } from "../services/sessionServices.js";
 import { buildAddressFormSkeleton } from "../components/addressForm/addressFormBuilder.js";
 import { hydrateAddressForm } from "../components/addressForm/addressFormHydrator.js";
+import { placeOrder } from "../services/ordersServices.js";
+import { validateAddressData } from "../components/addressForm/addressFormValidator.js";
 
 const shippingMethods = [
   {
@@ -97,7 +99,7 @@ async function renderOrderInformation() {
 
   // Order Address
   const customerAddress = await getCustomerAddresses_DB();
-
+  console.log(customerAddress);
   const orderAddressContainer = renderOrderAddress(customerAddress);
 
   // Shipping
@@ -106,8 +108,9 @@ async function renderOrderInformation() {
   // Payment
   const paymentContainer = renderPaymentMethods();
 
+  const addressID = customerAddress[0]?.address_id ?? null;
   // Complete Order button
-  const completeOrderButon = renderCompleteOrderButton();
+  const completeOrderButon = renderCompleteOrderButton(addressID);
 
   orderInformation.append(
     orderAddressContainer,
@@ -119,13 +122,62 @@ async function renderOrderInformation() {
   return orderInformation;
 }
 
-function renderCompleteOrderButton() {
+async function attachCompleteOrder(addressID) {
+  activateMessageBox();
+
+  try {
+    const form = document.querySelector("#address-form");
+    const defaultRadio =
+      document.querySelector("#default-address-radio") ?? null;
+    let newAddress = null;
+
+    console.log(defaultRadio);
+    if (!defaultRadio || (defaultRadio && defaultRadio.checked !== true)) {
+      newAddress = {
+        firstName: form.querySelector("#first_name").value ?? null,
+        lastName: form.querySelector("#last_name").value ?? null,
+        email: form.querySelector("#email").value ?? null,
+        phoneNumber: form.querySelector("#phone_number").value ?? null,
+        state: form.querySelector("#state").value ?? null,
+        city: form.querySelector("#city").value ?? null,
+        addressLine1: form.querySelector("#address_line1").value ?? null,
+        addressLine2: form.querySelector("#address_line2").value ?? null,
+        additionalNotes: form.querySelector("#additional_notes").value ?? null,
+      };
+
+      addressID = null;
+
+      const dataValidation = validateAddressData(newAddress);
+
+      if (!dataValidation.valid) {
+        const messageBox = createMesssageBox(dataValidation.message);
+        appendMessageBox(messageBox);
+        return;
+      }
+    }
+
+    const response = await placeOrder(addressID, newAddress);
+
+    const messageBox = createMesssageBox(response.message);
+    appendMessageBox(messageBox);
+  } catch (error) {
+    console.log(error);
+    const messageBox = createMesssageBox(
+      "Problem placing order please try again",
+    );
+    appendMessageBox(messageBox);
+  }
+}
+
+function renderCompleteOrderButton(addressID) {
   const completeOrderContainer = document.createElement("div");
   completeOrderContainer.classList.add("complete-order-container");
 
   const button = document.createElement("button");
   button.id = "complete-order-button";
   button.textContent = "Complete Order";
+
+  button.onclick = async () => await attachCompleteOrder(addressID);
 
   completeOrderContainer.append(button);
   return completeOrderContainer;
@@ -205,7 +257,8 @@ function renderOrderAddress(customerAddress) {
   const addressForm = buildAddressFormSkeleton(customerAddress, "checkout");
 
   if (hasAddress) {
-    const addressOptionContainer = buildAddressOptionContainer();
+    const addressID = customerAddress[0].address_id;
+    const addressOptionContainer = buildAddressOptionContainer(addressID);
     orderAddressContainer.append(addressOptionContainer);
   }
   if (hasAddress) hydrateAddressForm(addressForm, customerAddress[0]);
@@ -252,7 +305,7 @@ function renderOrderSummary(container, data) {
   subTotalText.textContent = "Subtotal";
 
   const subTotalPrice = document.createElement("p");
-  subTotalPrice.textContent = `$${subTotal}`;
+  subTotalPrice.textContent = `$${subTotal.toFixed(2)}`;
 
   subTotalRow.append(subTotalText, subTotalPrice);
 

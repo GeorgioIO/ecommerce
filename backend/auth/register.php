@@ -6,6 +6,7 @@ require_once __DIR__ . '/../customers/helpers/customers_db_helpers.php';
 require_once __DIR__ . '/../customers/helpers/customers_helpers.php';
 require_once __DIR__ . '/../customers/validators/customer_validators.php';
 require_once __DIR__ . '/../customers/validators/customer_db_validators.php';
+require_once __DIR__ . '/../cart/helpers/cart_helpers.php';
 
 if (
     empty($_POST['username']) ||
@@ -81,40 +82,41 @@ $customer_code = generate_customer_code();
 
 $params = [$customer_code , $username , $email , $phone_number , $hashedPassword];
 $types = "sssss";
-
-// Add user
 $query = "
 INSERT INTO users (customer_code , name ,  email , phone_number , password)
 VALUES (? , ? , ? , ? , ?);
 ";
 
-$stmt = $conn->prepare($query);
-$stmt->bind_param($types , ...$params);
-$message = [];
-
-if($stmt->execute())
+$conn->begin_transaction();
+try
 {
-    // $_SESSION['user_id'] = $conn->insert_id;
-    // $_SESSION['user_email'] = $email;
-    // $_SESSION['user_name'] = $username;
 
-    $stmt->close();
-    $conn->close();
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param($types , ...$params);
+    $message = [];
+
+    if(!$stmt->execute()) {
+        throw new Exception("Problem regitering your account");
+    }
+
+    create_new_cart($conn , $conn->insert_id);
+
+    $conn->commit();
 
     $_SESSION['redirect_message'] = 'Account created successfully';
     $_SESSION['redirect_message_type'] = 'success';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
-    exit;
-
 }
-else
+catch(Exception $e)
 {
-    $stmt->close();
-    $conn->close();
+    $conn->rollback();
 
     $_SESSION['redirect_message'] = 'Problem in registering...';
     $_SESSION['redirect_message_type'] = 'error';
     header("Location: /ecommerce/frontend/storefront/pages/my-account.php");
+} finally {
+    if(isset($stmt)) $stmt->close();
+    if(isset($conn)) $conn->close();
     exit;
 }
 
