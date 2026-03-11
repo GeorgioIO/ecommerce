@@ -42,7 +42,7 @@ if(!$genre_has_books_validation['success'])
 }
 
 
-$query = "DELETE FROM genres WHERE id = ?";
+$query = "UPDATE genres SET is_deleted = 1 WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i" , $DB_genre_id);
 

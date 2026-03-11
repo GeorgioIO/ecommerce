@@ -54,6 +54,15 @@ export const bookFormConfigs = {
       required: true,
     },
     {
+      name: "Genre",
+      labelText: "Genre",
+      key: "genre_id",
+      tag: "select",
+      source: "genres",
+      disabled: false,
+      required: true,
+    },
+    {
       name: "Format",
       labelText: "Format",
       key: "format_id",
@@ -78,15 +87,6 @@ export const bookFormConfigs = {
       tag: "textarea",
       disabled: false,
       required: false,
-    },
-    {
-      name: "Genre",
-      labelText: "Genre",
-      key: "genre_id",
-      tag: "select",
-      source: "genres",
-      disabled: false,
-      required: true,
     },
     {
       name: "Quantity",

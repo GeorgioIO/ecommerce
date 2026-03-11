@@ -8,6 +8,7 @@ $conn->query("
         id INT AUTO_INCREMENT,
         name VARCHAR(45) NOT NULL UNIQUE,
         image VARCHAR(255),
+        is_deleted BOOL NOT NULL DEFAULT 0,
         PRIMARY KEY(id)
     );
 ");

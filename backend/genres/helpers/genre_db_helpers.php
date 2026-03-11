@@ -13,6 +13,7 @@ function get_genres_by_order_counts($conn)
         JOIN books b ON g.id = b.genre_id
         LEFT JOIN order_items oi ON b.id = oi.book_id
         LEFT JOIN orders o ON o.id = oi.order_id
+        WHERE g.is_deleted = 0
         GROUP BY g.id , g.name , g.image
         ORDER BY total_orders DESC
         LIMIT 4
@@ -35,10 +36,11 @@ function get_genres_by_alphabet($conn)
 {
     $result = $conn->query("        
         SELECT
-            g.id,
-            g.name
+            id,
+            name
         FROM
-            genres g
+            genres 
+        WHERE is_deleted = 0
         ORDER BY RAND()
         LIMIT 6;
         ");
@@ -64,7 +66,8 @@ function get_all_genres($conn)
             name,
             image
         FROM
-            genres g
+            genres 
+        WHERE is_deleted = 0
         ORDER BY name ASC;
         ");
     
