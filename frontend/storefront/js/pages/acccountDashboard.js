@@ -3,7 +3,7 @@ import { getSession } from "../services/sessionServices.js";
 import { renderOrdersCatalog } from "../components/ordersCatalog.js";
 import {
   deleteCustomerAddress_DB,
-  get_customer_addresses_DB,
+  getCustomerAddresses_DB,
   getCustomerData_DB,
   saveCustomerAddress_DB,
   updateAccountDetails_DB,
@@ -166,7 +166,7 @@ async function renderAddressSection(content) {
   // Build the form if user have a user made address saved populate the form
   // If not tell him that He can fill the form and save address
   // Add delete address button that delete the address and make the form empty
-  const address = await get_customer_addresses_DB();
+  const address = await getCustomerAddresses_DB();
   if (address.success === false) {
     activateMessageBox();
     const message = createMesssageBox("Fail loading address");

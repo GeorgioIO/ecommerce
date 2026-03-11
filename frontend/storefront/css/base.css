@@ -53,6 +53,7 @@ textarea {
   --primary-color: #00cdbc;
   --secondary-color: white;
   --accent-color: black;
+  --feint-color: rgb(236, 236, 236);
   --border-primary-color: rgb(145, 145, 145);
   --border-feint-color: rgb(219, 219, 219);
 

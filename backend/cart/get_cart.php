@@ -23,16 +23,8 @@ require_once __DIR__ . '../../../configuration/database.php';
 
 */
 
-$user_id = $_SESSION['user_id'] ?? null;
-if(!$user_id)
-{
-    echo json_encode([
-        'success' => false,
-        'status' => 401,
-        'message' => 'Log in required'
-    ]);
-    exit;
-}
+$user_id = $_SESSION['user_id'] ;
+
 
 $query = <<<EOT
     SELECT

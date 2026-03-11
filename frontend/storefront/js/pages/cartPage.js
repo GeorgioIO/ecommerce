@@ -88,6 +88,7 @@ async function createTotalContainer(data) {
   tax.textContent = "Taxes and shipping calculated at checkout";
 
   const checkoutButton = document.createElement("a");
+  checkoutButton.href = "../pages/checkout.php";
   checkoutButton.textContent = "Check Out";
   checkoutButton.classList.add("checkout-button");
 

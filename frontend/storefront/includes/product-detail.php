@@ -41,7 +41,7 @@ $is_inStock = htmlspecialchars($product['is_inStock'] , ENT_QUOTES , 'uTF-8');
 
                 if ($product['is_inStock'] === 1) {
                     echo '<button id="single-product-adc-button" >ADD TO CART</button>';
-                    echo '<button id="buy-now-button">BUY IT NOW</button>';
+                    echo '<button id="buy-now-button" >BUY IT NOW</button>';
                     }
                 else
                 {

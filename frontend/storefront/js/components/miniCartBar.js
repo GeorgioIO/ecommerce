@@ -1,11 +1,24 @@
 import { swapClass } from "../../../admin/js/UIhelpers.js";
 import { getCartItems } from "../services/cartServices.js";
+import {
+  activateMessageBox,
+  appendMessageBox,
+  createMesssageBox,
+} from "./messageBox.js";
 import { buildSidebarCard } from "./sidebarProductCard.js";
 
 export async function renderMiniCartBar(body = null) {
   if (!body) body = document.body;
   // Get cart data
   const { data, success, status, message } = await getCartItems();
+
+  if (status === 401) {
+    activateMessageBox();
+    const messageBox = createMesssageBox(message);
+    appendMessageBox(messageBox);
+    return;
+  }
+
   let dataAvailable = false;
   if (data.length > 0) dataAvailable = true;
 
@@ -216,6 +229,7 @@ export function buildMiniCartFooter() {
 
   const checkoutButton = document.createElement("a");
   checkoutButton.id = "checkout-button";
+  checkoutButton.href = "../pages/checkout.php";
   checkoutButton.textContent = "CHECKOUT";
 
   buttonsContainer.append(viewCartButton, checkoutButton);

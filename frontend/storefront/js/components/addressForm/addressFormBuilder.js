@@ -1,17 +1,18 @@
 import { AddressConfig } from "./addressFormConfigs.js";
 
-export function buildAddressFormSkeleton(data) {
-  console.log(data);
+export function buildAddressFormSkeleton(data, destination = null) {
   // Create the form
   const form = document.createElement("form");
   form.id = "address-form";
   form.noValidate = true;
 
-  const defaultReminderText = document.createElement("p");
-  defaultReminderText.innerHTML =
-    "<strong>This address will be used as the default address in orders</strong>";
+  if (destination !== "checkout") {
+    const defaultReminderText = document.createElement("p");
+    defaultReminderText.innerHTML =
+      "<strong>This address will be used as the default address in orders</strong>";
 
-  form.append(defaultReminderText);
+    form.append(defaultReminderText);
+  }
 
   if (data.length === 0) {
     const noAddressText = document.createElement("p");
@@ -75,25 +76,27 @@ export function buildAddressFormSkeleton(data) {
     form.append(inputContainer);
   });
 
-  // Create buttons container
-  const buttonsContainer = document.createElement("div");
-  buttonsContainer.classList.add("buttons-container");
+  if (destination !== "checkout") {
+    // Create buttons container
+    const buttonsContainer = document.createElement("div");
+    buttonsContainer.classList.add("buttons-container");
 
-  // Create reset button
-  const deleteButton = document.createElement("button");
-  deleteButton.type = "button";
-  deleteButton.textContent = "Delete";
-  deleteButton.id = "delete-address-button";
-  deleteButton.dataset.addressid = data[0]?.address_id;
+    // Create reset button
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.textContent = "Delete";
+    deleteButton.id = "delete-address-button";
+    deleteButton.dataset.addressid = data[0]?.address_id;
 
-  const saveButton = document.createElement("button");
-  saveButton.type = "button";
-  saveButton.textContent = "Save address";
-  saveButton.id = "save-address-button";
+    const saveButton = document.createElement("button");
+    saveButton.type = "button";
+    saveButton.textContent = "Save address";
+    saveButton.id = "save-address-button";
 
-  buttonsContainer.append(saveButton, deleteButton);
+    buttonsContainer.append(saveButton, deleteButton);
 
-  form.append(buttonsContainer);
+    form.append(buttonsContainer);
+  }
 
   return form;
 }

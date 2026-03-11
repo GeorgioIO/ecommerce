@@ -32,6 +32,7 @@ import { currentFilters } from "./core/currentFilters.js";
 import { updateExistingBarsButton } from "./core/UIhelpers.js";
 import { renderDashboardSection } from "./pages/acccountDashboard.js";
 import { loadProducts } from "./pages/productsPageUI.js";
+import { renderCheckoutSection } from "./pages/checkoutPage.js";
 
 const body = document.body;
 const sidebar = document.querySelector("#site-sidebar");
@@ -81,6 +82,10 @@ if (path.includes("products.php")) {
 
     await loadProducts();
   }
+}
+
+if (path.includes("checkout.php")) {
+  await renderCheckoutSection();
 }
 
 document.addEventListener("click", (e) => {

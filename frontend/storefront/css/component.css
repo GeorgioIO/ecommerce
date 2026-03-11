@@ -486,7 +486,8 @@
 #save-address-button,
 #show-filtering-bar-button,
 #view-cart-button,
-#checkout-button {
+#checkout-button,
+.checkout-redirection-button {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -1403,4 +1404,182 @@
   height: 45px;
   background-color: var(--accent-color);
   color: var(--secondary-color);
+}
+
+/* Checkout + Checkout product card */
+
+#checkout {
+  margin-top: 35px;
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  gap: 20px;
+  border: 1px solid var(--border-primary-color);
+}
+
+.error-checkout-container,
+.empty-checkout-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.error-checkout-container > p,
+.empty-checkout-container > p {
+  text-align: center;
+  font-weight: 600;
+  font-size: clamp(1.2rem, 1.2vw, 1.6rem);
+}
+
+.error-checkout-container > a,
+.empty-checkout-container > a {
+  height: 35px;
+}
+
+.checkout-order-summary-container,
+.order-information-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--feint-color);
+  gap: 12px;
+  width: 100%;
+  padding: 15px var(--sides-padding);
+}
+
+.order-information-container {
+  background-color: var(--secondary-color);
+  gap: 18px;
+}
+
+.checkout-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.checkout-card {
+  width: 100%;
+  gap: 12px;
+  display: grid;
+  grid-template-columns: 90px 1fr 50px;
+}
+
+.checkout-card figure,
+.checkout-card > figure > a,
+.checkout-card > figure > a img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.checkout-card > figure {
+  position: relative;
+}
+
+.checkout-card > figure .quantity-badge {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  font-family: var(--primary-font);
+  border-radius: 3px;
+  align-items: center;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.checkout-card-title {
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+}
+
+.checkout-card-price {
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+}
+
+.order-price-container {
+  border-top: 2px solid var(--border-feint-color);
+  padding-top: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.order-price-container > .subtotal-and-shipping-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.subtotal-and-shipping-container > div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order-price-container > .total-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-address-container,
+.shipping-container,
+.payment-container,
+.complete-order-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.address-option-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.address-option-container > div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shipping-methods-container,
+.payment-methods-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shipping-methods-container > div,
+.payment-methods-container > div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 65px;
+  background-color: #f2f8f6;
+  border-radius: 10px;
+  padding: 0px var(--sides-padding);
+  border: 1px solid var(--border-primary-color);
+}
+
+#complete-order-button {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border-radius: 10px;
+  height: 40px;
+  font-weight: 600;
 }

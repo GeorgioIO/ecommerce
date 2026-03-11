@@ -4,6 +4,59 @@ import { loadWishlist } from "../pages/wishlistUI.js";
 import { handleCartButton } from "../components/productCard.js";
 import { updateCart } from "../components/miniCartBar.js";
 import { calculateCartTotal } from "../components/miniCartBar.js";
+import { getCustomerAddresses_DB } from "../services/customerServices.js";
+import { hydrateAddressForm } from "../components/addressForm/addressFormHydrator.js";
+
+export function buildAddressOptionContainer() {
+  const addressOptionContainer = document.createElement("div");
+  addressOptionContainer.classList.add("address-option-container");
+
+  const defaultRow = document.createElement("div");
+  defaultRow.classList.add("default-address-row");
+
+  const defaultRadio = document.createElement("input");
+  defaultRadio.type = "radio";
+  defaultRadio.id = "default-address-radio";
+  defaultRadio.name = "address-radio";
+  defaultRadio.checked = true;
+
+  defaultRadio.onchange = async () => {
+    const form = document.querySelector("#address-form");
+
+    const customerAddress = await getCustomerAddresses_DB();
+    hydrateAddressForm(form, customerAddress[0]);
+  };
+
+  const defaultLabel = document.createElement("label");
+  defaultLabel.htmlFor = "default-address-radio";
+  defaultLabel.textContent = "Use default address";
+
+  defaultRow.append(defaultRadio, defaultLabel);
+
+  const newAddressRow = document.createElement("div");
+  newAddressRow.classList.add("new-address-row");
+
+  const newAddressRadio = document.createElement("input");
+  newAddressRadio.type = "radio";
+  newAddressRadio.id = "new-address-radio";
+  newAddressRadio.name = "address-radio";
+
+  newAddressRadio.onchange = (e) => {
+    const form = document.querySelector("#address-form");
+
+    form.reset();
+  };
+
+  const newAddressLabel = document.createElement("label");
+  newAddressLabel.htmlFor = "new-address-radio";
+  newAddressLabel.textContent = "Use new address (Will not be saved)";
+
+  newAddressRow.append(newAddressRadio, newAddressLabel);
+
+  addressOptionContainer.append(defaultRow, newAddressRow);
+
+  return addressOptionContainer;
+}
 
 export function updateExistingBarsButton(productid, buttonUpdated) {
   // Get bars
