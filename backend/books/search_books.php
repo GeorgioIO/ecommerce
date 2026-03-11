@@ -40,6 +40,7 @@ $query = <<<SQL
         LEFT JOIN carts c ON c.user_id = ? AND c.status = 'active'
         LEFT JOIN cart_items ci ON c.id = ci.cart_id AND ci.book_id = b.id
         WHERE 
+        is_delete = 0 AND 
             b.title LIKE ?
             OR a.name LIKE ?
             OR g.name LIKE ?

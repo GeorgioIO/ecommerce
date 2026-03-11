@@ -17,6 +17,7 @@ $conn->query("
     CREATE TABLE IF NOT EXISTS authors (
         id INT AUTO_INCREMENT,
         name VARCHAR(45) NOT NULL UNIQUE,
+        is_deleted BOOL NOT NULL DEFAULT 0,
         PRIMARY KEY(id)
     );
 ");

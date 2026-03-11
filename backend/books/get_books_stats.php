@@ -13,7 +13,8 @@ SELECT
     COUNT(*) AS books_count,
     SUM(CASE WHEN is_InStock = 1 THEN 1 ELSE 0 END) AS in_stock_count,
     SUM(CASE WHEN is_InStock = 0 THEN 1 ELSE 0 END) AS out_of_stock_count
-FROM books;
+FROM books
+WHERE is_deleted = 0;
 EOT;
 
 $result = $conn->query($query);

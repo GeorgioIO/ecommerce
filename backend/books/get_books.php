@@ -47,7 +47,7 @@ $datastmt = $conn->prepare($query);
 
 if(!$author_id && !$genre_id)
 {
-    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books");
+    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books WHERE is_deleted = 0");
     $countstmt->execute();
     $total_books = $countstmt->get_result()->fetch_assoc()['total_books'];
 
@@ -73,7 +73,7 @@ else if($author_id)
     $DB_author_id = trim($author_id);
     $DB_author_id = (int) $DB_author_id;
 
-    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books WHERE author_id = ?");
+    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books WHERE author_id = ? AND is_deleted = 0");
     $countstmt->bind_param("i" , $DB_author_id);
     $countstmt->execute();
     $total_books = $countstmt->get_result()->fetch_assoc()['total_books'];
@@ -98,7 +98,7 @@ elseif ($genre_id)
     $DB_genre_id = (int) $DB_genre_id;
 
 
-    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books WHERE genre_id = ?");
+    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books WHERE genre_id = ? AND is_deleted = 0");
     $countstmt->bind_param("i" , $DB_genre_id);
     $countstmt->execute();
     $total_books = $countstmt->get_result()->fetch_assoc()['total_books'];

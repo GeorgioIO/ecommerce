@@ -93,7 +93,7 @@ if(isset($_GET['language']))
 $where_sql = "";
 if(count($filters) > 0)
 {
-    $where_sql = "WHERE " . implode(" AND ", $filters);
+    $where_sql = "WHERE b.is_deleted = 0 AND " . implode(" AND ", $filters);
 }
 
 // Sorting options

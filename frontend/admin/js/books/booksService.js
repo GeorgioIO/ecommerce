@@ -98,7 +98,6 @@ export async function fetch_books_DB(filters, pagination = null) {
     params.set(key, filters[key]);
   }
 
-  console.log(params.toString());
   const result = await fetch(
     `../../backend/books/get_books.php?${params.toString()}`,
   );
@@ -106,5 +105,4 @@ export async function fetch_books_DB(filters, pagination = null) {
   // console.log(result.text());
 
   return result.json();
-  // console.log(result.text());
 }

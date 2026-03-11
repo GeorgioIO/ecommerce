@@ -16,6 +16,7 @@ $query = <<<EOT
 
 SELECT id, name 
 FROM authors
+WHERE is_deleted = 0
 ORDER BY name
 EOT;
 
@@ -58,7 +59,7 @@ if($result && $result->num_rows > 0)
     }
 }
 
-$result = $conn->query("SELECT COUNT(*) AS total_authors FROM authors");
+$result = $conn->query("SELECT COUNT(*) AS total_authors FROM authors WHERE is_deleted = 0");
 $total_authors = $result->fetch_assoc()['total_authors'];
 
 $pagination = $hasPagination ? [

@@ -41,7 +41,7 @@ if(!$author_has_books_validation['success'])
     exit;
 }
 
-$query = "DELETE FROM authors WHERE id = ?";
+$query = "UPDATE authors SET is_deleted = 1 WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i" , $DB_author_id);
 
