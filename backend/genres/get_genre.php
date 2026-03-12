@@ -31,7 +31,7 @@ SELECT
     image
 FROM
     genres 
-WHERE id = ?
+WHERE id = ? AND is_deleted = 0
 EOT;
 
 $stmt = $conn->prepare($query);

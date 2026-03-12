@@ -16,6 +16,7 @@ $query = <<<EOT
 
 SELECT id , name , image
 FROM genres
+WHERE is_deleted = 0
 ORDER BY name
 EOT;
 
@@ -58,7 +59,7 @@ if($result && $result->num_rows > 0)
     }
 }
 
-$result = $conn->query("SELECT COUNT(*) AS total_genres FROM genres");
+$result = $conn->query("SELECT COUNT(*) AS total_genres FROM genres WHERE is_deleted = 0");
 $total_genres = $result->fetch_assoc()['total_genres'];
 
 $pagination = $hasPagination ? [

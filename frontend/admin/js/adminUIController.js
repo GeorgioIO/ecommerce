@@ -163,6 +163,7 @@ document.addEventListener("reset", (e) => {
   }
 });
 
+// ! Click Events
 document.addEventListener("click", async (e) => {
   const openOperationFormButton = e.target.closest(".open-operation-form"); // false
   const showDeletionModalButton = e.target.closest(".show-confirmation-modal"); // false
@@ -319,6 +320,7 @@ confirmationModal.addEventListener("click", async (e) => {
           swapClass(confirmationModal, "fade-out-modal", "fade-in-modal");
           listState.filters = {};
           listState.entity = entity;
+          listState.page = 1;
           await loadEntityElements();
         }
       }

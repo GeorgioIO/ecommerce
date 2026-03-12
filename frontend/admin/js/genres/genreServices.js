@@ -12,6 +12,7 @@ export async function fetch_genres_DB(pagination = null) {
   );
 
   return result.json();
+  // console.log(result.text());
 }
 
 // Function responsible to add a genre
