@@ -1,0 +1,52 @@
+<?php
+
+header('Content-Type: application/json');
+
+require __DIR__ . '/../../configuration/session.php';
+
+if (!isset($_SESSION['admin_id'])) {
+    http_response_code(401);
+    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+}
+
+require_once  __DIR__ .  '/../../configuration/database.php';
+require_once  __DIR__ . '/../helpers.php';
+
+$book_id = $_POST["id"] ?? null;
+
+// validate id
+$validation_result = validate_entity_ID($book_id);
+
+if($validation_result['valid'] === false)
+{
+    echo json_encode([
+        'success' => false,
+        'message' => $validation_result['message']
+    ]);
+    exit;
+}
+
+// sanitize book id
+$DB_book_id = trim($book_id);
+$DB_book_id = (int) $DB_book_id;
+
+$query = "UPDATE books SET is_deleted = 0 WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i" , $DB_book_id);
+
+if($stmt->execute())
+{
+    $response = ['success' => true , 'message' => "Book #$DB_book_id is restored successsfully!"];
+}
+else
+{
+    $response = ['success' => false , 'message' => 'Problem in restoring book'];
+}
+
+$stmt->close();
+$conn->close();
+
+echo json_encode($response);
+exit;
+
+?>

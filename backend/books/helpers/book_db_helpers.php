@@ -242,6 +242,7 @@ function form_load_books_query($filters)
             b.price,
             b.is_onSale,
             b.discount_percentage,
+            b.is_deleted,
             CASE 
                 WHEN b.is_onSale = 1
                     THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
@@ -277,6 +278,7 @@ function form_load_books_query($filters)
             b.price,
             b.is_onSale,
             b.discount_percentage,
+            b.is_deleted,
             CASE 
                 WHEN b.is_onSale = 1
                     THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)
@@ -312,6 +314,7 @@ function form_load_books_query($filters)
             b.price,
             b.is_onSale,
             b.discount_percentage,
+            b.is_deleted,
             CASE 
                 WHEN b.is_onSale = 1
                     THEN ROUND(b.price - (b.price * b.discount_percentage) / 100 , 2)

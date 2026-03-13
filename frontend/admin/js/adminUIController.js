@@ -9,6 +9,7 @@ import {
   addBook_DB,
   update_book_DB,
   deleteBook_DB,
+  restoreBook_DB,
 } from "./books/booksService.js";
 import { validateBookData } from "./books/booksValidators.js";
 import {
@@ -86,6 +87,7 @@ export const entityHandlers = {
     addEntity: addBook_DB,
     updateEntity: update_book_DB,
     delete: deleteBook_DB,
+    restore: restoreBook_DB,
     loader: loadBooks,
     dataCollector: collectBookFormData,
     dataValidator: validateBookData,
@@ -264,9 +266,9 @@ document.addEventListener("click", async (e) => {
   }
 
   if (showDeletionModalButton) {
-    const { entity, id } = showDeletionModalButton.dataset;
+    const { entity, id, mode } = showDeletionModalButton.dataset;
 
-    showDeletionModal(entity, id);
+    showDeletionModal(entity, id, mode);
     return;
   }
 
@@ -305,7 +307,9 @@ document.addEventListener("click", async (e) => {
 
 confirmationModal?.addEventListener("click", async (e) => {
   const closeConfirmationModal = e.target.closest("#close-confirmation-modal");
-  const confirmBookDeletion = e.target.closest("#delete-entity-btn");
+  const confirmBookOperation = e.target.closest(
+    ".confirm-delete-or-restore-button",
+  );
 
   if (closeConfirmationModal) {
     setTimeout(() => {
@@ -318,25 +322,25 @@ confirmationModal?.addEventListener("click", async (e) => {
     setTimeout(() => {
       confirmationModal.querySelector(".confirmation-text").textContent = "";
     }, 1000);
-  } else if (confirmBookDeletion) {
+  } else if (confirmBookOperation) {
     try {
-      const { entity, id, intent } = confirmBookDeletion.dataset;
-      // Validate ID
-      const validateID = validateIDEligibility(id);
+      const { entity, id, intent } = confirmBookOperation.dataset;
 
+      const validateID = validateIDEligibility(id);
       if (validateID.valid === false) {
         showMessageLog("error", validateID.error);
         return;
       }
 
-      const deleteEntity = entityHandlers?.[entity]?.[intent];
+      const operationHandler = entityHandlers?.[entity]?.[intent];
       const loadEntityElements = entityHandlers?.[entity]?.loader;
-      if (deleteEntity) {
-        const deleteEntityResult = await deleteEntity(id);
-        if (!deleteEntityResult?.success) {
-          showMessageLog("error", deleteEntityResult.message);
+
+      if (operationHandler) {
+        const operationResult = await operationHandler(id);
+        if (!operationResult?.success) {
+          showMessageLog("error", operationResult.message);
         } else {
-          showMessageLog("success", deleteEntityResult.message);
+          showMessageLog("success", operationResult.message);
           swapClass(confirmationModal, "fade-out-modal", "fade-in-modal");
           listState.filters = {};
           listState.entity = entity;

@@ -24,7 +24,7 @@ require_once __DIR__ . '/../../backend/auth/admin_guard.php';
         <p class="confirmation-text"></p>
         <div class="confirmation-buttons-container">
           <button id="close-confirmation-modal">Back</button>
-          <button id="delete-entity-btn" data-intent="delete">Confirm</button>
+          <button id="delete-entity-btn" class="confirm-delete-or-restore-button">Confirm</button>
         </div>
       </div>
       <div class="form-container">

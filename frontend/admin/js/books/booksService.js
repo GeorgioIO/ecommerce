@@ -56,6 +56,21 @@ export async function deleteBook_DB(book_ID) {
   // console.log(result.text());
 }
 
+export async function restoreBook_DB(book_ID) {
+  const result = await fetch("../../backend/books/restore_book.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      id: book_ID,
+    }),
+  });
+
+  return result.json();
+  // console.log(result.text());
+}
+
 export async function update_book_DB(bookData) {
   const formData = new FormData();
 

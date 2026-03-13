@@ -190,18 +190,27 @@ export function renderMiniActiveTableState(data, renderHeader, renderRow) {
   `;
 }
 
-export function showDeletionModal(entity, id) {
+export function showDeletionModal(entity, id, mode) {
+  let message =
+    mode === "delete"
+      ? `Are you sure you want to delete ${entity} with ID #${id} ?`
+      : `Are you sure you want to restore ${entity} with ID #${id}`;
+  let buttonID =
+    mode === "delete" ? `${mode}-entity-btn` : `${mode}-entity-button`;
+
   const confirmationModal = document.querySelector("#confirmation-modal");
   confirmationModal.style.display = "flex";
 
   const confirmationText =
     confirmationModal.querySelector(".confirmation-text");
-  const confirmDeletionButton =
-    confirmationModal.querySelector("#delete-entity-btn");
+  const confirmDeletionButton = confirmationModal.querySelector(
+    ".confirm-delete-or-restore-button",
+  );
 
-  confirmationText.textContent = `Are you sure you want to delete ${entity} with ID #${id} ?`;
-
+  confirmationText.textContent = message;
+  confirmDeletionButton.id = buttonID;
   confirmDeletionButton.dataset.id = id;
   confirmDeletionButton.dataset.entity = entity;
+  confirmDeletionButton.dataset.intent = mode;
   swapClass(confirmationModal, "fade-in-modal", "fade-out-modal");
 }
