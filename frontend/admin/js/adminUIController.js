@@ -51,6 +51,7 @@ import {
   addGenre_DB,
   updateGenre_DB,
   deleteGenre_DB,
+  restoreGenre_DB,
 } from "./genres/genreServices.js";
 import { validateGenreData } from "./genres/genreValidators.js";
 import {
@@ -113,6 +114,7 @@ export const entityHandlers = {
     addEntity: addGenre_DB,
     updateEntity: updateGenre_DB,
     delete: deleteGenre_DB,
+    restore: restoreGenre_DB,
     loader: loadGenres,
     dataCollector: collectGenreFormData,
     dataValidator: validateGenreData,

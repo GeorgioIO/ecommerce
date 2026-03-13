@@ -9,19 +9,26 @@ header('Content-Type: application/json');
 require_once  __DIR__ .  "/../../configuration/database.php";
 
 $hasPagination = isset($_GET['page']) && isset($_GET['perPage']);
-
+$paginationText = $hasPagination ? " LIMIT ? OFFSET ?" : "";
+$is_deleted = $_GET['is_deleted'] ?? 0;
 
 
 $query = <<<EOT
-
-SELECT id , name , image
-FROM genres
-WHERE is_deleted = 0
-ORDER BY name
+    SELECT 
+        id, 
+        name, 
+        image, 
+        is_deleted
+    FROM 
+        genres
+    WHERE 
+        is_deleted = ?
+    ORDER BY name
+    $paginationText
 EOT;
 
-$params = [];
-$types = "";
+$params = [$is_deleted];
+$types = "i";
 
 if($hasPagination)
 {
@@ -32,7 +39,6 @@ if($hasPagination)
     $perPage = min(50 , max(5 , $perPage));
     $offset = ($page - 1) * $perPage;
 
-    $query .= " LIMIT ? OFFSET ?";
 
     $params[] = $perPage;
     $params[] = $offset;
@@ -40,17 +46,11 @@ if($hasPagination)
 }
 
 $stmt = $conn->prepare($query);
-
-if($hasPagination)
-{
-    $stmt->bind_param("ii" , $perPage , $offset);
-}
-
+$stmt->bind_param($types , ...$params);
 $stmt->execute();
 $result = $stmt->get_result();
 
 $genres = [];
-
 if($result && $result->num_rows > 0)
 {
     while($row = $result->fetch_assoc())
@@ -59,7 +59,11 @@ if($result && $result->num_rows > 0)
     }
 }
 
-$result = $conn->query("SELECT COUNT(*) AS total_genres FROM genres WHERE is_deleted = 0");
+$count_query = "SELECT COUNT(*) AS total_genres FROM genres WHERE is_deleted = ?";
+$count_stmt = $conn->prepare($count_query);
+$count_stmt->bind_param("i" , $is_deleted);
+$count_stmt->execute();
+$result = $count_stmt->get_result();
 $total_genres = $result->fetch_assoc()['total_genres'];
 
 $pagination = $hasPagination ? [
@@ -69,11 +73,13 @@ $pagination = $hasPagination ? [
     'totalPages' => ceil($total_genres / $perPage)
 ] : null;
 
-$conn->close();
 $stmt->close();
+$count_stmt->close();
+$conn->close();
 
 echo json_encode([
     'success' => true,
+    'status' => 200,
     'data' => $genres,
     'pagination' => $pagination
 ]);

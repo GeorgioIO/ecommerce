@@ -10,9 +10,14 @@ $paginationText = $hasPagination ? " LIMIT ? OFFSET ?" : "";
 $is_deleted = $_GET['is_deleted'] ?? 0;
 
 $query = <<<EOT
-    SELECT id, name, is_deleted
-    FROM authors
-    WHERE is_deleted = ?
+    SELECT 
+        id, 
+        name, 
+        is_deleted
+    FROM 
+        authors
+    WHERE 
+        is_deleted = ?
     ORDER BY name
     $paginationText
 EOT;
@@ -40,7 +45,6 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 $authors = [];
-
 if($result && $result->num_rows > 0)
 {
     while($row = $result->fetch_assoc())

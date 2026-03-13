@@ -42,7 +42,7 @@ export function collectGenreFormData(form) {
 
 export async function loadGenres() {
   try {
-    const genresResponse = await fetch_genres_DB({
+    const genresResponse = await fetch_genres_DB(listState.filters, {
       page: listState.page,
       perPage: listState.perPage,
     });
@@ -99,6 +99,60 @@ function renderGenreTableHeader() {
 }
 
 function renderGenreTableRow(item) {
+  let setDeletedButton = "";
+  if (item.is_deleted == 1) {
+    setDeletedButton = `
+        <button class="table-row-button show-confirmation-modal" data-mode="restore" data-entity="genre" data-id="${item.id}">
+            <svg
+                width="25px"
+                height="25px" 
+                viewBox="0 0 24 24"
+                fill="black"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                  d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                  stroke="#1C1C1C"
+                  stroke-width="1.3"
+                  stroke-linecap="round"
+              />
+              <path
+                  d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                  stroke="#1C1C1C"
+                  stroke-width="1.3"
+                  stroke-linecap="round"
+              />
+          </svg>
+        </button>
+    `;
+  } else {
+    setDeletedButton = `
+       <button class="table-row-button show-confirmation-modal" data-mode="delete" data-entity="genre" data-id="${item.id}">
+          <svg
+              width="25px"
+              height="25px" 
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+                d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
+                stroke="#1C1C1C"
+                stroke-width="1.3"
+                stroke-linecap="round"
+            />
+            <path
+                d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
+                stroke="#1C1C1C"
+                stroke-width="1.3"
+                stroke-linecap="round"
+            />
+        </svg>
+      </button>
+    
+    `;
+  }
+
   return `
     <div class="flex-table-row">
         <div>
@@ -140,30 +194,7 @@ function renderGenreTableRow(item) {
                     />
                 </svg>
             </button>
-            <button class="table-row-button show-confirmation-modal" data-mode="delete" data-entity="genre" data-id="${
-              item.id
-            }">
-                <svg
-                    width="25px"
-                    height="25px" 
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M5.73708 6.54391V18.9857C5.73708 19.7449 6.35257 20.3604 7.11182 20.3604H16.8893C17.6485 20.3604 18.264 19.7449 18.264 18.9857V6.54391M2.90906 6.54391H21.0909"
-                        stroke="#1C1C1C"
-                        stroke-width="1.3"
-                        stroke-linecap="round"
-                    />
-                    <path
-                        d="M8 6V4.41421C8 3.63317 8.63317 3 9.41421 3H14.5858C15.3668 3 16 3.63317 16 4.41421V6"
-                        stroke="#1C1C1C"
-                        stroke-width="1.3"
-                        stroke-linecap="round"
-                    />
-                </svg>
-            </button>
+            ${setDeletedButton}
           </div>
         </div>
   `;

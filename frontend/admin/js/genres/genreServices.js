@@ -1,5 +1,6 @@
-export async function fetch_genres_DB(pagination = null) {
+export async function fetch_genres_DB(filters, pagination = null) {
   let params = "";
+
   if (pagination) {
     params = new URLSearchParams({
       page: pagination.page,
@@ -7,12 +8,16 @@ export async function fetch_genres_DB(pagination = null) {
     });
   }
 
+  if (filters) {
+    const key = Object.keys(filters)[0];
+    params.set(key, filters[key]);
+  }
+
   const result = await fetch(
     `../../backend/genres/get_genres.php?${params.toString()}`,
   );
 
   return result.json();
-  // console.log(result.text());
 }
 
 // Function responsible to add a genre
@@ -47,6 +52,20 @@ export async function updateGenre_DB(genreData) {
 
 export async function deleteGenre_DB(genreID) {
   const result = await fetch("../../backend/genres/delete_genre.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      id: genreID,
+    }),
+  });
+
+  return result.json();
+}
+
+export async function restoreGenre_DB(genreID) {
+  const result = await fetch("../../backend/genres/restore_genre.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
