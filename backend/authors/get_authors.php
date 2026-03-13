@@ -3,25 +3,22 @@
 header('Content-Type: application/json');
 
 require __DIR__ . '/../../configuration/session.php';
-
-
-
-
 require_once __DIR__ . '/../../configuration/database.php';
 
 $hasPagination = isset($_GET['page']) && isset($_GET['perPage']);
-
+$paginationText = $hasPagination ? " LIMIT ? OFFSET ?" : "";
+$is_deleted = $_GET['is_deleted'] ?? 0;
 
 $query = <<<EOT
-
-SELECT id, name 
-FROM authors
-WHERE is_deleted = 0
-ORDER BY name
+    SELECT id, name, is_deleted
+    FROM authors
+    WHERE is_deleted = ?
+    ORDER BY name
+    $paginationText
 EOT;
 
-$params = [];
-$types = "";
+$params = [$is_deleted];
+$types = "i";
 
 if($hasPagination)
 {
@@ -32,20 +29,13 @@ if($hasPagination)
     $perPage = min(50 , max(5 , $perPage));
     $offset = ($page - 1) * $perPage;
 
-    $query .= " LIMIT ? OFFSET ?";
-
     $params[] = $perPage;
     $params[] = $offset;
     $types .= "ii";
 }
 
 $stmt = $conn->prepare($query);
-
-if($hasPagination)
-{
-    $stmt->bind_param("ii" , $perPage , $offset);
-}
-
+$stmt->bind_param($types , ...$params);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -59,7 +49,11 @@ if($result && $result->num_rows > 0)
     }
 }
 
-$result = $conn->query("SELECT COUNT(*) AS total_authors FROM authors WHERE is_deleted = 0");
+$count_query = "SELECT COUNT(*) AS total_authors FROM authors WHERE is_deleted = ?";
+$count_stmt = $conn->prepare($count_query);
+$count_stmt->bind_param("i" , $is_deleted); 
+$count_stmt->execute();
+$result = $count_stmt->get_result();
 $total_authors = $result->fetch_assoc()['total_authors'];
 
 $pagination = $hasPagination ? [
@@ -69,12 +63,13 @@ $pagination = $hasPagination ? [
     'totalPages' => ceil($total_authors / $perPage)
 ] : null;
 
-$conn->close();
+$count_stmt->close();
 $stmt->close();
-
+$conn->close();
 
 echo json_encode([
     'success' => true,
+    'status' => 200,
     'data' => $authors,
     'pagination' => $pagination
 ]);

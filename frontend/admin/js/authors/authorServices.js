@@ -26,6 +26,20 @@ export async function delete_Author_DB(author_ID) {
   return result.json();
 }
 
+export async function restore_Author_DB(author_ID) {
+  const result = await fetch("../../backend/authors/restore_author.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      id: author_ID,
+    }),
+  });
+
+  return result.json();
+}
+
 export async function update_author_DB(authorData) {
   const formData = new FormData();
 
@@ -55,13 +69,19 @@ export async function get_author_data_DB(author_id) {
   return res.json();
 }
 
-export async function fetch_authors_DB(pagination = null) {
+export async function fetch_authors_DB(filters, pagination = null) {
   let params = "";
+
   if (pagination) {
     params = new URLSearchParams({
       page: pagination.page,
       perPage: pagination.perPage,
     });
+  }
+
+  if (filters) {
+    const key = Object.keys(filters)[0];
+    params.set(key, filters[key]);
   }
 
   const result = await fetch(

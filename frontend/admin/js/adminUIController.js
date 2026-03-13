@@ -23,6 +23,7 @@ import {
   addAuthor_DB,
   update_author_DB,
   delete_Author_DB,
+  restore_Author_DB,
 } from "./authors/authorServices.js";
 import { validateAuthorData } from "./authors/authorValidators.js";
 import {
@@ -100,6 +101,7 @@ export const entityHandlers = {
     addEntity: addAuthor_DB,
     updateEntity: update_author_DB,
     delete: delete_Author_DB,
+    restore: restore_Author_DB,
     loader: loadAuthors,
     dataCollector: collectAuthorFormData,
     dataValidator: validateAuthorData,
@@ -163,6 +165,7 @@ document.addEventListener("change", (e) => {
       listState.filters = { is_deleted: 0 };
     }
 
+    listState.page = 1;
     loadEntities();
   }
 

@@ -3,9 +3,6 @@
 header('Content-Type: application/json');
 
 require __DIR__ . '/../../configuration/session.php';
-
-
-
 require_once  __DIR__ . '/../../configuration/database.php';
 require_once __DIR__ . '/helpers/book_helpers.php';
 require_once __DIR__ . '/helpers/book_db_helpers.php';

@@ -1,0 +1,63 @@
+<?php
+
+header('Content-Type: application/json');
+
+require __DIR__ . '/../../configuration/session.php';
+
+if (!isset($_SESSION['admin_id'])) {
+    http_response_code(401);
+    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+}
+
+require_once  __DIR__ .  '/../../configuration/database.php';
+require_once  __DIR__ . '/../helpers.php';
+require_once  __DIR__ . '/validators/author_db_validators.php';
+
+$author_id = $_POST["id"] ?? null;
+
+// validate id
+$validation_result = validate_entity_ID($author_id);
+
+if($validation_result['valid'] === false)
+{
+    echo json_encode([
+        'success' => false,
+        'message' => $validation_result['message']
+    ]);
+    exit;
+}
+
+// sanitize author id
+$DB_author_id = trim($author_id);
+$DB_author_id = (int) $DB_author_id;
+
+$author_has_books_validation = DB_validate_author_has_books($conn , $DB_author_id);
+if(!$author_has_books_validation['success'])
+{
+    echo json_encode([
+        'success' => false,
+        'message' => $author_has_books_validation['message']
+    ]);
+    exit;
+}
+
+$query = "UPDATE authors SET is_deleted = 0 WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i" , $DB_author_id);
+
+if($stmt->execute())
+{
+    $response = ['success' => true , 'message' => "Author #$DB_author_id is restored successsfully!"];
+}
+else
+{
+    $response = ['success' => false , 'message' => 'Problem in restoring author'];
+}
+
+$stmt->close();
+$conn->close();
+
+echo json_encode($response);
+exit;
+
+?>
