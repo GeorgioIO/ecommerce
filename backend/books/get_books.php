@@ -12,16 +12,94 @@ require_once __DIR__ . '/helpers/book_db_helpers.php';
 require_once __DIR__ . '/../helpers.php';
 
 $hasPagination = isset($_GET['page']) && isset($_GET['perPage']);
-
+$paginationText = $hasPagination ? " LIMIT ? OFFSET ?" : "";
 $author_id = $_GET['author_id'] ?? null; // 3
 $genre_id = $_GET['genre_id'] ?? null; // null
+$is_deleted = $_GET['is_deleted'] ?? 0;
 
-$params = [];
-$types = "";
+$filters = [
+    'author' => $author_id,
+    'genre' => $genre_id,
+    'pagination' => $paginationText
+];
+
+$params = [$is_deleted];
+$types = "i";
+
+// ! Query source 
+$query = form_load_books_query($filters);
+
+$data_stmt = $conn->prepare($query);
+
+if(!$author_id && !$genre_id)
+{
+    $count_query = "SELECT COUNT(*) AS total_books FROM books WHERE is_deleted = ?";
+    $count_stmt = $conn->prepare($count_query);
+    $count_stmt->bind_param("i" , $is_deleted);
+    $count_stmt->execute();
+    $result = $count_stmt->get_result();
+    $total_books = $result->fetch_assoc()['total_books'];
+
+}
+else if($author_id)        
+{   
+    $author_id = trim($author_id);
+
+    $validation_result = validate_entity_ID($author_id);
+
+    if(!$validation_result['valid'])
+    {
+        echo json_encode([
+            'success' => false,
+            'status' => 400,
+            'message' => $validation_result['message']
+        ]);
+        exit;
+    }
+
+    $author_id = (int) $author_id;
+    $params[] = $author_id;
+    $types .= 'i';
+
+    $count_query = "SELECT COUNT(*) AS total_books FROM books WHERE author_id = ? AND is_deleted = ?";
+    $count_stmt = $conn->prepare($count_query);
+    $count_stmt->bind_param("ii" , $author_id , $is_deleted);
+    $count_stmt->execute();
+    $result = $count_stmt->get_result();
+    $total_books = $result->fetch_assoc()['total_books'];
+
+    
+}
+elseif ($genre_id)
+{
+    $genre_id = trim($genre_id);
+
+    $validation_result = validate_entity_ID($genre_id);
+
+    if($validation_result['valid'] === false)
+    {
+        echo json_encode([
+            'success' => false,
+            'status' => 400,
+            'message' => $validation_result['message']
+        ]);
+        exit;
+    }
+
+    $genre_id = (int) $genre_id;
+    $params[] = $genre_id;
+    $types .= 'i';
+
+    $count_query = "SELECT COUNT(*) AS total_books FROM books WHERE genre_id = ? AND is_deleted = ?";
+    $count_stmt = $conn->prepare($count_query);
+    $count_stmt->bind_param("ii" , $genre_id , $is_deleted);
+    $count_stmt->execute();
+    $result = $count_stmt->get_result();
+    $total_books = $result->fetch_assoc()['total_books'];
+}
 
 if($hasPagination)
 {
-
     $page = $_GET['page'] ?? 1;
     $perPage = $_GET['perPage'] ?? 10;
 
@@ -29,89 +107,15 @@ if($hasPagination)
     $perPage = min(50 , max(5 , $perPage));
     $offset = ($page - 1) * $perPage;
 
-    $query = form_load_books_query($author_id , $genre_id , $perPage , $offset);
-
-    $query .= " LIMIT ? OFFSET ?";
-
     $params[] = $perPage;
     $params[] = $offset;
     $types .= "ii";
-
-}
-else
-{
-    $query = form_load_books_query($author_id , $genre_id);
 }
 
-$datastmt = $conn->prepare($query);
-
-if(!$author_id && !$genre_id)
-{
-    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books WHERE is_deleted = 0");
-    $countstmt->execute();
-    $total_books = $countstmt->get_result()->fetch_assoc()['total_books'];
-
-    if($hasPagination)
-    {
-        $datastmt->bind_param("ii" , $perPage , $offset);
-    }
-}
-else if($author_id)        
-{   
-    // validate id
-    $validation_result = validate_entity_ID($author_id);
-
-    if($validation_result['valid'] === false)
-    {
-        echo json_encode([
-            'success' => false,
-            'message' => $validation_result['message']
-        ]);
-        exit;
-    }
-
-    $DB_author_id = trim($author_id);
-    $DB_author_id = (int) $DB_author_id;
-
-    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books WHERE author_id = ? AND is_deleted = 0");
-    $countstmt->bind_param("i" , $DB_author_id);
-    $countstmt->execute();
-    $total_books = $countstmt->get_result()->fetch_assoc()['total_books'];
-
-    $datastmt->bind_param('iii' , $DB_author_id  , $perPage , $offset);
-}
-elseif ($genre_id)
-{
-// validate id
-    $validation_result = validate_entity_ID($genre_id);
-
-    if($validation_result['valid'] === false)
-    {
-        echo json_encode([
-            'success' => false,
-            'message' => $validation_result['message']
-        ]);
-        exit;
-    }
-
-    $DB_genre_id = trim($genre_id);
-    $DB_genre_id = (int) $DB_genre_id;
-
-
-    $countstmt = $conn->prepare("SELECT COUNT(*) AS total_books FROM books WHERE genre_id = ? AND is_deleted = 0");
-    $countstmt->bind_param("i" , $DB_genre_id);
-    $countstmt->execute();
-    $total_books = $countstmt->get_result()->fetch_assoc()['total_books'];
-    
-    $datastmt->bind_param('iii' , $DB_genre_id  , $perPage , $offset);
-}
-
-
-$datastmt->execute();
-
-$result = $datastmt->get_result();
+$data_stmt->bind_param($types , ...$params);
+$data_stmt->execute();
+$result = $data_stmt->get_result();
 $books = [];
-
 
 // Collect rows
 if($result && $result->num_rows > 0)
@@ -132,14 +136,16 @@ $pagination = $hasPagination ? [
 
 
 $conn->close();
-$datastmt->close();
-$countstmt->close();
+$data_stmt->close();
+$count_stmt->close();
 
 echo json_encode([
     'success' => true,
+    'status' => 200,
     'data' => $books,
     'pagination' => $pagination
 ]);
+exit;
 
 
 ?>

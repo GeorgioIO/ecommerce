@@ -20,7 +20,7 @@ const formContainer = document.querySelector(".form-container");
 
 // ========== LISTENERS ========== //
 
-formContainer.addEventListener("click", (e) => {
+formContainer?.addEventListener("click", (e) => {
   const discountCheckbox = e.target.closest("#is_onSale");
 
   if (discountCheckbox) {

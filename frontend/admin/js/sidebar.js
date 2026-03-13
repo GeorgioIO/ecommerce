@@ -12,7 +12,7 @@ const sidebarButtons = document.querySelectorAll(
 );
 
 sidebarButtons.forEach((button) => {
-  button.addEventListener("click", (e) => {
+  button.addEventListener("click", async (e) => {
     const section = e.currentTarget.dataset.section;
     changeSidebarSection(section);
 
@@ -34,7 +34,7 @@ sidebarButtons.forEach((button) => {
     } else if (section === "logout") {
       window.location.href = "/ecommerce/backend/auth/admin_logout.php";
     } else if (section === "dashboard") {
-      loadDashboard();
+      await loadDashboard();
     }
   });
 });

@@ -90,6 +90,7 @@ function loadMiniOrdersTable(data) {
 
 // ========== EXPORTED FUNCTIONS ========== //
 export async function loadDashboard() {
+  if (!content) return;
   content.innerHTML = "";
 
   // Build dashboard skeleton
@@ -128,12 +129,8 @@ export async function loadDashboard() {
   const rightUpperGraph = loadRightUpperGraph();
   dashboardContent.append(rightUpperGraph);
 
-  loadHorizontalBarChart(
-    rightUpperGraph.id,
-    revenuesPerCustomer,
-    customerNames,
-    "Most Valuable Customers",
-  );
+  const rightLowerGraph = loadRightLowerGraph();
+  dashboardContent.append(rightLowerGraph);
 
   const mostSellingGenres = await loadMostSellingGenres_DB();
 
@@ -142,10 +139,14 @@ export async function loadDashboard() {
     (item) => item.total_orders_revenue,
   );
 
-  const rightLowerGraph = loadRightLowerGraph();
-  dashboardContent.append(rightLowerGraph);
+  await loadHorizontalBarChart(
+    rightUpperGraph.id,
+    revenuesPerCustomer,
+    customerNames,
+    "Most Valuable Customers",
+  );
 
-  loadPieChart(
+  await loadPieChart(
     rightLowerGraph.id,
     genreNames,
     revenuesPerGenre,

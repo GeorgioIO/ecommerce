@@ -14,20 +14,9 @@ button {
 
 /* Font Faces */
 
-@font-face {
-  font-family: "Source-sans";
-  src: url("../../../assets/fonts/SourceSans3-VariableFont_wght.ttf")
-    format("truetype");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* VARIABLES */
 
 :root {
-  --source-sans-font: "Source-sans", sans-serif;
-
   /* color variables */
   --color-primary: #00cdbc;
   --color-secondary: white;
@@ -66,7 +55,18 @@ body {
 }
 
 .admin-login-form > h1 {
-  font-family: var(--source-sans-font);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
 }
 
 .input-container {
@@ -78,8 +78,8 @@ body {
 }
 
 .input-container > label {
-  font-family: var(--source-sans-font);
-  font-weight: 700;
+  font-family: sans-serif;
+  font-weight: 300;
   font-size: 1.2rem;
 }
 

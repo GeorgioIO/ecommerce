@@ -1,4 +1,20 @@
-export function loadPieChart(id, labels, values, title) {
+export function loadPlotlyScript() {
+  return new Promise((resolve, reject) => {
+    if (window.plotly) {
+      resolve(window.Plotly);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://cdn.plot.ly/plotly-2.30.0.min.js";
+    script.onload = () => resolve(window.Plotly);
+    script.onerror = () => reject("Failed to load plotly");
+    document.body.appendChild(script);
+  });
+}
+
+export async function loadPieChart(id, labels, values, title) {
+  const Plotly = await loadPlotlyScript();
   const data = [
     {
       labels,
@@ -60,7 +76,9 @@ export function loadPieChart(id, labels, values, title) {
   Plotly.newPlot(id, data, layout, config);
 }
 
-export function loadHorizontalBarChart(id, xarray, yarray, title) {
+export async function loadHorizontalBarChart(id, xarray, yarray, title) {
+  const Plotly = await loadPlotlyScript();
+  console.log(Plotly);
   const data = [
     {
       x: xarray,

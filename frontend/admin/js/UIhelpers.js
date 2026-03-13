@@ -1,4 +1,5 @@
 import { createPaginationButtons } from "./pagination/paginationUI.js";
+import { entityHandlers } from "./adminUIController.js";
 
 export function toggleDiscountInfo() {
   const disountInfo = document.querySelectorAll(".discount-info");
@@ -142,16 +143,29 @@ export function renderActiveTableState({
 }) {
   const header = renderHeader();
   const footer = renderTableFooter(pagination);
+  const showDeleted = entityHandlers[entity].showDeleted;
+
+  const deletedCheckbox =
+    entity !== "order" && entity !== "customer"
+      ? `<div class="show-deleted-entity-filter">
+                <input type="checkbox" id="show-deleted-entity-checkbox" data-entity="${entity}" ${showDeleted ? "checked" : ""}/>
+                <label for="show-deleted-entity-checkbox"> Show deleted </label>
+            </div>`
+      : "";
+
   return `
-        ${
-          canAdd
-            ? `
-            <button class="open-operation-form" data-mode="add" data-intent="showAdd" data-entity="${entity}">
-                Add New ${label}
-            </button>
-            `
-            : ""
-        }
+        <div class="table-container-header">
+            ${
+              canAdd
+                ? `
+                <button class="open-operation-form" data-mode="add" data-intent="showAdd" data-entity="${entity}">
+                    Add New ${label}
+                </button>
+                `
+                : ""
+            }
+            ${deletedCheckbox}
+        </div>
         
         <div class="flex-table" data-entity="${entity}">
             ${header}

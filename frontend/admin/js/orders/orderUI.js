@@ -33,7 +33,7 @@ let currentCustomerAddresses = [];
 // ========== LISTENERS ========== //
 
 // Listen to change events in operation form
-formContainer.addEventListener("change", async (e) => {
+formContainer?.addEventListener("change", async (e) => {
   const customerNamesSelect = e.target.closest("#name");
   const existingAddressSelect = e.target.closest("#existing-address-select");
   const inlineQuantityNumber = e.target.closest(".quantity-line-input");

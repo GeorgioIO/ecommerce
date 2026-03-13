@@ -14,13 +14,13 @@
 
     if(isset($_SESSION['admin_id']))
     {
-        header('Location : /ecommerce/frontend/admin/admin_dashboard.php');
+        header('Location: /ecommerce/frontend/admin/admin_dashboard.php');
         exit;
     }
     
     ?>
 
-    <form class="admin-login-form">
+    <form method="post" class="admin-login-form">
         <h1>Admin Dashboard Login</h1>
         
         <div class="input-container">

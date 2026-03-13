@@ -7,7 +7,7 @@ const formContainer = document.querySelector(".form-container");
 
 // LISTENERS
 
-formContainer.addEventListener("click", (e) => {
+formContainer?.addEventListener("click", (e) => {
   const addNewLineButton = e.target.closest("#add-new-order-line-button");
   const deleteLineButton = e.target.closest("#delete-order-line-button");
   const addNewBookButton = e.target.closest("#add-book-line-button");

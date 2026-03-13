@@ -78,7 +78,7 @@ const closeOperationFormButton = document.querySelector(
 const formBody = document.querySelector(".form-body");
 const formContainer = document.querySelector(".form-container");
 
-const entityHandlers = {
+export const entityHandlers = {
   book: {
     showAdd: showBookAddForm,
     showEdit: showBookEditForm,
@@ -89,6 +89,7 @@ const entityHandlers = {
     loader: loadBooks,
     dataCollector: collectBookFormData,
     dataValidator: validateBookData,
+    showDeleted: false,
   },
   author: {
     showAdd: showAuthorAddForm,
@@ -129,11 +130,11 @@ const entityHandlers = {
   },
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadDashboard();
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadDashboard();
 });
 
-closeOperationFormButton.addEventListener("click", () => {
+closeOperationFormButton?.addEventListener("click", () => {
   formBody.innerHTML = "";
 
   removeSearchBox();
@@ -141,9 +142,27 @@ closeOperationFormButton.addEventListener("click", () => {
   swapClass(formContainer, "slide-out-form", "slide-in-form");
 });
 
-// Listening to change events
+// ! Change Events
 document.addEventListener("change", (e) => {
-  const inputFile = e.target.closest('input[type="file"');
+  const inputFile = e.target.closest('input[type="file"]');
+  const deletedFiltering = e.target.closest("#show-deleted-entity-checkbox");
+
+  if (deletedFiltering) {
+    const { entity } = deletedFiltering.dataset;
+
+    const loadEntities = entityHandlers?.[entity]?.loader;
+    entityHandlers[entity].showDeleted = deletedFiltering.checked;
+
+    const showDeleted = entityHandlers[entity].showDeleted;
+
+    if (showDeleted) {
+      listState.filters.is_deleted = 1;
+    } else {
+      listState.filters = { is_deleted: 0 };
+    }
+
+    loadEntities();
+  }
 
   // Check if file image is png or jpeg
   if (inputFile) {
@@ -153,6 +172,7 @@ document.addEventListener("change", (e) => {
   }
 });
 
+// ! Reset Events
 document.addEventListener("reset", (e) => {
   const form = e.target;
   const entity = form.dataset.entity;
@@ -283,7 +303,7 @@ document.addEventListener("click", async (e) => {
   }
 });
 
-confirmationModal.addEventListener("click", async (e) => {
+confirmationModal?.addEventListener("click", async (e) => {
   const closeConfirmationModal = e.target.closest("#close-confirmation-modal");
   const confirmBookDeletion = e.target.closest("#delete-entity-btn");
 

@@ -2,11 +2,10 @@ import { validateLoginData } from "./loginValidators.js";
 import { showLoginMessageLog } from "./loginMessageLog.js";
 import { checkAdminLogin_DB } from "./loginServices.js";
 
-document.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const form = e.target;
-  const submitButton = e.submitter;
+const form = document.querySelector(".admin-login-form");
 
+form.addEventListener("submit", async (e) => {
+  const submitButton = e.submitter;
   if (submitButton) {
     // Collect data as an object
     const data = loginDataCollector(form);
@@ -20,11 +19,12 @@ document.addEventListener("submit", async (e) => {
 
     const checkAdminResult = await checkAdminLogin_DB(data);
 
+    console.log(checkAdminResult);
+
     if (!checkAdminResult.success) {
       showLoginMessageLog("error", checkAdminResult.message);
       return;
     } else {
-      console.log("hi");
       showLoginMessageLog("success", checkAdminResult.message);
 
       setTimeout(() => {

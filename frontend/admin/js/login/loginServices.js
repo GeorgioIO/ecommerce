@@ -8,5 +8,6 @@ export async function checkAdminLogin_DB(adminData) {
     body: formData,
   });
 
+  // alert(result.text());
   return result.json();
 }

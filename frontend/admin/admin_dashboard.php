@@ -12,7 +12,6 @@ require_once __DIR__ . '/../../backend/auth/admin_guard.php';
     <title>Admin Dashboard | BookNest</title>
 
     <link rel="stylesheet" href="../admin/css/admin_styles.css" />
-    <script defer src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
     <script defer type="module" src="../admin/js/sidebar.js"></script>
     <script defer type="module" src="../admin/js/adminUIController.js"></script>
   </head>

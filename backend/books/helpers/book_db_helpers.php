@@ -216,8 +216,12 @@ function get_best_seller_books($conn , $user_id= null)
     return $best_sellers;
 }
 
-function form_load_books_query($author_id , $genre_id)
+function form_load_books_query($filters)
 {
+    $author_id = $filters['author'];
+    $genre_id = $filters['genre'];
+    $paginationText = $filters['pagination'];
+
     if($author_id === null && $genre_id === null)
     {
         return <<<EOT
@@ -248,9 +252,9 @@ function form_load_books_query($author_id , $genre_id)
         LEFT JOIN genres g ON b.genre_id = g.id
         LEFT JOIN authors a ON b.author_id = a.id
         LEFT JOIN book_formats bf ON b.format_id = bf.id
-        WHERE b.is_deleted = 0
+        WHERE b.is_deleted = ?
         ORDER BY b.title ASC
-        
+        $paginationText;    
         EOT;
     }
     elseif ($author_id)
@@ -283,10 +287,9 @@ function form_load_books_query($author_id , $genre_id)
         LEFT JOIN genres g ON b.genre_id = g.id
         LEFT JOIN authors a ON b.author_id = a.id
         LEFT JOIN book_formats bf ON b.format_id = bf.id
-        WHERE b.author_id = ? AND b.is_deleted = 0
+        WHERE b.is_deleted = ? AND b.author_id = ?
         ORDER BY b.title ASC
-       
-        
+        $paginationText;
         EOT;
     }
     elseif($genre_id)
@@ -319,9 +322,9 @@ function form_load_books_query($author_id , $genre_id)
         LEFT JOIN genres g ON b.genre_id = g.id
         LEFT JOIN authors a ON b.author_id = a.id
         LEFT JOIN book_formats bf ON b.format_id = bf.id
-        WHERE b.genre_id = ? AND b.is_deleted = 0
+        WHERE b.is_deleted = ? AND b.genre_id = ? 
         ORDER BY b.title ASC
-       
+        $paginationText;
         EOT;
     }
 }
