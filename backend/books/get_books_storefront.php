@@ -89,11 +89,15 @@ if(isset($_GET['language']))
     $types .= "s";
 }
 
+$filters[] = " b.is_deleted = ?";
+$params[] = 0;
+$types .= 'i';
+
 // Build the where clause
 $where_sql = "";
 if(count($filters) > 0)
 {
-    $where_sql = "WHERE b.is_deleted = 0 AND " . implode(" AND ", $filters);
+    $where_sql = "WHERE " . implode(" AND ", $filters);
 }
 
 // Sorting options
