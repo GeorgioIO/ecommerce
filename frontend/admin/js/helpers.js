@@ -1,4 +1,18 @@
 import { showMessageLog } from "./messageLog/messageLog.js";
+import { listState } from "./adminUIController.js";
+import { entityHandlers } from "./adminUIController.js";
+
+export function resetListState() {
+  listState.entity = "";
+  listState.filters = {};
+  listState.page = 1;
+  listState.perPage = 10;
+  listState.totalPages = 1;
+
+  entityHandlers.book.showDeleted = false;
+  entityHandlers.author.showDeleted = false;
+  entityHandlers.genre.showDeleted = false;
+}
 
 export function normalizeOrderLineData(raw) {
   // Coming from search

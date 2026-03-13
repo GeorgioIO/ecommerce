@@ -1,6 +1,7 @@
 import { createPaginationButtons } from "./pagination/paginationUI.js";
 import { entityHandlers } from "./adminUIController.js";
 import { listState } from "./adminUIController.js";
+import { resetListState } from "./helpers.js";
 
 export function toggleDiscountInfo() {
   const disountInfo = document.querySelectorAll(".discount-info");
@@ -73,6 +74,7 @@ export function handleEntityImageElement(mode = "set", source = "") {
 }
 
 export function changeSidebarSection(entity) {
+  resetListState();
   const sidebarButtons = document.querySelectorAll(
     ".sidebar ul li .adm-sidebar-button",
   );
@@ -106,18 +108,30 @@ Input :
 Output : empty table state in HTML
 */
 export function renderEmptyTableState({ entity, label, canAdd = true }) {
+  const showDeleted = entityHandlers[entity].showDeleted;
+  const deletedCheckbox =
+    entity !== "order" && entity !== "customer"
+      ? `<div class="show-deleted-entity-filter">
+                <input type="checkbox" id="show-deleted-entity-checkbox" data-entity="${entity}" ${showDeleted ? "checked" : ""}/>
+                <label for="show-deleted-entity-checkbox"> Show deleted </label>
+            </div>`
+      : "";
+
   return `
+        <div class="table-container-header">
+          ${
+            canAdd
+              ? `
+              <button class="open-operation-form" data-mode="add" data-intent="showAdd" data-entity="${entity}">
+                  Add New ${label}
+              </button>
+              `
+              : ""
+          }
+          ${deletedCheckbox}
+      </div>
       <div class="empty-state-container">
-        <p>Currently there is no ${entity} ${canAdd ? "- click to add" : ""}</p>
-        ${
-          canAdd
-            ? `
-            <button class="open-operation-form" data-mode="add" data-entity="${entity}" data-intent="showAdd">
-                Add New ${label}
-            </button>
-            `
-            : ""
-        }
+        <p>Currently there is no ${entity}s</p>
       </div>
   `;
 }

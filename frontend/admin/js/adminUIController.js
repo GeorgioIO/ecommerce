@@ -66,7 +66,7 @@ import { validateOrderData } from "./orders/ordersValidators.js";
 import { removeSearchBox } from "./orders/orderLineSearch.js";
 import { loadDashboard } from "./dashboard/dashboardUI.js";
 
-export const listState = {
+export let listState = {
   entity: "",
   filters: {},
   page: 1,
@@ -106,6 +106,7 @@ export const entityHandlers = {
     loader: loadAuthors,
     dataCollector: collectAuthorFormData,
     dataValidator: validateAuthorData,
+    showDeleted: false,
   },
   genre: {
     showAdd: showGenreAddForm,
@@ -118,6 +119,7 @@ export const entityHandlers = {
     loader: loadGenres,
     dataCollector: collectGenreFormData,
     dataValidator: validateGenreData,
+    showDeleted: false,
   },
   customer: {
     showView: showCustomerViewForm,
