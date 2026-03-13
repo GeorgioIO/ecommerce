@@ -1,8 +1,8 @@
 import { handleEntityImageElement, toggleDiscountInfo } from "../UIhelpers.js";
 
 export function hydrateBookForm(form, data) {
-  console.log(data);
   Object.keys(data).forEach((key) => {
+    if (key === "is_deleted") return;
     const input = form.querySelector(`#${key}`);
     if (!input || input.type === "file") return;
 

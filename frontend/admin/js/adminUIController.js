@@ -208,7 +208,7 @@ document.addEventListener("click", async (e) => {
     const showEntityEditForm = entityHandlers?.[entity]?.showEdit;
     listState.entity = entity;
     listState.filters = {};
-
+    listState.filters.showDeleted = 0;
     loadEntityElements();
     showEntityEditForm(entityid);
   }
@@ -342,7 +342,10 @@ confirmationModal?.addEventListener("click", async (e) => {
         } else {
           showMessageLog("success", operationResult.message);
           swapClass(confirmationModal, "fade-out-modal", "fade-in-modal");
+
+          let currentIsDeletedFilter = listState.filters.is_deleted;
           listState.filters = {};
+          listState.filters.is_deleted = currentIsDeletedFilter;
           listState.entity = entity;
           listState.page = 1;
           await loadEntityElements();
@@ -391,6 +394,7 @@ document.addEventListener("submit", async (e) => {
       showMessageLog("success", addEntityResult.message);
       removeSearchBox();
       listState.filters = {};
+      listState.filters.showDeleted = 0;
       listState.entity = entity;
       await loadEntityElements();
     } else {
@@ -404,6 +408,7 @@ document.addEventListener("submit", async (e) => {
     if (updateEntityResult?.success) {
       showMessageLog("success", updateEntityResult.message);
       listState.filters = {};
+      listState.filters.showDeleted = 0;
       listState.entity = entity;
       await loadEntityElements();
     } else {

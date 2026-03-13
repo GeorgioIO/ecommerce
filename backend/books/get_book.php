@@ -45,7 +45,7 @@ SELECT
     slug
 FROM
     books 
-WHERE id = ? AND is_deleted = 0
+WHERE id = ? 
 EOT;
 
 $stmt = $conn->prepare($query);

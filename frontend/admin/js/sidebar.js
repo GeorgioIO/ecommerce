@@ -17,11 +17,12 @@ sidebarButtons.forEach((button) => {
     changeSidebarSection(section);
 
     listState.page = 1;
+    let currentIsDeletedFilter = listState.filters.is_deleted;
     listState.filters = {};
+    listState.filters.is_deleted = currentIsDeletedFilter;
     listState.entity = section;
 
     if (section === "book") {
-      listState.filters = {};
       loadBooks();
     } else if (section === "author") {
       loadAuthors();

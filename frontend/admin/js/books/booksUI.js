@@ -98,7 +98,6 @@ function renderBookTableHeader() {
 
 function renderBookTableRow(item) {
   let setDeletedButton = "";
-  console.log(item);
   if (item.is_deleted == 1) {
     setDeletedButton = `           
        <button class="table-row-button show-confirmation-modal" data-mode="restore" data-entity="book" data-id="${item.id}">
