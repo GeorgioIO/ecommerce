@@ -7,7 +7,7 @@ import {
 } from "./books/booksUI.js";
 import {
   addBook_DB,
-  update_book_DB,
+  updateBook_DB,
   deleteBook_DB,
   restoreBook_DB,
 } from "./books/booksService.js";
@@ -87,7 +87,7 @@ export const entityHandlers = {
     showEdit: showBookEditForm,
     resetForm: resetBookForm,
     addEntity: addBook_DB,
-    updateEntity: update_book_DB,
+    updateEntity: updateBook_DB,
     delete: deleteBook_DB,
     restore: restoreBook_DB,
     loader: loadBooks,

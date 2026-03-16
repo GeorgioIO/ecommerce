@@ -1,4 +1,4 @@
-import { fetch_books_DB } from "../books/booksService.js";
+import { getBooks_DB } from "../books/booksService.js";
 import { showMessageLog } from "../messageLog/messageLog.js";
 import {
   createOrderLine,
@@ -51,7 +51,7 @@ export function enableSearch(input, searchBox) {
 
     if (searchValue.length < 2) return;
 
-    const books = await fetch_books_DB();
+    const books = await getBooks_DB();
 
     // Find matches
     const matches = books.data.filter((book) =>

@@ -1,20 +1,11 @@
-// Function responsible to get data for a single book
-export async function get_book_data_DB(book_id) {
-  const result = await fetch("../../backend/books/get_book.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      id: book_id,
-    }),
-  });
+// Get book
+export async function getBook_DB(bookID) {
+  const result = await fetch(`../../backend/books/get_book.php?id=${bookID}`);
 
   return result.json();
-  // console.log(result.text());
 }
 
-// Function responsible for adding a book to the database
+// Add book
 export async function addBook_DB(bookData) {
   const formData = new FormData();
   formData.append("isbn", bookData.isbn);
@@ -40,40 +31,38 @@ export async function addBook_DB(bookData) {
   // console.log(result.text());
 }
 
-// Function responsible for deleting a book from the database
-export async function deleteBook_DB(book_ID) {
-  const result = await fetch("../../backend/books/delete_book.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+export async function deleteBook_DB(bookID) {
+  const result = await fetch(
+    `../../backend/books/delete_book.php?id=${bookID}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
-    body: new URLSearchParams({
-      id: book_ID,
-    }),
-  });
+  );
 
   return result.json();
   // console.log(result.text());
 }
 
-export async function restoreBook_DB(book_ID) {
-  const result = await fetch("../../backend/books/restore_book.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+export async function restoreBook_DB(bookID) {
+  const result = await fetch(
+    `../../backend/books/restore_book.php?id=${bookID}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
-    body: new URLSearchParams({
-      id: book_ID,
-    }),
-  });
+  );
 
   return result.json();
   // console.log(result.text());
 }
 
-export async function update_book_DB(bookData) {
+export async function updateBook_DB(bookData) {
   const formData = new FormData();
-
   formData.append("id", bookData.id);
   formData.append("isbn", bookData.isbn);
   formData.append("sku", bookData.sku);
@@ -98,7 +87,7 @@ export async function update_book_DB(bookData) {
   // console.log(result.text());
 }
 
-export async function fetch_books_DB(filters, pagination = null) {
+export async function getBooks_DB(filters, pagination = null) {
   let params = "";
 
   if (pagination) {
@@ -113,7 +102,6 @@ export async function fetch_books_DB(filters, pagination = null) {
     params.set(key, filters[key]);
   }
 
-  console.log(filters);
   const result = await fetch(
     `../../backend/books/get_books.php?${params.toString()}`,
   );

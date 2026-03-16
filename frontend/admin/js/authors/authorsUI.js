@@ -77,7 +77,7 @@ export async function loadAuthors() {
 }
 
 export async function populateSelectAuthors(selectElement) {
-  const authors = await fetch_authors_DB();
+  const authors = await getAuthors_DB();
 
   // Default option
   const defaultOptionElement = document.createElement("option");

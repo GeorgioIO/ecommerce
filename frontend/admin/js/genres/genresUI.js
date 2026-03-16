@@ -230,7 +230,7 @@ export function resetGenreForm(form) {
 }
 
 export async function populateSelectGenres(selectElement) {
-  const genres = await fetch_genres_DB();
+  const genres = await getGenres_DB();
 
   // Default option
   const defaultOptionElement = document.createElement("option");

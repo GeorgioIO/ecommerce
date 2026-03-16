@@ -6,7 +6,7 @@ import {
   handlePaginationButtonsColor,
   toggleDiscountInfo,
 } from "../UIhelpers.js";
-import { get_book_data_DB, fetch_books_DB } from "../books/booksService.js";
+import { getBook_DB, getBooks_DB } from "../books/booksService.js";
 import { buildBookForm } from "../books/bookFormBuilder.js";
 import { hydrateBookForm } from "./bookFormHydrator.js";
 import { bookTableConfigs } from "./bookTableConfigs.js";
@@ -33,14 +33,14 @@ export async function showBookAddForm() {
 }
 
 export async function showBookEditForm(bookID) {
-  const bookData = await get_book_data_DB(bookID);
+  const bookData = await getBook_DB(bookID);
   openForm("edit", bookData.data);
 }
 
 // Function to load books from the database by sending a request to backend
 export async function loadBooks() {
   try {
-    const booksResponse = await fetch_books_DB(listState.filters, {
+    const booksResponse = await getBooks_DB(listState.filters, {
       page: listState.page,
       perPage: listState.perPage,
     });
