@@ -3,69 +3,66 @@
 header('Content-Type: application/json');
 
 require __DIR__ . '/../../configuration/session.php';
+require_once __DIR__ . '/../helpers.php';
 
 if (!isset($_SESSION['admin_id'])) {
-    http_response_code(401);
-    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+    respond(false , 401 , null , null , 'Unauthorized to use api');
 }
 
-require_once __DIR__ .  '/../../configuration/database.php';
-require_once __DIR__ . '/../helpers.php';
-require_once __DIR__ . '/validators/author_validators.php';
-require_once  __DIR__ . '/validators/author_db_validators.php';
-require_once  __DIR__ . '/helpers/author_helpers.php';
-
-$author_payload = extract_author_payload($_POST);
-
-// Validation of data
-$author_name_result = validate_author_name($author_payload['name']);
-if(!$author_name_result['success'])
+if($_SERVER['REQUEST_METHOD'] === "POST")
 {
-    echo json_encode([
-        'success' => false,
-        'message' => $author_name_result['message']
-    ]);
-    exit;
-}
+    require_once __DIR__ .  '/../../configuration/database.php';
+    require_once __DIR__ . '/validators/author_validators.php';
+    require_once  __DIR__ . '/validators/author_db_validators.php';
+    require_once  __DIR__ . '/helpers/author_helpers.php';
 
-$DB_author_name = $author_name_result['value'];
+    $input = json_decode(file_get_contents("php://input") , true);
 
-// Validate DB name uniqueness
-$DB_name_validation_result = DB_validate_author_name($conn , $DB_author_name);
-if(!$DB_name_validation_result['success'])
-{
-    echo json_encode([
-        'success' => false,
-        'message' => $DB_name_validation_result['message']
-    ]);
-    exit;
-}
+    if(!$input)
+    {
+        respond(false , 400 , null , null , "Invalid JSON Body.");
+    }
 
-$query = <<<EOT
+    $author_payload = extract_author_payload($input);
 
-INSERT INTO authors
-(name)
-VALUES
-(?);
+    $author_name_validation = validate_author_name($author_payload['name']);
+    if(!$author_name_validation['success'])
+    {
+        respond(false , 400 , null , null , $author_name_validation['message']);
+        exit;
+    }
 
-EOT;
+    $author_name = $author_name_validation['value'];
 
-$stmt = $conn->prepare($query);
+    // ! Validate name uniqueness in Database 
+    $name_is_unique = DB_validate_author_name($conn , $author_name);
+    if(!$name_is_unique['success'])
+    {
+        respond(false , 400 , null , null ,$name_is_unique['message']);
+    }
 
-$stmt->bind_param("s" , $DB_author_name);
+    $query = <<<EOT
+        INSERT INTO authors
+        (name)
+        VALUES
+        (?);
+    EOT;
 
-if($stmt->execute()){
-    $response = ['success' => true , 'message' => 'New author is added!'];
+    $stmt = $conn->prepare($query);
+
+    $stmt->bind_param("s" , $author_name);
+
+    if($stmt->execute()){
+        respond(true , 201 , null , null , 'New author is added');
+    }
+    else
+    {
+        respond(false , 500 , null , null , 'Something went wrong in adding author');
+    }
 }
 else
 {
-    $response = ['success' => false , 'message' => 'Problem in adding author'];
+    respond(false , 400 , null , null , 'Wrong method used');
 }
-
-$stmt->close();
-$conn->close();
-
-echo json_encode($response);
-exit;
 
 ?>

@@ -1,5 +1,17 @@
 <?php
 
+function respond($success , $status , $data=null , $pagination=null , $message=null)
+{
+    echo json_encode([
+        'success' => $success,
+        'status' => $status,
+        'data' => $data,
+        'pagination' => $pagination,
+        'message'=> $message
+    ]);
+    exit;
+}
+
 function upload_image($image_file)
 {
     $upload_directory = __DIR__ . "/../assets/images/";

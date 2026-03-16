@@ -21,9 +21,9 @@ import {
 } from "./authors/authorsUI.js";
 import {
   addAuthor_DB,
-  update_author_DB,
-  delete_Author_DB,
-  restore_Author_DB,
+  updateAuthor_DB,
+  deleteAuthor_DB,
+  restoreAuthor_DB,
 } from "./authors/authorServices.js";
 import { validateAuthorData } from "./authors/authorValidators.js";
 import {
@@ -100,9 +100,9 @@ export const entityHandlers = {
     showEdit: showAuthorEditForm,
     resetForm: resetAuthorForm,
     addEntity: addAuthor_DB,
-    updateEntity: update_author_DB,
-    delete: delete_Author_DB,
-    restore: restore_Author_DB,
+    updateEntity: updateAuthor_DB,
+    delete: deleteAuthor_DB,
+    restore: restoreAuthor_DB,
     loader: loadAuthors,
     dataCollector: collectAuthorFormData,
     dataValidator: validateAuthorData,

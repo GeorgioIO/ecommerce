@@ -3,61 +3,52 @@
 header('Content-Type: application/json');
 
 require __DIR__ . '/../../configuration/session.php';
+require_once  __DIR__ . '/../helpers.php';
+
 
 if (!isset($_SESSION['admin_id'])) {
-    http_response_code(401);
-    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+    respond(false , 401 , 'Unauthorized to use api');
 }
 
-require_once  __DIR__ .  '/../../configuration/database.php';
-require_once  __DIR__ . '/../helpers.php';
-require_once  __DIR__ . '/validators/author_db_validators.php';
-
-$author_id = $_POST["id"] ?? null;
-
-// validate id
-$validation_result = validate_entity_ID($author_id);
-
-if($validation_result['valid'] === false)
+if($_SERVER['REQUEST_METHOD'] === "PATCH")
 {
-    echo json_encode([
-        'success' => false,
-        'message' => $validation_result['message']
-    ]);
-    exit;
-}
+    require_once  __DIR__ .  '/../../configuration/database.php';
+    require_once  __DIR__ . '/validators/author_db_validators.php';
 
-// sanitize author id
-$DB_author_id = trim($author_id);
-$DB_author_id = (int) $DB_author_id;
 
-$author_has_books_validation = DB_validate_author_has_books($conn , $DB_author_id);
-if(!$author_has_books_validation['success'])
-{
-    echo json_encode([
-        'success' => false,
-        'message' => $author_has_books_validation['message']
-    ]);
-    exit;
-}
+    parse_str($_SERVER['QUERY_STRING'] , $query_params);
 
-$query = "UPDATE authors SET is_deleted = 0 WHERE id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i" , $DB_author_id);
+    if(!isset($query_params['id']))
+    {
+        respond(false , 400 , 'Missing author id');
+    }
 
-if($stmt->execute())
-{
-    $response = ['success' => true , 'message' => "Author #$DB_author_id is restored successsfully!"];
+    $author_id = intval($query_params['id']);
+    $author_id = trim($author_id);
+    $author_id_validation = validate_entity_ID($author_id);
+
+    if(!$author_id_validation['valid'])
+    {
+        respond(false , 400 , $author_id_validation['message']);
+    }
+
+    $query = "UPDATE authors SET is_deleted = 0 WHERE id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i" , $author_id);
+
+    if($stmt->execute())
+    {
+        respond(true , 200 , 'Author is restored successsfully');
+    }
+    else
+    {
+        respond(false , 500 , 'Something went wrong in restoring author');
+    }
 }
 else
 {
-    $response = ['success' => false , 'message' => 'Problem in restoring author'];
+    respond(false , 400 , 'Wrong method used');
 }
 
-$stmt->close();
-$conn->close();
-
-echo json_encode($response);
-exit;
 
 ?>

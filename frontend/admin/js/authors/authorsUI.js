@@ -1,4 +1,4 @@
-import { fetch_authors_DB, get_author_data_DB } from "./authorServices.js";
+import { getAuthors_DB, getAuthor_DB } from "./authorServices.js";
 import { authorFormConfigs } from "./authorFormConfigs.js";
 import { authorTableConfigs } from "./authorTableConfigs.js";
 import { buildAuthorForm } from "./authorFormBuilder.js";
@@ -20,7 +20,7 @@ export async function showAuthorAddForm() {
 }
 
 export async function showAuthorEditForm(authorID) {
-  const authorData = await get_author_data_DB(authorID);
+  const authorData = await getAuthor_DB(authorID);
   openForm("edit", authorData.data);
 }
 
@@ -40,7 +40,7 @@ export function collectAuthorFormData(form) {
 // Function to load author from the database by sending a request to backend
 export async function loadAuthors() {
   try {
-    const authorsResponse = await fetch_authors_DB(listState.filters, {
+    const authorsResponse = await getAuthors_DB(listState.filters, {
       page: listState.page,
       perPage: listState.perPage,
     });
