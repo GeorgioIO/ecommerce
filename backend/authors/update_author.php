@@ -9,7 +9,7 @@ if (!isset($_SESSION['admin_id'])) {
     respond(false , 401 ,null , null , 'Unauthorized to use api');
 }
 
-if($_SERVER['REQUEST_METHOD'] === "UPDATE")
+if($_SERVER['REQUEST_METHOD'] === "PUT")
 {
     require_once  __DIR__ . '/../../configuration/database.php';
     require_once  __DIR__ . '/validators/author_validators.php';

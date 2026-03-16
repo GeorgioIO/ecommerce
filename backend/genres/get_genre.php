@@ -1,63 +1,57 @@
 <?php
 
-require __DIR__ . '/../../configuration/session.php';
 
-header('Content-Type: application/json');
-
-require_once  __DIR__ . '/../../configuration/database.php';
-require_once  __DIR__ . '/validators/genre_validators.php';
-
-
-$id = $_POST["id"] ?? null;
-
-// validate genre id
-$genre_id_result = validate_genre_id($id);
-if(!$genre_id_result['success'])
+if($_SERVER['REQUEST_METHOD'] === "GET")
 {
-    echo json_encode([
-        'success' => false,
-        'message' => $genre_id_result['message']
-    ]);
-    exit;
+    header('Content-Type: application/json');
+
+    require_once  __DIR__ . '/../../configuration/database.php';
+    require_once  __DIR__ . '/validators/genre_validators.php';
+    require_once __DIR__ . '/../helpers.php';
+
+    $genre_id = $_GET["id"] ?? null;
+
+
+    $genre_id_validation = validate_entity_ID($genre_id);
+    if(!$genre_id_validation['valid'])
+    {
+        echo json_encode([
+            'success' => false,
+            'message' => $genre_id_result['message']
+        ]);
+        exit;
+    }
+
+    $query = <<<EOT
+        SELECT 
+            id,
+            name,
+            image
+        FROM
+            genres 
+        WHERE id = ? AND is_deleted = 0
+    EOT;
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i" , $genre_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if($result->num_rows === 0){
+        respond(false , 404 , null , null , 'Genre not found');
+    }
+
+    $genre = $result->fetch_assoc();
+
+    $stmt->close();
+    $conn->close();
+
+    respond(true , 200 , $genre , null , null);
 }
-
-$DB_genre_id = $genre_id_result['value'];
-
-$query = <<<EOT
-
-SELECT 
-    id,
-    name,
-    image
-FROM
-    genres 
-WHERE id = ? AND is_deleted = 0
-EOT;
-
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i" , $DB_genre_id);
-$stmt->execute();
-
-$result = $stmt->get_result();
-
-// id isnt found in database
-if($result->num_rows === 0){
-    echo json_encode([
-        'success' => false, 
-        'data' => 'Genre not found'
-    ]);
-    exit;
+else
+{
+    respond(false , 400 , null , null , 'Wrong method used');
 }
-
-$genre = $result->fetch_assoc();
-
-$stmt->close();
-$conn->close();
-
-echo json_encode([
-    'success' => true,
-    'data' => $genre
-]);
-exit;
 
 ?>

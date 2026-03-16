@@ -1,111 +1,95 @@
 <?php
 
-require __DIR__ . '/../../configuration/session.php';
+require_once __DIR__ . '/../../configuration/session.php';
+require_once  __DIR__ . '/../helpers.php';
 
 
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['admin_id'])) {
-    http_response_code(401);
-    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+    respond(false , 401 , null , null , 'Unauthorized to use api');
 }
 
-require_once  __DIR__ . '/../../configuration/database.php';
-require_once  __DIR__ . '/../helpers.php';
-require_once  __DIR__ . '/validators/genre_validators.php';
-require_once  __DIR__ . '/validators/genre_db_validators.php';
-require_once  __DIR__ . '/helpers/genre_helpers.php';
-
-$genre_payload = extract_genre_payload($_POST , $_FILES);
-
-// Validation of data
-$genre_name_result = validate_genre_name($genre_payload['name']);
-if(!$genre_name_result['success'])
+if($_SERVER['REQUEST_METHOD'] === "POST")
 {
-    echo json_encode([
-        'success' => false,
-        'message' => $genre_name_result['message']
-    ]);
-    exit;
-}
+    require_once  __DIR__ . '/../../configuration/database.php';
+    require_once  __DIR__ . '/validators/genre_validators.php';
+    require_once  __DIR__ . '/validators/genre_db_validators.php';
+    require_once  __DIR__ . '/helpers/genre_helpers.php';
 
-$genre_image_result = validate_genre_image_file($genre_payload['image']);
-if(!$genre_image_result['success'])
-{
-    echo json_encode([
-        'success' => false,
-        'message' => $genre_image_result['message']
-    ]);
-    exit;
-}
+    $genre_payload = extract_genre_payload($_POST , $_FILES);
 
-$DB_genre_name = $genre_name_result['value'];
-
-// Validate DB name uniqueness
-$DB_name_validation_result = DB_validate_genre_name($conn , $DB_genre_name , $genre_payload['id']);
-if(!$DB_name_validation_result['success'])
-{
-    echo json_encode([
-        'success' => false,
-        'message' => $DB_name_validation_result['message']
-    ]);
-    exit;
-}
-
-$DB_image_filename = null;
-
-if($genre_image_result['value'])
-{
-    $DB_image_filename = upload_image($genre_image_result['value']);
-
-    if($DB_image_filename === false)
+    $genre_name_validation = validate_genre_name($genre_payload['name']);
+    if(!$genre_name_validation['success'])
     {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Failed to upload image'
-        ]);
-        exit;
+        respond(false , 400 , null , null , "{$genre_payload['name']}");
+    }
+
+    $genre_image_validation = validate_genre_image_file($genre_payload['image']);
+    if(!$genre_image_validation['success'])
+    {
+        respond(false , 400 , null , null , $genre_image_validation['message']);
+    }
+
+    $genre_name = $genre_name_validation['value'];
+
+    // Validate DB name uniqueness
+    $name_is_unique = DB_validate_genre_name($conn , $genre_name , $genre_payload['id']);
+    if(!$name_is_unique['success'])
+    {
+        respond(false , 400 , null , null , $name_is_unique['message']);
+    }
+
+    $genre_filename = null;
+
+    if($genre_image_validation['value'])
+    {
+        $genre_filename = upload_image($genre_image_validation['value']);
+
+        if($genre_filename === false)
+        {
+            respond(false , 400 , null , null , 'Failed to upload image');
+        }
+    }
+
+    if($genre_filename === null)
+    {
+        $query = <<<EOT
+            UPDATE genres SET
+                name = ?
+            WHERE id = ?
+        EOT;
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param(
+            "si", 
+            $genre_name , $genre_payload['id']);
+    }
+    else
+    {
+        $query = <<<EOT
+            UPDATE genres SET
+                name = ?,
+                image = ?
+            WHERE id = ?
+        EOT;
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param(
+            "ssi", 
+            $genre_name , $genre_filename , $genre_payload['id']);
+    }
+
+    if($stmt->execute())
+    {
+        respond(true , 200 , null , null , 'Genre is updated successfully.');
+    }
+    else
+    {
+        respond(false , 500 , null , null , 'Something went wrong in updating genre');
     }
 }
-
-if($DB_image_filename === null)
-{
-    $query = <<<EOT
-        UPDATE genres SET
-            name = ?
-        WHERE id = ?
-    EOT;
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param(
-        "si", 
-        $DB_genre_name , $genre_payload['id']);
-}
 else
 {
-    $query = <<<EOT
-        UPDATE genres SET
-            name = ?,
-            image = ?
-        WHERE id = ?
-    EOT;
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param(
-        "ssi", 
-        $DB_genre_name , $DB_image_filename , $genre_payload['id']);
+    respond(false , 400 , null , null , 'Wrong method used');
 }
 
-if($stmt->execute())
-{
-    $response = ['success' => true , 'message' => 'Genre is updated successfully!'];
-}
-else
-{
-    $response = ['success' => false , 'message' => 'Problem in updating genre'];
-}
-
-$stmt->close();
-$conn->close();
-
-echo json_encode($response);
-exit;
 ?>

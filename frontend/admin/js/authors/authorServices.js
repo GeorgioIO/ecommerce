@@ -43,7 +43,7 @@ export async function restoreAuthor_DB(authorID) {
 
 export async function updateAuthor_DB(authorData) {
   const res = await fetch("../../backend/authors/update_author.php", {
-    method: "UPDATE",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },

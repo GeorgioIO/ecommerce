@@ -1,100 +1,80 @@
 <?php
 
-require __DIR__ . '/../../configuration/session.php';
+require_once __DIR__ . '/../../configuration/session.php';
+require_once __DIR__ . '/../helpers.php';
 
 header('Content-Type: application/json');
 
-
 if (!isset($_SESSION['admin_id'])) {
-    http_response_code(401);
-    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+    respond(false , 401 , null , null , 'Unauthorized to use api');
 }
 
-
-require_once __DIR__ .  '/../../configuration/database.php';
-require_once __DIR__ . '/../helpers.php';
-require_once __DIR__ . '/validators/genre_validators.php';
-require_once  __DIR__ . '/validators/genre_db_validators.php';
-require_once  __DIR__ . '/helpers/genre_helpers.php';
-
-
-$genre_payload = extract_genre_payload($_POST , $_FILES);
-
-// Validation of data
-$genre_name_result = validate_genre_name($genre_payload['name']);
-if(!$genre_name_result['success'])
+if($_SERVER['REQUEST_METHOD'] === "POST")
 {
-    echo json_encode([
-        'success' => false,
-        'message' => $genre_name_result['message']
-    ]);
-    exit;
-}
+    require_once __DIR__ .  '/../../configuration/database.php';
+    require_once __DIR__ . '/validators/genre_validators.php';
+    require_once  __DIR__ . '/validators/genre_db_validators.php';
+    require_once  __DIR__ . '/helpers/genre_helpers.php';
 
-$genre_image_result = validate_genre_image_file($genre_payload['image']);
-if(!$genre_image_result['success'])
-{
-    echo json_encode([
-        'success' => false,
-        'message' => $genre_image_result['message']
-    ]);
-    exit;
-}
 
-$DB_genre_name = $genre_name_result['value'];
+    $genre_payload = extract_genre_payload($_POST , $_FILES);
 
-// Validate DB name uniqueness
-$DB_name_validation_result = DB_validate_genre_name($conn , $DB_genre_name);
-if(!$DB_name_validation_result['success'])
-{
-    echo json_encode([
-        'success' => false,
-        'message' => $DB_name_validation_result['message']
-    ]);
-    exit;
-}
-
-$DB_genre_filename = null;
-
-if($genre_image_result['value'])
-{
-    $DB_genre_filename = upload_image($genre_image_result['value']);
-
-    if($DB_genre_filename === false)
+    // Validation of data
+    $genre_name_validation = validate_genre_name($genre_payload['name']);
+    if(!$genre_name_validation['success'])
     {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Failed to upload cover image'
-        ]);
-        exit;
+        respond(false , 400 , null , null , $genre_name_validation['message']);
     }
-}
 
-$query = <<<EOT
+    $genre_image_validation = validate_genre_image_file($genre_payload['image']);
+    if(!$genre_image_validation['success'])
+    {
+        respond(false , 400 , null , null , $genre_image_validation['message']);
+    }
 
-INSERT INTO genres
-(name , image)
-VALUES
-(? , ?);
+    $genre_name = $genre_name_validation['value'];
 
-EOT;
+    // ! Validate genre name uniqueness
+    $name_is_unique = DB_validate_genre_name($conn , $genre_name);
+    if(!$name_is_unique['success'])
+    {
+        respond(false , 400 , null , null , $name_is_unique['message']);
+    }
 
-$stmt = $conn->prepare($query);
+    $genre_filename = null;
 
-$stmt->bind_param("ss" , $DB_genre_name , $DB_genre_filename);
+    if($genre_image_validation['value'])
+    {
+        $genre_filename = upload_image($genre_image_validation['value']);
 
-if($stmt->execute()){
-    $response = ['success' => true , 'message' => 'New genre is added!'];
+        if($genre_filename === false)
+        {
+            respond(false , 400 , null , null , 'Failed to upload image');
+        }
+    }
+
+    $query = <<<EOT
+        INSERT INTO genres
+        (name , image)
+        VALUES
+        (? , ?);
+    EOT;
+
+    $stmt = $conn->prepare($query);
+
+    $stmt->bind_param("ss" , $genre_name , $genre_filename);
+
+    if($stmt->execute()){
+        respond(true , 201 , null , null , 'New genre is added');
+    }
+    else
+    {
+        respond(false , 500 , null , null , 'Problem in adding genre');
+    }
 }
 else
 {
-    $response = ['success' => false , 'message' => 'Problem in adding genre'];
+    respond(false , 400 , null , null , 'Wrong method used');
 }
-
-$stmt->close();
-$conn->close();
-
-echo json_encode($response);
-exit;
 
 ?>

@@ -1,4 +1,4 @@
-export async function fetch_genres_DB(filters, pagination = null) {
+export async function getGenres_DB(filters, pagination = null) {
   let params = "";
 
   if (pagination) {
@@ -13,81 +13,70 @@ export async function fetch_genres_DB(filters, pagination = null) {
     params.set(key, filters[key]);
   }
 
-  const result = await fetch(
+  const res = await fetch(
     `../../backend/genres/get_genres.php?${params.toString()}`,
   );
 
-  return result.json();
+  return res.json();
 }
 
-// Function responsible to add a genre
 export async function addGenre_DB(genreData) {
   const formData = new FormData();
   formData.append("name", genreData.name);
   formData.append("image", genreData.image);
 
-  const result = await fetch("../../backend/genres/add_genre.php", {
+  const res = await fetch("../../backend/genres/add_genre.php", {
     method: "POST",
     body: formData,
   });
 
-  return result.json();
+  return res.json();
 }
 
-// Function responsible for updating a genre
 export async function updateGenre_DB(genreData) {
   const formData = new FormData();
-
   formData.append("id", genreData.id);
   formData.append("name", genreData.name);
   formData.append("image", genreData.image);
 
-  const result = await fetch("../../backend/genres/update_genre.php", {
+  const res = await fetch("../../backend/genres/update_genre.php", {
     method: "POST",
     body: formData,
   });
 
-  return result.json();
+  return res.json();
 }
 
 export async function deleteGenre_DB(genreID) {
-  const result = await fetch("../../backend/genres/delete_genre.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+  const res = await fetch(
+    `../../backend/genres/delete_genre.php?id=${genreID}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
-    body: new URLSearchParams({
-      id: genreID,
-    }),
-  });
+  );
 
-  return result.json();
+  return res.json();
 }
 
 export async function restoreGenre_DB(genreID) {
-  const result = await fetch("../../backend/genres/restore_genre.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+  const res = await fetch(
+    `../../backend/genres/restore_genre.php?id=${genreID}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
-    body: new URLSearchParams({
-      id: genreID,
-    }),
-  });
+  );
 
-  return result.json();
+  return res.json();
 }
 
-export async function getGenreData_DB(genreID) {
-  const result = await fetch("../../backend/genres/get_genre.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      id: genreID,
-    }),
-  });
+export async function getGenre_DB(genreID) {
+  const res = await fetch(`../../backend/genres/get_genre.php?id=${genreID}`);
 
-  return result.json();
+  return res.json();
 }

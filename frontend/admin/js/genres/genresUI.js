@@ -1,4 +1,4 @@
-import { fetch_genres_DB, getGenreData_DB } from "./genreServices.js";
+import { getGenres_DB, getGenre_DB } from "./genreServices.js";
 
 import { genreTableConfigs } from "./genreTableConfigs.js";
 import {
@@ -22,7 +22,7 @@ export async function showGenreAddForm() {
 }
 
 export async function showGenreEditForm(genreID) {
-  const genreData = await getGenreData_DB(genreID);
+  const genreData = await getGenre_DB(genreID);
   openForm("edit", genreData.data);
 }
 
@@ -42,7 +42,7 @@ export function collectGenreFormData(form) {
 
 export async function loadGenres() {
   try {
-    const genresResponse = await fetch_genres_DB(listState.filters, {
+    const genresResponse = await getGenres_DB(listState.filters, {
       page: listState.page,
       perPage: listState.perPage,
     });

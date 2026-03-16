@@ -7,7 +7,7 @@ require_once  __DIR__ . '/../helpers.php';
 
 
 if (!isset($_SESSION['admin_id'])) {
-    respond(false , 401 , 'Unauthorized to use api');
+    respond(false , 401 , null , null, 'Unauthorized to use api');
 }
 
 if($_SERVER['REQUEST_METHOD'] === "PATCH")
@@ -20,7 +20,7 @@ if($_SERVER['REQUEST_METHOD'] === "PATCH")
 
     if(!isset($query_params['id']))
     {
-        respond(false , 400 , 'Missing author id');
+        respond(false , 400 , null , null , 'Missing author id');
     }
 
     $author_id = intval($query_params['id']);
@@ -29,7 +29,7 @@ if($_SERVER['REQUEST_METHOD'] === "PATCH")
 
     if(!$author_id_validation['valid'])
     {
-        respond(false , 400 , $author_id_validation['message']);
+        respond(false , 400 , null , null, $author_id_validation['message']);
     }
 
     $query = "UPDATE authors SET is_deleted = 0 WHERE id = ?";
@@ -38,16 +38,16 @@ if($_SERVER['REQUEST_METHOD'] === "PATCH")
 
     if($stmt->execute())
     {
-        respond(true , 200 , 'Author is restored successsfully');
+        respond(true , 200 , null , null, 'Author is restored successsfully');
     }
     else
     {
-        respond(false , 500 , 'Something went wrong in restoring author');
+        respond(false , 500 , null , null, 'Something went wrong in restoring author');
     }
 }
 else
 {
-    respond(false , 400 , 'Wrong method used');
+    respond(false , 400 ,  null , null, 'Wrong method used');
 }
 
 
