@@ -1,12 +1,12 @@
 import {
-  fetch_customers_DB,
-  get_customer_addresses_DB,
+  getCustomers_DB,
+  getCustomerAddress_DB,
+  getCustomer_DB,
 } from "./customerServices.js";
 
 import { customerTableConfigs } from "./customerTableConfigs.js";
 import { customerFormConfigs } from "./customerFormConfigs.js";
 import { buildCustomerForm } from "./customerFormBuilder.js";
-import { get_customer_data_DB } from "./customerServices.js";
 import { hydrateCustomerForm } from "./customerFormHydrator.js";
 import {
   swapClass,
@@ -21,15 +21,14 @@ const content = document.querySelector(".table-container");
 const formContainer = document.querySelector(".form-container");
 
 export async function showCustomerViewForm(customerID) {
-  const customerData = await get_customer_data_DB(customerID);
-  const customerAddresses = await get_customer_addresses_DB(customerID);
-  openForm(customerData.data, customerAddresses);
+  const customerData = await getCustomer_DB(customerID);
+  const customerAddresses = await getCustomerAddress_DB(customerID);
+  openForm(customerData.data, customerAddresses.data);
 }
 
 async function openForm(data = {}, customer_addresses = {}) {
   // get form body
   const formBody = document.querySelector(".form-body");
-  console.log(customer_addresses);
   // empty it first
   formBody.innerHTML = "";
 
@@ -69,7 +68,7 @@ export function resetCustomerForm(form) {
 
 export async function loadCustomers() {
   try {
-    const customersResponse = await fetch_customers_DB({
+    const customersResponse = await getCustomers_DB({
       page: listState.page,
       perPage: listState.perPage,
     });

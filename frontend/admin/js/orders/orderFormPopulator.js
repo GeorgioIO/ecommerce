@@ -1,4 +1,4 @@
-import { fetch_customers_DB } from "../customers/customerServices.js";
+import { getCustomers_DB } from "../customers/customerServices.js";
 import { showMessageLog } from "../messageLog/messageLog.js";
 
 // ====== EXPORTED FUNCTIONS
@@ -27,7 +27,7 @@ async function populateCustomerSelect(selectElement, mode, data) {
   if (mode === "add") {
     try {
       // Get customers
-      const customers = await fetch_customers_DB();
+      const customers = await getCustomers_DB();
 
       // Default option
       const defaultOptionElement = document.createElement("option");

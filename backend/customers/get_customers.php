@@ -2,94 +2,96 @@
 
 header('Content-Type: application/json');
 
-require __DIR__ . '/../../configuration/session.php';
+require_once __DIR__ . '/../../configuration/session.php';
+require_once __DIR__ . '/../helpers.php';
 
 if (!isset($_SESSION['admin_id'])) {
-    http_response_code(401);
-    exit(json_encode(['success' => false, 'message' => 'Unauthorized']));
+    respond(false , 401 , null , null , 'Unauthorized to use api');
 }
 
-require_once  __DIR__ . '/../../configuration/database.php';
-
-$hasPagination = isset($_GET['page']) && isset($_GET['perPage']);
-
-
-$query = <<<EOT
-SELECT
-    u.id,
-    u.customer_code,
-    u.name,
-    u.email,
-    u.phone_number,
-    u.date_added,
-    u.role,
-    COALESCE(SUM(o.total_price), 0) AS total_spent,
-    COUNT(o.id) AS total_orders
-FROM users u
-LEFT JOIN orders o ON u.id = o.user_id
-GROUP BY u.id
-ORDER BY u.role
-
-EOT;
-
-$params = [];
-$types = "";
-
-if($hasPagination)
+if($_SERVER['REQUEST_METHOD'] === "GET")
 {
-    $page = $_GET['page'] ?? 1;
-    $perPage = $_GET['perPage'] ?? 10;
 
-    $page = max(1 , (int) $page);
-    $perPage = min(50 , max(5 , $perPage));
-    $offset = ($page - 1) * $perPage;
+    require_once  __DIR__ . '/../../configuration/database.php';
+    $hasPagination = isset($_GET['page']) && isset($_GET['perPage']);
 
-    $query .= " LIMIT ? OFFSET ?";
 
-    $params[] = $perPage;
-    $params[] = $offset;
-    $types .= "ii";
-}
+    $query = <<<EOT
+        SELECT
+            u.id,
+            u.customer_code,
+            u.name,
+            u.email,
+            u.phone_number,
+            u.date_added,
+            u.role,
+            COALESCE(SUM(o.total_price), 0) AS total_spent,
+            COUNT(o.id) AS total_orders
+        FROM 
+            users u
+        LEFT JOIN  orders o ON u.id = o.user_id
+        GROUP BY u.id
+        ORDER BY u.role
+    EOT;
 
-$stmt = $conn->prepare($query);
+    $params = [];
+    $types = "";
 
-if($hasPagination)
-{
-    $stmt->bind_param("ii" , $perPage , $offset);
-}
-
-$stmt->execute();
-$result = $stmt->get_result();
-
-$customers = [];
-
-if($result && $result->num_rows > 0)
-{
-    while($row = $result->fetch_assoc())
+    if($hasPagination)
     {
-        $customers[] = $row;
+        $page = $_GET['page'] ?? 1;
+        $perPage = $_GET['perPage'] ?? 10;
+
+        $page = max(1 , (int) $page);
+        $perPage = min(50 , max(5 , $perPage));
+        $offset = ($page - 1) * $perPage;
+
+        $query .= " LIMIT ? OFFSET ?";
+
+        $params[] = $perPage;
+        $params[] = $offset;
+        $types .= "ii";
     }
+
+    $stmt = $conn->prepare($query);
+
+    if($hasPagination)
+    {
+        $stmt->bind_param("ii" , $perPage , $offset);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $customers = [];
+
+    if($result && $result->num_rows > 0)
+    {
+        while($row = $result->fetch_assoc())
+        {
+            $customers[] = $row;
+        }
+    }
+
+    $result = $conn->query("SELECT COUNT(*) AS total_customers FROM users");
+    $total_customers = $result->fetch_assoc()['total_customers'];
+
+
+    $pagination = $hasPagination ? [
+        'page' => $page,
+        'perPage' => $perPage,
+        'total' => $total_customers,
+        'totalPages' => ceil($total_customers / $perPage)
+    ] : null;
+
+    $conn->close();
+    $stmt->close();
+
+    respond(true , 200 , $customers , $pagination , null);
 }
-
-$result = $conn->query("SELECT COUNT(*) AS total_customers FROM users");
-$total_customers = $result->fetch_assoc()['total_customers'];
-
-
-$pagination = $hasPagination ? [
-    'page' => $page,
-    'perPage' => $perPage,
-    'total' => $total_customers,
-    'totalPages' => ceil($total_customers / $perPage)
-] : null;
-
-$conn->close();
-$stmt->close();
-
-echo json_encode([
-    'success' => true,
-    'data' => $customers,
-    'pagination' => $pagination
-]);
-exit;
+else
+{
+    respond(false , 400  , null , null , 'Wrong method used');
+}
 
 ?>

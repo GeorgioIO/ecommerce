@@ -2,84 +2,57 @@
 
 header('Content-Type: application/json');
 
-require __DIR__ . '/../../configuration/session.php';
-
-if (!isset($_SESSION['admin_id']) && !isset($_SESSION['user_id'])) {
-    echo json_encode([
-        'success' => false,
-        'status' => 401,
-        'message' => 'Unauthorized'
-    ]);
-    exit;
-}
-
-require_once  __DIR__ . '/../../configuration/database.php';
-require_once  __DIR__ . '/validators/customer_validators.php';
-
-if(!isset($_POST["id"]))
+if($_SERVER['REQUEST_METHOD'] === 'GET')
 {
-    $id = $_SESSION['user_id'];
+    require_once  __DIR__ . '/../../configuration/database.php';
+    require_once  __DIR__ . '/validators/customer_validators.php';
+    require_once __DIR__ . '/../helpers.php';
+
+    $id = $_GET['id'] ?? null;
+
+    $customer_id_validation = validate_entity_ID($id);
+    if(!$customer_id_validation['valid'])
+    {
+        respond(false , 400 , null , null , $customer_id_validation['message']);
+    }
+
+    $query = <<<EOT
+        SELECT
+            u.id,
+            u.customer_code,
+            u.name,
+            u.email,
+            u.phone_number,
+            u.date_added,
+            u.password,
+            COALESCE(SUM(o.total_price), 0) AS total_spent,
+            COUNT(o.id) AS total_orders
+        FROM users u
+        LEFT JOIN orders o ON u.id = o.user_id
+        WHERE u.id = ?
+        GROUP BY u.id
+    EOT;
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i" , $id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if($result->num_rows === 0){
+        respond(false , 404 , null , null , 'Customer not found');
+    }
+
+    $customer = $result->fetch_assoc();
+
+    $stmt->close();
+    $conn->close();
+
+    respond(true , 200 , $customer , null , null);
 }
 else
 {
-    $id = $_POST["id"];
+    respond(false , 400 , null , null , 'Wrong method used');
 }
-
-// validate author id
-$customer_id_result = validate_customer_id($id);
-if(!$customer_id_result['success'])
-{
-    echo json_encode([
-        'success' => false,
-        'message' => $customer_id_result['message']
-    ]);
-    exit;
-}
-
-$DB_customer_id = $customer_id_result['value'];
-
-$query = <<<EOT
-
-SELECT
-    u.id,
-    u.customer_code,
-    u.name,
-    u.email,
-    u.phone_number,
-    u.date_added,
-    u.password,
-    COALESCE(SUM(o.total_price), 0) AS total_spent,
-    COUNT(o.id) AS total_orders
-FROM users u
-LEFT JOIN orders o ON u.id = o.user_id
-WHERE u.id = ?
-GROUP BY u.id
-EOT;
-
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i" , $DB_customer_id);
-$stmt->execute();
-
-$result = $stmt->get_result();
-
-// id isnt found in database
-if($result->num_rows === 0){
-    echo json_encode([
-        'success' => false, 
-        'data' => 'Customer not found'
-    ]);
-    exit;
-}
-
-$customer = $result->fetch_assoc();
-
-$stmt->close();
-$conn->close();
-
-echo json_encode([
-    'success' => true,
-    'data' => $customer
-]);
-exit;
 
 ?>

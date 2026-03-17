@@ -10,7 +10,7 @@ import {
   fetchOrderLines_DB,
   get_order_data_DB,
 } from "./ordersServices.js";
-import { get_customer_addresses_DB } from "../customers/customerServices.js";
+import { getCustomerAddress_DB } from "../customers/customerServices.js";
 import { orderTableConfigs } from "./orderTableConfigs.js";
 import { orderDetailsConfig, orderAddressConfig } from "./orderFormConfigs.js";
 import { buildOrderForm } from "./orderFormBuilder.js";
@@ -67,14 +67,16 @@ formContainer?.addEventListener("change", async (e) => {
 
     // Get addresses a specific customer id
     currentCustomerAddresses =
-      (await get_customer_addresses_DB(customerID)) ?? null;
+      (await getCustomerAddress_DB(customerID)) ?? null;
 
-    populateExistingAddressesSelect(addressesSelect, currentCustomerAddresses);
+    populateExistingAddressesSelect(
+      addressesSelect,
+      currentCustomerAddresses.data,
+    );
     resetAddressSection();
   } else if (existingAddressSelect) {
     // Get address id
     const addressID = Number(existingAddressSelect.value);
-    console.log(addressID);
     // When 'New address' is selected
     if (!addressID) {
       resetAddressSection();
@@ -82,7 +84,7 @@ formContainer?.addEventListener("change", async (e) => {
     }
 
     // Get the specific address data from currentCustomerAddresses array
-    const address = currentCustomerAddresses.find(
+    const address = currentCustomerAddresses.data.find(
       (addr) => addr.address_id === addressID,
     );
     if (!address) return;
@@ -294,6 +296,7 @@ function populateExistingAddressesSelect(selectElement, existingAddresses) {
   newAddressOption.value = null;
   selectElement.append(newAddressOption);
 
+  console.log(existingAddresses);
   if (existingAddresses) {
     existingAddresses.forEach((address) => {
       // Create group for each address
@@ -354,11 +357,16 @@ async function openForm(
     );
     const addressesSelect = document.querySelector("#existing-address-select");
     addressesContainer.style.display = "flex";
-    currentCustomerAddresses = await get_customer_addresses_DB(
+    let currentCustomerAddresses = await getCustomerAddress_DB(
       orderMetaData.user_id,
     );
 
-    populateExistingAddressesSelect(addressesSelect, currentCustomerAddresses);
+    console.log(currentCustomerAddresses);
+
+    populateExistingAddressesSelect(
+      addressesSelect,
+      currentCustomerAddresses.data,
+    );
 
     hydrateOrderForm(form, orderMetaData, orderAddressData, orderLines);
 
