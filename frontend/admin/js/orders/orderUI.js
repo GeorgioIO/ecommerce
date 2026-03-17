@@ -5,10 +5,10 @@ import {
   handlePaginationButtonsColor,
 } from "../UIhelpers.js";
 import {
-  fetchOrders_DB,
-  fetchOrderAddress_DB,
-  fetchOrderLines_DB,
-  get_order_data_DB,
+  getOrders_DB,
+  getOrderAddress_DB,
+  getOrderLines_DB,
+  getOrder_DB,
 } from "./ordersServices.js";
 import { getCustomerAddress_DB } from "../customers/customerServices.js";
 import { orderTableConfigs } from "./orderTableConfigs.js";
@@ -147,11 +147,11 @@ export function collectOrderFormData(form) {
 
 export async function showOrderEditForm(orderID) {
   console.log(orderID);
-  const orderMetaData = await get_order_data_DB(orderID);
-  const orderAddressData = await fetchOrderAddress_DB(orderID);
-  const orderLines = await fetchOrderLines_DB(orderID);
+  const orderMetaData = await getOrder_DB(orderID);
+  const orderAddressData = await getOrderAddress_DB(orderID);
+  const orderLines = await getOrderLines_DB(orderID);
 
-  openForm("edit", orderMetaData, orderAddressData, orderLines);
+  openForm("edit", orderMetaData.data, orderAddressData.data, orderLines.data);
 }
 
 export async function showOrderAddForm() {
@@ -200,7 +200,7 @@ export function resetOrderForm(form) {
 // Function to load orders from the database by sending a request to backend
 export async function loadOrders() {
   try {
-    const ordersResponse = await fetchOrders_DB({
+    const ordersResponse = await getOrders_DB({
       page: listState.page,
       perPage: listState.perPage,
     });
@@ -357,11 +357,10 @@ async function openForm(
     );
     const addressesSelect = document.querySelector("#existing-address-select");
     addressesContainer.style.display = "flex";
+    console.log("here", orderMetaData.user_id);
     let currentCustomerAddresses = await getCustomerAddress_DB(
       orderMetaData.user_id,
     );
-
-    console.log(currentCustomerAddresses);
 
     populateExistingAddressesSelect(
       addressesSelect,

@@ -27,7 +27,6 @@ try
     $result = $conn->query("SELECT COUNT(*) AS total_orders FROM orders");
     $total_orders = (int) $result->fetch_assoc()['total_orders'];
 
-    
 
     // Total Customers
     $result = $conn->query("SELECT COUNT(*) AS total_customers FROM users WHERE role = 'Customer'");

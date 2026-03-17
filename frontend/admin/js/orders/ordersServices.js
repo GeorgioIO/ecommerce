@@ -1,46 +1,29 @@
-export async function get_order_data_DB(order_id) {
-  const result = await fetch("../../backend/orders/get_order.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      id: order_id,
-    }),
-  });
+export async function getOrder_DB(orderID) {
+  const result = await fetch(
+    `../../backend/orders/get_order.php?id=${orderID}`,
+  );
+
+  // console.log(result.text());
+  return result.json();
+}
+
+export async function getOrderAddress_DB(orderID) {
+  const result = await fetch(
+    `../../backend/orders/get_order_address.php?id=${orderID}`,
+  );
 
   return result.json();
 }
 
-export async function fetchOrderAddress_DB(orderID) {
-  const result = await fetch("../../backend/orders/get_order_address.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      id: orderID,
-    }),
-  });
+export async function getOrderLines_DB(orderID) {
+  const result = await fetch(
+    `../../backend/orders/get_order_lines.php?id=${orderID}`,
+  );
 
   return result.json();
 }
 
-export async function fetchOrderLines_DB(orderID) {
-  const result = await fetch("../../backend/orders/get_order_lines.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      id: orderID,
-    }),
-  });
-
-  return result.json();
-}
-
-export async function fetchOrders_DB(pagination) {
+export async function getOrders_DB(pagination) {
   const params = new URLSearchParams({
     page: pagination.page,
     perPage: pagination.perPage,
@@ -54,7 +37,7 @@ export async function fetchOrders_DB(pagination) {
   return result.json();
 }
 
-export async function fetchOrdersCount_DB() {
+export async function getOrdersCount_DB() {
   const result = await fetch("../../backend/orders/get_orders_count.php");
 
   return result.json();
@@ -133,5 +116,6 @@ export async function updateOrder_DB(orderData) {
     body: formData,
   });
 
+  // console.log(result.text());
   return result.json();
 }

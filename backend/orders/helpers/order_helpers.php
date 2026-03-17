@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../../notifications/admin_notifications/helpers/admin_notifcations_db_helpers.php';
+require_once __DIR__ . '/../../books/helpers/book_db_helpers.php';
 
 function normalize_address_payload($payload)
 {

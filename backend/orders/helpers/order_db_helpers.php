@@ -19,6 +19,7 @@ function get_select_orders_query($role)
             FROM
                 orders o
             JOIN users u ON o.user_id = u.id
+            ORDER BY o.date_added DESC
         ";
     }
     else if($role === "user")
