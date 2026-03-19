@@ -24,15 +24,17 @@ It reflects how **real admin panels work** fcusing on data consistency, validati
 
 ![Books Section](/assets/readme-assets/dashboard-books.png)
 
-- Add, Edit, and delete books
+- Add, Edit, Delete and Restore books
 - Manage:
   - ISBN, SKU
   - Price
   - Stock Quantity
   - Formats, Genres, Authors
+  - Book Discount
 - Automatic stock status updates (in stock, out of stock)
 - Pagination
 - Image upload handling
+- Show deleted books
 
 #### Process of adding a book
 
@@ -255,6 +257,8 @@ Admin have limited control on customers section , for example adding a customer 
   - Shipping address (id , first name , last name , email , phone number , state , city , address line 1 , address line 2 , additional notes)
   - Order lines
 - Usage of **database transactions** to esnure consistency and the full database safety in case of failures
+
+---
 
 ### Process of adding an order
 
