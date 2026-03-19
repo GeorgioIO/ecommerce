@@ -1,7 +1,7 @@
-import { fetch_formats_DB } from "./formatsServices.js";
+import { getFormats_DB } from "./formatsServices.js";
 
 export async function populateSelectFormats(selectElement) {
-  const formats = await fetch_formats_DB();
+  const formats = await getFormats_DB();
 
   // Default option
   const defaultOptionElement = document.createElement("option");
@@ -9,7 +9,7 @@ export async function populateSelectFormats(selectElement) {
   defaultOptionElement.textContent = "Select Format";
   selectElement.append(defaultOptionElement);
 
-  formats.forEach((format) => {
+  formats.data.forEach((format) => {
     let optionElement = document.createElement("option");
     optionElement.value = format.id;
     optionElement.textContent = format.name;
