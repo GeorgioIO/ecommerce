@@ -19,15 +19,15 @@ export async function addToWishlist(productID) {
 }
 
 export async function removeFromWishlist(productID) {
-  const result = await fetch("../../../backend/wishlist/remove_wishlist.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+  const result = await fetch(
+    `../../../backend/wishlist/remove_wishlist.php?id=${productID}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
-    body: new URLSearchParams({
-      id: productID,
-    }),
-  });
+  );
 
   document.dispatchEvent(
     new CustomEvent("wishlistUpdated", {
@@ -56,5 +56,4 @@ export async function getWishlistItems(pagination = null) {
   if (!result.ok) return;
 
   return result.json();
-  // console.log(result.text());
 }
