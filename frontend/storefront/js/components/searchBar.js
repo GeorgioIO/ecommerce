@@ -1,9 +1,9 @@
 import { swapClass } from "../../../admin/js/UIhelpers.js";
-import { currentFilters } from "../core/currentFilters.js";
 import { searchBooks } from "../services/booksServices.js";
 import { buildSidebarCard } from "./sidebarProductCard.js";
 let maxMiniSearch = 4;
 let searchCounter = 0;
+
 export function buildSearchBar() {
   let searchBar = document.querySelector("#search-bar") ?? null;
 
@@ -99,9 +99,9 @@ export function buildSearchBar() {
     try {
       const books = await searchBooks(searchValue);
 
-      if (searchValue !== lastQuery || !books?.length) return;
+      if (searchValue !== lastQuery || !books.data?.length) return;
 
-      for (const book of books) {
+      for (const book of books.data) {
         if (searchCounter >= maxMiniSearch) break;
         searchResultContainer.append(await buildSidebarCard(book, "search"));
         searchCounter++;

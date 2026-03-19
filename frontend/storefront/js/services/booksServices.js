@@ -1,18 +1,13 @@
 export async function searchBooks(value) {
-  const result = await fetch("../../../backend/books/search_books.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      value: value,
-    }),
-  });
+  const result = await fetch(
+    `../../../backend/books/search_books.php?value=${value}`,
+  );
 
   if (!result.ok) {
     throw new Error("Search request failed");
   }
 
+  // console.log(result.text());
   return result.json();
 }
 
@@ -38,7 +33,6 @@ export async function getBooks_DB(filters = null, pagination = null) {
   );
 
   return result.json();
-  // console.log(result.text());
 }
 
 export async function getBooksStats_DB() {
@@ -63,5 +57,4 @@ export async function getFormats_DB() {
   const result = await fetch("../../../backend/formats/get_formats.php");
 
   return result.json();
-  // console.log(result.text());
 }
