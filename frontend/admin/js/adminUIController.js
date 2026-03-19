@@ -372,8 +372,10 @@ two modes add and edit
 
 */
 document.addEventListener("submit", async (e) => {
-  e.preventDefault();
   const form = e.target;
+  if (!form.dataset.entity) return;
+
+  e.preventDefault();
   const { entity, mode } = form.dataset;
   // Get data collector and collect - entity
   const entityDataCollector = entityHandlers?.[entity]?.dataCollector;

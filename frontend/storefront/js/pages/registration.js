@@ -23,7 +23,7 @@ loginForm?.addEventListener("submit", (e) => {
   let password = loginForm.querySelector("#password");
 
   // Sanitize Data
-  email = identifier.value.trim();
+  email = email.value.trim();
   password = password.value.trim();
 
   activateMessageBox();

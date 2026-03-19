@@ -8,7 +8,14 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
     require_once  __DIR__ . '/validators/customer_validators.php';
     require_once __DIR__ . '/../helpers.php';
 
-    $id = $_GET['id'] ?? null;
+    if(isset($_GET['id']))
+    {
+        $id = $_GET['id'];
+    }
+    else
+    {
+        $id = $_SESSION['user_id'];
+    }
 
     $customer_id_validation = validate_entity_ID($id);
     if(!$customer_id_validation['valid'])

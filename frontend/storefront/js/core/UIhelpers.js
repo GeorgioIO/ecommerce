@@ -4,7 +4,7 @@ import { loadWishlist } from "../pages/wishlistUI.js";
 import { handleCartButton } from "../components/productCard.js";
 import { updateCart } from "../components/miniCartBar.js";
 import { calculateCartTotal } from "../components/miniCartBar.js";
-import { getCustomerAddresses_DB } from "../services/customerServices.js";
+import { getCustomerAddress_DB } from "../services/customerServices.js";
 import { hydrateAddressForm } from "../components/addressForm/addressFormHydrator.js";
 
 export function buildAddressOptionContainer(addressID) {
@@ -24,7 +24,7 @@ export function buildAddressOptionContainer(addressID) {
   defaultRadio.onchange = async () => {
     const form = document.querySelector("#address-form");
 
-    const customerAddress = await getCustomerAddresses_DB();
+    const customerAddress = await getCustomerAddress_DB();
     hydrateAddressForm(form, customerAddress[0]);
   };
 

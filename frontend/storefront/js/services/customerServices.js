@@ -1,4 +1,4 @@
-export async function updateAccountDetails_DB(data) {
+export async function updateAccount_DB(data) {
   const formData = new FormData();
   formData.append("name", data.name);
   formData.append("email", data.email);
@@ -13,45 +13,31 @@ export async function updateAccountDetails_DB(data) {
   });
 
   return result.json();
-  // console.log(result.text());
 }
 
-export async function getCustomerData_DB() {
+export async function getCustomer_DB() {
   const result = await fetch("../../../backend/customers/get_customer.php");
 
-  // console.log(result.text());
   return result.json();
 }
-// getCustomerAddresses_DB
-export async function getCustomerAddresses_DB(customer_id) {
+
+export async function getCustomerAddress_DB(customerID) {
   const result = await fetch(
-    "../../../backend/customers/get_customer_addresses.php",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        id: customer_id,
-      }),
-    },
+    `../../../backend/customers/get_customer_address.php?id=${customerID}`,
   );
-  return result.json();
+
   // console.log(result.text());
+  return result.json();
 }
 
 export async function deleteCustomerAddress_DB() {
   const result = await fetch(
     "../../../backend/customers/delete_customer_address.php",
     {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
+      method: "DELETE",
     },
   );
   return result.json();
-  // console.log(result.text());
 }
 
 export async function saveCustomerAddress_DB(data) {

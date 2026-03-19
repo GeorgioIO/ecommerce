@@ -6,7 +6,7 @@ import {
 } from "../components/messageBox.js";
 import { buildAddressOptionContainer } from "../core/UIhelpers.js";
 import { getCartItems } from "../services/cartServices.js";
-import { getCustomerAddresses_DB } from "../services/customerServices.js";
+import { getCustomerAddress_DB } from "../services/customerServices.js";
 import { getSession } from "../services/sessionServices.js";
 import { buildAddressFormSkeleton } from "../components/addressForm/addressFormBuilder.js";
 import { hydrateAddressForm } from "../components/addressForm/addressFormHydrator.js";

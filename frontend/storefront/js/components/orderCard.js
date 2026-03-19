@@ -3,7 +3,7 @@
 // Output : Order card element
 
 import { swapClass } from "../../../admin/js/UIhelpers.js";
-import { fetchOrderLines_DB } from "../services/ordersServices.js";
+import { getOrderLines_DB } from "../services/ordersServices.js";
 
 export async function buildOrderCard(order) {
   // Create order card
@@ -128,8 +128,8 @@ function buildOrderLinesContainer(lines) {
 }
 
 async function setViewDetailsEventListener(order) {
-  const lines = await fetchOrderLines_DB(order.id);
-  const linesContainer = buildOrderLinesContainer(lines);
+  const lines = await getOrderLines_DB(order.id);
+  const linesContainer = buildOrderLinesContainer(lines.data);
   swapClass(linesContainer, "slide-in-right", "slide-out-right");
   document.body.append(linesContainer);
 }

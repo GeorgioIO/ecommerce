@@ -1,12 +1,12 @@
-import { fetchOrders_DB } from "../services/ordersServices.js";
+import { getOrders_DB } from "../services/ordersServices.js";
 import { getSession } from "../services/sessionServices.js";
 import { renderOrdersCatalog } from "../components/ordersCatalog.js";
 import {
   deleteCustomerAddress_DB,
-  getCustomerAddresses_DB,
-  getCustomerData_DB,
+  getCustomerAddress_DB,
+  getCustomer_DB,
   saveCustomerAddress_DB,
-  updateAccountDetails_DB,
+  updateAccount_DB,
 } from "../services/customerServices.js";
 import { buildAddressFormSkeleton } from "../components/addressForm/addressFormBuilder.js";
 import {
@@ -100,7 +100,7 @@ dashboard?.addEventListener("click", async (e) => {
       return;
     }
 
-    const response = await updateAccountDetails_DB(data);
+    const response = await updateAccount_DB(data);
 
     if (!response.success) {
       const messageBox = createMesssageBox(response.message);
@@ -146,7 +146,7 @@ dashboardSidebar?.addEventListener("click", async (e) => {
 export async function loadOrders(content, state) {
   if (!state) state = ordersListState;
   // Get orders for the user
-  const response = await fetchOrders_DB({
+  const response = await getOrders_DB({
     page: state.page,
     perPage: state.perPage,
   });
@@ -167,8 +167,9 @@ export async function loadOrders(content, state) {
 }
 
 async function renderAccountDetailsSection(content) {
-  const customerData = await getCustomerData_DB();
+  const customerData = await getCustomer_DB();
 
+  console.log(customerData);
   if (!customerData.success) {
     activateMessageBox();
     const messageBox = createMesssageBox("Fail loading customer data");
@@ -189,17 +190,17 @@ async function renderAddressSection(content) {
   // Build the form if user have a user made address saved populate the form
   // If not tell him that He can fill the form and save address
   // Add delete address button that delete the address and make the form empty
-  const address = await getCustomerAddresses_DB();
+  const address = await getCustomerAddress_DB();
   if (address.success === false) {
     activateMessageBox();
     const message = createMesssageBox("Fail loading address");
     appendMessageBox(message);
   }
 
-  const form = buildAddressFormSkeleton(address);
+  const form = buildAddressFormSkeleton(address.data[0]);
 
   if (address) {
-    hydrateAddressForm(form, address[0]);
+    hydrateAddressForm(form, address.data[0]);
   }
 
   content.append(form);

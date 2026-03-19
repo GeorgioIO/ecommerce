@@ -1,95 +1,77 @@
 <?php
 
 require_once __DIR__ . '../../../configuration/session.php';
+require_once __DIR__ . '/../helpers.php';
 
 header("Content-Type: application/json");
 
 if(!isset($_SESSION['user_id']))
 {
-    echo json_encode([
-        'success' => false,
-        'status' => 401,
-        'message' => 'Unauthorized'
-    ]);
-    exit;
+    respond(false , 401 , null , null , 'Not authorized to use api');
 }
 
 require_once __DIR__ . '../../../configuration/database.php';
 
-
-// Collect user id
-$user_id = $_SESSION['user_id'];
-
-// Get address
-$address_query = "SELECT address_id FROM users WHERE id = ?";
-$select_stmt = $conn->prepare($address_query);
-$select_stmt->bind_param("i" , $user_id);
-$select_stmt->execute();
-$result = $select_stmt->get_result();
-
-if($result->num_rows === 1)
+if($_SERVER['REQUEST_METHOD'] === 'DELETE')
 {
-    $address_id = $result->fetch_assoc()['address_id'];
-}
-else {
-    echo json_encode([
-        'success' => false,
-        'status' => 400,
-        'message' => 'You dont own any address currently'
-    ]);
-    exit;
-}
+    $user_id = $_SESSION['user_id'];
 
-$conn->begin_transaction();
+    // Get address
+    $address_query = "SELECT address_id FROM users WHERE id = ?";
+    $select_stmt = $conn->prepare($address_query);
+    $select_stmt->bind_param("i" , $user_id);
+    $select_stmt->execute();
+    $result = $select_stmt->get_result();
 
-try
-{
-    // Soft delete the book from user_addresses
-    $delete_query = "UPDATE shipping_addresses SET is_active = 0 WHERE id = ?";
-    $delete_stmt = $conn->prepare($delete_query);
-    $delete_stmt->bind_param("i" , $address_id);
-    $delete_stmt->execute();
-
-    if($delete_stmt->affected_rows === 0)
+    if($result->num_rows === 1)
     {
-        throw new Exception('Address not found');
+        $address_id = $result->fetch_assoc()['address_id'];
+    }
+    else {
+        respond(false , 404 , null , null , 'You dont own any address currently');
     }
 
-    // Soft delete address from user table
-    $user_ad_query = "UPDATE users SET address_id = NULL WHERE id = ?";
-    $user_ad_stmt = $conn->prepare($user_ad_query);
-    $user_ad_stmt->bind_param("i" , $user_id);
-    $user_ad_stmt->execute();
+    $conn->begin_transaction();
 
-    if($user_ad_stmt->affected_rows === 0)
+    try
     {
-        throw new Exception('User update failed');
+        // Soft delete the book from user_addresses
+        $delete_query = "UPDATE shipping_addresses SET is_active = 0 WHERE id = ?";
+        $delete_stmt = $conn->prepare($delete_query);
+        $delete_stmt->bind_param("i" , $address_id);
+        $delete_stmt->execute();
+
+        if($delete_stmt->affected_rows === 0)
+        {
+            throw new Exception('Address not found');
+        }
+
+        // Soft delete address from user table
+        $user_ad_query = "UPDATE users SET address_id = NULL WHERE id = ?";
+        $user_ad_stmt = $conn->prepare($user_ad_query);
+        $user_ad_stmt->bind_param("i" , $user_id);
+        $user_ad_stmt->execute();
+
+        if($user_ad_stmt->affected_rows === 0)
+        {
+            throw new Exception('User update failed');
+        }
+
+        $conn->commit();
+
+        respond(false , 200 , null , null , 'Address deleted successfully');
+
     }
+    catch (Exception $e)
+    {
+        $conn->rollback();
 
-    $conn->commit();
-
-    echo json_encode([
-        'success' => true,
-        'status' => 200,
-        'message' => 'Address deleted successfully'
-    ]);
-    exit;
-
+        respond(false , 500 , null , null , 'Something went wrong in deleting address');
+    }
 }
-catch (Exception $e)
+else
 {
-    $conn->rollback();
-
-    echo json_encode([
-        'success' => false,
-        'status' => 500,
-        'message' => 'Problem in deleting address ' . $e
-    ]);
-    exit;
+    respond(false , 400 , null , null , 'Wrong method used');
 }
-
-
-
-
 
 ?>
