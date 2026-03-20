@@ -1,6 +1,6 @@
 # 🛒 Store - BookNest
 
-![Storefront gif](/assets/readme-assets/website-entry.gif)
+![homepage](/assets/readme-assets/home-page.png)
 
 **Guest:**
 
@@ -66,3 +66,9 @@ You can also use the search bar to search for any book you want and from there d
 You can also on the **Single Product** page either buy the product directly _Adding to cart directly and checkout_ or you can add it to cart , in both situation you can set the quantity.
 
 ![Single product](/assets/readme-assets/single-product.png)
+
+### Checkout
+
+Finally you can checkout your order and place it , you will receive an email that an order is placed (cart will be empty again directly when the order is succesfuly place)
+
+![checkout](/assets/readme-assets/checkout.png)

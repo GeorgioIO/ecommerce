@@ -22,3 +22,11 @@ POST: Array
 TIME: 13:08:35
 
 ---
+METHOD: POST
+POST: Array
+(
+    [address_id] => 44
+)
+TIME: 13:16:46
+
+---
