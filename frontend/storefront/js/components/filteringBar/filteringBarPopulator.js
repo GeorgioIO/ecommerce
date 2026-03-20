@@ -40,7 +40,7 @@ export function populateExistingFilters(filters) {
 
 async function populateFormatsSelector(selector) {
   const formats = await getFormats_DB();
-  formats.forEach((format) => {
+  formats.data.forEach((format) => {
     const optionElement = document.createElement("option");
     optionElement.textContent = format.name;
     optionElement.value = format.id;

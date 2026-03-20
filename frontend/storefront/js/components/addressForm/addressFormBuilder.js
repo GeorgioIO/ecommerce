@@ -14,7 +14,7 @@ export function buildAddressFormSkeleton(data, destination = null) {
     form.append(defaultReminderText);
   }
 
-  if (data.length === 0) {
+  if (!data || data.length === 0) {
     const noAddressText = document.createElement("p");
     noAddressText.innerHTML = "<i>Currently you don't have any address set</i>";
     form.append(noAddressText);
@@ -86,7 +86,7 @@ export function buildAddressFormSkeleton(data, destination = null) {
     deleteButton.type = "button";
     deleteButton.textContent = "Delete";
     deleteButton.id = "delete-address-button";
-    deleteButton.dataset.addressid = data[0]?.address_id;
+    if (data) deleteButton.dataset.addressid = data.address_id ?? 0;
 
     const saveButton = document.createElement("button");
     saveButton.type = "button";

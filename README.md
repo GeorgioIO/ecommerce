@@ -34,4 +34,8 @@ To check in depth details about The Dashboard [Click Here](https://github.com/Ge
 
 ## 📊 BookNest Storefront
 
-**Under Construction**
+When you visit the website for the first time you are a **Guest** allowed to browse the store, search products and filtering, other features (Cart, Wishlist...) needs you to login.
+
+![Storefront gif](assets/readme-assets/website-entry.gif)
+
+To check in depth details about The Storefront [Click Here](https://github.com/GeorgioIO/ecommerce/blob/main/frontend/storefront/README.md)

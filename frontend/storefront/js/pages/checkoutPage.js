@@ -98,8 +98,8 @@ async function renderOrderInformation() {
   orderInformation.classList.add("order-information-container");
 
   // Order Address
-  const customerAddress = await getCustomerAddresses_DB();
-  console.log(customerAddress);
+  const customerAddress = await getCustomerAddress_DB();
+  console.log(customerAddress.data[0].address_id);
   const orderAddressContainer = renderOrderAddress(customerAddress);
 
   // Shipping
@@ -108,7 +108,7 @@ async function renderOrderInformation() {
   // Payment
   const paymentContainer = renderPaymentMethods();
 
-  const addressID = customerAddress[0]?.address_id ?? null;
+  const addressID = customerAddress.data[0].address_id ?? null;
   // Complete Order button
   const completeOrderButon = renderCompleteOrderButton(addressID);
 
@@ -158,6 +158,7 @@ async function attachCompleteOrder(addressID) {
 
     const response = await placeOrder(addressID, newAddress);
 
+    console.log(response);
     const messageBox = createMesssageBox(response.message);
     appendMessageBox(messageBox);
   } catch (error) {
@@ -242,7 +243,7 @@ function renderShippingMethods() {
 }
 
 function renderOrderAddress(customerAddress) {
-  let hasAddress = customerAddress.length === 0 ? false : true;
+  let hasAddress = customerAddress.data[0].length === 0 ? false : true;
 
   const orderAddressContainer = document.createElement("div");
   orderAddressContainer.classList.add("order-address-container");
@@ -254,14 +255,17 @@ function renderOrderAddress(customerAddress) {
   orderAddressContainer.append(containerTitle);
 
   // Address Form
-  const addressForm = buildAddressFormSkeleton(customerAddress, "checkout");
+  const addressForm = buildAddressFormSkeleton(
+    customerAddress.data[0],
+    "checkout",
+  );
 
   if (hasAddress) {
-    const addressID = customerAddress[0].address_id;
+    const addressID = customerAddress.data[0].address_id;
     const addressOptionContainer = buildAddressOptionContainer(addressID);
     orderAddressContainer.append(addressOptionContainer);
   }
-  if (hasAddress) hydrateAddressForm(addressForm, customerAddress[0]);
+  if (hasAddress) hydrateAddressForm(addressForm, customerAddress.data[0]);
 
   orderAddressContainer.append(addressForm);
 

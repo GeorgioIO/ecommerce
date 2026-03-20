@@ -191,7 +191,7 @@ async function renderAddressSection(content) {
   // If not tell him that He can fill the form and save address
   // Add delete address button that delete the address and make the form empty
   const address = await getCustomerAddress_DB();
-  if (address.success === false) {
+  if (!address.success) {
     activateMessageBox();
     const message = createMesssageBox("Fail loading address");
     appendMessageBox(message);
@@ -199,20 +199,11 @@ async function renderAddressSection(content) {
 
   const form = buildAddressFormSkeleton(address.data[0]);
 
-  if (address) {
+  if (address.data) {
     hydrateAddressForm(form, address.data[0]);
   }
 
   content.append(form);
-}
-
-export async function renderOrdersSection(state) {
-  const response = await fetchOrders_DB({
-    page: state.page,
-    perPage: state.perPage,
-  });
-
-  console.log(response);
 }
 
 export function renderDashboardSection(data) {

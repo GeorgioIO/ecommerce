@@ -1,46 +1,34 @@
 <?php
-
-require_once __DIR__ . '../../../configuration/session.php';
+file_put_contents(
+    __DIR__ . '/debug.log',
+    "METHOD: " . $_SERVER['REQUEST_METHOD'] . "\n" .
+    "POST: " . print_r($_POST, true) .
+    "TIME: " . date('H:i:s') . "\n\n" .
+    "---\n",
+    FILE_APPEND  // 👈 this is the key change
+);
+require_once __DIR__ . '/../../configuration/session.php';
+require_once __DIR__ . '/../helpers.php';
 header("Content-Type: application/json");
 
 // User is not logged in
 if(!isset($_SESSION['user_id']))
 {
-    echo json_encode([
-        'success' => false,
-        'status' => 401,
-        'message' => 'Log in required' 
-    ]);
-    exit;
+    respond(false , 401 , null , null , 'Log in required');
 }
-
-require_once __DIR__ . '/validators/order_validators.php';
-require_once __DIR__ . '/validators/order_db_validators.php';
-require_once __DIR__ . '/helpers/order_helpers.php';
-require_once __DIR__ . '/helpers/order_db_helpers.php';
-require_once __DIR__ . '/../customers/helpers/customers_db_helpers.php';
-require_once __DIR__ . '/../../configuration/database.php';
-require_once __DIR__ .  '/../cart/helpers/cart_helpers.php';
-require_once __DIR__ . '/../notifications/admin_notifications/helpers/admin_notifcations_db_helpers.php';
-require_once __DIR__ . '/../email/email_config.php';
-require_once __DIR__ . '/../helpers.php';
-require_once __DIR__ . '/../books/helpers/book_db_helpers.php';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-    /*
-        For a order we need :
-            - user id
-            - status (Processing)
-            - Total Price
-            - Today date
-
-            - if default address used id
-            - else use new one
-                - validate values
-            - fetch cart
-            
-    */
+    require_once __DIR__ . '/validators/order_validators.php';
+    require_once __DIR__ . '/validators/order_db_validators.php';
+    require_once __DIR__ . '/helpers/order_helpers.php';
+    require_once __DIR__ . '/helpers/order_db_helpers.php';
+    require_once __DIR__ . '/../customers/helpers/customers_db_helpers.php';
+    require_once __DIR__ . '/../../configuration/database.php';
+    require_once __DIR__ .  '/../cart/helpers/cart_helpers.php';
+    require_once __DIR__ . '/../notifications/admin_notifications/helpers/admin_notifcations_db_helpers.php';
+    require_once __DIR__ . '/../email/email_config.php';
+    require_once __DIR__ . '/../books/helpers/book_db_helpers.php';
 
     // Get user id
     $user_id = $_SESSION['user_id'];
@@ -183,12 +171,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 }
 else
 {
-    echo json_encode([
-        'success' => false,
-        'status' => 400,
-        'message' => 'Wrong method used.'
-    ]);
-    exit;
+    respond(false , 400 , null , null , 'Wrong method used.');
 }
 
 
