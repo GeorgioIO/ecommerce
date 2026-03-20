@@ -53,6 +53,6 @@ if($_SERVER['REQUEST_METHOD'] === "PATCH")
 }
 else
 {
-    respond(false , 400 , null , null , 'Wrong method used');
+    respond(false , 400 , null , null , 'Wrong method used in restoring genre');
 }
 ?>

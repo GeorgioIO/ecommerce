@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
 }
 else
 {
-    respond(false , 400 , null , null , 'Wrong Method used');
+    respond(false , 400 , null , null , 'Wrong method used in getting formats');
 }
 
 ?>

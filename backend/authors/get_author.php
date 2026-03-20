@@ -42,7 +42,7 @@ if($_SERVER['REQUEST_METHOD'] === "GET")
 }
 else
 {
-    respond(false , 400 , null , null , 'Wrong method used');
+    respond(false , 400 , null , null , 'Wrong method used in getting author');
 }
 
 

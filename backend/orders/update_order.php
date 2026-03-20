@@ -335,7 +335,7 @@ Data im expecting to get in EDIT ORDER :
 }
 else
 {
-    respond(false , 400 , null , null , 'Wrong method used');
+    respond(false , 400 , null , null , 'Wrong method used in updating orders');
 }
 
 

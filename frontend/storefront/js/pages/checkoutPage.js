@@ -131,7 +131,6 @@ async function attachCompleteOrder(addressID) {
       document.querySelector("#default-address-radio") ?? null;
     let newAddress = null;
 
-    console.log(defaultRadio);
     if (!defaultRadio || (defaultRadio && defaultRadio.checked !== true)) {
       newAddress = {
         firstName: form.querySelector("#first_name").value ?? null,
@@ -148,7 +147,7 @@ async function attachCompleteOrder(addressID) {
       addressID = null;
 
       const dataValidation = validateAddressData(newAddress);
-
+      console.log(dataValidation);
       if (!dataValidation.valid) {
         const messageBox = createMesssageBox(dataValidation.message);
         appendMessageBox(messageBox);
@@ -158,7 +157,7 @@ async function attachCompleteOrder(addressID) {
 
     const response = await placeOrder(addressID, newAddress);
 
-    console.log(response);
+    console.log("Response  ", response);
     const messageBox = createMesssageBox(response.message);
     appendMessageBox(messageBox);
   } catch (error) {

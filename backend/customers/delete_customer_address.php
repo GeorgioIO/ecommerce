@@ -71,7 +71,7 @@ if($_SERVER['REQUEST_METHOD'] === 'DELETE')
 }
 else
 {
-    respond(false , 400 , null , null , 'Wrong method used');
+    respond(false , 400 , null , null , 'Wrong method used in deleting customer address');
 }
 
 ?>

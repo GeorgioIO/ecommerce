@@ -130,7 +130,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
 }
 else
 {
-    respond(true , 400 , null , null , "Wrong method used");
+    respond(true , 400 , null , null , "Wrong method used in getting books");
 }
 
 

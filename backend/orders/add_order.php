@@ -202,7 +202,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 }
 else
 {
-    respond(true , 400 , null , null , 'Wrong method used');
+    respond(true , 400 , null , null , 'Wrong method used in adding order');
 }
 
 

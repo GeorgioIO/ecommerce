@@ -7,6 +7,7 @@ file_put_contents(
     "---\n",
     FILE_APPEND  // 👈 this is the key change
 );
+
 require_once __DIR__ . '/../../configuration/session.php';
 require_once __DIR__ . '/../helpers.php';
 header("Content-Type: application/json");
@@ -55,10 +56,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
         }
 
     }
-    else if(isset($_POST['new_address']))
+    else if(isset($_POST['new_address']) && $_POST['new_address'] !== 'null')
     {
         // ! New Address
         $address = json_decode($_POST['new_address'] , true);
+
+        if (!$address) {
+            respond(false , 400 , null , null , 'Invalid new address data');
+        }
 
         $address = normalize_address_payload($address);
 
@@ -69,6 +74,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
             echo json_encode($address_validation);
             exit;
         }
+    }
+    else
+    {
+        respond(false , 400 , null , null , 'Address information is required');
     }
      
     
@@ -171,7 +180,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 }
 else
 {
-    respond(false , 400 , null , null , 'Wrong method used.');
+    respond(false , 400 , null , null , 'Wrong method used in adding order');
 }
 
 

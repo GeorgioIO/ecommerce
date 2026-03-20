@@ -12,8 +12,6 @@ require __DIR__ . '/../../PHPMailer/PHPMailer-master/src/PHPMailer.php';
 require __DIR__ . '/../../PHPMailer/PHPMailer-master/src/SMTP.php'; 
 require __DIR__ . '/email_bodies.php';
 
-
-
 function sendEmail($type , $subject , $data , $receiver='georgiojabbour.g.gj@gmail.com')
 {
     $config = require __DIR__ . '/../../configuration/env.php'; 
